@@ -34,7 +34,7 @@ Love to cook but always struggle to come up with ideas? SmartCook is a web app d
   - Food image upload & contest page
 * Implement and test webpage navigation/ routing logic 
 
-#### Set up RESTful API to retrieve/store information from different APIs and database
+#### Minimal requirement 2: Set up RESTful API to retrieve/store information from different APIs and database
 * Set up Google login authentication 
 * Search and test different recipe APIs to decide which APIs to use
 * Set up backend end-points & link to APIs to get data 
