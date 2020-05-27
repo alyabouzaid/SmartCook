@@ -1,68 +1,52 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# SmartCook
 
-## Available Scripts
+### Project Description: 
+Love to cook but always struggle to come up with ideas? SmartCook is a web app designed for all food lovers who enjoy cooking, exploring new recipes, creating recipe journals, and socializing about food/cooking. It is not just a standard recipe recommendation app. It is an app that keeps track of your ingredient inventory (almost like an online fridge) and recommends you different recipes based on the type of food you like and the ingredients you have on hand. Also, SmartCook allows you to save and customize your favourite recipes into your personal recipe journal. You can upload food pictures and create group chats to communicate on meal planning and vote for your favourite food pictures. The data that will be stored in SmartCook includes recipes, user’s ingredient inventory, user's recipe journal, user account information, chat history, and food pictures uploaded by users. If time allows, we would like to add an online grocery shopping feature that allows users to order groceries online (e.g. Instacart). Both the online grocery shopping and the group chat feature may be added/removed based on time constraint. 
 
-In the project directory, you can run:
+### Project task requirements:
+#### 3-5 minimal requirements (will definitely complete)
+* Create user interface design 
+* Set up database to store data 
+* Set up RESTful API to retrieve/store information from different APIs and database
+* Create ingredient inventory tracker 
+* Implement recipe recommendation system
 
-### `yarn start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### 3-7 minimal requirements (will most likely complete)
+* Design recipe journal feature to save user’s favourite recipes/ user’s recipe annotations 
+* Create food picture upload feature 
+* Build food picture voting feature 
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+ 
+#### 2-3 stretch requirements (plan to complete 1!)
+* Create group chat feature 
+* Create online grocery shopping feature
+* Implement a more personalize recommendation system to recommend recipes based on user's most used ingredients/dietary restrictions 
 
-### `yarn test`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Task Breakdown
+#### Minimal requirement 1: Design user interface
+* Design login in & landing page 
+* Design different components of the web app: 
+  - Recipe recommendation page 
+  - Ingredient inventory page
+  - Recipe journal page 
+  - Food image upload & contest page
+* Implement and test webpage navigation/ routing logic 
 
-### `yarn build`
+#### Minimal requirement 2: Set up RESTful API to retrieve/store information from different APIs and database
+* Set up Google login authentication 
+* Search and test different recipe APIs to decide which APIs to use
+* Set up backend end-points & link to APIs to get data 
+* Connect frontend and backend
+* Test end-points and connection between frontend and backend
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### Prototype sketches
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+<img src="gallery/logIn.png">
+<img src="gallery/homePage.png">
+<img src="gallery/ingredientInventory.png">
+![GitHub Logo](/gallery/g1.PNG)
+![GitHub Logo](/gallery/g2.PNG)
+![GitHub Logo](/gallery/g3.PNG)
