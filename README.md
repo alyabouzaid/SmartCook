@@ -47,6 +47,7 @@ Love to cook but always struggle to come up with ideas? SmartCook is a web app d
 <img src="gallery/logIn.png">
 <img src="gallery/homePage.png">
 <img src="gallery/ingredientInventory.png">
-![GitHub Logo](/gallery/g1.PNG)
-![GitHub Logo](/gallery/g2.PNG)
-![GitHub Logo](/gallery/g3.PNG)
+<img src="gallery/g1.png">
+<img src="gallery/g2.png">
+<img src="gallery/g3.png">
+
