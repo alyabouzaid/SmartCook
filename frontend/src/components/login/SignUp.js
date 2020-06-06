@@ -23,14 +23,17 @@ const useStyles = makeStyles({
     },
 });
 
-export default function LogIn() {
+export default function SignUp() {
     const classes = useStyles();
     return (
         <div>
             <Header/>
             <Container className={classes.root} maxWidth="sm">
                 <div>
-                    <TextField label="Username">Text box</TextField>
+                    <TextField label="First Name">Text box</TextField>
+                </div>
+                <div>
+                    <TextField label="Last Name">Text box</TextField>
                 </div>
                 <div>
                     <TextField label="Password" type={"password"}>Text box</TextField>
@@ -43,18 +46,7 @@ export default function LogIn() {
                         size="small"
                         onClick=""
                     >
-                        Log in
-                    </Button>
-                </div>
-                <div>
-                    <Button
-                        href=""
-                        color="inherit"
-                        target="_blank"
-                        size="small"
-                        onClick=""
-                    >
-                        Forgot Password?
+                        Sign up
                     </Button>
                 </div>
             </Container>
