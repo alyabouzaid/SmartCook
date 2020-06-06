@@ -11,7 +11,7 @@ import reducers from "./reducers";
 
 ReactDOM.render(
   <Provider store={createStore(reducers)}>
-    <LandingPage />
+    <App />
     {/* <Header /> */}
   </Provider>,
   document.getElementById("root")
