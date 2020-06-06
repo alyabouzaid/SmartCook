@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import LandingPage from "./components/landingPage/LandingPage";
+import LandingPage from "./components/landingPage/landingPage";
 import Header from "./components/landingPage/Header";
 import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
