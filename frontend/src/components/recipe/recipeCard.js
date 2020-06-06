@@ -39,16 +39,16 @@ export default function RecipeCard({recipe}) {
                         <MoreVertIcon />
                     </IconButton>
                 }
-                title={recipe.title}
+                title={recipe["recipe"]["label"]}
             />
             <CardMedia
                 className={classes.media}
-                image={recipe.imgPath}
-                title={recipe.title}
+                image={recipe["recipe"]["image"]}
+                title={recipe["recipe"]["label"]}
             />
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                    {recipe.introduction}
+                    {recipe["recipe"]["ingredientLines"]}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
