@@ -11,6 +11,7 @@ export const clearIngredients = amount => {
 		type: 'CLEAR_INGREDIENT',
 		clearIngredients: amount
 	};
+<<<<<<< HEAD
 };
 
 
@@ -19,4 +20,6 @@ export const editIngredients = amount => {
 		type: 'EDIT_INGREDIENT',
 		editIngredients: amount
 	};
+=======
+>>>>>>> 0b32df1e6b967853856f443f4b21ad6f02decf55
 };

@@ -14,6 +14,7 @@ import {recipeList} from "./constants";
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
+        flexWrap: 'wrap',
         margin: '3%',
     },
     formControl: {
@@ -33,6 +34,17 @@ export default function Recommendation() {
         setState({...state, [event.target.name]: event.target.checked});
     };
 
+    const getRecommendation = () => {
+        fetch("https://api.edamam.com/search?q=chicken%26curry%26onion%26basil&app_id=43011121&app_key" +
+            "=8ded8a6fbd319218357df399687664aa&from=0&to=10&calories=591-722&health=alcohol-free", {
+            method: 'GET',
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                   setState({...state, recommendation: res})
+            })
+    };
+
     return (
         <div>
             <div className={classes.root}>
@@ -50,16 +62,18 @@ export default function Recommendation() {
                 </FormControl>
             </div>
             <div>
-                <Button variant="contained" color="primary">
+                <Button variant="contained" color="primary" onClick={getRecommendation}>
                     Generate Recommendation
                 </Button>
             </div>
-            <div className={classes.root}>
-                {recipeList.map(recipe =>
-                    <RecipeCard recipe={recipe}/>
-                )
-                }
-            </div>
+            {   state.recommendation &&
+                <div className={classes.root}>
+                    {state.recommendation["hits"].map(recipe =>
+                        <RecipeCard recipe={recipe}/>
+                    )
+                    }
+                </div>
+            }
         </div>
     );
 }

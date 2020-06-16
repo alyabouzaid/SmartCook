@@ -39,6 +39,7 @@ class IngredientInventory extends React.Component {
 	render() {
 
 
+<<<<<<< HEAD
         const useStyles = makeStyles({
             root: {
                 width: 400,
@@ -55,13 +56,26 @@ class IngredientInventory extends React.Component {
                 fontSize: 18,
             },
         });
+=======
+        const useStyles = makeStyles((theme) => ({
+            root: {
+                backgroundColor: "#FF0000",
+                color: "black",
+                position: "sticky",
+
+        }}));
+>>>>>>> 0b32df1e6b967853856f443f4b21ad6f02decf55
 
         
 
 		return (				
         
 
+<<<<<<< HEAD
         <Container  text-align="center" className={useStyles.root} >
+=======
+        <Container  text-align="center" >
+>>>>>>> 0b32df1e6b967853856f443f4b21ad6f02decf55
                         
 
 
