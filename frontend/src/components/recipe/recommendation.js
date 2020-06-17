@@ -52,7 +52,7 @@ export default function Recommendation() {
                     <FormLabel component="legend">Select Your Ingredients</FormLabel>
                     <FormGroup>
                         {ingredientList.map((ingredient) =>
-                            <FormControlLabel
+                            <FormControlLabel key={ingredient.id}
                                 control={<Checkbox checked={state.ingredient} onChange={handleChange}
                                                    name={ingredient}/>}
                                 label={ingredient}
