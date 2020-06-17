@@ -11,15 +11,12 @@ export const clearIngredients = amount => {
 		type: 'CLEAR_INGREDIENT',
 		clearIngredients: amount
 	};
-<<<<<<< HEAD
 };
 
 
-export const editIngredients = amount => {
+export const deleteIngredient = amount => {
 	return {
-		type: 'EDIT_INGREDIENT',
-		editIngredients: amount
+		type: 'DELETE_INGREDIENT',
+		deleteIngredient: amount
 	};
-=======
->>>>>>> 0b32df1e6b967853856f443f4b21ad6f02decf55
 };

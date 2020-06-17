@@ -1,5 +1,17 @@
 
+var removeByAttr = function(arr, attr, value){
+    var i = arr.length;
+    while(i--){
+       if( arr[i] 
+           && arr[i].hasOwnProperty(attr) 
+           && (arguments.length > 2 && arr[i][attr] === value ) ){ 
 
+           arr.splice(i,1);
+
+       }
+    }
+    return arr;
+}
 
 export default function counterMessagesReducer (ingredientInventory = [
 	{	
@@ -9,12 +21,13 @@ export default function counterMessagesReducer (ingredientInventory = [
 	},
 	{	
 		"key":1,
-		"description": "apples",
+		"description": "Apple",
 		"amount":3
 
 	}
 	], action)  {
 	if (action.type === 'ADD_INGREDIENT') {
+		console.log(ingredientInventory.type);
 
 		return [...ingredientInventory, action.addingIngredient];
 
@@ -25,6 +38,17 @@ export default function counterMessagesReducer (ingredientInventory = [
 		return [];
 
 	}
+
+	if (action.type === 'DELETE_INGREDIENT') {
+
+		let temp = ingredientInventory.slice()
+		temp = removeByAttr(temp, "key", action.deleteIngredient);
+
+		return temp;
+
+	}
+
+
 	console.log(ingredientInventory);
 
 	return ingredientInventory;

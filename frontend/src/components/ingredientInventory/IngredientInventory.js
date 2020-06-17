@@ -1,62 +1,50 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { addingIngredient } from '../../actions/ingredientInventoryActions';
-import { clearIngredients } from '../../actions/ingredientInventoryActions';
-import { makeStyles, withTheme } from "@material-ui/core/styles";
+import { clearIngredients,deleteIngredient } from '../../actions/ingredientInventoryActions';
+import { makeStyles } from "@material-ui/core/styles";
 import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Header from "../login/Header";
+
+
+
+
 
 class IngredientInventory extends React.Component {
 
 
-
-
     addItem() {
-
-
         let inventory =  document.getElementById("inventory").value
         let amount =  document.getElementById("amount").value
 
+        let key = 0 
+        if (this.props.ingredientInventory.length>0){
+          key = this.props.ingredientInventory[this.props.ingredientInventory.length - 1].key +1
+        }
+
         this.props.addingIngredient({
-            "key": this.props.ingredientInventory.length,
+            "key": key,
             "description": inventory,
             "amount":amount
         })
 
     }
 
-    detailsMessage(i) {
-        
-        // {console.log(i)}
-
-        var workshops_content = document.getElementById("itemclickedbox");
-        workshops_content.value = i
-        console.log(workshops_content)
-        
-    }
-
-
 
 	render() {
 
 
-<<<<<<< HEAD
-        const useStyles = makeStyles({
-            root: {
-                width: 400,
-                height: 300,
-                position: "relative",
-                background: "white",
-                marginTop: 200,
-                marginRight: "auto",
-                marginLeft: "auto",
-                display: "flex",
-                justifyContent: "space-evenly",
-                flexDirection: "column",
-                textAlign: "center",
-                fontSize: 18,
-            },
-        });
-=======
         const useStyles = makeStyles((theme) => ({
             root: {
                 backgroundColor: "#FF0000",
@@ -64,66 +52,60 @@ class IngredientInventory extends React.Component {
                 position: "sticky",
 
         }}));
->>>>>>> 0b32df1e6b967853856f443f4b21ad6f02decf55
 
         
 
 		return (				
         
-
-<<<<<<< HEAD
-        <Container  text-align="center" className={useStyles.root} >
-=======
-        <Container  text-align="center" >
->>>>>>> 0b32df1e6b967853856f443f4b21ad6f02decf55
-                        
-
-
-            <h1>Ingredient Inventory </h1>
-
+        <div>
+        <Header/>
+        <Container  text-align="center"   >
+        &nbsp;
+        <Typography variant="h4">
+            Ingredient Inventory
+            </Typography>
+            
             <p>	
-                 <b>Ingredient:</b>
-				<input type="text" id="inventory" name="fname" size="100" />
+				<TextField label="Ingredient" variant="filled" type="text" id="inventory" name="fname" size="100" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <TextField label="Amount" variant="filled" type="text" id="amount" name="fname" size="100" />
 			</p>
-
-
-
-			<p>	
-                 <b>Amount:</b>
-				<input type="text" id="amount" name="fname" size="100" />
-			</p>
-
 
 
             <p>
-            <button onClick={() => { this.addItem()}}>add item</button>
+            <Button variant="contained" color="secondary" disableElevation onClick={() => { this.addItem()}}>add ingredient</Button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <Button variant="contained" color="secondary"  onClick={() =>  this.props.clearIngredients([]) }>clear inventory</Button>
             </p>
 
 
-            <ul>
+        <TableContainer component={Paper}>
+        <Table className={useStyles.table} aria-label="simple table">
+            <TableHead>
+            <TableRow>
+                <TableCell></TableCell>
+                <TableCell align="right">Ingredient</TableCell>
+                <TableCell align="right">Amount&nbsp;(kg/quantity)</TableCell>
+            </TableRow>
+            </TableHead>
+            <TableBody>
+            {this.props.ingredientInventory.map((row) => (
+                <TableRow key={row.name}>
+                <TableCell component="th" scope="row">
+                <Button variant="contained" color="secondary" onClick={() => this.props.deleteIngredient(row.key)}>Delete</Button>
+                </TableCell>
+                <TableCell align="right">{row.description}</TableCell>
+                <TableCell align="right">{row.amount}</TableCell>
+                </TableRow>
+            ))}
+            </TableBody>
+        </Table>
+        </TableContainer>
+         &nbsp;
+        </Container>
+        </div>
 
-
-                    {(this.props.ingredientInventory).map(item => ( 
-                    <div>
-
-                    {/* <button onClick={() => { this.detailsMessage( "   " +item.description+  "  item number:  "+ item.key)}}>Show date</button> */}
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        {item.description} 
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        {item.amount  }
-                    </div>
-                    ))}
-            </ul>
-
-            {/* <input  id="itemclickedbox" value="No item clicked yet" size="100"/> */}
-
-			<p>	
-				<button onClick={() =>  this.props.clearIngredients([]) }>clear inventory</button>
-			</p>
-
-
-
-        </Container>);
+        );
 	}
 }
 
@@ -133,4 +115,4 @@ const mapStateToProps = (state) => { //name is by convention
 }
     
 
-export default connect(mapStateToProps, { addingIngredient,clearIngredients })(IngredientInventory);
+export default connect(mapStateToProps, { addingIngredient,clearIngredients,deleteIngredient })(IngredientInventory);
