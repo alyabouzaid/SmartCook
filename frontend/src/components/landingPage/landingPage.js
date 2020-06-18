@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Header from "./Header";
+// import Header from "./Header";
 // import Parallax from "./Parallax";
 import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
@@ -8,6 +8,7 @@ import GridPost from "./GridPost";
 import GridList from "@material-ui/core/GridList";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import Header from "../login/Header";
 
 const useStyles = makeStyles((theme) => ({
   gridList: {

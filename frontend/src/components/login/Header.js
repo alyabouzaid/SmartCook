@@ -6,10 +6,10 @@ import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles, withTheme } from "@material-ui/core/styles";
-import "./style.css";
+import { withStyles, makeStyles, withTheme } from "@material-ui/core/styles";
+import {Link} from "react-router-dom";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = (theme) => ({
     appbar: {
         backgroundColor: "#e0f2f1",
         // "#e3f2fd",
@@ -23,100 +23,125 @@ const useStyles = makeStyles((theme) => ({
         flex: 1,
         marginLeft: 15,
     },
-}));
+});
 
-export default function Header(props) {
-    const classes = useStyles();
+class Header extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
-    return (
-        <AppBar className={classes.appbar}>
-            <Toolbar className={classes.toolbar}>
-                <Typography variant="h5" className={classes.websiteTitle}>
-                    SmartCook
-                </Typography>
-                {/* </Button> */}
-                <List className="menu-list">
-                    {props.isAuthenticated ? (
-                        <ListItem className="menu-item">
-                            <Button
-                                href=""
-                                color="inherit"
-                                target="_blank"
-                                size="small"
-                                onClick=""
-                            >
-                                Inventory
-                            </Button>
-                            <Button
-                                href=""
-                                color="inherit"
-                                target="_blank"
-                                size="small"
-                                onClick=""
-                            >
-                                Recommender
-                            </Button>
-                            <Button
-                                href=""
-                                color="inherit"
-                                target="_blank"
-                                size="small"
-                                onClick=""
-                            >
-                                Journal
-                            </Button>
-                            <Button
-                                href=""
-                                color="inherit"
-                                target="_blank"
-                                size="small"
-                                onClick=""
-                            >
-                                Food Pictures
-                            </Button>
-                            <Button
-                                href=""
-                                color="inherit"
-                                target="_blank"
-                                size="small"
-                                onClick={props.logout}
-                            >
-                                Logout
-                            </Button>
-                        </ListItem>
-                    ) : (
-                        <ListItem>
-                            <Button href="" color="inherit" target="_blank" size="small">
-                                Home
-                            </Button>
-                            <Button href="" color="inherit" target="_blank" size="small">
-                                About
-                            </Button>
-                            <Button
-                                href=""
-                                color="inherit"
-                                target="_blank"
-                                size="small"
-                                onClick={props.login}
-                            >
-                                Login
-                            </Button>
-                            <Button
-                                href=""
-                                color="inherit"
-                                target="_blank"
-                                size="small"
-                                style={{
-                                    color: "#00bfa5",
-                                    fontWeight: "bold",
-                                }}
-                            >
-                                Sign up
-                            </Button>
-                        </ListItem>
-                    )}
-                </List>
-            </Toolbar>
-        </AppBar>
-    );
+// function Header(props) {
+
+    // const classes = useStyles();
+    render() {
+        const {classes} = this.props;
+        return (
+            <AppBar className={classes.appbar}>
+                <Toolbar className={classes.toolbar}>
+                    <Typography style={{textAlign: "left"}} variant="h5" className={classes.websiteTitle}>
+                        SmartCook
+                    </Typography>
+                    {/* </Button> */}
+                    <List className="menu-list">
+                        {/*{this.props.isAuthenticated ? (*/}
+                            <ListItem className="menu-item">
+
+                                <Link to={"/ingredientInventory"}
+                                      style={{ textDecoration: 'none', color:"inherit" }}>
+                                <Button
+                                    href=""
+                                    color="inherit"
+                                    target="_blank"
+                                    size="small"
+                                    // onClick={() => { this.props.logIn(pageConstants.INVENTORY_PAGE)}}
+                                >
+                                    Inventory
+                                </Button>
+                                </Link>
+
+                                <Link to={"/recommendation"}
+                                      style={{ textDecoration: 'none', color:"inherit" }}>
+                                <Button
+                                    href=""
+                                    color="inherit"
+                                    target="_blank"
+                                    size="small"
+                                    onClick=""
+                                >
+                                    Recommender
+                                </Button>
+                                </Link>
+
+                                <Button
+                                    href=""
+                                    color="inherit"
+                                    target="_blank"
+                                    size="small"
+                                    onClick=""
+                                >
+                                    Journal
+                                </Button>
+                                <Button
+                                    href=""
+                                    color="inherit"
+                                    target="_blank"
+                                    size="small"
+                                    onClick=""
+                                >
+                                    Food Pictures
+                                </Button>
+                                <Link to={"/logIn"}
+                                      style={{ textDecoration: 'none', color:"inherit" }}>
+                                <Button
+                                    href=""
+                                    color="inherit"
+                                    target="_blank"
+                                    size="small"
+                                    onClick=""
+                                >
+                                    Logout
+                                </Button>
+                                </Link>
+                            </ListItem>
+                        {/*) : (*/}
+                        {/*    <ListItem>*/}
+                        {/*        <Button href="" color="inherit" target="_blank" size="small"*/}
+                        {/*                onClick={() => { this.props.logIn(pageConstants.LANDING_PAGE)}}>*/}
+                        {/*            Home*/}
+                        {/*        </Button>*/}
+                        {/*        <Button href="" color="inherit" target="_blank" size="small">*/}
+                        {/*            About*/}
+                        {/*        </Button>*/}
+                        {/*        <Button*/}
+                        {/*            href=""*/}
+                        {/*            color="inherit"*/}
+                        {/*            target="_blank"*/}
+                        {/*            size="small"*/}
+                        {/*            onClick={this.props.login}*/}
+                        {/*            // onClick={() => { this.props.logIn(pageConstants.LOG_IN_PAGE)}}*/}
+                        {/*        >*/}
+                        {/*            Login*/}
+                        {/*        </Button>*/}
+                        {/*        <Button*/}
+                        {/*            href=""*/}
+                        {/*            color="inherit"*/}
+                        {/*            target="_blank"*/}
+                        {/*            size="small"*/}
+                        {/*            style={{*/}
+                        {/*                color: "#00bfa5",*/}
+                        {/*                fontWeight: "bold",*/}
+                        {/*            }}*/}
+                        {/*            onClick={() => { this.props.logIn(pageConstants.SIGN_UP_PAGE)}}*/}
+                        {/*        >*/}
+                        {/*            Sign up*/}
+                        {/*        </Button>*/}
+                        {/*    </ListItem>*/}
+                        {/*)}*/}
+                    </List>
+                </Toolbar>
+            </AppBar>
+        );
+    }
 }
+
+export default withStyles(useStyles)(Header);
