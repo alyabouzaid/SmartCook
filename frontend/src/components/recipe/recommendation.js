@@ -9,6 +9,8 @@ import RecipeCard from "./recipeCard";
 import Button from "@material-ui/core/Button";
 import {ingredientList} from "./constants";
 import {recipeList} from "./constants";
+import Header from "../login/Header";
+import pic from "../login/landingPage.jpg";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,7 +48,8 @@ export default function Recommendation() {
     };
 
     return (
-        <div>
+        <div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
+            <Header/>
             <div className={classes.root}>
                 <FormControl component="fieldset" className={classes.formControl}>
                     <FormLabel component="legend">Select Your Ingredients</FormLabel>
