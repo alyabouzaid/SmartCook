@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {makeStyles} from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -7,76 +8,68 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import RecipeCard from "./recipeCard";
 import Button from "@material-ui/core/Button";
-import {ingredientList} from "./constants";
-import {recipeList} from "./constants";
 import Header from "../login/Header";
 import pic from "../login/landingPage.jpg";
+import {selectingIngredient} from "../../actions/selectIngredientActions";
+import {newRecommendation, clearRecommendation} from "../../actions/recommendationActions";
 
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        margin: '3%',
-    },
-    formControl: {
-        margin: theme.spacing(3),
-    },
-}));
+class Recommendation extends React.Component {
 
-export default function Recommendation() {
-    const classes = useStyles();
-    let initialState = {};
-    ingredientList.forEach((ingredient) => {
-        initialState[ingredient] = false;
-    });
-    const [state, setState] = React.useState(initialState);
+   render() {
 
-    const handleChange = (event) => {
-        setState({...state, [event.target.name]: event.target.checked});
-    };
+       const getRecommendation = () => {
+           fetch("https://api.edamam.com/search?q=chicken%26curry%26onion%26basil&app_id=43011121&app_key" +
+               "=8ded8a6fbd319218357df399687664aa&from=0&to=10&calories=591-722&health=alcohol-free", {
+               method: 'GET',
+           })
+               .then((res) => res.json())
+               .then((res) => {
+                   this.props.newRecommendation(res);
+               })
+       };
 
-    const getRecommendation = () => {
-        fetch("https://api.edamam.com/search?q=chicken%26curry%26onion%26basil&app_id=43011121&app_key" +
-            "=8ded8a6fbd319218357df399687664aa&from=0&to=10&calories=591-722&health=alcohol-free", {
-            method: 'GET',
-        })
-            .then((res) => res.json())
-            .then((res) => {
-                   setState({...state, recommendation: res})
-            })
-    };
+       return (
+           <div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
+               <Header/>
+               <div style={{display: 'flex', flexWrap: 'wrap', margin: '3%'}}>
+                   <FormControl component="fieldset" style={{margin: '3%'}}>
+                       <FormLabel component="legend">Select Your Ingredients</FormLabel>
+                       <FormGroup>
+                           {this.props.ingredientInventory.map((ingredient) =>
+                               <FormControlLabel key={ingredient.id}
+                                                 control={<Checkbox checked={ingredient.selected}
+                                                                    onChange={() => {this.props.selectingIngredient(ingredient.key);}}
+                                                                    name={ingredient.description}/>}
+                                                 label={ingredient.description}
+                               />
+                           )}
+                       </FormGroup>
+                   </FormControl>
+               </div>
+               <div>
+                   <Button variant="contained" color="primary" onClick={getRecommendation}>
+                       Generate Recommendation
+                   </Button>
+               </div>
+               {this.props.recommendation["hits"] &&
+               <div style={{display: 'flex', flexWrap: 'wrap', margin: '3%'}}>
+                   {this.props.recommendation["hits"].map(recipe =>
+                       <RecipeCard recipe={recipe}/>
+                   )
+                   }
+               </div>
+               }
+           </div>
+       );
+   }
 
-    return (
-        <div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
-            <Header/>
-            <div className={classes.root}>
-                <FormControl component="fieldset" className={classes.formControl}>
-                    <FormLabel component="legend">Select Your Ingredients</FormLabel>
-                    <FormGroup>
-                        {ingredientList.map((ingredient) =>
-                            <FormControlLabel key={ingredient.id}
-                                control={<Checkbox checked={state.ingredient} onChange={handleChange}
-                                                   name={ingredient}/>}
-                                label={ingredient}
-                            />
-                        )}
-                    </FormGroup>
-                </FormControl>
-            </div>
-            <div>
-                <Button variant="contained" color="primary" onClick={getRecommendation}>
-                    Generate Recommendation
-                </Button>
-            </div>
-            {   state.recommendation &&
-                <div className={classes.root}>
-                    {state.recommendation["hits"].map(recipe =>
-                        <RecipeCard recipe={recipe}/>
-                    )
-                    }
-                </div>
-            }
-        </div>
-    );
 }
+
+const mapStateToProps = (state) => { //name is by convention
+    return { ingredientInventory: state.ingredientInventory,
+             recommendation: state.recommendationStore }; //now it will appear as props
+};
+
+
+export default connect(mapStateToProps, {selectingIngredient, newRecommendation, clearRecommendation})(Recommendation);
