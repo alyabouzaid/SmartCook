@@ -2,9 +2,9 @@
 var removeByAttr = function(arr, attr, value){
     var i = arr.length;
     while(i--){
-       if( arr[i] 
-           && arr[i].hasOwnProperty(attr) 
-           && (arguments.length > 2 && arr[i][attr] === value ) ){ 
+       if( arr[i]
+           && arr[i].hasOwnProperty(attr)
+           && (arguments.length > 2 && arr[i][attr] === value ) ){
 
            arr.splice(i,1);
 
@@ -14,22 +14,25 @@ var removeByAttr = function(arr, attr, value){
 }
 
 export default function counterMessagesReducer (ingredientInventory = [
-	{	
+	{
 		"key": 0,
 		"description": "Tomato",
-		"amount" : 2
+		"amount" : 2,
+		"selected": false
 	},
-	{	
+	{
 		"key":1,
 		"description": "Apple",
-		"amount":3
+		"amount": 3,
+		"selected": true
 
 	}
 	], action)  {
 	if (action.type === 'ADD_INGREDIENT') {
 		console.log(ingredientInventory.type);
-
-		return [...ingredientInventory, action.addingIngredient];
+        let entry = action.addingIngredient;                    // Rick Edited to add selected property
+        entry["selected"] = false;
+		return [...ingredientInventory, entry];
 
 	}
 
@@ -48,6 +51,10 @@ export default function counterMessagesReducer (ingredientInventory = [
 
 	}
 
+	if (action.type === 'SELECT_INGREDIENT'){         // Rick Edited to add selected property
+	   ingredientInventory.forEach(item => {if (item.key === action.payload) {item.selected = !item.selected}});
+       return [...ingredientInventory];
+	}
 
 	console.log(ingredientInventory);
 
