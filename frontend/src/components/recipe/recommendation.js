@@ -14,22 +14,9 @@ import {selectingIngredient} from "../../actions/selectIngredientActions";
 import {newRecommendation, clearRecommendation} from "../../actions/recommendationActions";
 import {getRecommendation} from "../../actions/recommendationActions";
 
-
 class Recommendation extends React.Component {
 
    render() {
-
-       // const getRecommendation = () => {
-       //     fetch("https://api.edamam.com/search?q=chicken%26curry%26onion%26basil&app_id=43011121&app_key" +
-       //         "=8ded8a6fbd319218357df399687664aa&from=0&to=10&calories=591-722&health=alcohol-free", {
-       //         method: 'GET',
-       //     })
-       //         .then((res) => res.json())
-       //         .then((res) => {
-       //             this.props.newRecommendation(res);
-       //         })
-       // };
-
        return (
            <div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
                <Header/>
