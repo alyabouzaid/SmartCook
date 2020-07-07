@@ -6,12 +6,42 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './journal.css';
 
 import parse from 'html-react-parser';
+import Header from "../login/Header";
+import pic from "../login/landingPage.jpg";
 
-class Journal extends Component {
+class Journal extends React.Component {
+
+    constructor (props) {
+        super(props);
+        this.state = {
+            isAuthenticated: true,
+        };
+    }
+
+    componentDidMount () {
+        fetch('http://localhost:9000/auth/user')
+            .then(res => res.text())
+            .then(res => {
+                const user = JSON.parse(res);
+                console.log(user);
+                if (user) {
+                    this.setState({isAuthenticated: user.isLoggedIn});
+                }
+            })
+            .catch(err => err);
+    }
+
+    defaultPage() {
+        return (<div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
+            <Header/>
+            <h1>You must log in</h1>
+        </div>);
+    }
 
     render() {
-        return (
-            <div className="Journal">
+        return (this.state.isAuthenticated ?
+            (<div className="Journal">
+                <Header/>
                 <h2>Using CKEditor 5 build in React</h2>
                 <CKEditor
                     editor={ ClassicEditor }
@@ -29,7 +59,9 @@ class Journal extends Component {
                 <div className = "editorData">
                 {parse(this.props.editorData)}
                 </div>
-            </div>
+            </div>)
+                :
+                (this.defaultPage())
         );
     }
 }

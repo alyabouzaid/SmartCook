@@ -85,15 +85,19 @@ class Header extends React.Component {
                                     </Button>
                                 </Link>
 
-                                <Button
-                                    href=""
-                                    color="inherit"
-                                    target="_blank"
-                                    size="small"
-                                    onClick=""
-                                >
-                                    Journal
-                                </Button>
+                                <Link to={"/journal"}
+                                      style={{ textDecoration: 'none', color:"inherit" }}>
+                                    <Button
+                                        href=""
+                                        color="inherit"
+                                        target="_blank"
+                                        size="small"
+                                        onClick=""
+                                    >
+                                        Journal
+                                    </Button>
+                                </Link>
+
                                 <Button
                                     href=""
                                     color="inherit"
