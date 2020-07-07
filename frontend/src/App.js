@@ -6,6 +6,7 @@ import IngredientInventory from './components/ingredientInventory/IngredientInve
 import LogIn from './components/login/LogIn';
 import SignUp from './components/login/SignUp';
 import {Route, Switch } from "react-router-dom";
+import Journal from "./components/journal/journal";
 
 
 class App extends React.Component {
@@ -20,6 +21,7 @@ class App extends React.Component {
                         <Route path="/logIn" component={LogIn} />
                         <Route path="/recommendation" component={Recommendation} />
                         <Route path="/signUp" component={SignUp} />
+                        <Route path="/journal" component={Journal} />
                     </Switch>
 
                 </div>
