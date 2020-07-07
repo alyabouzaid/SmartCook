@@ -22,7 +22,25 @@ import pic from "../login/landingPage.jpg";
 
 
 class IngredientInventory extends React.Component {
+    constructor (props) {
+        super(props);
+        this.state = {
+            isAuthenticated: true,
+        };
+    }
 
+    componentDidMount () {
+        fetch('http://localhost:9000/auth/user')
+            .then(res => res.text())
+            .then(res => {
+                const user = JSON.parse(res);
+                console.log(user);
+                if (user) {
+                    this.setState({isAuthenticated: user.isLoggedIn});
+                }
+            })
+            .catch(err => err);
+    }
 
     addItem() {
         let inventory =  document.getElementById("inventory").value
@@ -41,10 +59,14 @@ class IngredientInventory extends React.Component {
 
     }
 
+    defaultPage() {
+        return (<div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
+            <Header/>
+            <h1>You must log in</h1>
+        </div>);
+    }
 
-    render() {
-
-
+    createPage() {
         const useStyles = makeStyles((theme) => ({
             root: {
                 backgroundColor: "#FF0000",
@@ -54,59 +76,57 @@ class IngredientInventory extends React.Component {
 
             },
         }));
+        return (<div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
+            <Header/>
+            <Container  text-align="center"   >
+                &nbsp;
+                <Typography variant="h4">
+                    Ingredient Inventory
+                </Typography>
+
+                <p>
+                    <TextField label="Ingredient" variant="filled" type="text" id="inventory" name="fname" size="100" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <TextField label="Amount" variant="filled" type="text" id="amount" name="fname" size="100" />
+                </p>
 
 
-
-        return (
-
-            <div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
-                <Header/>
-                <Container  text-align="center"   >
-                    &nbsp;
-                    <Typography variant="h4">
-                        Ingredient Inventory
-                    </Typography>
-
-                    <p>
-                        <TextField label="Ingredient" variant="filled" type="text" id="inventory" name="fname" size="100" />
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <TextField label="Amount" variant="filled" type="text" id="amount" name="fname" size="100" />
-                    </p>
+                <p>
+                    <Button variant="contained" color="secondary" disableElevation onClick={() => { this.addItem()}}>add ingredient</Button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <Button variant="contained" color="secondary"  onClick={() =>  this.props.clearIngredients([]) }>clear inventory</Button>
+                </p>
 
 
-                    <p>
-                        <Button variant="contained" color="secondary" disableElevation onClick={() => { this.addItem()}}>add ingredient</Button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <Button variant="contained" color="secondary"  onClick={() =>  this.props.clearIngredients([]) }>clear inventory</Button>
-                    </p>
-
-
-                    <TableContainer component={Paper}>
-                        <Table className={useStyles.table} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell></TableCell>
-                                    <TableCell align="right">Ingredient</TableCell>
-                                    <TableCell align="right">Amount&nbsp;(kg/quantity)</TableCell>
+                <TableContainer component={Paper}>
+                    <Table className={useStyles.table} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell></TableCell>
+                                <TableCell align="right">Ingredient</TableCell>
+                                <TableCell align="right">Amount&nbsp;(kg/quantity)</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {this.props.ingredientInventory.map((row) => (
+                                <TableRow key={row.name}>
+                                    <TableCell component="th" scope="row">
+                                        <Button variant="contained" color="secondary" onClick={() => this.props.deleteIngredient(row.key)}>Delete</Button>
+                                    </TableCell>
+                                    <TableCell align="right">{row.description}</TableCell>
+                                    <TableCell align="right">{row.amount}</TableCell>
                                 </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {this.props.ingredientInventory.map((row) => (
-                                    <TableRow key={row.name}>
-                                        <TableCell component="th" scope="row">
-                                            <Button variant="contained" color="secondary" onClick={() => this.props.deleteIngredient(row.key)}>Delete</Button>
-                                        </TableCell>
-                                        <TableCell align="right">{row.description}</TableCell>
-                                        <TableCell align="right">{row.amount}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    &nbsp;
-                </Container>
-            </div>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                &nbsp;
+            </Container>
+        </div>);
+    }
 
+    render() {
+        return (this.state.isAuthenticated ? (this.createPage()) : (this.defaultPage())
         );
     }
 }

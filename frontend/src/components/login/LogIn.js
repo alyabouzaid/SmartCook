@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from "./Header";
+// import Header from "../landingPage/Header";
 import { TextField } from '@material-ui/core';
 import Button from "@material-ui/core/Button";
 import Container from '@material-ui/core/Container';
@@ -49,24 +50,20 @@ class LogIn extends React.Component {
                         <TextField label="Password" type={"password"}>Text box</TextField>
                     </div>
                     <div>
-                        <Link to={"/"}
-                              style={{ textDecoration: 'none', color:"inherit" }}>
                         <Button
-                            href=""
+                            href="http://localhost:9000/auth/google"
                             color="inherit"
-                            target="_blank"
+                            target="_self"
                             size="small"
-                            // onClick={() => { this.props.logIn(pageConstants.LANDING_PAGE)}}>
                         >
                             Log in
                         </Button>
-                        </Link>
                     </div>
                     <div>
                         <Button
                             href=""
                             color="inherit"
-                            target="_blank"
+                            target="_self"
                             size="small"
                             onClick=""
                         >
