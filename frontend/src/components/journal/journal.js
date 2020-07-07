@@ -6,6 +6,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './journal.css';
 
 import parse from 'html-react-parser';
+import JournalImage from "./journalImage";
 
 class Journal extends Component {
 
@@ -29,13 +30,14 @@ class Journal extends Component {
                 <div className = "editorData">
                 {parse(this.props.editorData)}
                 </div>
+                <JournalImage />
             </div>
         );
     }
 }
 
 const mapStateToProps = (state) => { //name is by convention
-    return { editorData: state.journalStore}; //now it will appear as props
+    return { editorData: state.journalStore.body}; //now it will appear as props
 };
 
 export default connect(mapStateToProps, {editJournal})(Journal);
