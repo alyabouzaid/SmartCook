@@ -5,10 +5,10 @@ const Schema = mongoose.Schema;
 
 const usersSchema = new Schema(
   {
-    _id: { type: String },
-    name: { type: String },
-    message: {type: String },
-    time: { type: Number },
+    author: { type: String },
+    title: { type: String },
+    body: {type: String },
+    images: { type : Array , "default" : [] } ,
   },
   {
     timestamps: true,
