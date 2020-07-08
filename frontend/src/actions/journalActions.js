@@ -39,7 +39,7 @@ export const uploadImage = e => {
             formData.append(i, file)
         });
 
-        // formData.append("email", this.props.user.email);
+        // formData.append("user", user);
 
         fetch("http://localhost:9000/images/image-upload", {
             method: 'POST',
@@ -60,6 +60,7 @@ export const loadJournalsData = () => {
         })
             .then((res) => res.json())
             .then((res) => {
+                dispatch(loadJournals(res));
             })
     }
 };
@@ -74,6 +75,34 @@ export const addNewJournalData = (data) => {
             .then((res) => res.json())
             .then((res) => {
                dispatch(submitJournal());
+               dispatch(addJournal(res));
             })
     }
+};
+
+export const loadJournals = (journals) => {
+    return {
+        type: 'JOURNALS_LOAD',
+        payload: journals
+    };
+};
+
+export const addJournal = (journal) => {
+    return {
+        type: 'JOURNALS_ADD',
+        payload: journal
+    };
+};
+
+export const deleteOneJournal = (id) => {
+    return {
+        type: 'JOURNALS_DELETE_ONE',
+        payload: id
+    };
+};
+
+export const deleteAllJournal = () => {
+    return {
+        type: 'JOURNALS_DELETE_ALL',
+    };
 };
