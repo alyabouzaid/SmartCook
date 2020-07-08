@@ -7,7 +7,6 @@ import "./journalImage.css";
 import {withStyles} from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import ListSubheader from "@material-ui/core/ListSubheader";
 
 const useStyles = (theme) => ({
     root: {
@@ -19,7 +18,7 @@ const useStyles = (theme) => ({
     },
     gridList: {
         width: 300,
-        height: 450,
+        height: 300,
     },
 });
 
@@ -55,7 +54,7 @@ class JournalImage extends Component {
 }
 
 const mapStateToProps = (state) => { //name is by convention
-    return {images: state.journalStore.images}; //now it will appear as props
+    return {images: state.journalEditorStore.images}; //now it will appear as props
 };
 
 export default compose(withStyles(useStyles), connect(mapStateToProps, {uploadImage}))(JournalImage);

@@ -5,6 +5,7 @@ import LandingPage from "./components/landingPage/landingPage";
 import IngredientInventory from './components/ingredientInventory/IngredientInventory';
 import {Route, Switch } from "react-router-dom";
 import Journal from "./components/journal/journal";
+import JournalView from './components/journal/journalView';
 
 
 class App extends React.Component {
@@ -18,6 +19,7 @@ class App extends React.Component {
                         <Route path="/ingredientInventory" component={IngredientInventory} />
                         <Route path="/recommendation" component={Recommendation} />
                         <Route path="/journal" component={Journal} />
+                        <Route path="/journalView" component={JournalView} />
                     </Switch>
 
                 </div>

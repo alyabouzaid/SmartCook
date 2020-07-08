@@ -21,7 +21,8 @@
     "passport-google-oauth20": "^2.0.0",
     "mongoose-findorcreate": "^3.0.0",
     "morgan": "~1.9.1",
-    "uuid": "latest"
+    "uuid": "latest",
+    "node-fetch": "latest"
   },
   "devDependencies": {
     "cloudinary": "^1.22.0",

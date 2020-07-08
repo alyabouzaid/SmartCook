@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import compose from 'recompose/compose';
-import {editJournal} from "../../actions/journalActions";
+import {editJournal, updateTitle, addNewJournalData} from "../../actions/journalActions";
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './journal.css';
@@ -13,6 +13,8 @@ import JournalImage from "./journalImage";
 
 import {withStyles} from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 const useStyles = (theme) => ({
     root: {
@@ -51,10 +53,15 @@ class Journal extends React.Component {
 
     render() {
         const {classes} = this.props;
-        return (this.state.isAuthenticated ?
-            (<div>
-                <Header/>
-                <h2>Your personal Journal</h2>
+        return (
+            <div style={{margin: '5%'}}>
+                <h2>Your Personal Journal</h2>
+                <form noValidate autoComplete="off" style={{marginBottom: "5%"}}>
+                    <TextField id="standard-basic" label="Title" fullWidth
+                     value = {this.props.editorData.title}
+                     onChange = {(e) => this.props.updateTitle(e.target.value)}
+                    />
+                </form>
                 <Grid container spacing={2} className={classes.root}>
                     <Grid item xs={9}>
                         <CKEditor
@@ -72,19 +79,22 @@ class Journal extends React.Component {
                         />
                     </Grid>
                     <Grid item xs={3}>
-                        {/*{parse(this.props.editorData)}*/}
+                        {/*{parse(this.props.editorData.body)}*/}
                         <JournalImage/>
                     </Grid>
                 </Grid>
-            </div>)
-                :
-                (this.defaultPage())
+                <Button variant="contained" color="primary"
+                        onClick={() => this.props.addNewJournalData(this.props.editorData)}>
+                    Submit Journal
+                </Button>
+            </div>
+
         );
     }
 }
 
 const mapStateToProps = (state) => { //name is by convention
-    return {editorData: state.journalStore.body}; //now it will appear as props
+    return {editorData: state.journalEditorStore}; //now it will appear as props
 };
 
-export default compose(withStyles(useStyles), connect(mapStateToProps, {editJournal}))(Journal);
+export default compose(withStyles(useStyles), connect(mapStateToProps, {editJournal, updateTitle, addNewJournalData}))(Journal);
