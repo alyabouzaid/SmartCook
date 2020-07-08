@@ -7,6 +7,8 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './journal.css';
 
 import parse from 'html-react-parser';
+import Header from "../login/Header";
+import pic from "../login/landingPage.jpg";
 import JournalImage from "./journalImage";
 
 import {withStyles} from '@material-ui/core/styles';
@@ -18,12 +20,40 @@ const useStyles = (theme) => ({
     },
 });
 
-class Journal extends Component {
+class Journal extends React.Component {
+
+    constructor (props) {
+        super(props);
+        this.state = {
+            isAuthenticated: true,
+        };
+    }
+
+    componentDidMount () {
+        fetch('http://localhost:9000/auth/user')
+            .then(res => res.text())
+            .then(res => {
+                const user = JSON.parse(res);
+                console.log(user);
+                if (user) {
+                    this.setState({isAuthenticated: user.isLoggedIn});
+                }
+            })
+            .catch(err => err);
+    }
+
+    defaultPage() {
+        return (<div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
+            <Header/>
+            <h1>You must log in</h1>
+        </div>);
+    }
 
     render() {
         const {classes} = this.props;
-        return (
-            <div>
+        return (this.state.isAuthenticated ?
+            (<div>
+                <Header/>
                 <h2>Your personal Journal</h2>
                 <Grid container spacing={2} className={classes.root}>
                     <Grid item xs={9}>
@@ -46,7 +76,9 @@ class Journal extends Component {
                         <JournalImage/>
                     </Grid>
                 </Grid>
-            </div>
+            </div>)
+                :
+                (this.defaultPage())
         );
     }
 }

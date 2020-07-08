@@ -16,9 +16,36 @@ import {getRecommendation} from "../../actions/recommendationActions";
 
 class Recommendation extends React.Component {
 
+    constructor (props) {
+        super(props);
+        this.state = {
+            isAuthenticated: true,
+        };
+    }
+
+    componentDidMount () {
+        fetch('http://localhost:9000/auth/user')
+            .then(res => res.text())
+            .then(res => {
+                const user = JSON.parse(res);
+                console.log(user);
+                if (user) {
+                    this.setState({isAuthenticated: user.isLoggedIn});
+                }
+            })
+            .catch(err => err);
+    }
+
+    defaultPage() {
+        return (<div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
+            <Header/>
+            <h1>You must log in</h1>
+        </div>);
+    }
+
    render() {
-       return (
-           <div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
+       return (this.state.isAuthenticated ?
+           (<div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
                <Header/>
                <div style={{display: 'flex', flexWrap: 'wrap', margin: '3%'}}>
                    <FormControl component="fieldset" style={{margin: '3%'}}>
@@ -49,7 +76,8 @@ class Recommendation extends React.Component {
                    }
                </div>
                }
-           </div>
+           </div>) : (this.defaultPage())
+
        );
    }
 
