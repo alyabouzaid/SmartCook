@@ -7,6 +7,8 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './journal.css';
 
 import parse from 'html-react-parser';
+import Header from "../login/Header";
+import pic from "../login/landingPage.jpg";
 import JournalImage from "./journalImage";
 
 import {withStyles} from '@material-ui/core/styles';
@@ -20,7 +22,34 @@ const useStyles = (theme) => ({
     },
 });
 
-class Journal extends Component {
+class Journal extends React.Component {
+
+    constructor (props) {
+        super(props);
+        this.state = {
+            isAuthenticated: true,
+        };
+    }
+
+    componentDidMount () {
+        fetch('http://localhost:9000/auth/user')
+            .then(res => res.text())
+            .then(res => {
+                const user = JSON.parse(res);
+                console.log(user);
+                if (user) {
+                    this.setState({isAuthenticated: user.isLoggedIn});
+                }
+            })
+            .catch(err => err);
+    }
+
+    defaultPage() {
+        return (<div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
+            <Header/>
+            <h1>You must log in</h1>
+        </div>);
+    }
 
     render() {
         const {classes} = this.props;
@@ -59,6 +88,7 @@ class Journal extends Component {
                     Submit Journal
                 </Button>
             </div>
+
         );
     }
 }

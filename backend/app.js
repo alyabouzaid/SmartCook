@@ -12,7 +12,11 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const journalsRouter = require('./routes/journals');
 const imagesRouter = require('./routes/images');
+
 const  recipesRouter = require('./routes/recipes');
+
+let serverRouter = require('./routes/server');
+
 
 require("dotenv").config();     // TODO: dotenv not working
 
@@ -23,7 +27,7 @@ const app = express();
 
 // mongoose connection
 mongoose.connect('mongodb://localhost/ReactReduxExpressMongo')
-.then(() =>  console.log('connection succesful'))
+.then(() =>  console.log('connection successful'))
 .catch((err) => console.error(err));
 
 
@@ -31,6 +35,7 @@ mongoose.connect('mongodb://localhost/ReactReduxExpressMongo')
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -43,6 +48,7 @@ app.use(bodyParser.json());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/', serverRouter);
 app.use('/journals', journalsRouter);
 app.use('/images', imagesRouter);
 app.use('/recipes', recipesRouter);
