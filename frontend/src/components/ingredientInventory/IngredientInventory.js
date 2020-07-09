@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { addingIngredient } from '../../actions/ingredientInventoryActions';
-import { clearIngredients,deleteIngredient } from '../../actions/ingredientInventoryActions';
+import { clearIngredients,deleteIngredient,initialData } from '../../actions/ingredientInventoryActions';
 import { makeStyles } from "@material-ui/core/styles";
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
@@ -23,10 +23,13 @@ import pic from "../login/landingPage.jpg";
 
 class IngredientInventory extends React.Component {
 
+    componentDidMount(){
+        this.props.initialData()}
 
     addItem() {
         let inventory =  document.getElementById("inventory").value
         let amount =  document.getElementById("amount").value
+        let targetAmount =  document.getElementById("targetAmount").value
 
         let key = 0
         if (this.props.ingredientInventory.length>0){
@@ -36,7 +39,9 @@ class IngredientInventory extends React.Component {
         this.props.addingIngredient({
             "key": key,
             "description": inventory,
-            "amount":amount
+            "amount": amount,
+            "targetAmount": targetAmount,
+            "selected": false
         })
 
     }
@@ -71,6 +76,8 @@ class IngredientInventory extends React.Component {
                         <TextField label="Ingredient" variant="filled" type="text" id="inventory" name="fname" size="100" />
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <TextField label="Amount" variant="filled" type="text" id="amount" name="fname" size="100" />
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <TextField label="Target Amount" variant="filled" type="text" id="targetAmount" name="fname" size="100" />
                     </p>
 
 
@@ -88,6 +95,7 @@ class IngredientInventory extends React.Component {
                                     <TableCell></TableCell>
                                     <TableCell align="right">Ingredient</TableCell>
                                     <TableCell align="right">Amount&nbsp;(kg/quantity)</TableCell>
+                                    <TableCell align="right">Target Amount&nbsp;(kg/quantity)</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -98,6 +106,7 @@ class IngredientInventory extends React.Component {
                                         </TableCell>
                                         <TableCell align="right">{row.description}</TableCell>
                                         <TableCell align="right">{row.amount}</TableCell>
+                                        <TableCell align="right">{row.targetAmount}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -117,4 +126,4 @@ const mapStateToProps = (state) => { //name is by convention
 }
 
 
-export default connect(mapStateToProps, { addingIngredient,clearIngredients,deleteIngredient })(IngredientInventory);
+export default connect(mapStateToProps, { addingIngredient,clearIngredients,deleteIngredient,initialData })(IngredientInventory);

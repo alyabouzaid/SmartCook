@@ -1,3 +1,4 @@
+import axios from 'axios'
 
 var removeByAttr = function(arr, attr, value){
     var i = arr.length;
@@ -13,30 +14,16 @@ var removeByAttr = function(arr, attr, value){
     return arr;
 }
 
-export default function counterMessagesReducer (ingredientInventory = [
-	{
-		"key": 0,
-		"description": "Tomato",
-		"amount" : 2,
-		"selected": false
-	},
-	{
-		"key":1,
-		"description": "Apple",
-		"amount": 3,
-		"selected": true
-
-	}
-	], action)  {
+export default function counterMessagesReducer (ingredientInventory = [], action)  {
 	if (action.type === 'ADD_INGREDIENT') {
-		console.log(ingredientInventory.type);
-        let entry = action.addingIngredient;                    // Rick Edited to add selected property
-        entry["selected"] = false;
-		return [...ingredientInventory, entry];
+		axios({url:'/',method:'POST',data:action.addingIngredient}).then(res => console.log(res)).catch(err => console.log(err))
+
+		return [...ingredientInventory, action.addingIngredient];
 
 	}
 
 	if (action.type === 'CLEAR_INGREDIENT') {
+		axios({url:'/',method:'DELETE',data:[]}).then(res => console.log(res)).catch(err => console.log(err))
 
 		return [];
 
@@ -54,6 +41,15 @@ export default function counterMessagesReducer (ingredientInventory = [
 	if (action.type === 'SELECT_INGREDIENT'){         // Rick Edited to add selected property
 	   ingredientInventory.forEach(item => {if (item.key === action.payload) {item.selected = !item.selected}});
        return [...ingredientInventory];
+	}
+
+
+	if (action.type === 'INITIALIZE_MESSAGES') {
+		console.log(33333333333333)
+		console.log(action.payload)
+
+		return action.payload;
+
 	}
 
 	console.log(ingredientInventory);
