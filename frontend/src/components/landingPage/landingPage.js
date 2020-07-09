@@ -31,85 +31,90 @@ const gridCardContent = [
     heading: "Track",
     title: "Ingredient Inventory",
     description:
-        "Track all available ingredients in your pantry and fridge with ease",
+      "Track all available ingredients in your pantry and fridge with ease",
   },
   {
     heading: "Recommend",
     title: "Recipes",
     description:
-        "Recommends different recipes based on your preference and ingredients available on hand",
+      "Recommends different recipes based on your preference and ingredients available on hand",
   },
   {
     heading: "Create",
     title: "Recipe Journal",
     description:
-        "Create and customize your favourite recipes into personal recipe journal",
+      "Create and customize your favourite recipes into personal recipe journal",
   },
   {
     heading: "Share",
     title: "Food Pictures",
     description:
-        "Share the joy and vote for food pictures among friends and family members",
+      "Share the joy and vote for food pictures among friends and family members",
   },
 ];
 
-
-
 class LandingPage extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
-      name: '',
+      name: "",
       isAuthenticated: true,
     };
   }
 
-  componentDidMount () {
-    fetch('http://localhost:9000/auth/user')
-        .then(res => res.text())
-        .then(res => {
-          const user = JSON.parse(res);
-          console.log(user);
-          if (user) {
-            this.setState({isAuthenticated: user.isLoggedIn});
-            this.setState({name: user.firstName});
-          }
-        })
-        .catch(err => err);
+  componentDidMount() {
+    fetch("http://localhost:9000/auth/user")
+      .then((res) => res.text())
+      .then((res) => {
+        const user = JSON.parse(res);
+        console.log(user);
+        if (user) {
+          this.setState({ isAuthenticated: user.isLoggedIn });
+          this.setState({ name: user.firstName });
+        }
+      })
+      .catch((err) => err);
   }
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
 
     let mainCardContent = {
       title: "Simple and fun way to start your cooking journey",
       title_isAuthenticated: "Welcome back " + this.state.name,
       description:
-          "Love to cook but always struggle to come up with ideas?  SmartCook is a web app designed for all food lovers who enjoy cooking,exploring new recipes, creating recipe journals, and socializing about food/cooking",
+        "Love to cook but always struggle to come up with ideas?  SmartCook is a web app designed for all food lovers who enjoy cooking,exploring new recipes, creating recipe journals, and socializing about food/cooking",
       description2:
-          "SmartCook is a web app designed for all food lovers who enjoy cooking,exploring new recipes, creating recipe journals, and socializing about food/cooking",
-      description_isAuthenticated: "Enjoy your cooking experience with SmartCook",
+        "SmartCook is a web app designed for all food lovers who enjoy cooking,exploring new recipes, creating recipe journals, and socializing about food/cooking",
+      description_isAuthenticated:
+        "Enjoy your cooking experience with SmartCook",
       image: "./gallery/landingPage.jpg",
     };
 
     return (
-        <div>
-          <Header/>
-          <img style={{ display: "none" }} src="./frontend/gallery/homePage.png" />
-          <MainCard card={mainCardContent} isAuthenticated={this.state.isAuthenticated}/>
-          <div className={classes.gridListHeader}>
-            <Typography variant="h4" component="h2">
-              Main Features
-            </Typography>
-          </div>
-          <div className={classes.gridList}>
-            <GridList cols={4} justify="center">
-              {gridCardContent.map((item) => {
-                return <GridPost key={item.heading} content={item}></GridPost>;
-              })}
-            </GridList>
-          </div>
+      <div>
+        <Header />
+        <img
+          style={{ display: "none" }}
+          src="./frontend/gallery/homePage.png"
+        />
+        <MainCard
+          card={mainCardContent}
+          isAuthenticated={this.state.isAuthenticated}
+        />
+        <div className={classes.gridListHeader}>
+          <Typography variant="h4" component="h2">
+            Main Features
+          </Typography>
         </div>
+        <div className={classes.gridList}>
+          <GridList cols={4} justify="center">
+            {gridCardContent.map((item) => {
+              return <GridPost key={item.heading} content={item}></GridPost>;
+            })}
+          </GridList>
+        </div>
+      </div>
     );
   }
 }
