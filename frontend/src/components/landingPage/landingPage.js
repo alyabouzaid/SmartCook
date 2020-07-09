@@ -10,6 +10,9 @@ import Typography from "@material-ui/core/Typography";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Header from "../login/Header";
 import pic from "../login/landingPage.jpg";
+import compose from "recompose/compose";
+import { connect } from "react-redux";
+import { loadUserData } from "../../actions/userActions";
 
 const useStyles = (theme) => ({
   gridList: {
@@ -54,26 +57,8 @@ const gridCardContent = [
 ];
 
 class LandingPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: "",
-      isAuthenticated: true,
-    };
-  }
-
   componentDidMount() {
-    fetch("http://localhost:9000/auth/user")
-      .then((res) => res.text())
-      .then((res) => {
-        const user = JSON.parse(res);
-        console.log(user);
-        if (user) {
-          this.setState({ isAuthenticated: user.isLoggedIn });
-          this.setState({ name: user.firstName });
-        }
-      })
-      .catch((err) => err);
+    this.props.loadUserData();
   }
 
   render() {
@@ -81,7 +66,7 @@ class LandingPage extends React.Component {
 
     let mainCardContent = {
       title: "Simple and fun way to start your cooking journey",
-      title_isAuthenticated: "Welcome back " + this.state.name,
+      title_isAuthenticated: "Welcome back " + this.props.userInfo.firstName,
       description:
         "Love to cook but always struggle to come up with ideas?  SmartCook is a web app designed for all food lovers who enjoy cooking,exploring new recipes, creating recipe journals, and socializing about food/cooking",
       description2:
@@ -100,7 +85,7 @@ class LandingPage extends React.Component {
         />
         <MainCard
           card={mainCardContent}
-          isAuthenticated={this.state.isAuthenticated}
+          isAuthenticated={this.props.userInfo.isLoggedIn}
         />
         <div className={classes.gridListHeader}>
           <Typography variant="h4" component="h2">
@@ -119,7 +104,16 @@ class LandingPage extends React.Component {
   }
 }
 
-export default withStyles(useStyles)(LandingPage);
+// export default withStyles(useStyles)(LandingPage);
+const mapStateToProps = (state) => {
+  //name is by convention
+  return { userInfo: state.userStore }; //now it will appear as props
+};
+
+export default compose(
+  withStyles(useStyles),
+  connect(mapStateToProps, { loadUserData })
+)(LandingPage);
 
 //
 // const useStyles = makeStyles((theme) => ({

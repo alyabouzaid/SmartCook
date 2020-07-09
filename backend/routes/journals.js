@@ -19,38 +19,35 @@ const journals = require("../models/journals.model");
 // });
 
 router.get("/", (req, res) => {
-  journals
-    .find()
-    .then((messages) => res.send(messages))
-    .catch((err) => res.status(400).json("Error: " + err));
+  journals.find()
+      .then((journals) => res.send(journals))
+      .catch((err) => res.status(400).json("Error: " + err));
 });
 
 router.post("/add", (req, res) => {
-  let date = new Date();
-  const _id = uuidv4();
-  const name = req.body.name;
-  const message = req.body.message;
-  const time = date.getTime();
+  const author = req.body.author;
+  const title = req.body.title;
+  const body = req.body.body;
+  const images = req.body.images;
 
-  const newMessage = new journals({
-    _id,
-    name,
-    message,
-    time,
+  const newJournal = new journals({
+    author,
+    title,
+    body,
+    images,
   });
 
-  newMessage
-    .save()
-    .then((message) => res.send(message))
-    .catch((err) => res.status(400).json("Error: " + err));
+  newJournal
+      .save()
+      .then((journal) => res.send(journal))
+      .catch((err) => res.status(400).json("Error: " + err));
 });
 
 router.get("/search/:id", (req, res) => {
   console.log(req.params.id);
-  journals
-    .findById(req.params.id)
-    .then((message) => res.json(message))
-    .catch((err) => res.status(400).json("Error: " + err));
+  journals.findById(req.params.id)
+      .then((journal) => res.json(journal))
+      .catch((err) => res.status(400).json("Error: " + err));
 });
 
 router.delete("/delete/:id", (req, res) => {
@@ -68,17 +65,18 @@ router.delete("/deleteall", (req, res) => {
 });
 
 router.post("/update/:id", (req, res) => {
-  journals
-    .findById(req.params.id)
-    .then((message) => {
-      message.name = req.body.name;
-      message.message = req.body.message;
-      message
-        .save()
-        .then((message) => res.send(message))
-        .catch((err) => res.status(400).json("Error: " + err));
-    })
-    .catch((err) => res.status(400).json("Error: " + err));
+  journals.findById(req.params.id)
+      .then((journal) => {
+        journal.author = req.body.author;
+        journal.title = req.body.title;
+        journal.body = req.body.body;
+        journal.images = req.body.images;
+        journal
+            .save()
+            .then((journal) => res.send(journal))
+            .catch((err) => res.status(400).json("Error: " + err));
+      })
+      .catch((err) => res.status(400).json("Error: " + err));
 });
 
 module.exports = router;

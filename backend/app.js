@@ -1,28 +1,29 @@
-const createError = require("http-errors");
-const express = require("express");
-const path = require("path");
-const cookieParser = require("cookie-parser");
-const logger = require("morgan");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const formData = require("express-form-data");
-const mongoose = require("mongoose");
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 require("dotenv").config();
 
-const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
-const journalsRouter = require("./routes/journals");
-const imagesRouter = require("./routes/images");
-const serverRouter = require("./routes/server");
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const formData = require('express-form-data');
+
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const journalsRouter = require('./routes/journals');
+const imagesRouter = require('./routes/images');
 const foodPicturesRouter = require("./routes/foodPictures");
+const  recipesRouter = require('./routes/recipes');
+const serverRouter = require('./routes/server');
+
+// mongoose
+const mongoose= require('mongoose');
 
 const app = express();
 // TODO: dotenv not working
 
 // mongoose connection
-// const uri =
-//   "mongodb+srv://smartcook_436:SCook-436@smartcook436.sln0r.mongodb.net/dev?retryWrites=true&w=majority";
-
 const uri = process.env.ATLAS_URL;
 mongoose.connect(uri, {
   useUnifiedTopology: true,
@@ -61,6 +62,7 @@ app.use("/journals", journalsRouter);
 app.use("/images", imagesRouter);
 // food pictures feature routes
 app.use("/foodPictures", foodPicturesRouter);
+app.use('/recipes', recipesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

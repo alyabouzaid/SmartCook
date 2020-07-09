@@ -22,7 +22,8 @@
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
     "uuid": "latest",
-    "uuidv4": "^6.1.1"
+    "uuidv4": "^6.1.1",
+    "node-fetch": "latest"
   },
   "devDependencies": {
     "cloudinary": "^1.22.0",

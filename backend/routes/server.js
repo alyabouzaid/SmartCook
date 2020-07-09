@@ -1,4 +1,3 @@
-const createError = require("http-errors");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const passport = require("passport");
@@ -21,7 +20,13 @@ const callbackPath = "/auth/google/callback";
 const callbackURL = `${url}${callbackPath}`;
 
 let isAuthenticated = false;
-let name = "";
+let name = '';
+let email = '';
+
+let app = express.Router();
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 // To use cookie session
 app.use(
@@ -38,15 +43,16 @@ passport.use(
   new GoogleStrategy(
     { clientID, clientSecret, callbackURL },
     (accessToken, refreshToken, profile, done) => {
-      // console.log(accessToken);
-      // console.log(profile);
+        // console.log(accessToken);
+        console.log(profile);
 
-      // Where you verify user on your application
-      // Find or Create a user in your DB and pass it.
-      // If you are not using googleapis, you don't need to keep access token anymore.
-      // access token is already used to fetch profile info.
-      name = profile.name.givenName;
-      done(null, { accessToken, refreshToken, profile });
+        // Where you verify user on your application
+        // Find or Create a user in your DB and pass it.
+        // If you are not using googleapis, you don't need to keep access token anymore.
+        // access token is already used to fetch profile info.
+        name = profile.name.givenName;
+        email = profile.emails[0].value;
+        done(null, { accessToken, refreshToken, profile });
     }
   )
 );
@@ -79,63 +85,56 @@ app.get(
 );
 
 // Middleware to check if the user is authenticated
-function isUserAuthenticated(req, res, next) {
-  // NOTE: if using jwt, you'd verify the token here.
+// function isUserAuthenticated(req, res, next) {
+//     // NOTE: if using jwt, you'd verify the token here.
+//
+//     if (req.user) {
+//         isAuthenticated = true;
+//         // console.log(`authenticated ${req.user.profile.id}`);
+//         console.log('user authenticated');
+//         next();
+//     } else {
+//         console.log('user not authenticated');
+//         isAuthenticated = false;
+//         name = '';
+//         email = '';
+//         // Path to start auth flow
+//         res.redirect(oauthPath);
+//     }
+// }
 
-  if (req.user) {
-    isAuthenticated = true;
-    // console.log(`authenticated ${req.user.profile.id}`);
-    console.log("user authenticated");
-    next();
-  } else {
-    console.log("user not authenticated");
+app.get('/auth/user', (req, res) => {
+    let json =
+        {
+            isLoggedIn: isAuthenticated,
+            firstName: name,
+            email: email,
+        }
+    ;
+    console.log(json);
+    res.send(json);
+});
+
+app.get('/auth/logout', (req, res) => {
+    req.logout();
+    req.session = null;
     isAuthenticated = false;
-    name = "";
-    // Path to start auth flow
-    res.redirect(oauthPath);
-  }
-}
-
-app.get("/auth/ingredientInventory", isUserAuthenticated, (req, res) => {
-  res.redirect("http://localhost:3000/ingredientInventory");
+    name = '';
+    email = '';
+    if (req.user) {
+        console.log('user still authenticated');
+    } else {
+        console.log('user not authenticated');
+    }
+    res.redirect("http://localhost:3000/");
 });
-
-app.get("/auth/recommendation", isUserAuthenticated, (req, res) => {
-  res.redirect("http://localhost:3000/recommendation");
-});
-
-app.get("/auth/user", (req, res) => {
-  let json = {
-    isLoggedIn: isAuthenticated,
-    firstName: name,
-  };
-  console.log(json);
-  res.send(json);
-});
-
-app.get("/auth/logout", (req, res) => {
-  req.logout();
-  req.session = null;
-  isAuthenticated = false;
-  name = "";
-  if (req.user) {
-    console.log("user still authenticated");
-  } else {
-    console.log("user not authenticated");
-  }
-  res.redirect("http://localhost:3000/");
-});
-
-// app.use(function (req, res, next) {
-//   next(createError(404));
-// });
 
 // error handler
-app.use(function (err, req, res, next) {
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
-  res.status(err.status || 500);
-  res.render("error");
-});
+// app.use(function(err, req, res, next) {
+//     res.locals.message = err.message;
+//     res.locals.error = req.app.get("env") === "development" ? err : {};
+//     res.status(err.status || 500);
+//     res.render("error");
+// });
 
 module.exports = app;
