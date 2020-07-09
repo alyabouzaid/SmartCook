@@ -17,29 +17,14 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Header from "../login/Header";
 import pic from "../login/landingPage.jpg";
-
+import {loadUserData} from "../../actions/userActions";
 
 
 
 class IngredientInventory extends React.Component {
-    constructor (props) {
-        super(props);
-        this.state = {
-            isAuthenticated: true,
-        };
-    }
 
-    componentDidMount () {
-        fetch('http://localhost:9000/auth/user')
-            .then(res => res.text())
-            .then(res => {
-                const user = JSON.parse(res);
-                console.log(user);
-                if (user) {
-                    this.setState({isAuthenticated: user.isLoggedIn});
-                }
-            })
-            .catch(err => err);
+    componentDidMount() {
+        this.props.loadUserData();
     }
 
     addItem() {
@@ -66,7 +51,9 @@ class IngredientInventory extends React.Component {
         </div>);
     }
 
-    createPage() {
+    render() {
+
+
         const useStyles = makeStyles((theme) => ({
             root: {
                 backgroundColor: "#FF0000",
@@ -76,65 +63,70 @@ class IngredientInventory extends React.Component {
 
             },
         }));
-        return (<div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
-            <Header/>
-            <Container  text-align="center"   >
-                &nbsp;
-                <Typography variant="h4">
-                    Ingredient Inventory
-                </Typography>
-
-                <p>
-                    <TextField label="Ingredient" variant="filled" type="text" id="inventory" name="fname" size="100" />
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <TextField label="Amount" variant="filled" type="text" id="amount" name="fname" size="100" />
-                </p>
 
 
-                <p>
-                    <Button variant="contained" color="secondary" disableElevation onClick={() => { this.addItem()}}>add ingredient</Button>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <Button variant="contained" color="secondary"  onClick={() =>  this.props.clearIngredients([]) }>clear inventory</Button>
-                </p>
+
+        return ( this.props.userInfo.isLoggedIn ?
+
+            (<div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
+                <Header/>
+                <Container  text-align="center"   >
+                    &nbsp;
+                    <Typography variant="h4">
+                        Ingredient Inventory
+                    </Typography>
+
+                    <p>
+                        <TextField label="Ingredient" variant="filled" type="text" id="inventory" name="fname" size="100" />
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <TextField label="Amount" variant="filled" type="text" id="amount" name="fname" size="100" />
+                    </p>
 
 
-                <TableContainer component={Paper}>
-                    <Table className={useStyles.table} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell></TableCell>
-                                <TableCell align="right">Ingredient</TableCell>
-                                <TableCell align="right">Amount&nbsp;(kg/quantity)</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {this.props.ingredientInventory.map((row) => (
-                                <TableRow key={row.name}>
-                                    <TableCell component="th" scope="row">
-                                        <Button variant="contained" color="secondary" onClick={() => this.props.deleteIngredient(row.key)}>Delete</Button>
-                                    </TableCell>
-                                    <TableCell align="right">{row.description}</TableCell>
-                                    <TableCell align="right">{row.amount}</TableCell>
+                    <p>
+                        <Button variant="contained" color="secondary" disableElevation onClick={() => { this.addItem()}}>add ingredient</Button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <Button variant="contained" color="secondary"  onClick={() =>  this.props.clearIngredients([]) }>clear inventory</Button>
+                    </p>
+
+
+                    <TableContainer component={Paper}>
+                        <Table className={useStyles.table} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell align="right">Ingredient</TableCell>
+                                    <TableCell align="right">Amount&nbsp;(kg/quantity)</TableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                &nbsp;
-            </Container>
-        </div>);
-    }
+                            </TableHead>
+                            <TableBody>
+                                {this.props.ingredientInventory.map((row) => (
+                                    <TableRow key={row.name}>
+                                        <TableCell component="th" scope="row">
+                                            <Button variant="contained" color="secondary" onClick={() => this.props.deleteIngredient(row.key)}>Delete</Button>
+                                        </TableCell>
+                                        <TableCell align="right">{row.description}</TableCell>
+                                        <TableCell align="right">{row.amount}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    &nbsp;
+                </Container>
+            </div>)
+                :
+                (this.defaultPage())
 
-    render() {
-        return (this.state.isAuthenticated ? (this.createPage()) : (this.defaultPage())
         );
     }
 }
 
 //state has entire state of app!!
 const mapStateToProps = (state) => { //name is by convention
-    return { ingredientInventory: state.ingredientInventory}; //now it will appear as props
+    return { ingredientInventory: state.ingredientInventory,
+        userInfo: state.userStore}; //now it will appear as props
 }
 
 
-export default connect(mapStateToProps, { addingIngredient,clearIngredients,deleteIngredient })(IngredientInventory);
+export default connect(mapStateToProps, { addingIngredient,clearIngredients,deleteIngredient, loadUserData })(IngredientInventory);

@@ -4,6 +4,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+require("dotenv").config();
+
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const formData = require('express-form-data');
@@ -17,18 +19,23 @@ const  recipesRouter = require('./routes/recipes');
 
 let serverRouter = require('./routes/server');
 
-
-require("dotenv").config();     // TODO: dotenv not working
-
 // mongoose
 const mongoose= require('mongoose');
 
 const app = express();
 
 // mongoose connection
-mongoose.connect('mongodb://localhost/ReactReduxExpressMongo')
-.then(() =>  console.log('connection successful'))
-.catch((err) => console.error(err));
+// mongoose.connect('mongodb://localhost/ReactReduxExpressMongo')
+// .then(() =>  console.log('connection successful'))
+// .catch((err) => console.error(err));
+
+
+const uri = process.env.ATLAS_URL;
+mongoose.connect(uri, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useCreateIndex: true,
+});
 
 
 // view engine setup
