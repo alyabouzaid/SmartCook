@@ -1,0 +1,11 @@
+table, th, td {
+    border: 1px solid black;
+}
+
+.editorData {
+    text-align: left;
+}
+
+.ck-editor__editable {
+    height: 400px;
+}

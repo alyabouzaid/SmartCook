@@ -1,31 +1,39 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var inventoryRouter = require('./routes/inventory');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const formData = require('express-form-data');
+
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const journalsRouter = require('./routes/journals');
+const imagesRouter = require('./routes/images');
+
+const  recipesRouter = require('./routes/recipes');
+
+let serverRouter = require('./routes/server');
+
+
+require("dotenv").config();     // TODO: dotenv not working
 
 // mongoose
 const mongoose= require('mongoose');
 
-
-var cors = require('cors');
-
-var app = express();
+const app = express();
 
 // mongoose connection
 mongoose.connect('mongodb://localhost/ReactReduxExpressMongo')
-.then(() =>  console.log('connection succesful'))
+.then(() =>  console.log('connection successful'))
 .catch((err) => console.error(err));
 
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
 
 app.use(cors());
 app.use(logger('dev'));
@@ -34,9 +42,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/', indexRouter);
-// app.use('/users', usersRouter);
+
 app.use('/', inventoryRouter);
+app.use(cors());
+app.use(formData.parse());
+app.use(bodyParser.json());
+
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/', serverRouter);
+app.use('/journals', journalsRouter);
+app.use('/images', imagesRouter);
+app.use('/recipes', recipesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
