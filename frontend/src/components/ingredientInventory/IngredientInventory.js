@@ -6,6 +6,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import {loadUserData} from "../../actions/userActions";
+
+
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -16,15 +19,17 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Header from "../login/Header";
-import pic from "../login/landingPage.jpg";
-import {loadUserData} from "../../actions/userActions";
+// import pic from "../login/landingPage.jpg";
+import pic from "./image5.jpg";
 
 
 
 class IngredientInventory extends React.Component {
 
     componentDidMount(){
-        this.props.initialData()}
+        this.props.initialData()
+        this.props.loadUserData()
+    }
 
     addItem() {
         let inventory =  document.getElementById("inventory").value
@@ -37,11 +42,13 @@ class IngredientInventory extends React.Component {
         }
 
         this.props.addingIngredient({
+            "email" : this.props.userInfo.email,
+            "inventory":[{
             "key": key,
             "description": inventory,
             "amount": amount,
             "targetAmount": targetAmount,
-            "selected": false
+            "selected": false}]
         })
 
     }
@@ -68,45 +75,45 @@ class IngredientInventory extends React.Component {
                 <Header/>
                 <Container  text-align="center"   >
                     &nbsp;
-                    <Typography variant="h4">
+                    <Typography variant="h4" style={{background: 'rgba(255, 255, 255, 0.6)'}}>
                         Ingredient Inventory
                     </Typography>
 
                     <p>
-                        <TextField label="Ingredient" variant="filled" type="text" id="inventory" name="fname" size="100" />
+                        <TextField style={{background: 'rgba(255, 255, 255, 0.6)'}} label="Ingredient" variant="filled" type="text" id="inventory" name="fname" size="100" />
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <TextField label="Amount" variant="filled" type="text" id="amount" name="fname" size="100" />
+                        <TextField style={{background: 'rgba(255, 255, 255, 0.6)'}} label="Amount" variant="filled" type="text" id="amount" name="fname" size="100" />
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <TextField label="Target Amount" variant="filled" type="text" id="targetAmount" name="fname" size="100" />
+                        <TextField style={{background: 'rgba(255, 255, 255, 0.6)'}} label="Target Amount" variant="filled" type="text" id="targetAmount" name="fname" size="100" />
                     </p>
 
 
                     <p>
-                        <Button variant="contained" color="secondary" disableElevation onClick={() => { this.addItem()}}>add ingredient</Button>
+                        <Button variant="contained" color="primary" disableElevation onClick={() => { this.addItem()}}>add ingredient</Button>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <Button variant="contained" color="secondary"  onClick={() =>  this.props.clearIngredients([]) }>clear inventory</Button>
+                        <Button variant="contained"  color="primary" onClick={() =>  this.props.clearIngredients(this.props.userInfo.email) }>clear inventory</Button>
                     </p>
 
 
-                    <TableContainer component={Paper}>
+                    <TableContainer style={{background: 'rgba(255, 255, 255, 0.6)'}} component={Paper}>
                         <Table className={useStyles.table} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell></TableCell>
                                     <TableCell align="right">Ingredient</TableCell>
                                     <TableCell align="right">Amount&nbsp;(kg/quantity)</TableCell>
                                     <TableCell align="right">Target Amount&nbsp;(kg/quantity)</TableCell>
+                                    <TableCell></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {this.props.ingredientInventory.map((row) => (
                                     <TableRow key={row.name}>
-                                        <TableCell component="th" scope="row">
-                                            <Button variant="contained" color="secondary" onClick={() => this.props.deleteIngredient(row.key)}>Delete</Button>
-                                        </TableCell>
                                         <TableCell align="right">{row.description}</TableCell>
                                         <TableCell align="right">{row.amount}</TableCell>
                                         <TableCell align="right">{row.targetAmount}</TableCell>
+                                        <TableCell component="th" scope="row">
+                                            <Button variant="contained" color="primary"  onClick={() => this.props.deleteIngredient({ "email":this.props.userInfo.email,"key":row.key})}>Delete</Button>
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -123,8 +130,8 @@ class IngredientInventory extends React.Component {
 //state has entire state of app!!
 const mapStateToProps = (state) => { //name is by convention
     return { ingredientInventory: state.ingredientInventory,
-        userInfo: state.userStore}; //now it will appear as props
+            userInfo: state.userStore}; //now it will appear as props
 }
 
 
-export default connect(mapStateToProps, { addingIngredient,clearIngredients,deleteIngredient,initialData })(IngredientInventory);
+export default connect(mapStateToProps, { addingIngredient,clearIngredients,deleteIngredient,initialData,loadUserData })(IngredientInventory);

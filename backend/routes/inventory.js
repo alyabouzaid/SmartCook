@@ -1,9 +1,10 @@
 
 
 var express = require('express');
-// var {uuid} = require('uuidv4')
+
 var router = express.Router();
 
+const fetch = require("node-fetch");
 
 const mongoose= require('mongoose');
 
@@ -19,110 +20,90 @@ mongoose.connect(uri, {
   });
 var Schema = mongoose.Schema;
 var streamSchema = new Schema({
-    key: Number,
+
+    email :String,
+    inventory:[{key: Number,
     description: String,
     amount: Number,
     targetAmount: Number,
-    selected: Boolean
+    selected: Boolean}]
 }, { versionKey: false });
 
 var Streams = mongoose.model('inventories', streamSchema);
 
-// messagessss = [
-// 	{
-// 		"key": 0,
-// 		"description": "Tomato",
-// 		"amount" : 2,
-//         "targetAmount": 3,
-//         "selected": true
-// 	},
-// 	{
-// 		"key":1,
-// 		"description": "Apple",
-// 		"amount": 3,
-//         "targetAmount": 4,
-//         "selected": false
-
-// 	}
-//     ]
-
-// Streams.insertMany(messagessss,function(error, docs) {})
 
 router.get('/', function(req, res, next) {
-  let users = Streams.find({}).then(
-    
-    (data) => {
-    console.log('Data: ',data)
 
-    res.json(data);}
+    fetch("http://localhost:9000/auth/user", {
+      method: 'GET',
+      headers: {'Content-Type': 'application/json'},
+  })  .then((resFetch) => {
+      resFetch.json().then((userInfo) => {
+          Streams.find({ email: userInfo.email }).then(
 
-  ).catch((error) => {console.log('error ', error) })
+          (data) => {
+          
 
-  // /const foundUser = users.find(user => user.key === req.params.userId)
-  // res.setHeader('Content-Type','application/json')
-  // res.send(users);
+          if(data[0] === undefined){
 
+            newUser = [{
+              "email" :userInfo.email,
+              "inventory":[]}]
+            Streams.insertMany(newUser,function(error, docs) {})
+            res.json([])
+          } else{
+
+          res.json(data[0].inventory);
+          }
+        }
+          
+  )}) })  .catch((error) => {console.log('error ', error) })
 });
 
 
-// router.get('/:userId', function(req, res, next) {
-  
-//   let users = Streams.find({}).then(
-    
-//     (data) => {
-//     console.log('Data: ',data)
-//     const foundUser = data.find(user => Number(user.key) === Number(req.params.userId))
-
-//     // console.log(foundUser)
-//     // console.log(req.params.userId)
-//     // console.log(data)
-
-//     res.send(foundUser);}
-
-//   ).catch((error) => {console.log('error ', error) })
-
-//   // const foundUser = users.find(user => user.key === req.params.userId)
-//   // res.setHeader('Content-Type','application/json')
-//   // res.send(foundUser);
-// });
-
 
 router.post('/', function(req,res,next){
-console.log(req.body)
+console.log(req.body.email)
+console.log(req.body.inventory[0])
 
-let stream = new Streams(req.body)
+Streams.update(
+  { email: req.body.email },
+  { $push: { inventory: req.body.inventory[0] } }
+).catch(err => console.log(err))
 
-stream.save()
 res.setHeader('Content-Type','application/json')
-res.send(stream);
+res.send({});
 })
 
 
 
-router.delete('/', function(req,res,next){
+router.delete('/:email', function(req,res,next){
 
+console.log(req.params.email)
 
-  mongoose.connection.collections['inventories'].drop( function(err) {
-    console.log('collection dropped');
-});
-
+    Streams.update(
+      { email: req.params.email },
+      { $set: { inventory: [] } }
+    ).catch(err => console.log(err))
 
   res.setHeader('Content-Type','application/json')
-  res.send(stream);
+  res.send({});
   })
 
 
 
-  router.delete('/:key', function(req,res,next){
+  router.delete('/:email/:key', function(req,res,next){
 
 
-    mongoose.connection.collections['inventories'].drop( function(err) {
-      console.log('collection dropped');
-  });
-        req.params.userId
-  
-    res.setHeader('Content-Type','application/json')
-    res.send(stream);
+    console.log(req.params.email)
+
+    Streams.update(
+      { email: req.params.email },
+      { $pull: { inventory: {key :req.params.key }}} 
+    ).catch(err => console.log(err))
+
+  res.setHeader('Content-Type','application/json')
+  res.send({});
     })
 
 module.exports = router;

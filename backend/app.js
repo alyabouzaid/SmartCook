@@ -14,6 +14,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const journalsRouter = require('./routes/journals');
 const imagesRouter = require('./routes/images');
+const inventoryRouter = require('./routes/inventory');
 
 const  recipesRouter = require('./routes/recipes');
 
@@ -50,10 +51,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/', inventoryRouter);
 app.use(cors());
 app.use(formData.parse());
 app.use(bodyParser.json());
+
+app.use('/inventories', inventoryRouter);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
