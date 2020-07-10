@@ -7,9 +7,10 @@ const foodPicPostSchema = new Schema(
   {
     _id: { type: String },
     description: { type: String },
-    photo: {
-      type: String,
-      default: "no photo",
+    image: {
+      type: Array,
+      default: [],
+      // default: "no photo",
     },
     likes: [{ type: String }],
     comments: [

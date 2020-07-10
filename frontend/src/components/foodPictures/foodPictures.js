@@ -18,8 +18,27 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Header from "../login/Header";
 import pic from "../landingPage/landingPage.jpg";
 import { connect } from "react-redux";
+import { withStyles } from "@material-ui/core/styles";
+import { loadUserData } from "../../actions/userActions";
+import {
+  getAllFoodPicPost,
+  deleteOneFoodPicPost,
+  updateLike,
+  updateComment,
+  // deleteAllFoodPicPosts,
+} from "../../actions/foodPicturesActions";
+import DeleteIcon from "@material-ui/icons/Delete";
+import TextField from "@material-ui/core/TextField";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import FolderIcon from "@material-ui/icons/Folder";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import { deepPurple } from "@material-ui/core/colors";
 
-const useStyles = makeStyles((theme) => ({
+import compose from "recompose/compose";
+
+const useStyles = (theme) => ({
   rootContainer: {
     display: "flex",
     justifyContent: "center",
@@ -60,123 +79,272 @@ const useStyles = makeStyles((theme) => ({
   commentInput: {
     justifyContent: "left",
   },
-}));
+  commentAvatar: {
+    color: theme.palette.getContrastText(deepPurple[500]),
+    backgroundColor: deepPurple[500],
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+  },
+  content: {
+    marginTop: 0,
+  },
+});
 
-export default function FoodPictures(props) {
-  const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+class FoodPictures extends React.Component {
+  constructor(props) {
+    super(props);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+    this.state = {
+      likeIconBgColor: "default",
+      expanded: false,
+      // dense: false,
+    };
+
+    this.handleClickLike = this.handleClickLike.bind(this);
+    this.generate = this.generate.bind(this);
+    this.handleExpandClick = this.handleExpandClick.bind(this);
+  }
+
+  // const [expanded, setExpanded] = React.useState(false);
+
+  handleExpandClick = () => {
+    this.setState({
+      expanded: !this.state.expanded,
+    });
   };
 
-  return (
-    <div>
-      <Header />
-      <div className={classes.rootContainer}>
-        <Card className={classes.root}>
-          <CardHeader
-            className={classes.header}
-            avatar={
-              <Avatar aria-label="recipe" className={classes.avatar}>
-                R
-              </Avatar>
-            }
-            action={
-              <IconButton aria-label="settings">
-                <MoreVertIcon />
-              </IconButton>
-            }
-            title="Sheena" //user
-            subheader="July 08, 2020" //posted dateTime
-          />
-          <CardMedia
-            className={classes.media}
-            image={pic}
-            title="Paella dish"
-          />
-          <CardActions disableSpacing className={classes.actions}>
-            <IconButton aria-label="add to favorites">
-              <FavoriteIcon />
-            </IconButton>
-            {/* <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton> */}
-            <Typography>0 likes</Typography>
-            {/* <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton> */}
-          </CardActions>
+  handleClickLike() {
+    this.setState({
+      likeIconBgColor: "red",
+    });
+  }
 
-          <CardContent className={classes.content}>
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              component="p"
-              align="left"
-            >
-              This impressive paella is a perfect party dish and a fun meal to
-              cook together with your guests. Add 1 cup of frozen peas along
-              with the mussels, if you like.
-            </Typography>
-          </CardContent>
-          <form
-            className={classes.comment}
-            // onSubmit={(e) => {
-            //   e.preventDefault();
-            //   makeComment(e.target[0].value, item._id);
-            // }}
-          >
-            <input
-              className={classes.commentInput}
-              type="text"
-              placeholder="Add a comment"
+  generate(element) {
+    return [0].map((value) =>
+      React.cloneElement(element, {
+        key: value,
+      })
+    );
+  }
+
+  componentDidMount() {
+    this.props.loadUserData();
+    this.props.getAllFoodPicPost();
+  }
+
+  render() {
+    const { classes } = this.props;
+
+    // return (
+    //   <div>
+    //     <Header />
+    //     {this.props.foodPicPost &&
+    //       this.props.foodPicPost.foodPicPosts &&
+    //       this.props.foodPicPost.foodPicPosts.map((item) => (
+    //         <div>{item.description}</div>
+    //       ))}
+    //   </div>
+    // );
+
+    return (
+      <div>
+        <Header />
+
+        {/* <GridList padding={30} className={classes.gridList}> */}
+        {this.props.foodPicPost &&
+          this.props.foodPicPost.foodPicPosts &&
+          this.props.foodPicPost.foodPicPosts.map((item) => (
+            <Card
+              className={classes.root}
               style={{
-                border: "none",
-                fontSize: 15,
-                // display: "block",
-                marginLeft: 12,
-                float: "left",
+                marginTop: 30,
+                marginBottom: 30,
+                marginLeft: 370,
               }}
-            />
-          </form>
+            >
+              <CardHeader
+                className={classes.header}
+                avatar={
+                  <Avatar aria-label="recipe" className={classes.avatar}>
+                    {item.postedBy.substring(0, 1)}
+                  </Avatar>
+                }
+                action={
+                  <IconButton aria-label="settings">
+                    {/* <MoreVertIcon /> */}
+                    <DeleteIcon
+                      onClick={() => this.props.deleteOneFoodPicPost(item._id)}
+                    />
+                  </IconButton>
+                }
+                title={
+                  <Typography align="left" variant="h6" component="h2">
+                    {item.postedBy}
+                  </Typography>
+                }
+                subheader={
+                  <Typography align="left" variant="subtitle2" component="h2">
+                    {item.dateTime}
+                  </Typography>
+                }
+              />
+              {item.image.map((image) => (
+                <CardMedia
+                  className={classes.media}
+                  image={image.secure_url}
+                  title="food image"
+                />
+              ))}
+              <CardActions disableSpacing className={classes.actions}>
+                <IconButton aria-label="add to favorites">
+                  <FavoriteIcon
+                    onClick={() => {
+                      this.handleClickLike();
+                      this.props.updateLike(
+                        item._id,
+                        this.props.userInfo.firstName
+                      );
+                    }}
+                    style={{ color: this.state.likeIconBgColor }}
+                  />
+                </IconButton>
+                {/* <IconButton aria-label="share">
+            <ShareIcon />
+          </IconButton> */}
+                <Typography>{item.likes.length} likes</Typography>
+              </CardActions>
 
-          {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-            minutes.
-          </Typography>
-          <Typography paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-            heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-            browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving chicken
-            and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion, salt and
-            pepper, and cook, stirring often until thickened and fragrant, about 10 minutes. Add
-            saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-          </Typography>
-          <Typography paragraph>
-            Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-            without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat to
-            medium-low, add reserved shrimp and mussels, tucking them down into the rice, and cook
-            again without stirring, until mussels have opened and rice is just tender, 5 to 7
-            minutes more. (Discard any mussels that don’t open.)
-          </Typography>
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then serve.
-          </Typography>
-        </CardContent>
-      </Collapse> */}
-        </Card>
+              <CardContent className={classes.content}>
+                <Typography
+                  variant="h6"
+                  color="textSecondary"
+                  component="p"
+                  align="left"
+                >
+                  {item.description}
+                </Typography>
+              </CardContent>
+
+              <IconButton
+                className={clsx(classes.expand, {
+                  [classes.expandOpen]: this.state.expanded,
+                })}
+                onClick={this.handleExpandClick}
+                aria-expanded={this.state.expanded}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </IconButton>
+              <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+                {/* <div className={classes.commentList}> */}
+                {item.comments.map((comment) => (
+                  <List>
+                    {this.generate(
+                      <ListItem>
+                        <ListItemAvatar>
+                          <Avatar
+                            className={classes.commentAvatar}
+                            style={{
+                              marginRight: 0,
+                            }}
+                          >
+                            {comment.postedBy.substring(0, 1)}
+                          </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText
+                          // primary="Single-line item"
+                          // // secondary={secondary ? 'Secondary text' : null}
+                          primary={
+                            <Typography
+                              align="left"
+                              variant="subtitle1"
+                              component="h2"
+                            >
+                              {comment.postedBy + ": " + " " + comment.text}
+                            </Typography>
+                          }
+                        />
+                      </ListItem>
+                    )}
+                  </List>
+                ))}
+
+                {/* <div>
+                {item.comments.map(
+                  (comment) => comment.postedBy + ": " + comment.text
+                )}
+              </div> */}
+                <form
+                  className={classes.comment}
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    // this.setState({ dense: e.target.checked });
+                    this.props.updateComment(
+                      item._id,
+                      e.target[0].value,
+                      this.props.userInfo.firstName
+                    );
+                  }}
+                >
+                  {/* <input
+                  className={classes.commentInput}
+                  type="text"
+                  placeholder="Add a comment"
+                  value={item.comment}
+                  style={{
+                    border: "none",
+                    fontSize: 15,
+                    // display: "block",
+                    marginLeft: 12,
+                    float: "left",
+                  }}
+                /> */}
+                  <TextField
+                    id="standard-basic"
+                    label="Add a comment"
+                    style={{
+                      border: "none",
+                      width: 500,
+                      fontSize: 15,
+                      // display: "block",
+                      marginLeft: 12,
+                      marginBottom: 15,
+                      float: "left",
+                    }}
+                  />
+                </form>
+              </Collapse>
+            </Card>
+          ))}
+        {/* </GridList> */}
       </div>
-    </div>
-  );
+    );
+  }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadUserData: () => dispatch(loadUserData()),
+    getAllFoodPicPost: () => dispatch(getAllFoodPicPost()),
+    deleteOneFoodPicPost: (idPayload) =>
+      dispatch(deleteOneFoodPicPost(idPayload)),
+    updateLike: (idPayload, username) =>
+      dispatch(updateLike(idPayload, username)),
+    updateComment: (idPayload, comment, username) =>
+      dispatch(updateComment(idPayload, comment, username)),
+    // deleteAllFoodPicPosts: (idPayload) =>
+    //   dispatch(deleteAllFoodPicPosts(idPayload)),
+  };
+};
+
+const mapStateToProps = (state) => {
+  return {
+    userInfo: state.userStore,
+    foodPicPost: state.foodPicturesStore,
+  };
+};
+
+export default compose(
+  withStyles(useStyles),
+  connect(mapStateToProps, mapDispatchToProps)
+)(FoodPictures);

@@ -20,10 +20,9 @@ const callbackPath = "/auth/google/callback";
 const callbackURL = `${url}${callbackPath}`;
 
 let isAuthenticated = false;
-let name = '';
-let email = '';
+let name = "";
+let email = "";
 
-let app = express.Router();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -43,16 +42,16 @@ passport.use(
   new GoogleStrategy(
     { clientID, clientSecret, callbackURL },
     (accessToken, refreshToken, profile, done) => {
-        // console.log(accessToken);
-        console.log(profile);
+      // console.log(accessToken);
+      console.log(profile);
 
-        // Where you verify user on your application
-        // Find or Create a user in your DB and pass it.
-        // If you are not using googleapis, you don't need to keep access token anymore.
-        // access token is already used to fetch profile info.
-        name = profile.name.givenName;
-        email = profile.emails[0].value;
-        done(null, { accessToken, refreshToken, profile });
+      // Where you verify user on your application
+      // Find or Create a user in your DB and pass it.
+      // If you are not using googleapis, you don't need to keep access token anymore.
+      // access token is already used to fetch profile info.
+      name = profile.name.givenName;
+      email = profile.emails[0].value;
+      done(null, { accessToken, refreshToken, profile });
     }
   )
 );
@@ -103,30 +102,28 @@ app.get(
 //     }
 // }
 
-app.get('/auth/user', (req, res) => {
-    let json =
-        {
-            isLoggedIn: isAuthenticated,
-            firstName: name,
-            email: email,
-        }
-    ;
-    console.log(json);
-    res.send(json);
+app.get("/auth/user", (req, res) => {
+  let json = {
+    isLoggedIn: isAuthenticated,
+    firstName: name,
+    email: email,
+  };
+  console.log(json);
+  res.send(json);
 });
 
-app.get('/auth/logout', (req, res) => {
-    req.logout();
-    req.session = null;
-    isAuthenticated = false;
-    name = '';
-    email = '';
-    if (req.user) {
-        console.log('user still authenticated');
-    } else {
-        console.log('user not authenticated');
-    }
-    res.redirect("http://localhost:3000/");
+app.get("/auth/logout", (req, res) => {
+  req.logout();
+  req.session = null;
+  isAuthenticated = false;
+  name = "";
+  email = "";
+  if (req.user) {
+    console.log("user still authenticated");
+  } else {
+    console.log("user not authenticated");
+  }
+  res.redirect("http://localhost:3000/");
 });
 
 // error handler

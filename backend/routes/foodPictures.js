@@ -18,7 +18,7 @@ router.get("/allpost", (req, res) => {
 router.post("/add", (req, res) => {
   const _id = uuid();
   const description = req.body.description;
-  const photo = req.body.photo;
+  const image = req.body.image;
   // const likes = req.body.likes;
   // const comments = req.body.comments;
   const postedBy = req.body.user;
@@ -31,7 +31,7 @@ router.post("/add", (req, res) => {
   const post = new foodPicturePost({
     _id,
     description,
-    photo,
+    image,
     // likes,
     // comments,
     postedBy,
@@ -40,6 +40,7 @@ router.post("/add", (req, res) => {
   post
     .save()
     .then(() => res.status(200).json(post))
+    // .then(() => res.json("Hii"))
     .catch((err) => res.status(400).json("Error: ", err));
 });
 

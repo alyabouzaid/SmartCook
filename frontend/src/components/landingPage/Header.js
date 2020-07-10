@@ -5,11 +5,11 @@ import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Typography from "@material-ui/core/Typography";
-import { withStyles} from "@material-ui/core/styles";
-import {Link} from "react-router-dom";
+import { withStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 import compose from "recompose/compose";
-import {connect} from "react-redux";
-import {loadUserData} from "../../actions/userActions";
+import { connect } from "react-redux";
+import { loadUserData } from "../../actions/userActions";
 
 const useStyles = (theme) => ({
   appbar: {
@@ -28,123 +28,126 @@ const useStyles = (theme) => ({
 });
 
 class Header extends React.Component {
-
   componentDidMount() {
     this.props.loadUserData();
   }
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
     return (
-        <AppBar className={classes.appbar}>
-          <Toolbar className={classes.toolbar}>
-            <Typography style={{textAlign: "left"}} variant="h5" className={classes.websiteTitle}>
-              <Link to={"/"}
-                    style={{ textDecoration: 'none', color:"inherit" }}>
-                SmartCook
-              </Link>
-            </Typography>
-            <List className="menu-list">
-              {this.props.userInfo.isLoggedIn ? (
-                  <ListItem className="menu-item">
+      <AppBar className={classes.appbar}>
+        <Toolbar className={classes.toolbar}>
+          <Typography
+            style={{ textAlign: "left" }}
+            variant="h5"
+            className={classes.websiteTitle}
+          >
+            <Link to={"/"} style={{ textDecoration: "none", color: "inherit" }}>
+              SmartCook
+            </Link>
+          </Typography>
+          <List className="menu-list">
+            {this.props.userInfo.isLoggedIn ? (
+              <ListItem className="menu-item">
+                <Link
+                  to={"/ingredientInventory"}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <Button href="" color="inherit" target="_blank" size="small">
+                    Inventory
+                  </Button>
+                </Link>
 
-                    <Link to={"/ingredientInventory"}
-                          style={{ textDecoration: 'none', color:"inherit" }}>
-                      <Button
-                          href=""
-                          color="inherit"
-                          target="_blank"
-                          size="small"
-                      >
-                        Inventory
-                      </Button>
-                    </Link>
+                <Link
+                  to={"/recommendation"}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <Button
+                    href=""
+                    color="inherit"
+                    target="_blank"
+                    size="small"
+                    onClick=""
+                  >
+                    Recommender
+                  </Button>
+                </Link>
 
-                    <Link to={"/recommendation"}
-                          style={{ textDecoration: 'none', color:"inherit" }}>
-                      <Button
-                          href=""
-                          color="inherit"
-                          target="_blank"
-                          size="small"
-                          onClick=""
-                      >
-                        Recommender
-                      </Button>
-                    </Link>
+                <Link
+                  to={"/journal"}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <Button
+                    href=""
+                    color="inherit"
+                    target="_blank"
+                    size="small"
+                    onClick=""
+                  >
+                    Journal
+                  </Button>
+                </Link>
 
-                    <Link to={"/journal"}
-                          style={{ textDecoration: 'none', color:"inherit" }}>
-                      <Button
-                          href=""
-                          color="inherit"
-                          target="_blank"
-                          size="small"
-                          onClick=""
-                      >
-                        Journal
-                      </Button>
-                    </Link>
-
-                    <Button
-                        href=""
-                        color="inherit"
-                        target="_blank"
-                        size="small"
-                        onClick=""
-                    >
-                      Food Pictures
-                    </Button>
-                    <Button
-                        href="http://localhost:9000/auth/logout"
-                        color="inherit"
-                        target="_self"
-                        size="small"
-                        onClick=""
-                    >
-                      Logout
-                    </Button>
-                  </ListItem>
-              ) : (
-                  <ListItem>
-                    <Link to={"/"}
-                          style={{ textDecoration: 'none', color:"inherit" }}>
-                      <Button
-                          href=""
-                          color="inherit"
-                          target="_self"
-                          size="small"
-                      >
-                        Home
-                      </Button>
-                    </Link>
-                    <Button href="" color="inherit" target="_blank" size="small">
-                      About
-                    </Button>
-                    <Button
-                        href="http://localhost:9000/auth/google"
-                        color="inherit"
-                        target="_self"
-                        size="small"
-                        style={{
-                          color: "#00bfa5",
-                          fontWeight: "bold",
-                        }}
-                        onClick=""
-                    >
-                      Log In | Register
-                    </Button>
-                  </ListItem>
-              )}
-            </List>
-          </Toolbar>
-        </AppBar>
+                <Button
+                  href=""
+                  color="inherit"
+                  target="_blank"
+                  size="small"
+                  onClick=""
+                >
+                  Food Pictures
+                </Button>
+                <Button
+                  href="http://localhost:9000/auth/logout"
+                  color="inherit"
+                  target="_self"
+                  size="small"
+                  onClick=""
+                >
+                  Logout
+                </Button>
+              </ListItem>
+            ) : (
+              <ListItem>
+                <Link
+                  to={"/"}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <Button href="" color="inherit" target="_self" size="small">
+                    Home
+                  </Button>
+                </Link>
+                <Button href="" color="inherit" target="_blank" size="small">
+                  About
+                </Button>
+                <Button
+                  href="http://localhost:9000/auth/google"
+                  color="inherit"
+                  target="_self"
+                  size="small"
+                  style={{
+                    color: "#00bfa5",
+                    fontWeight: "bold",
+                  }}
+                  onClick=""
+                >
+                  Log In | Register
+                </Button>
+              </ListItem>
+            )}
+          </List>
+        </Toolbar>
+      </AppBar>
     );
   }
 }
 
-const mapStateToProps = (state) => { //name is by convention
-  return {userInfo: state.userStore}; //now it will appear as props
+const mapStateToProps = (state) => {
+  //name is by convention
+  return { userInfo: state.userStore }; //now it will appear as props
 };
 
-export default compose(withStyles(useStyles), connect(mapStateToProps, {loadUserData}))(Header);
+export default compose(
+  withStyles(useStyles),
+  connect(mapStateToProps, { loadUserData })
+)(Header);
