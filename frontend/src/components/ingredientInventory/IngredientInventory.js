@@ -6,6 +6,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import {loadUserData} from "../../actions/userActions";
+
+
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -24,7 +27,9 @@ import pic from "../login/landingPage.jpg";
 class IngredientInventory extends React.Component {
 
     componentDidMount(){
-        this.props.initialData()}
+        this.props.initialData()
+        this.props.loadUserData()
+    }
 
     addItem() {
         let inventory =  document.getElementById("inventory").value
@@ -37,11 +42,13 @@ class IngredientInventory extends React.Component {
         }
 
         this.props.addingIngredient({
+            "email" : this.props.userInfo.email,
+            "inventory":[{
             "key": key,
             "description": inventory,
             "amount": amount,
             "targetAmount": targetAmount,
-            "selected": false
+            "selected": false}]
         })
 
     }
@@ -84,7 +91,7 @@ class IngredientInventory extends React.Component {
                     <p>
                         <Button variant="contained" color="secondary" disableElevation onClick={() => { this.addItem()}}>add ingredient</Button>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <Button variant="contained" color="secondary"  onClick={() =>  this.props.clearIngredients([]) }>clear inventory</Button>
+                        <Button variant="contained" color="secondary"  onClick={() =>  this.props.clearIngredients(this.props.userInfo.email) }>clear inventory</Button>
                     </p>
 
 
@@ -102,7 +109,7 @@ class IngredientInventory extends React.Component {
                                 {this.props.ingredientInventory.map((row) => (
                                     <TableRow key={row.name}>
                                         <TableCell component="th" scope="row">
-                                            <Button variant="contained" color="secondary" onClick={() => this.props.deleteIngredient(row.key)}>Delete</Button>
+                                            <Button variant="contained" color="secondary" onClick={() => this.props.deleteIngredient({ "email":this.props.userInfo.email,"key":row.key})}>Delete</Button>
                                         </TableCell>
                                         <TableCell align="right">{row.description}</TableCell>
                                         <TableCell align="right">{row.amount}</TableCell>
@@ -122,8 +129,9 @@ class IngredientInventory extends React.Component {
 
 //state has entire state of app!!
 const mapStateToProps = (state) => { //name is by convention
-    return { ingredientInventory: state.ingredientInventory}; //now it will appear as props
+    return { ingredientInventory: state.ingredientInventory,
+            userInfo: state.userStore}; //now it will appear as props
 }
 
 
-export default connect(mapStateToProps, { addingIngredient,clearIngredients,deleteIngredient,initialData })(IngredientInventory);
+export default connect(mapStateToProps, { addingIngredient,clearIngredients,deleteIngredient,initialData,loadUserData })(IngredientInventory);

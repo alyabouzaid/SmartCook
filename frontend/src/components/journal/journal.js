@@ -15,6 +15,7 @@ import {withStyles} from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import {loadUserData} from "../../actions/userActions";
 
 const useStyles = (theme) => ({
     root: {
@@ -24,24 +25,8 @@ const useStyles = (theme) => ({
 
 class Journal extends React.Component {
 
-    constructor (props) {
-        super(props);
-        this.state = {
-            isAuthenticated: true,
-        };
-    }
-
-    componentDidMount () {
-        fetch('http://localhost:9000/auth/user')
-            .then(res => res.text())
-            .then(res => {
-                const user = JSON.parse(res);
-                console.log(user);
-                if (user) {
-                    this.setState({isAuthenticated: user.isLoggedIn});
-                }
-            })
-            .catch(err => err);
+    componentDidMount() {
+        this.props.loadUserData();
     }
 
     defaultPage() {
@@ -53,48 +38,53 @@ class Journal extends React.Component {
 
     render() {
         const {classes} = this.props;
-        return (
-            <div style={{margin: '5%'}}>
-                <h2>Your Personal Journal</h2>
-                <form noValidate autoComplete="off" style={{marginBottom: "5%"}}>
-                    <TextField id="standard-basic" label="Title" fullWidth
-                     value = {this.props.editorData.title}
-                     onChange = {(e) => this.props.updateTitle(e.target.value)}
-                    />
-                </form>
-                <Grid container spacing={2} className={classes.root}>
-                    <Grid item xs={9}>
-                        <CKEditor
-                            editor={ClassicEditor}
-                            data="<p>Hello from CKEditor 5!</p>"
-                            onInit={editor => {
-                                // You can store the "editor" and use when it is needed.
-                                console.log('Editor is ready to use!', editor);
-                            }}
-                            onChange={(event, editor) => {
-                                const data = editor.getData();
-                                this.props.editJournal(data);
-                                console.log({event, editor, data});
-                            }}
+        return (this.props.userInfo.isLoggedIn ?
+            (<div>
+                <Header/>
+                <div style={{margin: '5%'}}>
+                    <h2>Your Personal Journal</h2>
+                    <form noValidate autoComplete="off" style={{marginBottom: "5%"}}>
+                        <TextField id="standard-basic" label="Title" fullWidth
+                                   value = {this.props.editorData.title}
+                                   onChange = {(e) => this.props.updateTitle(e.target.value)}
                         />
+                    </form>
+                    <Grid container spacing={2} className={classes.root}>
+                        <Grid item xs={9}>
+                            <CKEditor
+                                editor={ClassicEditor}
+                                data="<p>Hello from CKEditor 5!</p>"
+                                onInit={editor => {
+                                    // You can store the "editor" and use when it is needed.
+                                    console.log('Editor is ready to use!', editor);
+                                }}
+                                onChange={(event, editor) => {
+                                    const data = editor.getData();
+                                    this.props.editJournal(data);
+                                    console.log({event, editor, data});
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={3}>
+                            {/*{parse(this.props.editorData.body)}*/}
+                            <JournalImage/>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={3}>
-                        {/*{parse(this.props.editorData.body)}*/}
-                        <JournalImage/>
-                    </Grid>
-                </Grid>
-                <Button variant="contained" color="primary"
-                        onClick={() => this.props.addNewJournalData(this.props.editorData)}>
-                    Submit Journal
-                </Button>
-            </div>
-
+                    <Button variant="contained" color="primary"
+                            onClick={() => this.props.addNewJournalData(this.props.editorData)}>
+                        Submit Journal
+                    </Button>
+                </div>
+            </div>)
+                :
+                (this.defaultPage())
         );
     }
 }
 
 const mapStateToProps = (state) => { //name is by convention
-    return {editorData: state.journalEditorStore}; //now it will appear as props
+    return {editorData: state.journalEditorStore,
+        userInfo: state.userStore}; //now it will appear as props
 };
 
-export default compose(withStyles(useStyles), connect(mapStateToProps, {editJournal, updateTitle, addNewJournalData}))(Journal);
+export default compose(withStyles(useStyles), connect(mapStateToProps, {editJournal, updateTitle, addNewJournalData, loadUserData}))(Journal);

@@ -7,6 +7,9 @@ import ListItem from "@material-ui/core/ListItem";
 import Typography from "@material-ui/core/Typography";
 import { withStyles} from "@material-ui/core/styles";
 import {Link} from "react-router-dom";
+import compose from "recompose/compose";
+import {connect} from "react-redux";
+import {loadUserData} from "../../actions/userActions";
 
 const useStyles = (theme) => ({
   appbar: {
@@ -25,24 +28,9 @@ const useStyles = (theme) => ({
 });
 
 class Header extends React.Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      isAuthenticated: true,
-    };
-  }
 
-  componentDidMount () {
-    fetch('http://localhost:9000/auth/user')
-        .then(res => res.text())
-        .then(res => {
-          const user = JSON.parse(res);
-          console.log(user);
-          if (user) {
-            this.setState({isAuthenticated: user.isLoggedIn});
-          }
-        })
-        .catch(err => err);
+  componentDidMount() {
+    this.props.loadUserData();
   }
 
   render() {
@@ -57,7 +45,7 @@ class Header extends React.Component {
               </Link>
             </Typography>
             <List className="menu-list">
-              {this.state.isAuthenticated ? (
+              {this.props.userInfo.isLoggedIn ? (
                   <ListItem className="menu-item">
 
                     <Link to={"/ingredientInventory"}
@@ -85,15 +73,19 @@ class Header extends React.Component {
                       </Button>
                     </Link>
 
-                    <Button
-                        href=""
-                        color="inherit"
-                        target="_blank"
-                        size="small"
-                        onClick=""
-                    >
-                      Journal
-                    </Button>
+                    <Link to={"/journal"}
+                          style={{ textDecoration: 'none', color:"inherit" }}>
+                      <Button
+                          href=""
+                          color="inherit"
+                          target="_blank"
+                          size="small"
+                          onClick=""
+                      >
+                        Journal
+                      </Button>
+                    </Link>
+
                     <Button
                         href=""
                         color="inherit"
@@ -151,4 +143,8 @@ class Header extends React.Component {
   }
 }
 
-export default withStyles(useStyles)(Header);
+const mapStateToProps = (state) => { //name is by convention
+  return {userInfo: state.userStore}; //now it will appear as props
+};
+
+export default compose(withStyles(useStyles), connect(mapStateToProps, {loadUserData}))(Header);
