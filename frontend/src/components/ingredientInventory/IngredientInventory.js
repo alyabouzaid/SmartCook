@@ -17,7 +17,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Header from "../login/Header";
 import pic from "../login/landingPage.jpg";
-
+import {loadUserData} from "../../actions/userActions";
 
 
 
@@ -122,7 +122,8 @@ class IngredientInventory extends React.Component {
 
 //state has entire state of app!!
 const mapStateToProps = (state) => { //name is by convention
-    return { ingredientInventory: state.ingredientInventory}; //now it will appear as props
+    return { ingredientInventory: state.ingredientInventory,
+        userInfo: state.userStore}; //now it will appear as props
 }
 
 

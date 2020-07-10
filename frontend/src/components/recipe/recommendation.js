@@ -13,27 +13,12 @@ import pic from "../login/landingPage.jpg";
 import {selectingIngredient} from "../../actions/selectIngredientActions";
 import {newRecommendation, clearRecommendation} from "../../actions/recommendationActions";
 import {getRecommendation} from "../../actions/recommendationActions";
+import {loadUserData} from "../../actions/userActions";
 
 class Recommendation extends React.Component {
 
-    constructor (props) {
-        super(props);
-        this.state = {
-            isAuthenticated: true,
-        };
-    }
-
-    componentDidMount () {
-        fetch('http://localhost:9000/auth/user')
-            .then(res => res.text())
-            .then(res => {
-                const user = JSON.parse(res);
-                console.log(user);
-                if (user) {
-                    this.setState({isAuthenticated: user.isLoggedIn});
-                }
-            })
-            .catch(err => err);
+    componentDidMount() {
+        this.props.loadUserData();
     }
 
     defaultPage() {
@@ -44,7 +29,7 @@ class Recommendation extends React.Component {
     }
 
    render() {
-       return (this.state.isAuthenticated ?
+       return (this.props.userInfo.isLoggedIn ?
            (<div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
                <Header/>
                <div style={{display: 'flex', flexWrap: 'wrap', margin: '3%'}}>
@@ -85,8 +70,9 @@ class Recommendation extends React.Component {
 
 const mapStateToProps = (state) => { //name is by convention
     return { ingredientInventory: state.ingredientInventory,
-             recommendation: state.recommendationStore }; //now it will appear as props
+             recommendation: state.recommendationStore,
+        userInfo: state.userStore}; //now it will appear as props
 };
 
 
-export default connect(mapStateToProps, {selectingIngredient, newRecommendation, clearRecommendation, getRecommendation})(Recommendation);
+export default connect(mapStateToProps, {selectingIngredient, newRecommendation, clearRecommendation, getRecommendation, loadUserData})(Recommendation);
