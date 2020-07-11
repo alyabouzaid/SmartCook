@@ -9,19 +9,20 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const formData = require("express-form-data");
 
-const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
-const journalsRouter = require("./routes/journals");
-const imagesRouter = require("./routes/images");
+
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const journalsRouter = require('./routes/journals');
+const imagesRouter = require('./routes/images');
+const inventoryRouter = require('./routes/inventory');
+const  recipesRouter = require('./routes/recipes');
 const foodPicturesRouter = require("./routes/foodPictures");
-const recipesRouter = require("./routes/recipes");
 const serverRouter = require("./routes/server");
 
 // mongoose
 const mongoose = require("mongoose");
 
 const app = express();
-// TODO: dotenv not working
 
 // mongoose connection
 const uri = process.env.ATLAS_URL;
@@ -57,6 +58,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 // google authentication routes
 app.use("/", serverRouter);
+app.use('/inventories', inventoryRouter);
 // journal feature routes
 app.use("/journals", journalsRouter);
 app.use("/images", imagesRouter);

@@ -4,11 +4,13 @@ import { addingIngredient } from "../../actions/ingredientInventoryActions";
 import {
   clearIngredients,
   deleteIngredient,
+  initialData,
 } from "../../actions/ingredientInventoryActions";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import { loadUserData } from "../../actions/userActions";
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -19,17 +21,19 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Header from "../login/Header";
-import pic from "../login/landingPage.jpg";
-import { loadUserData } from "../../actions/userActions";
+// import pic from "../login/landingPage.jpg";
+import pic from "./image5.jpg";
 
 class IngredientInventory extends React.Component {
   componentDidMount() {
+    this.props.initialData();
     this.props.loadUserData();
   }
 
   addItem() {
     let inventory = document.getElementById("inventory").value;
     let amount = document.getElementById("amount").value;
+    let targetAmount = document.getElementById("targetAmount").value;
 
     let key = 0;
     if (this.props.ingredientInventory.length > 0) {
@@ -40,25 +44,17 @@ class IngredientInventory extends React.Component {
     }
 
     this.props.addingIngredient({
-      key: key,
-      description: inventory,
-      amount: amount,
+      email: this.props.userInfo.email,
+      inventory: [
+        {
+          key: key,
+          description: inventory,
+          amount: amount,
+          targetAmount: targetAmount,
+          selected: false,
+        },
+      ],
     });
-  }
-
-  defaultPage() {
-    return (
-      <div
-        style={{
-          backgroundImage: `url(${pic})`,
-          height: 1000,
-          backgroundSize: "cover",
-        }}
-      >
-        <Header />
-        <h1>You must log in</h1>
-      </div>
-    );
   }
 
   render() {
@@ -70,7 +66,7 @@ class IngredientInventory extends React.Component {
       },
     }));
 
-    return this.props.userInfo.isLoggedIn ? (
+    return (
       <div
         style={{
           backgroundImage: `url(${pic})`,
@@ -81,9 +77,15 @@ class IngredientInventory extends React.Component {
         <Header />
         <Container text-align="center">
           &nbsp;
-          <Typography variant="h4">Ingredient Inventory</Typography>
+          <Typography
+            variant="h4"
+            style={{ background: "rgba(255, 255, 255, 0.6)" }}
+          >
+            Ingredient Inventory
+          </Typography>
           <p>
             <TextField
+              style={{ background: "rgba(255, 255, 255, 0.6)" }}
               label="Ingredient"
               variant="filled"
               type="text"
@@ -93,6 +95,7 @@ class IngredientInventory extends React.Component {
             />
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <TextField
+              style={{ background: "rgba(255, 255, 255, 0.6)" }}
               label="Amount"
               variant="filled"
               type="text"
@@ -100,11 +103,21 @@ class IngredientInventory extends React.Component {
               name="fname"
               size="100"
             />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <TextField
+              style={{ background: "rgba(255, 255, 255, 0.6)" }}
+              label="Target Amount"
+              variant="filled"
+              type="text"
+              id="targetAmount"
+              name="fname"
+              size="100"
+            />
           </p>
           <p>
             <Button
               variant="contained"
-              color="secondary"
+              color="primary"
               disableElevation
               onClick={() => {
                 this.addItem();
@@ -115,35 +128,49 @@ class IngredientInventory extends React.Component {
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <Button
               variant="contained"
-              color="secondary"
-              onClick={() => this.props.clearIngredients([])}
+              color="primary"
+              onClick={() =>
+                this.props.clearIngredients(this.props.userInfo.email)
+              }
             >
               clear inventory
             </Button>
           </p>
-          <TableContainer component={Paper}>
+          <TableContainer
+            style={{ background: "rgba(255, 255, 255, 0.6)" }}
+            component={Paper}
+          >
             <Table className={useStyles.table} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell></TableCell>
                   <TableCell align="right">Ingredient</TableCell>
                   <TableCell align="right">Amount&nbsp;(kg/quantity)</TableCell>
+                  <TableCell align="right">
+                    Target Amount&nbsp;(kg/quantity)
+                  </TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {this.props.ingredientInventory.map((row) => (
                   <TableRow key={row.name}>
+                    <TableCell align="right">{row.description}</TableCell>
+                    <TableCell align="right">{row.amount}</TableCell>
+                    <TableCell align="right">{row.targetAmount}</TableCell>
                     <TableCell component="th" scope="row">
                       <Button
                         variant="contained"
-                        color="secondary"
-                        onClick={() => this.props.deleteIngredient(row.key)}
+                        color="primary"
+                        onClick={() =>
+                          this.props.deleteIngredient({
+                            email: this.props.userInfo.email,
+                            key: row.key,
+                          })
+                        }
                       >
                         Delete
                       </Button>
                     </TableCell>
-                    <TableCell align="right">{row.description}</TableCell>
-                    <TableCell align="right">{row.amount}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -152,8 +179,6 @@ class IngredientInventory extends React.Component {
           &nbsp;
         </Container>
       </div>
-    ) : (
-      this.defaultPage()
     );
   }
 }
@@ -171,5 +196,6 @@ export default connect(mapStateToProps, {
   addingIngredient,
   clearIngredients,
   deleteIngredient,
+  initialData,
   loadUserData,
 })(IngredientInventory);
