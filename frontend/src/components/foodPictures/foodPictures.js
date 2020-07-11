@@ -12,12 +12,11 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Header from "../login/Header";
-import pic from "../landingPage/landingPage.jpg";
 import { connect } from "react-redux";
+import compose from "recompose/compose";
 import { withStyles } from "@material-ui/core/styles";
 import { loadUserData } from "../../actions/userActions";
 import {
@@ -30,13 +29,12 @@ import {
 import DeleteIcon from "@material-ui/icons/Delete";
 import TextField from "@material-ui/core/TextField";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import FolderIcon from "@material-ui/icons/Folder";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { deepPurple } from "@material-ui/core/colors";
-
-import compose from "recompose/compose";
+import { css } from "@emotion/core";
+import DotLoader from "react-spinners/DotLoader";
 
 const useStyles = (theme) => ({
   rootContainer: {
@@ -90,6 +88,13 @@ const useStyles = (theme) => ({
   },
 });
 
+const override = css`
+  display: inline-block;
+  margin: 0;
+  justifycontent: center;
+  alignitems: center;
+`;
+
 class FoodPictures extends React.Component {
   constructor(props) {
     super(props);
@@ -104,8 +109,6 @@ class FoodPictures extends React.Component {
     this.generate = this.generate.bind(this);
     this.handleExpandClick = this.handleExpandClick.bind(this);
   }
-
-  // const [expanded, setExpanded] = React.useState(false);
 
   handleExpandClick = () => {
     this.setState({
@@ -149,7 +152,14 @@ class FoodPictures extends React.Component {
     return (
       <div>
         <Header />
-
+        {/* <div className="sweet-loading">
+          <DotLoader
+            css={override}
+            size={100}
+            color={"teal"}
+            loading={this.props.foodPicPost.loading}
+          />
+        </div> */}
         {/* <GridList padding={30} className={classes.gridList}> */}
         {this.props.foodPicPost &&
           this.props.foodPicPost.foodPicPosts &&
@@ -159,7 +169,7 @@ class FoodPictures extends React.Component {
               style={{
                 marginTop: 30,
                 marginBottom: 30,
-                marginLeft: 370,
+                marginLeft: 450,
               }}
             >
               <CardHeader

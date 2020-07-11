@@ -19,8 +19,8 @@ class App extends React.Component {
           <Route path="/recommendation" component={Recommendation} />
           <Route path="/journal" component={Journal} />
           <Route path="/journalView" component={JournalView} />
-          <Route path="/foodPic" component={FoodPictures} />
-          <Route path="/foodPicCreatePost" component={FoodPicturesCreatePost} />
+          <Route path="/foodPicAllView" component={FoodPictures} />
+          <Route path="/foodPicNewPost" component={FoodPicturesCreatePost} />
         </Switch>
       </div>
     );

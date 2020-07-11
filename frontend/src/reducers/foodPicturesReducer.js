@@ -13,7 +13,7 @@ export default function foodPicturesReducer(
         ...state,
         foodPicPosts: [...state.foodPicPosts, action.payload],
       };
-    case "GET_POSTINGS_LOADING":
+    case "LOADING_ALL_FOODPIC_POSTS":
       return {
         ...state,
         loading: true,

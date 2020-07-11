@@ -22,7 +22,7 @@ const useStyles = (theme) => ({
   rootContainer: {
     display: "flex",
     justifyContent: "center",
-    paddingTop: 50,
+    paddingTop: 200,
   },
   rootCard: {
     width: 500,

@@ -13,6 +13,10 @@ const foodPicPostSchema = new Schema(
       // default: "no photo",
     },
     likes: [{ type: String }],
+    likesLength: {
+      type: Number,
+      default: 0,
+    },
     comments: [
       {
         text: String,

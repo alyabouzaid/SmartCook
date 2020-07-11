@@ -11,6 +11,14 @@ import compose from "recompose/compose";
 import { connect } from "react-redux";
 import { loadUserData } from "../../actions/userActions";
 
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import InboxIcon from "@material-ui/icons/MoveToInbox";
+import DraftsIcon from "@material-ui/icons/Drafts";
+import SendIcon from "@material-ui/icons/Send";
+
 const useStyles = (theme) => ({
   appbar: {
     backgroundColor: "#e0f2f1",
@@ -27,9 +35,58 @@ const useStyles = (theme) => ({
   },
 });
 
+const StyledMenu = withStyles({
+  paper: {
+    border: "1px solid #d3d4d5",
+  },
+})((props) => (
+  <Menu
+    elevation={0}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: "bottom",
+      horizontal: "center",
+    }}
+    transformOrigin={{
+      vertical: "top",
+      horizontal: "center",
+    }}
+    {...props}
+  />
+));
+
+const StyledMenuItem = withStyles((theme) => ({
+  root: {
+    "&:focus": {
+      backgroundColor: theme.palette.primary.main,
+      "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
+        color: theme.palette.common.white,
+      },
+    },
+  },
+}))(MenuItem);
+
 class Header extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      anchorEl: null,
+    };
+
+    this.handleClick = this.handleClick.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+  }
   componentDidMount() {
     this.props.loadUserData();
+  }
+
+  handleClick(e) {
+    this.setState({ anchorEl: e.currentTarget });
+  }
+
+  handleClose() {
+    this.setState({ anchorEl: null });
   }
 
   render() {
@@ -88,21 +145,58 @@ class Header extends React.Component {
                   </Button>
                 </Link>
 
-                <Button
-                  href=""
-                  color="inherit"
-                  target="_blank"
-                  size="small"
-                  onClick=""
+                <Link
+                  to={"/foodPicNewPost"}
+                  style={{ textDecoration: "none", color: "inherit" }}
                 >
-                  Food Pictures
-                </Button>
+                  {/* <div> */}
+                  <Button
+                    href=""
+                    color="inherit"
+                    target="_blank"
+                    size="small"
+                    onClick={this.handleClick}
+                  >
+                    Food Pictures
+                  </Button>
+                  {/* <StyledMenu
+                      id="customized-menu"
+                      anchorEl={this.state.anchorEl}
+                      keepMounted
+                      open={Boolean(this.state.anchorEl)}
+                      onClose={this.handleClose}
+                    >
+                      <StyledMenuItem>
+                        <ListItemIcon>
+                          <SendIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText primary="Sent mail" />
+                      </StyledMenuItem>
+                      <StyledMenuItem>
+                        <ListItemIcon>
+                          <DraftsIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText primary="Drafts" />
+                      </StyledMenuItem>
+                      <StyledMenuItem>
+                        <ListItemIcon>
+                          <InboxIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText primary="Inbox" />
+                      </StyledMenuItem>
+                    </StyledMenu>
+                  </div> */}
+                </Link>
+
                 <Button
                   href="http://localhost:9000/auth/logout"
                   color="inherit"
                   target="_self"
                   size="small"
                   onClick=""
+                  style={{
+                    color: "#00bfa5",
+                  }}
                 >
                   Logout
                 </Button>

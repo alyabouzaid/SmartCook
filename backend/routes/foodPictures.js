@@ -5,13 +5,13 @@ const foodPicturePost = require("../models/foodPictures.model");
 
 //get all postings request
 router.get("/allpost", (req, res) => {
+  // setTimeout(() => {
   foodPicturePost
     .find()
-    // .populate("postedBy","_id name")
-    // .populate("comments.postedBy","_id name")
-    // .sort('-createdAt')
+    .sort("-likesLength")
     .then((posts) => res.status(200).json(posts))
     .catch((err) => res.status(400).json("Error: ", err));
+  // }, 4000);
 });
 
 // post request
@@ -19,21 +19,13 @@ router.post("/add", (req, res) => {
   const _id = uuid();
   const description = req.body.description;
   const image = req.body.image;
-  // const likes = req.body.likes;
-  // const comments = req.body.comments;
   const postedBy = req.body.user;
   const dateTime = new Date().toLocaleString();
-
-  // if (!description || !photo) {
-  //   return res.status(4).json({ error: "Plase include all fields" });
-  // }
 
   const post = new foodPicturePost({
     _id,
     description,
     image,
-    // likes,
-    // comments,
     postedBy,
     dateTime,
   });
@@ -47,8 +39,8 @@ router.post("/add", (req, res) => {
 // get all individual postings request (next sprint)
 router.get("/mypost", (req, res) => {
   foodPicturePost
-    .find({ postedBy: req.params.user })
-    // .populate("PostedBy","_id name")
+    // .find({ postedBy: req.user })
+    .find({ postedBy: `${req.body.user}` })
     .then((posts) => res.status(200).json(posts))
     .catch((err) => res.status(400).json("Error: ", err));
 });
@@ -59,7 +51,8 @@ router.put("/like/:id", (req, res) => {
     .findByIdAndUpdate(
       req.params.id,
       {
-        $push: { likes: req.body.user }, //check if this is right
+        $push: { likes: req.body.user },
+        $inc: { likesLength: 1 },
       },
       {
         new: true,
@@ -73,9 +66,6 @@ router.put("/like/:id", (req, res) => {
         return res.status(200).json(result);
       }
     });
-  // .then((res) => res.status(200).json(res))
-  // .then(() => res.status(200).json("Like is updated."))
-  // .catch((err) => res.status(400).json("Error: ", err));
 });
 
 // update comment request
@@ -102,10 +92,6 @@ router.put("/comment/:id", (req, res) => {
         return res.status(200).json(result);
       }
     });
-  // .populate("comments.postedBy","_id name")
-  // .populate("postedBy","_id name")
-  // .then(() => res.status(200).json("Comment is updated."))
-  // .catch((err) => res.status(400).json("Error: ", err));
 });
 
 // delete request

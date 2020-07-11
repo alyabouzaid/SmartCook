@@ -1,28 +1,11 @@
 import axios from "axios";
 
 export const uploadImageAndCreatePost = (description, image, username) => {
-  console.log("in getImage and createPost");
+  // console.log("in getImage and createPost");
   return async (dispatch) => {
     try {
-      // const files = Array.from(e.target.files);
-
       const formData = new FormData();
       formData.append("file", image);
-
-      // files.forEach((file, i) => {
-      //     formData.append(i, file)
-      // });
-
-      // formData.append("user", user);
-
-      // fetch("http://localhost:9000/images/image-upload", {
-      //     method: 'POST',
-      //     body: formData
-      // })
-      //     .then(res => res.json())
-      //     .then(images => {
-      //         dispatch(addImage(images[0]))
-      //     })
       const res = await axios.post(
         "http://localhost:9000/images/image-upload",
         formData
@@ -38,10 +21,10 @@ export const uploadImageAndCreatePost = (description, image, username) => {
 
 // post request
 export const createNewFoodPicPost = (description, imageData, username) => {
-  console.log("in createNewFoodPic");
-  console.log("description: ", JSON.stringify(description));
-  console.log("image: ", JSON.stringify(imageData));
-  console.log("username: ", JSON.stringify(username));
+  // console.log("in createNewFoodPic");
+  // console.log("description: ", JSON.stringify(description));
+  // console.log("image: ", JSON.stringify(imageData));
+  // console.log("username: ", JSON.stringify(username));
   return async (dispatch) => {
     try {
       const params = {
@@ -57,7 +40,8 @@ export const createNewFoodPicPost = (description, imageData, username) => {
       );
       console.log("create post waiting");
       const newFoodPicPost = await res.data;
-      dispatch(addNewFoodPicPost(newFoodPicPost));
+      await dispatch(addNewFoodPicPost(newFoodPicPost));
+      window.location = "/foodPicAllView";
     } catch (error) {
       console.log("error", error);
     }
@@ -148,8 +132,9 @@ export const updateLike = (idPayload, username) => {
   };
 };
 
+//update comment request
 export const updateComment = (idPayload, comment, username) => {
-  console.log("comment");
+  // console.log("comment");
   return async (dispatch) => {
     try {
       const params = {
