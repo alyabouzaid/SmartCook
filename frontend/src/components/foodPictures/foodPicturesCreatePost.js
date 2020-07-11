@@ -101,7 +101,7 @@ class FoodPicturesCreatePost extends React.Component {
   }
 
   componentDidMount() {
-    this.props.loadUserData();
+    // this.props.loadUserData();
     this.props.getAllFoodPicPost();
   }
   // render() {
