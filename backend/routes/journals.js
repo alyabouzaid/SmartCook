@@ -1,23 +1,22 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
-
 const mongoose = require("mongoose");
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require("uuid");
 
 const journals = require("../models/journals.model");
 
-const uri = "mongodb://localhost:27017/myapp";
-mongoose.connect(uri, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-  useCreateIndex: true,
-});
+// const uri = "mongodb://localhost:27017/myapp";
+// mongoose.connect(uri, {
+//   useUnifiedTopology: true,
+//   useNewUrlParser: true,
+//   useCreateIndex: true,
+// });
 
-const connection = mongoose.connection;
-connection.once("open", () => {
-  console.log("MongoDB database connection established successfully");
-});
+// const connection = mongoose.connection;
+// connection.once("open", () => {
+//   console.log("MongoDB database connection established successfully");
+// });
 
 router.get("/", (req, res) => {
   journals.find()
@@ -52,15 +51,17 @@ router.get("/search/:id", (req, res) => {
 });
 
 router.delete("/delete/:id", (req, res) => {
-  journals.findByIdAndDelete(req.params.id)
-      .then(() => res.json("Posting is deleted."))
-      .catch((err) => res.status(400).json("Error: " + err));
+  journals
+    .findByIdAndDelete(req.params.id)
+    .then(() => res.json("Posting is deleted."))
+    .catch((err) => res.status(400).json("Error: " + err));
 });
 
 router.delete("/deleteall", (req, res) => {
-  journals.remove({})
-      .then(() => res.json("All Postings are deleted."))
-      .catch((err) => res.status(400).json("Error: " + err));
+  journals
+    .remove({})
+    .then(() => res.json("All Postings are deleted."))
+    .catch((err) => res.status(400).json("Error: " + err));
 });
 
 router.post("/update/:id", (req, res) => {
