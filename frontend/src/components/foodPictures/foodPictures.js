@@ -35,6 +35,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { deepPurple } from "@material-ui/core/colors";
 import { css } from "@emotion/core";
 import DotLoader from "react-spinners/DotLoader";
+import pic from "../login/landingPage.jpg";
 
 const useStyles = (theme) => ({
   rootContainer: {
@@ -150,7 +151,7 @@ class FoodPictures extends React.Component {
     // );
 
     return (
-      <div>
+      <div style={{backgroundColor: '#FFFAF0'}}>
         <Header />
         {/* <div className="sweet-loading">
           <DotLoader

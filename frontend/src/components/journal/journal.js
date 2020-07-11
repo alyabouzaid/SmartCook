@@ -12,7 +12,6 @@ import "./journal.css";
 
 import parse from "html-react-parser";
 import Header from "../login/Header";
-import pic from "../login/landingPage.jpg";
 import JournalImage from "./journalImage";
 
 import { withStyles } from "@material-ui/core/styles";
@@ -20,6 +19,9 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { loadUserData } from "../../actions/userActions";
+
+import Typography from "@material-ui/core/Typography";
+import pic from "../ingredientInventory/image5.jpg"
 
 const useStyles = (theme) => ({
   root: {
@@ -50,10 +52,13 @@ class Journal extends React.Component {
   render() {
     const { classes } = this.props;
     return this.props.userInfo.isLoggedIn ? (
-      <div>
+      <div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
         <Header />
         <div style={{ margin: "5%" }}>
-          <h2>Your Personal Journal</h2>
+          <Typography variant="h4" style={{background: 'rgba(255, 255, 255, 0.6)'}}>
+            Your Personal Journal
+          </Typography>
+          &nbsp;
           <form noValidate autoComplete="off" style={{ marginBottom: "5%" }}>
             <TextField
               id="standard-basic"
@@ -61,6 +66,7 @@ class Journal extends React.Component {
               fullWidth
               value={this.props.editorData.title}
               onChange={(e) => this.props.updateTitle(e.target.value)}
+              style={{background: 'rgba(255, 255, 255, 0.6)'}}
             />
           </form>
           <Grid container spacing={2} className={classes.root}>
