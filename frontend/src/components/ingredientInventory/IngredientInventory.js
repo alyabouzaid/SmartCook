@@ -21,13 +21,11 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Header from "../login/Header";
-// import pic from "../login/landingPage.jpg";
 import pic from "./image5.jpg";
 
 class IngredientInventory extends React.Component {
   componentDidMount() {
     this.props.initialData();
-    this.props.loadUserData();
   }
 
   addItem() {
@@ -77,12 +75,6 @@ class IngredientInventory extends React.Component {
         <Header />
         <Container text-align="center">
           &nbsp;
-          <Typography
-            variant="h4"
-            style={{ background: "rgba(255, 255, 255, 0.6)" }}
-          >
-            Ingredient Inventory
-          </Typography>
           <p>
             <TextField
               style={{ background: "rgba(255, 255, 255, 0.6)" }}

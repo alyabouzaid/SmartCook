@@ -3,12 +3,6 @@ const cookieParser = require("cookie-parser");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20");
 const cookieSession = require("cookie-session");
-require("dotenv").config();
-
-let app = express.Router();
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 
 // configuration constants. Make sure it matches what you registered.
 const clientID = process.env.OAUTH_CLIENT_ID;
@@ -23,6 +17,7 @@ let isAuthenticated = false;
 let name = "";
 let email = "";
 
+let app = express.Router();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

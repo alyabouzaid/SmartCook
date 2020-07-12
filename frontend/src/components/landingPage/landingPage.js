@@ -57,9 +57,6 @@ const gridCardContent = [
 ];
 
 class LandingPage extends React.Component {
-  componentDidMount() {
-    this.props.loadUserData();
-  }
 
   render() {
     const { classes } = this.props;
