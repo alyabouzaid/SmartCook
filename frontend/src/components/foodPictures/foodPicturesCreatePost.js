@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core/styles";
+import "../../index.css";
 import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -129,7 +130,13 @@ class FoodPicturesCreatePost extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
+      <div
+        style={{
+          backgroundImage: `url(${pic})`,
+          height: 1000,
+          backgroundSize: "cover",
+        }}
+      >
         <Header />
         <div className={classes.rootContainer}>
           <Card className={classes.rootCard}>
@@ -137,6 +144,7 @@ class FoodPicturesCreatePost extends React.Component {
               className={classes.rootCardTitle}
               variant="h5"
               component="p"
+              style={{ fontFamily: "Grand Hotel" }}
             >
               Food Picture Post
             </Typography>

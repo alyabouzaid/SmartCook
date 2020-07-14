@@ -114,7 +114,7 @@ export const loadAllFoodPicPost = (posts) => {
 
 //update like request
 export const updateLike = (idPayload, username) => {
-  console.log("like");
+  // console.log("like");
   return async (dispatch) => {
     try {
       const params = {

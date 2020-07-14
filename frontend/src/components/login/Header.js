@@ -16,9 +16,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import SendIcon from "@material-ui/icons/Send";
+import "../../index.css";
 
 const useStyles = (theme) => ({
   appbar: {
@@ -101,7 +99,15 @@ class Header extends React.Component {
             variant="h5"
             className={classes.websiteTitle}
           >
-            <Link to={"/"} style={{ textDecoration: "none", color: "inherit" }}>
+            <Link
+              to={"/"}
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+                // fontFamily: "Grand Hotel",
+                // fontSize: 30,
+              }}
+            >
               SmartCook
             </Link>
           </Typography>

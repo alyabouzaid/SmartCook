@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -36,6 +37,7 @@ import { deepPurple } from "@material-ui/core/colors";
 import { css } from "@emotion/core";
 import DotLoader from "react-spinners/DotLoader";
 import pic from "../login/landingPage.jpg";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 const useStyles = (theme) => ({
   rootContainer: {
@@ -86,6 +88,23 @@ const useStyles = (theme) => ({
   },
   content: {
     marginTop: 0,
+  },
+});
+
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: [
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(","),
   },
 });
 
@@ -151,7 +170,7 @@ class FoodPictures extends React.Component {
     // );
 
     return (
-      <div style={{backgroundColor: '#FFFAF0'}}>
+      <div style={{ backgroundColor: "#FFFAF0" }}>
         <Header />
         {/* <div className="sweet-loading">
           <DotLoader
@@ -222,6 +241,7 @@ class FoodPictures extends React.Component {
                 {/* <IconButton aria-label="share">
             <ShareIcon />
           </IconButton> */}
+
                 <Typography>{item.likes.length} likes</Typography>
               </CardActions>
 
