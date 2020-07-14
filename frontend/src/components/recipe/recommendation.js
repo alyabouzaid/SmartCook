@@ -35,10 +35,6 @@ const useStyles = (theme) => ({
 
 class Recommendation extends React.Component {
 
-    componentDidMount() {
-        this.props.loadUserData();
-    }
-
     defaultPage() {
         return (<div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
             <Header/>
@@ -51,9 +47,6 @@ class Recommendation extends React.Component {
         return (this.props.userInfo.isLoggedIn ?
                 (<div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
                     <Header/>
-                    <Typography variant="h4" style={{background: 'rgba(255, 255, 255, 0.6)', margin: '3%'}}>
-                        Recommender
-                    </Typography>
                     <div style={{display: 'flex', flexWrap: 'wrap', margin: '3%', background: 'rgba(255, 255, 255, 0.6)'}}>
                         <FormControl component="fieldset" style={{margin: '3%'}}>
                             <FormLabel component="legend">Select Your Ingredients</FormLabel>

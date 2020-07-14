@@ -30,9 +30,6 @@ const useStyles = (theme) => ({
 });
 
 class Journal extends React.Component {
-  componentDidMount() {
-    this.props.loadUserData();
-  }
 
   defaultPage() {
     return (
@@ -55,9 +52,6 @@ class Journal extends React.Component {
       <div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
         <Header />
         <div style={{ margin: "5%" }}>
-          <Typography variant="h4" style={{background: 'rgba(255, 255, 255, 0.6)'}}>
-            Your Personal Journal
-          </Typography>
           &nbsp;
           <form noValidate autoComplete="off" style={{ marginBottom: "5%" }}>
             <TextField

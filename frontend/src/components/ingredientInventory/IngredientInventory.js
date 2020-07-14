@@ -21,14 +21,16 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Header from "../login/Header";
+<<<<<<< HEAD
 // import pic from "../login/landingPage.jpg";
 import "../../index.css";
+=======
+>>>>>>> 33ff0a5b688034fa477e9ab523554a3348bd1847
 import pic from "./image5.jpg";
 
 class IngredientInventory extends React.Component {
   componentDidMount() {
     this.props.initialData();
-    this.props.loadUserData();
   }
 
   addItem() {
@@ -77,6 +79,7 @@ class IngredientInventory extends React.Component {
       >
         <Header />
         <Container text-align="center">
+<<<<<<< HEAD
           {/* &nbsp;
           <Typography
             variant="h4"
@@ -87,6 +90,9 @@ class IngredientInventory extends React.Component {
           >
             Ingredient Inventory
           </Typography> */}
+=======
+          &nbsp;
+>>>>>>> 33ff0a5b688034fa477e9ab523554a3348bd1847
           <p>
             <TextField
               style={{ background: "rgba(255, 255, 255, 0.6)" }}
