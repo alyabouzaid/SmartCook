@@ -87,7 +87,7 @@ class Journal extends React.Component {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => this.props.addNewJournalData(this.props.editorData)}
+            onClick={() => this.props.addNewJournalData(this.props.editorData, this.props.userInfo)}
           >
             Submit Journal
           </Button>

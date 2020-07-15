@@ -65,7 +65,10 @@ export const loadJournalsData = () => {
     }
 };
 
-export const addNewJournalData = (data) => {
+export const addNewJournalData = (editorData, userInfo) => {
+
+    let data = {...editorData, author: userInfo.firstName, email: userInfo.email};
+
     return async dispatch => {
         fetch("http://localhost:9000/journals/add", {
             method: 'POST',
