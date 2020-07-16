@@ -3,7 +3,6 @@ import {withStyles} from '@material-ui/core/styles';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
@@ -14,7 +13,6 @@ import {connect} from "react-redux";
 import {selectingIngredient} from "../../actions/selectIngredientActions";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
 import FormGroup from "@material-ui/core/FormGroup";
 
 const useStyles = (theme) => ({
@@ -50,7 +48,7 @@ class IngredientList extends React.Component {
                 aria-labelledby="nested-list-subheader"
                 subheader={
                     <ListSubheader style={{fontSize: "18px", textAlign: "left"}} component="div" id="nested-list-subheader">
-                        Select Filters:
+                        Select Ingredients:
                     </ListSubheader>
                 }
                 className={classes.root}

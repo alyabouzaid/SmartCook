@@ -1,12 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {makeStyles} from '@material-ui/core/styles';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import RecipeCard from "./recipeCard";
 import Button from "@material-ui/core/Button";
 import Header from "../login/Header";
 import pic from "../login/landingPage.jpg";
@@ -22,11 +15,12 @@ import compose from "recompose/compose";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
-import SearchBar from "./SearchBar";
 import IngredientList from "./IngredientList";
 import Link from "@material-ui/core/Link";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import {initialData} from "../../actions/ingredientInventoryActions";
+import CategoryList from "./CategoryList";
+import FilterSearchBar from "./FilterSearchBar";
 
 const useStyles = (theme) => ({
     root: {
@@ -105,7 +99,8 @@ class Recommendation extends React.Component {
 
     render() {
         const {classes} = this.props;
-        return (<div>
+        return this.props.userInfo.isLoggedIn ? (
+            <div>
             <Header/>
             <div style={{margin: "3%"}}>
                 {/*<h1 style={{backgroundColor: "tan", textAlign: "center"}}>Test</h1>*/}
@@ -114,7 +109,11 @@ class Recommendation extends React.Component {
 
                     {/*left side*/}
                     <Grid style={{}} item xs={false} sm={4} md={2}>
-                        <SearchBar/>
+                        <FilterSearchBar/>
+
+                        <p style={{textAlign: "left", backgroundColor: "floralWhite", margin: "3", fontSize: '24px'}}/>
+
+                        <CategoryList/>
                         <p style={{textAlign: "left", backgroundColor: "floralWhite", margin: "3", fontSize: '24px'}}/>
                         <IngredientList/>
                         <p style={{textAlign: "left", backgroundColor: "floralWhite", margin: "3", fontSize: '24px'}}/>
@@ -149,7 +148,10 @@ class Recommendation extends React.Component {
 
                 </Grid>
             </div>
-        </div>);
+        </div>
+    ) : (
+            this.defaultPage()
+        );
     }
 
     // render() {
@@ -203,7 +205,8 @@ class Recommendation extends React.Component {
 }
 
 const mapStateToProps = (state) => { //name is by convention
-    return { ingredientInventory: state.ingredientInventory,
+    return {
+        ingredientInventory: state.ingredientInventory,
         recommendation: state.recommendationStore,
         userInfo: state.userStore}; //now it will appear as props
 };
