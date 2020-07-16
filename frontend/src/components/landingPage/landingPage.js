@@ -65,9 +65,9 @@ class LandingPage extends React.Component {
       title: "Simple and fun way to start your cooking journey",
       title_isAuthenticated: "Welcome back " + this.props.userInfo.firstName,
       description:
-        "Love to cook but always struggle to come up with ideas?  SmartCook is a web app designed for all food lovers who enjoy cooking,exploring new recipes, creating recipe journals, and socializing about food/cooking",
+        "Love to cook but always struggle to come up with ideas?  SmartCook is a web app designed for all food lovers who enjoy cooking, exploring new recipes, creating recipe journals, and socializing about food/cooking",
       description2:
-        "SmartCook is a web app designed for all food lovers who enjoy cooking,exploring new recipes, creating recipe journals, and socializing about food/cooking",
+        "SmartCook is a web app designed for all food lovers who enjoy cooking, exploring new recipes, creating recipe journals, and socializing about food/cooking",
       description_isAuthenticated:
         "Enjoy your cooking experience with SmartCook",
       image: "./gallery/landingPage.jpg",

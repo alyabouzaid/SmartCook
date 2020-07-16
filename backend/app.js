@@ -18,7 +18,7 @@ const inventoryRouter = require('./routes/inventory');
 const  recipesRouter = require('./routes/recipes');
 const foodPicturesRouter = require("./routes/foodPictures");
 const serverRouter = require("./routes/server");
-
+// TODO: REMOVE ENV
 // mongoose
 const mongoose = require("mongoose");
 
@@ -57,7 +57,7 @@ app.use(bodyParser.json());
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 // google authentication routes
-app.use("/", serverRouter);
+app.use("/auth", serverRouter);
 app.use('/inventories', inventoryRouter);
 // journal feature routes
 app.use("/journals", journalsRouter);
