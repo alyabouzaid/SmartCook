@@ -80,7 +80,6 @@ class Journal extends React.Component {
               />
             </Grid>
             <Grid item xs={3}>
-              {/*{parse(this.props.editorData.body)}*/}
               <JournalImage />
             </Grid>
           </Grid>

@@ -3,8 +3,8 @@ var router = express.Router();
 
 const journals = require("../models/journals.model");
 
-router.get("/", (req, res) => {
-  journals.find()
+router.get("/:email", (req, res) => {
+  journals.find({email: req.params.email})
       .then((journals) => res.send(journals))
       .catch((err) => res.status(400).json("Error: " + err));
 });

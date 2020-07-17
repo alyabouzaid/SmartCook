@@ -52,9 +52,9 @@ export const uploadImage = e => {
     }
 };
 
-export const loadJournalsData = () => {
+export const loadJournalsData = (email) => {
     return async dispatch => {
-        fetch("http://localhost:9000/journals", {
+        fetch(`http://localhost:9000/journals/${email}`, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
         })
@@ -79,6 +79,19 @@ export const addNewJournalData = (editorData, userInfo) => {
             .then((res) => {
                dispatch(submitJournal());
                dispatch(addJournal(res));
+            })
+    }
+};
+
+export const deleteOneJournalData = (id) => {
+
+    return async dispatch => {
+        fetch(`http://localhost:9000/journals/delete/${id}`, {
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json'},
+        })
+            .then((res) => {
+                dispatch(deleteOneJournal(id));
             })
     }
 };
