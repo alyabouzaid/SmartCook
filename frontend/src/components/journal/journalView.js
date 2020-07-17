@@ -13,8 +13,9 @@ import parse from 'html-react-parser';
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CardHeader from "@material-ui/core/CardHeader";
-import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
+import {Link} from "react-router-dom";
+import ListItem from "@material-ui/core/ListItem";
 
 const useStyles = (theme) => ({
     root: {
@@ -37,51 +38,65 @@ class JournalView extends Component {
         const {classes} = this.props;
         return (
             <div style={{margin: '5%'}}>
-            {this.props.journals.map((journal) =>
-            <Card className={classes.root}>
-                <CardActionArea>
-                    <CardHeader
-                        action={
-                            <IconButton aria-label="settings">
-                                <DeleteIcon
-                                    onClick={() => this.props.deleteOneJournalData(journal._id)}
-                                />
-                            </IconButton>
-                        }
-                        title={
-                            <Typography align="left" variant="h6" component="h2">
-                                {journal.title}
-                            </Typography>
-                        }
-                        subheader={
-                            <Typography align="left" variant="subtitle2" component="h2">
-                                {journal.author}   {journal.createdAt.slice(0,-5).replace("T", " ")}
-                            </Typography>
-                        }
-                    />
-                    {journal.images.length > 0 &&
-                    <CardMedia
-                        className={classes.media}
-                        image={journal.images[0].secure_url}
-                        title={journal.title}
-                    />}
-                    <CardContent>
-                        <div style={{textAlign: "left"}}>
-                        <h2> {journal.title} </h2>
-                        <h3> {journal.author} </h3>
-                        {parse(journal.body)}
-                        </div>
-                    </CardContent>
-                </CardActionArea>
-                <CardActions>
-                    <Button size="small" color="primary">
-                        Share
+                <h1> Your Cooking Journals</h1>
+                <Link
+                    to={"/journal"}
+                    style={{textDecoration: "none", color: "inherit"}}
+                >
+                    <Button
+                        href=""
+                        color="inherit"
+                        target="_blank"
+                        size="small"
+                        onClick=""
+                    >
+                        Add A New Journal
                     </Button>
-                    <Button size="small" color="primary">
-                        Learn More
-                    </Button>
-                </CardActions>
-            </Card>)}
+                </Link>
+                {this.props.journals.map((journal) =>
+                    <Card className={classes.root}>
+                        <CardActionArea>
+                            <CardHeader
+                                action={
+                                    // this.props.userInfo.email === journal.email &&
+                                    <IconButton aria-label="settings">
+                                        <DeleteIcon
+                                            onClick={() => this.props.deleteOneJournalData(journal._id)}
+                                        />
+                                    </IconButton>
+                                }
+                                title={
+                                    <Typography align="left" variant="h6" component="h2">
+                                        {journal.title}
+                                    </Typography>
+                                }
+                                subheader={
+                                    <Typography align="left" variant="subtitle2" component="h2">
+                                        {journal.author} {journal.createdAt.slice(0, -5).replace("T", " ")}
+                                    </Typography>
+                                }
+                            />
+                            {journal.images.length > 0 &&
+                            <CardMedia
+                                className={classes.media}
+                                image={journal.images[0].secure_url}
+                                title={journal.title}
+                            />}
+                            <CardContent>
+                                <div style={{textAlign: "left"}}>
+                                    {parse(journal.body)}
+                                </div>
+                            </CardContent>
+                        </CardActionArea>
+                        <CardActions>
+                            <Button size="small" color="primary">
+                                Share
+                            </Button>
+                            <Button size="small" color="primary">
+                                Learn More
+                            </Button>
+                        </CardActions>
+                    </Card>)}
             </div>)
     }
 }

@@ -9,19 +9,15 @@ import {
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import "./journal.css";
-
-import parse from "html-react-parser";
 import Header from "../login/Header";
 import JournalImage from "./journalImage";
-
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { loadUserData } from "../../actions/userActions";
-
-import Typography from "@material-ui/core/Typography";
 import pic from "../ingredientInventory/image5.jpg"
+
 
 const useStyles = (theme) => ({
   root: {
@@ -86,7 +82,7 @@ class Journal extends React.Component {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => this.props.addNewJournalData(this.props.editorData, this.props.userInfo)}
+            onClick={() => {this.props.addNewJournalData(this.props.editorData, this.props.userInfo)}}
           >
             Submit Journal
           </Button>

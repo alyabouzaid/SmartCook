@@ -133,7 +133,7 @@ class Header extends React.Component {
                 </Link>
 
                 <Link
-                  to={"/journal"}
+                  to={"/journalView"}
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
                   <Button
@@ -170,7 +170,7 @@ class Header extends React.Component {
                       </ListItem>
                     </StyledMenuItem>
                     <StyledMenuItem>
-                      
+
                       <ListItem button component="a" href="/journalView">
                         <ListItemText primary="Collections" />
                       </ListItem>
