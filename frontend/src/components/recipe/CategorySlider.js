@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 // TODO: fix slider range (only goes from 0 to 100)
 export default function CategorySlider({category}) {
     const classes = useStyles();
-    const [value, setValue] = React.useState(50);
+    const [value, setValue] = React.useState(category.startingValue);
 
     const handleSliderChange = (event, newValue) => {
         setValue(newValue);
@@ -42,9 +42,12 @@ export default function CategorySlider({category}) {
             <Grid container spacing={2} alignItems="center">
                 <Grid item xs>
                     <Slider
-                        value={typeof value === 'number' ? value : 0}
+                        value={value}
+                        min={0}
+                        step={category.sliderStep}
+                        max={category.maxValue}
+                        scale={(x) => x * 10}
                         onChange={handleSliderChange}
-                        aria-labelledby={category.name}
                     />
                 </Grid>
                 <Grid item>
@@ -55,7 +58,7 @@ export default function CategorySlider({category}) {
                         onChange={handleInputChange}
                         onBlur={handleBlur}
                         inputProps={{
-                            step: 100,
+                            step: category.inputStep,
                             min: 0,
                             max: category.maxValue,
                             type: 'number',

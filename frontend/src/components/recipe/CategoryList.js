@@ -74,11 +74,11 @@ class CategoryList extends React.Component {
                 </ListItem>
 
                 <ListItem>
-                    <CategorySlider category={{name: "Calories", maxValue: 3000}}/>
+                    <CategorySlider category={{name: "Calories (kcal)", maxValue: 3000, startingValue: 1500, sliderStep: 100, inputStep: 50}}/>
                 </ListItem>
 
                 <ListItem>
-                    <CategorySlider category={{name: "Cooking Time", maxValue: 3000}}/>
+                    <CategorySlider category={{name: "Cooking Time (min)", maxValue: 300, startingValue: 150, sliderStep: 5, inputStep: 5}}/>
                 </ListItem>
             </List>
         );

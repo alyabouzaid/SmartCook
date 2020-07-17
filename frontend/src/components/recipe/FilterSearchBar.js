@@ -34,7 +34,7 @@ class FilterSearchBar extends React.Component {
                 aria-labelledby="nested-list-subheader"
                 subheader={
                     <ListSubheader style={{fontSize: "18px", textAlign: "left"}} component="div" id="nested-list-subheader">
-                        Select Filter:
+                        Select Ingredient Filter:
                     </ListSubheader>
                 }
                 className={classes.root}

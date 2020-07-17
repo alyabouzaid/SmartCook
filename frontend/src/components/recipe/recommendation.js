@@ -21,6 +21,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import {initialData} from "../../actions/ingredientInventoryActions";
 import CategoryList from "./CategoryList";
 import FilterSearchBar from "./FilterSearchBar";
+import RecipeInfo from "./RecipeInfo";
 
 const useStyles = (theme) => ({
     root: {
@@ -73,30 +74,6 @@ class Recommendation extends React.Component {
         </div>);
     }
 
-    formCard(recipe) {
-        const {classes} = this.props;
-        return (
-            <Card className={classes.card} variant="outlined">
-                <CardActionArea disableRipple>
-                    <Link href={recipe["recipe"]["shareAs"]}>
-                <CardMedia
-                    className={classes.cardMedia}
-                    image={recipe["recipe"]["image"]}
-                    title={recipe["recipe"]["label"]}
-                />
-                    </Link>
-                </CardActionArea>
-                <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2" style={{textAlign: "center"}}>
-                        <Link href={recipe["recipe"]["shareAs"]} style={{ textDecoration: "none", color: "inherit" }}>
-                            {recipe["recipe"]["label"]}
-                        </Link>
-                    </Typography>
-                </CardContent>
-            </Card>
-        );
-    }
-
     render() {
         const {classes} = this.props;
         return this.props.userInfo.isLoggedIn ? (
@@ -136,7 +113,7 @@ class Recommendation extends React.Component {
                                 <Grid container item xs={12} spacing={3} justify="center">
                                     {this.props.recommendation["hits"].map(recipe =>
                                         <Grid item xs={12} sm={6} md={4}>
-                                            {this.formCard(recipe)}
+                                            <RecipeInfo recipe={recipe}/>
                                         </Grid>
                                     )
                                     }
