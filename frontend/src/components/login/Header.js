@@ -7,10 +7,11 @@ import ListItem from "@material-ui/core/ListItem";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import compose from "recompose/compose";
 import { connect } from "react-redux";
 import { loadUserData } from "../../actions/userActions";
-
+import { useLocation } from "react-router-dom";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
@@ -91,6 +92,8 @@ class Header extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const { pathname } = window.location.pathname;
+
     return (
       <AppBar className={classes.appbar}>
         <Toolbar className={classes.toolbar}>
@@ -111,20 +114,29 @@ class Header extends React.Component {
               SmartCook
             </Link>
           </Typography>
+
           <List className="menu-list">
             {this.props.userInfo.isLoggedIn ? (
               <ListItem className="menu-item">
-                <Link
+                <NavLink
                   to={"/ingredientInventory"}
+                  activeClassName="selected"
+                  activeStyle={{
+                    borderBottom: "2px solid #43AA8B",
+                  }}
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
                   <Button href="" color="inherit" target="_blank" size="small">
                     Inventory
                   </Button>
-                </Link>
+                </NavLink>
 
-                <Link
+                <NavLink
                   to={"/recommendation"}
+                  activeClassName="selected"
+                  activeStyle={{
+                    borderBottom: "2px solid #43AA8B",
+                  }}
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
                   <Button
@@ -136,10 +148,14 @@ class Header extends React.Component {
                   >
                     Recommender
                   </Button>
-                </Link>
+                </NavLink>
 
-                <Link
+                <NavLink
                   to={"/journal"}
+                  activeClassName="selected"
+                  activeStyle={{
+                    borderBottom: "2px solid #43AA8B",
+                  }}
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
                   <Button
@@ -151,7 +167,7 @@ class Header extends React.Component {
                   >
                     Journal
                   </Button>
-                </Link>
+                </NavLink>
 
                 {/* <div>
                   <Button
@@ -209,17 +225,11 @@ class Header extends React.Component {
                     </ListItem>
                   </StyledMenuItem>
                   <StyledMenuItem>
-                    {/* <ListItemIcon>
-                          <DraftsIcon fontSize="small" />
-                        </ListItemIcon> */}
                     <ListItem button component="a" href="/foodPicAllView">
                       <ListItemText primary="All posts" />
                     </ListItem>
                   </StyledMenuItem>
                   <StyledMenuItem>
-                    {/* <ListItemIcon>
-                          <InboxIcon fontSize="small" />
-                        </ListItemIcon> */}
                     <ListItem button component="a" href="">
                       <ListItemText primary="My posts" />
                     </ListItem>
@@ -241,17 +251,32 @@ class Header extends React.Component {
               </ListItem>
             ) : (
               <ListItem>
-                <Link
+                <NavLink
                   to={"/"}
+                  activeClassName="selected"
+                  activeStyle={{
+                    borderBottom: "2px solid #43AA8B",
+                  }}
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
                   <Button href="" color="inherit" target="_self" size="small">
                     Home
                   </Button>
-                </Link>
-                <Button href="" color="inherit" target="_blank" size="small">
-                  About
-                </Button>
+                </NavLink>
+
+                <NavLink
+                  to={"/"}
+                  activeClassName="selected"
+                  activeStyle={{
+                    borderBottom: "2px solid #43AA8B",
+                  }}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <Button href="" color="inherit" target="_blank" size="small">
+                    About
+                  </Button>
+                </NavLink>
+
                 <Button
                   href="http://localhost:9000/auth/google"
                   color="inherit"
