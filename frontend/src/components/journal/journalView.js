@@ -4,7 +4,6 @@ import compose from 'recompose/compose';
 import {loadJournalsData, addNewJournalData, deleteOneJournalData} from "../../actions/journalActions";
 import {withStyles} from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
@@ -15,7 +14,6 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import CardHeader from "@material-ui/core/CardHeader";
 import Typography from "@material-ui/core/Typography";
 import {Link} from "react-router-dom";
-import ListItem from "@material-ui/core/ListItem";
 
 const useStyles = (theme) => ({
     root: {
@@ -43,51 +41,41 @@ class JournalView extends Component {
                     to={"/journal"}
                     style={{textDecoration: "none", color: "inherit"}}
                 >
-                    <Button
-                        href=""
-                        color="inherit"
-                        target="_blank"
-                        size="small"
-                        onClick=""
-                    >
-                        Add A New Journal
-                    </Button>
+                    Add A New Journal
                 </Link>
                 {this.props.journals.map((journal) =>
-                    <Card className={classes.root}>
-                        <CardActionArea>
-                            <CardHeader
-                                action={
-                                    // this.props.userInfo.email === journal.email &&
-                                    <IconButton aria-label="settings">
-                                        <DeleteIcon
-                                            onClick={() => this.props.deleteOneJournalData(journal._id)}
-                                        />
-                                    </IconButton>
-                                }
-                                title={
-                                    <Typography align="left" variant="h6" component="h2">
-                                        {journal.title}
-                                    </Typography>
-                                }
-                                subheader={
-                                    <Typography align="left" variant="subtitle2" component="h2">
-                                        {journal.author} {journal.createdAt.slice(0, -5).replace("T", " ")}
-                                    </Typography>
-                                }
-                            />
-                            {journal.images.length > 0 &&
-                            <CardMedia
-                                className={classes.media}
-                                image={journal.images[0].secure_url}
-                                title={journal.title}
-                            />}
-                            <CardContent>
-                                <div style={{textAlign: "left"}}>
-                                    {parse(journal.body)}
-                                </div>
-                            </CardContent>
-                        </CardActionArea>
+                    <Card key={journal.id} className={classes.root}>
+                        <CardHeader
+                            action={
+                                // this.props.userInfo.email === journal.email &&
+                                <IconButton aria-label="settings">
+                                    <DeleteIcon
+                                        onClick={() => this.props.deleteOneJournalData(journal._id)}
+                                    />
+                                </IconButton>
+                            }
+                            title={
+                                <Typography align="left" variant="h6" component="h2">
+                                    {journal.title}
+                                </Typography>
+                            }
+                            subheader={
+                                <Typography align="left" variant="subtitle2" component="h2">
+                                    {journal.author} {journal.createdAt.slice(0, -5).replace("T", " ")}
+                                </Typography>
+                            }
+                        />
+                        {journal.images.length > 0 &&
+                        <CardMedia
+                            className={classes.media}
+                            image={journal.images[0].secure_url}
+                            title={journal.title}
+                        />}
+                        <CardContent>
+                            <div style={{textAlign: "left"}}>
+                                {parse(journal.body)}
+                            </div>
+                        </CardContent>
                         <CardActions>
                             <Button size="small" color="primary">
                                 Share

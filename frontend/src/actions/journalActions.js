@@ -1,10 +1,11 @@
+import { toast } from 'react-toastify';
+
 export const updateTitle = (title) => {
     return {
         type: 'JOURNAL_EDITOR_TITLE',
         payload: title
     };
 };
-
 
 export const editJournal = (data) => {
     return {
@@ -79,6 +80,10 @@ export const addNewJournalData = (editorData, userInfo) => {
             .then((res) => {
                dispatch(submitJournal());
                dispatch(addJournal(res));
+               toast.success("A new journal has been added", {
+                   position: toast.POSITION.TOP_CENTER,
+                   autoClose: 3000
+               });
             })
     }
 };

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from 'react-router';
 import compose from "recompose/compose";
 import {
   editJournal,
@@ -17,6 +18,9 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { loadUserData } from "../../actions/userActions";
 import pic from "../ingredientInventory/image5.jpg"
+
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const useStyles = (theme) => ({
@@ -82,7 +86,9 @@ class Journal extends React.Component {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => {this.props.addNewJournalData(this.props.editorData, this.props.userInfo)}}
+            onClick={() => {this.props.addNewJournalData(this.props.editorData, this.props.userInfo);
+            this.props.history.push('/journalView')
+            }}
           >
             Submit Journal
           </Button>
@@ -100,7 +106,7 @@ const mapStateToProps = (state) => {
 };
 
 export default compose(
-  withStyles(useStyles),
+  withStyles(useStyles), withRouter,
   connect(mapStateToProps, {
     editJournal,
     updateTitle,

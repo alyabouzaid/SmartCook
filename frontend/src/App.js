@@ -8,7 +8,10 @@ import Journal from "./components/journal/journal";
 import JournalView from "./components/journal/journalView";
 import FoodPictures from "./components/foodPictures/foodPictures";
 import FoodPicturesCreatePost from "./components/foodPictures/foodPicturesCreatePost";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+toast.configure();
 class App extends React.Component {
   render() {
     return (
