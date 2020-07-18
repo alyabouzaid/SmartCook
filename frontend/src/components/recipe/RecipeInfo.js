@@ -7,6 +7,10 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import Link from "@material-ui/core/Link";
 import CardMedia from "@material-ui/core/CardMedia";
 import Card from "@material-ui/core/Card";
+import CardActions from '@material-ui/core/CardActions';
+import LinkIcon from '@material-ui/icons/Link';
+import IconButton from "@material-ui/core/IconButton";
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 const useStyles = makeStyles((theme) => ({
     cardGrid: {
@@ -54,54 +58,62 @@ export default function RecipeInfo({recipe}) {
         <div>
             <Card className={classes.card} variant="outlined">
                 <CardActionArea disableRipple>
+                    <Link href={recipe["recipe"]["shareAs"]}>
                         <CardMedia
                             className={classes.cardMedia}
                             image={recipe["recipe"]["image"]}
-                            // title={recipe["recipe"]["label"]}
-                            title="Click for more info"
-                            onClick={handleClick}
+                            title={recipe["recipe"]["label"]}
                         />
+                    </Link>
                 </CardActionArea>
-                <CardContent className={classes.cardContent} style={{height: "100px"}}>
-                    <Typography gutterBottom variant="h5" component="h2" style={{textAlign: "center"}}>
-                        <Link href={recipe["recipe"]["shareAs"]} title="Click for recipe" style={{ textDecoration: "none", color: "inherit" }}>
+                <CardContent className={classes.cardContent} style={{height: "80px"}}>
+                    <Typography gutterBottom variant="h5" component="h2" style={{textAlign: "left"}}>
+                        <Link href={recipe["recipe"]["shareAs"]} title={recipe["recipe"]["label"]} style={{ textDecoration: "none", color: "inherit" }}>
                             {recipe["recipe"]["label"]}
                         </Link>
                     </Typography>
                 </CardContent>
+                <CardActions disableRipple>
+                    <IconButton aria-label="more info" onClick={handleClick}>
+                        <InfoOutlinedIcon size="small"/>
+                    </IconButton>
+                    <Popover
+                        id={id}
+                        open={open}
+                        anchorEl={anchorEl}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                    >
+                        <Card className={classes.card} variant="outlined">
+                            <CardContent className={classes.cardContent}>
+                                <Typography className={classes.title} paragraph >Ingredients:</Typography>
+                                <Typography style={{textAlign: "left"}}>
+                                    {recipe["recipe"]["ingredientLines"].map( (item) => <li> {item} </li>)}
+                                </Typography>
+                                <p style={{textAlign: "left", backgroundColor: "transparent", margin: "3", fontSize: '24px'}}/>
+                                <Typography className={classes.title} paragraph>Health Labels:</Typography>
+                                <Typography style={{textAlign: "left"}}>
+                                    {recipe["recipe"]["dietLabels"].concat(recipe["recipe"]["healthLabels"]).map( (item) => <li> {item} </li>)}
+                                </Typography>
+                                {/*<p style={{textAlign: "left", backgroundColor: "floralWhite", margin: "3", fontSize: '24px'}}/>*/}
+                                {/*<Typography className={classes.title}>Calories: {Number(recipe["recipe"]["calories"]).toFixed(0)} kcal</Typography>*/}
+                                {/*<p style={{textAlign: "left", backgroundColor: "floralWhite", margin: "3", fontSize: '24px'}}/>*/}
+                                {/*<Typography className={classes.title}>Time: {recipe["recipe"]["totalTime"]} min </Typography>*/}
+                            </CardContent>
+                        </Card>
+                    </Popover>
+                    <IconButton aria-label="share" href={recipe["recipe"]["shareAs"]} >
+                        <LinkIcon size="small" />
+                    </IconButton>
+                </CardActions>
             </Card>
-            <Popover
-                id={id}
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                }}
-            >
-                <Card className={classes.card} variant="outlined">
-                    <CardContent className={classes.cardContent}>
-                        <Typography className={classes.title} paragraph>Ingredients:</Typography>
-                        <Typography style={{textAlign: "left"}}>
-                            {recipe["recipe"]["ingredientLines"].map( (item) => <li> {item} </li>)}
-                        </Typography>
-                        <p style={{textAlign: "left", backgroundColor: "floralWhite", margin: "3", fontSize: '24px'}}/>
-                        <Typography className={classes.title} paragraph>Health Labels:</Typography>
-                        <Typography style={{textAlign: "left"}}>
-                            {recipe["recipe"]["dietLabels"].concat(recipe["recipe"]["healthLabels"]).map( (item) => <li> {item} </li>)}
-                        </Typography>
-                        {/*<p style={{textAlign: "left", backgroundColor: "floralWhite", margin: "3", fontSize: '24px'}}/>*/}
-                        {/*<Typography className={classes.title}>Calories: {Number(recipe["recipe"]["calories"]).toFixed(0)} kcal</Typography>*/}
-                        {/*<p style={{textAlign: "left", backgroundColor: "floralWhite", margin: "3", fontSize: '24px'}}/>*/}
-                        {/*<Typography className={classes.title}>Time: {recipe["recipe"]["totalTime"]} min </Typography>*/}
-                    </CardContent>
-                </Card>
-            </Popover>
         </div>
     );
 }
