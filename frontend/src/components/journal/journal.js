@@ -19,11 +19,7 @@ import Button from "@material-ui/core/Button";
 import { loadUserData } from "../../actions/userActions";
 import pic from "../ingredientInventory/image5.jpg"
 
-import { ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-
-const useStyles = (theme) => ({
+const useStyles = () => ({
   root: {
     flexGrow: 1,
   },
@@ -67,7 +63,7 @@ class Journal extends React.Component {
             <Grid item xs={9}>
               <CKEditor
                 editor={ClassicEditor}
-                data="<p>Hello from CKEditor 5!</p>"
+                data=""
                 onInit={(editor) => {
                   // You can store the "editor" and use when it is needed.
                   console.log("Editor is ready to use!", editor);
