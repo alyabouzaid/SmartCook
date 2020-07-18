@@ -1,5 +1,4 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -36,6 +35,7 @@ import { deepPurple } from "@material-ui/core/colors";
 import { css } from "@emotion/core";
 import DotLoader from "react-spinners/DotLoader";
 import pic from "../login/landingPage.jpg";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 const useStyles = (theme) => ({
   rootContainer: {
@@ -151,7 +151,7 @@ class FoodPictures extends React.Component {
     // );
 
     return (
-      <div style={{backgroundColor: '#FFFAF0'}}>
+      <div style={{ backgroundColor: "#FFFAF0" }}>
         <Header />
         {/* <div className="sweet-loading">
           <DotLoader
@@ -181,10 +181,20 @@ class FoodPictures extends React.Component {
                   </Avatar>
                 }
                 action={
-                  <IconButton aria-label="settings">
+                  <IconButton
+                    aria-label="settings"
+                    onClick={() => {
+                      console.log("testing:", this.props.userInfo.firstName);
+                      console.log("testing2:", item._id);
+                      this.props.deleteOneFoodPicPost(
+                        item._id,
+                        this.props.userInfo.firstName
+                      );
+                    }}
+                  >
                     {/* <MoreVertIcon /> */}
                     <DeleteIcon
-                      onClick={() => this.props.deleteOneFoodPicPost(item._id)}
+                    // onClick={() => this.props.deleteOneFoodPicPost(item._id)}
                     />
                   </IconButton>
                 }
@@ -207,21 +217,23 @@ class FoodPictures extends React.Component {
                 />
               ))}
               <CardActions disableSpacing className={classes.actions}>
-                <IconButton aria-label="add to favorites">
-                  <FavoriteIcon
-                    onClick={() => {
-                      this.handleClickLike();
-                      this.props.updateLike(
-                        item._id,
-                        this.props.userInfo.firstName
-                      );
-                    }}
-                    style={{ color: this.state.likeIconBgColor }}
-                  />
+                <IconButton
+                  aria-label="add to favorites"
+                  onClick={() => {
+                    this.handleClickLike();
+                    this.props.updateLike(
+                      item._id,
+                      this.props.userInfo.firstName.trim()
+                    );
+                  }}
+                  style={{ color: this.state.likeIconBgColor }}
+                >
+                  <FavoriteIcon />
                 </IconButton>
                 {/* <IconButton aria-label="share">
             <ShareIcon />
           </IconButton> */}
+
                 <Typography>{item.likes.length} likes</Typography>
               </CardActions>
 
@@ -249,7 +261,7 @@ class FoodPictures extends React.Component {
               <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
                 {/* <div className={classes.commentList}> */}
                 {item.comments.map((comment) => (
-                  <List>
+                  <List key={item._id}>
                     {this.generate(
                       <ListItem>
                         <ListItemAvatar>
@@ -337,8 +349,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loadUserData: () => dispatch(loadUserData()),
     getAllFoodPicPost: () => dispatch(getAllFoodPicPost()),
-    deleteOneFoodPicPost: (idPayload) =>
-      dispatch(deleteOneFoodPicPost(idPayload)),
+    deleteOneFoodPicPost: (idPayload, username) =>
+      dispatch(deleteOneFoodPicPost(idPayload, username)),
     updateLike: (idPayload, username) =>
       dispatch(updateLike(idPayload, username)),
     updateComment: (idPayload, comment, username) =>

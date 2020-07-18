@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core/styles";
+import "../../index.css";
 import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -39,28 +40,6 @@ const useStyles = (theme) => ({
   },
 });
 
-// const [description, setDescription] = useState("");
-//   const [image, setImage] = useState({ preview: "", raw: "" });
-
-//   const hiddenFileInput = React.useRef(null);
-
-//   const handleClick = (event) => {
-//     hiddenFileInput.current.click();
-//   };
-
-//   // const testing = () => {
-//   //   console.log("testing submit button");
-//   // };
-
-//   const handleChange = (e) => {
-//     if (e.target.files.length) {
-//       setImage({
-//         preview: URL.createObjectURL(e.target.files[0]),
-//         raw: e.target.files[0],
-//       });
-//     }
-//   };
-
 class FoodPicturesCreatePost extends React.Component {
   myInput = React.createRef();
 
@@ -75,19 +54,9 @@ class FoodPicturesCreatePost extends React.Component {
       },
     };
 
-    // this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    // this.hiddenFileInput = this.hiddenFileInput.bind(this);
     this.inputRef = null;
   }
-
-  // handleClick() {
-  //   this.hiddenFileInput.current.click();
-  // }
-
-  // hiddenFileInput() {
-  //   React.useRef(null);
-  // }
 
   handleChange(e) {
     if (e.target.files.length) {
@@ -102,7 +71,7 @@ class FoodPicturesCreatePost extends React.Component {
 
   componentDidMount() {
     // this.props.loadUserData();
-    this.props.getAllFoodPicPost();
+    // this.props.getAllFoodPicPost();
   }
   // render() {
   //   const { classes } = this.props;
@@ -129,7 +98,13 @@ class FoodPicturesCreatePost extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
+      <div
+        style={{
+          backgroundImage: `url(${pic})`,
+          height: 1000,
+          backgroundSize: "cover",
+        }}
+      >
         <Header />
         <div className={classes.rootContainer}>
           <Card className={classes.rootCard}>
@@ -137,6 +112,7 @@ class FoodPicturesCreatePost extends React.Component {
               className={classes.rootCardTitle}
               variant="h5"
               component="p"
+              style={{ fontFamily: "Grand Hotel" }}
             >
               Food Picture Post
             </Typography>

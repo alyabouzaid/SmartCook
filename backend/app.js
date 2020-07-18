@@ -18,7 +18,7 @@ const inventoryRouter = require('./routes/inventory');
 const  recipesRouter = require('./routes/recipes');
 const foodPicturesRouter = require("./routes/foodPictures");
 const serverRouter = require("./routes/server");
-// TODO: REMOVE ENV
+
 // mongoose
 const mongoose = require("mongoose");
 
