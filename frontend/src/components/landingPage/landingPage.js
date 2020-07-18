@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import Header from "./Header";
-// import Parallax from "./Parallax";
 import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
 import MainCard from "./MainCard";
@@ -12,7 +10,8 @@ import Header from "../login/Header";
 import pic from "../login/landingPage.jpg";
 import compose from "recompose/compose";
 import { connect } from "react-redux";
-import { loadUserData } from "../../actions/userActions";
+import { getFeaturedFoodPicPost } from "../../actions/foodPicturesActions";
+import FeaturedPostCarousel from "../foodPictures/featuredPostCarousel";
 
 const useStyles = (theme) => ({
   gridList: {
@@ -26,6 +25,7 @@ const useStyles = (theme) => ({
   gridListHeader: {
     display: "flex",
     justifyContent: "center",
+    marginTop: 80,
   },
 });
 
@@ -57,6 +57,9 @@ const gridCardContent = [
 ];
 
 class LandingPage extends React.Component {
+  componentDidMount() {
+    this.props.getFeaturedFoodPicPost();
+  }
 
   render() {
     const { classes } = this.props;
@@ -80,15 +83,20 @@ class LandingPage extends React.Component {
           style={{ display: "none" }}
           src="./frontend/gallery/homePage.png"
         />
-        <MainCard
+        {/* <MainCard
           card={mainCardContent}
           isAuthenticated={this.props.userInfo.isLoggedIn}
+        /> */}
+        <FeaturedPostCarousel
+          card={mainCardContent}
+          isAuthenticated={this.props.userInfo.isLoggedIn}
+          featuredPosts={this.props.featuredPosts}
         />
-        <div className={classes.gridListHeader}>
+        {/* <div className={classes.gridListHeader}>
           <Typography variant="h4" component="h2">
             Main Features
           </Typography>
-        </div>
+        </div> */}
         <div className={classes.gridList}>
           <GridList cols={4} justify="center">
             {gridCardContent.map((item) => {
@@ -101,15 +109,23 @@ class LandingPage extends React.Component {
   }
 }
 
-// export default withStyles(useStyles)(LandingPage);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getFeaturedFoodPicPost: () => dispatch(getFeaturedFoodPicPost()),
+  };
+};
+
 const mapStateToProps = (state) => {
-  //name is by convention
-  return { userInfo: state.userStore }; //now it will appear as props
+  return {
+    userInfo: state.userStore,
+    foodPicPost: state.foodPicturesStore,
+    featuredPosts: state.foodPicturesStore.featuredPosts,
+  };
 };
 
 export default compose(
   withStyles(useStyles),
-  connect(mapStateToProps, { loadUserData })
+  connect(mapStateToProps, mapDispatchToProps)
 )(LandingPage);
 
 //

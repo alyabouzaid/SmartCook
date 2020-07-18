@@ -135,9 +135,22 @@ class IngredientInventory extends React.Component {
             <Table className={useStyles.table} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell style={{fontWeight: 'bold', fontSize: '16px'}} align="right">Ingredient</TableCell>
-                  <TableCell style={{fontWeight: 'bold', fontSize: '16px'}} align="right">Amount&nbsp;(kg/quantity)</TableCell>
-                  <TableCell style={{fontWeight: 'bold', fontSize: '16px'}} align="right">
+                  <TableCell
+                    style={{ fontWeight: "bold", fontSize: "16px" }}
+                    align="right"
+                  >
+                    Ingredient
+                  </TableCell>
+                  <TableCell
+                    style={{ fontWeight: "bold", fontSize: "16px" }}
+                    align="right"
+                  >
+                    Amount&nbsp;(kg/quantity)
+                  </TableCell>
+                  <TableCell
+                    style={{ fontWeight: "bold", fontSize: "16px" }}
+                    align="right"
+                  >
                     Target Amount&nbsp;(kg/quantity)
                   </TableCell>
                   <TableCell></TableCell>
@@ -146,9 +159,15 @@ class IngredientInventory extends React.Component {
               <TableBody>
                 {this.props.ingredientInventory.map((row) => (
                   <TableRow key={row.name}>
-                    <TableCell style={{fontSize: '16px'}} align="right">{row.description}</TableCell>
-                    <TableCell style={{fontSize: '16px'}} align="right">{row.amount}</TableCell>
-                    <TableCell style={{fontSize: '16px'}} align="right">{row.targetAmount}</TableCell>
+                    <TableCell style={{ fontSize: "16px" }} align="right">
+                      {row.description}
+                    </TableCell>
+                    <TableCell style={{ fontSize: "16px" }} align="right">
+                      {row.amount}
+                    </TableCell>
+                    <TableCell style={{ fontSize: "16px" }} align="right">
+                      {row.targetAmount}
+                    </TableCell>
                     <TableCell component="th" scope="row">
                       <Button
                         variant="contained"

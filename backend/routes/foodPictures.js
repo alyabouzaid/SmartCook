@@ -3,7 +3,7 @@ const { uuid } = require("uuidv4");
 var mongoose = require("mongoose");
 const foodPicturePost = require("../models/foodPictures.model");
 
-//get all postings request
+// get all postings request
 router.get("/allpost", (req, res) => {
   // setTimeout(() => {
   foodPicturePost
@@ -12,6 +12,16 @@ router.get("/allpost", (req, res) => {
     .then((posts) => res.status(200).json(posts))
     .catch((err) => res.status(400).json("Error: ", err));
   // }, 4000);
+});
+
+// get highest like post (feature post) request
+router.get("/featuredPost", (req, res) => {
+  foodPicturePost
+    .find()
+    .sort("-likesLength")
+    .limit(3)
+    .then((posts) => res.status(200).json(posts))
+    .catch((err) => res.status(400).json("Error: ", err));
 });
 
 // post request
@@ -48,8 +58,11 @@ router.get("/mypost", (req, res) => {
 // update like request
 router.put("/like/:id", (req, res) => {
   foodPicturePost
-    .findByIdAndUpdate(
-      req.params.id,
+    .findOneAndUpdate(
+      {
+        _id: req.params.id,
+        likes: { $ne: req.body.user },
+      },
       {
         $push: { likes: req.body.user },
         $inc: { likesLength: 1 },
@@ -96,18 +109,32 @@ router.put("/comment/:id", (req, res) => {
 
 // delete request
 router.delete("/delete/:id", (req, res) => {
+  // console.log("route:", req.body.username);
   foodPicturePost
-    .findByIdAndRemove(req.params.id)
-    .then(() => res.status(200).json("Post is deleted."))
-    .catch((err) => res.status(400).json("Error: " + err));
+    // .findByIdAndRemove(req.params.id)
+    // .findOneAndDelete({
+    //   _id: req.params.id,
+    //   postedBy: req.body.user,
+    // })
+    // .findOneAndDelete({
+    //   $and: [{ _id: req.params.id }, { postedBy: req.body.user }],
+    // })
+    .remove({
+      postedBy: req.body.username,
+      _id: req.params.id,
+      // postedBy: { $eq: req.body.user },
+    })
+    // .then(() => res.status(200).json("Post is deleted."))
+    .then(() => res.status(200).json(`${req.body.username}`))
+    .catch((err) => res.status(400).json("Error: cannot find user "));
 });
 
 //delete all request
 router.delete("/deleteAll", (req, res) => {
-  messagePost
+  foodPicturePost
     .remove({})
     .then(() => res.status(200).json("All posts are deleted."))
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json("Error: ", err));
 });
 
 module.exports = router;
