@@ -57,7 +57,7 @@ app.use(bodyParser.json());
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 // google authentication routes
-app.use("/", serverRouter);
+app.use("/auth", serverRouter);
 app.use('/inventories', inventoryRouter);
 // journal feature routes
 app.use("/journals", journalsRouter);

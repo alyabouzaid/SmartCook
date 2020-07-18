@@ -8,10 +8,9 @@ const cookieSession = require("cookie-session");
 const clientID = process.env.OAUTH_CLIENT_ID;
 const clientSecret = process.env.OAUTH_CLIENT_SECRET;
 const scope = ["email", "profile"];
-const url = "http://localhost:9000";
-const oauthPath = "/auth/google";
-const callbackPath = "/auth/google/callback";
-const callbackURL = `${url}${callbackPath}`;
+const oauthPath = "/google";
+const callbackPath = "/google/callback";
+const callbackURL = "http://localhost:9000/auth/google/callback";
 
 let isAuthenticated = false;
 let name = "";
@@ -39,7 +38,6 @@ passport.use(
     (accessToken, refreshToken, profile, done) => {
       // console.log(accessToken);
       console.log(profile);
-
       // Where you verify user on your application
       // Find or Create a user in your DB and pass it.
       // If you are not using googleapis, you don't need to keep access token anymore.
@@ -97,7 +95,7 @@ app.get(
 //     }
 // }
 
-app.get("/auth/user", (req, res) => {
+app.get("/user", (req, res) => {
   let json = {
     isLoggedIn: isAuthenticated,
     firstName: name,
@@ -107,7 +105,7 @@ app.get("/auth/user", (req, res) => {
   res.send(json);
 });
 
-app.get("/auth/logout", (req, res) => {
+app.get("/logout", (req, res) => {
   req.logout();
   req.session = null;
   isAuthenticated = false;
@@ -118,7 +116,7 @@ app.get("/auth/logout", (req, res) => {
   } else {
     console.log("user not authenticated");
   }
-  res.redirect("http://localhost:3000/");
+  res.redirect("http://localhost:3000/"); // TODO: CHANGE TO "/"
 });
 
 // error handler
