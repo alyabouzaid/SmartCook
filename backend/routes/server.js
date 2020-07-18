@@ -15,6 +15,7 @@ const callbackURL = "http://localhost:9000/auth/google/callback";
 let isAuthenticated = false;
 let name = "";
 let email = "";
+let fullName = "";
 
 let app = express.Router();
 app.use(express.json());
@@ -42,6 +43,7 @@ passport.use(
       // Find or Create a user in your DB and pass it.
       // If you are not using googleapis, you don't need to keep access token anymore.
       // access token is already used to fetch profile info.
+        fullName = profile.displayName;
       name = profile.name.givenName;
       email = profile.emails[0].value;
       done(null, { accessToken, refreshToken, profile });
@@ -100,6 +102,7 @@ app.get("/user", (req, res) => {
     isLoggedIn: isAuthenticated,
     firstName: name,
     email: email,
+      fullName: fullName,
   };
   console.log(json);
   res.send(json);
@@ -111,6 +114,7 @@ app.get("/logout", (req, res) => {
   isAuthenticated = false;
   name = "";
   email = "";
+  fullName = "";
   if (req.user) {
     console.log("user still authenticated");
   } else {
