@@ -2,7 +2,13 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const uploadImageAndCreatePost = (description, image, username) => {
+export const uploadImageAndCreatePost = (
+  description,
+  image,
+  email,
+  userFirstName,
+  userFullName
+) => {
   console.log("in getImage and createPost");
   return async (dispatch) => {
     try {
@@ -14,7 +20,15 @@ export const uploadImageAndCreatePost = (description, image, username) => {
       );
       const imageData = await res.data;
       console.log("image data: ", JSON.stringify(imageData));
-      dispatch(createNewFoodPicPost(description, imageData, username));
+      dispatch(
+        createNewFoodPicPost(
+          description,
+          imageData,
+          email,
+          userFirstName,
+          userFullName
+        )
+      );
     } catch (error) {
       console.log("Error: ", error);
       toast.error("API error", {
@@ -26,7 +40,13 @@ export const uploadImageAndCreatePost = (description, image, username) => {
 };
 
 // post request
-export const createNewFoodPicPost = (description, imageData, username) => {
+export const createNewFoodPicPost = (
+  description,
+  imageData,
+  email,
+  userFirstName,
+  userFullName
+) => {
   // console.log("in createNewFoodPic");
   // console.log("description: ", JSON.stringify(description));
   // console.log("image: ", JSON.stringify(imageData));
@@ -36,7 +56,9 @@ export const createNewFoodPicPost = (description, imageData, username) => {
       const params = {
         description: description,
         image: imageData,
-        user: username,
+        email: email,
+        userFirstName: userFirstName,
+        userFullName: userFullName,
       };
       // console.log("create post waiting before");
       // dispatch(postMessagePostingsLoading());
@@ -135,12 +157,12 @@ export const loadFeaturedPicPost = (posts) => {
 };
 
 //update like request
-export const updateLike = (idPayload, username) => {
+export const updateLike = (idPayload, email) => {
   // console.log("like");
   return async (dispatch) => {
     try {
       const params = {
-        user: username,
+        email: email,
       };
       const res = await axios.put(
         `http://localhost:9000/foodPictures/like/${idPayload}`,
@@ -172,13 +194,21 @@ export const updateLike = (idPayload, username) => {
 };
 
 //update comment request
-export const updateComment = (idPayload, comment, username) => {
+export const updateComment = (
+  idPayload,
+  comment,
+  userFirstName,
+  userFullName,
+  email
+) => {
   // console.log("comment");
   return async (dispatch) => {
     try {
       const params = {
         comment: comment,
-        user: username,
+        userFirstName: userFirstName,
+        userFullName: userFullName,
+        email: email,
       };
       const res = await axios.put(
         `http://localhost:9000/foodPictures/comment/${idPayload}`,
@@ -206,11 +236,11 @@ export const addUpdatedFoodPicPost = (updatedFoodPicPost) => {
 };
 
 //Delete one post request
-export const deleteOneFoodPicPost = (idPayload, username) => {
+export const deleteOneFoodPicPost = (idPayload, email) => {
   return async (dispatch) => {
     try {
       console.log("in action1:", idPayload);
-      console.log("in action2:", username);
+      console.log("in action2:", email);
 
       const res = await axios.delete(
         `http://localhost:9000/foodPictures/delete/${idPayload}`,
@@ -219,7 +249,7 @@ export const deleteOneFoodPicPost = (idPayload, username) => {
             "Content-Type": "application/json",
           },
           data: {
-            username,
+            email,
           },
         }
       );

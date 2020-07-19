@@ -20,10 +20,14 @@ const foodPicPostSchema = new Schema(
     comments: [
       {
         text: String,
-        postedBy: String,
+        postedByFirstName: String,
+        postedByFullName: String,
+        postedByEmail: String,
       },
     ],
-    postedBy: { type: String },
+    postedByFirstName: { type: String },
+    postedByFullName: { type: String },
+    postedByEmail: { type: String },
     dateTime: { type: String },
   },
   { timestamps: true }

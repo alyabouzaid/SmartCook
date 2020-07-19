@@ -109,18 +109,25 @@ class FoodPictures extends React.Component {
     this.handleClickLike = this.handleClickLike.bind(this);
     this.generate = this.generate.bind(this);
     this.handleExpandClick = this.handleExpandClick.bind(this);
+    this.trimInitialForNameDisplay = this.trimInitialForNameDisplay.bind(this);
   }
 
-  handleExpandClick = () => {
+  handleExpandClick() {
     this.setState({
       expanded: !this.state.expanded,
     });
-  };
+  }
 
   handleClickLike() {
     this.setState({
       likeIconBgColor: "red",
     });
+  }
+
+  trimInitialForNameDisplay(fullName) {
+    return fullName
+      .split(/\s/)
+      .reduce((response, word) => (response += word.slice(0, 1)), "");
   }
 
   generate(element) {
@@ -132,7 +139,6 @@ class FoodPictures extends React.Component {
   }
 
   componentDidMount() {
-    // this.props.loadUserData();
     this.props.getAllFoodPicPost();
   }
 
@@ -177,18 +183,20 @@ class FoodPictures extends React.Component {
                 className={classes.header}
                 avatar={
                   <Avatar aria-label="recipe" className={classes.avatar}>
-                    {item.postedBy.substring(0, 1)}
+                    {/* {item.postedByFirstName.substring(0, 1)} */}
+                    {this.trimInitialForNameDisplay(item.postedByFullName)}
                   </Avatar>
                 }
                 action={
                   <IconButton
                     aria-label="settings"
                     onClick={() => {
-                      console.log("testing:", this.props.userInfo.firstName);
-                      console.log("testing2:", item._id);
+                      // console.log("testing:", this.props.userInfo.firstName);
+                      // console.log("testing2:", item._id);
                       this.props.deleteOneFoodPicPost(
                         item._id,
-                        this.props.userInfo.firstName
+                        // this.props.userInfo.firstName
+                        this.props.userInfo.email
                       );
                     }}
                   >
@@ -200,7 +208,7 @@ class FoodPictures extends React.Component {
                 }
                 title={
                   <Typography align="left" variant="h6" component="h2">
-                    {item.postedBy}
+                    {item.postedByFullName}
                   </Typography>
                 }
                 subheader={
@@ -223,7 +231,8 @@ class FoodPictures extends React.Component {
                     this.handleClickLike();
                     this.props.updateLike(
                       item._id,
-                      this.props.userInfo.firstName.trim()
+                      // this.props.userInfo.firstName.trim()
+                      this.props.userInfo.email
                     );
                   }}
                   style={{ color: this.state.likeIconBgColor }}
@@ -271,7 +280,10 @@ class FoodPictures extends React.Component {
                               marginRight: 0,
                             }}
                           >
-                            {comment.postedBy.substring(0, 1)}
+                            {/* {comment.postedByFirstName.substring(0, 1)} */}
+                            {this.trimInitialForNameDisplay(
+                              item.postedByFullName
+                            )}
                           </Avatar>
                         </ListItemAvatar>
                         <ListItemText
@@ -283,7 +295,10 @@ class FoodPictures extends React.Component {
                               variant="subtitle1"
                               component="h2"
                             >
-                              {comment.postedBy + ": " + " " + comment.text}
+                              {comment.postedByFullName +
+                                ": " +
+                                " " +
+                                comment.text}
                             </Typography>
                           }
                         />
@@ -305,7 +320,9 @@ class FoodPictures extends React.Component {
                     this.props.updateComment(
                       item._id,
                       e.target[0].value,
-                      this.props.userInfo.firstName
+                      this.props.userInfo.firstName,
+                      this.props.userInfo.fullName,
+                      this.props.userInfo.email
                     );
                   }}
                 >

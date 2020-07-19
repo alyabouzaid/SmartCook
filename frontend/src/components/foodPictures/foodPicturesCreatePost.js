@@ -176,8 +176,9 @@ class FoodPicturesCreatePost extends React.Component {
                 this.props.uploadImageAndCreatePost(
                   this.state.description,
                   this.state.image.raw,
-                  // props.userInfo.name
-                  this.props.userInfo.firstName
+                  this.props.userInfo.email,
+                  this.props.userInfo.firstName,
+                  this.props.userInfo.fullName
                 )
               }
             >
@@ -192,8 +193,8 @@ class FoodPicturesCreatePost extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    uploadImageAndCreatePost: (description, image, username) =>
-      dispatch(uploadImageAndCreatePost(description, image, username)),
+    uploadImageAndCreatePost: (description, image, email, username) =>
+      dispatch(uploadImageAndCreatePost(description, image, email, username)),
     loadUserData: () => dispatch(loadUserData()),
     getAllFoodPicPost: () => dispatch(getAllFoodPicPost()),
   };

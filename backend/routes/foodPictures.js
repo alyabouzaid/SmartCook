@@ -29,14 +29,17 @@ router.post("/add", (req, res) => {
   const _id = uuid();
   const description = req.body.description;
   const image = req.body.image;
-  const postedBy = req.body.user;
+  const postedByFirstName = req.body.userFirstName;
+  const postedByFullName = req.body.userFullName;
+  const userEmail = req.body.email;
   const dateTime = new Date().toLocaleString();
 
   const post = new foodPicturePost({
     _id,
     description,
     image,
-    postedBy,
+    postedByFirstName,
+    postedByFullName,
     dateTime,
   });
   post
@@ -61,10 +64,10 @@ router.put("/like/:id", (req, res) => {
     .findOneAndUpdate(
       {
         _id: req.params.id,
-        likes: { $ne: req.body.user },
+        likes: { $ne: req.body.email },
       },
       {
-        $push: { likes: req.body.user },
+        $push: { likes: req.body.email },
         $inc: { likesLength: 1 },
       },
       {
@@ -85,7 +88,9 @@ router.put("/like/:id", (req, res) => {
 router.put("/comment/:id", (req, res) => {
   const comment = {
     text: req.body.comment,
-    postedBy: req.body.user,
+    postedByFirstName: req.body.userFirstName,
+    postedByFullName: req.body.userFullName,
+    postedByEmail: req.body.email,
   };
   foodPicturePost
     .findByIdAndUpdate(
@@ -120,7 +125,7 @@ router.delete("/delete/:id", (req, res) => {
     //   $and: [{ _id: req.params.id }, { postedBy: req.body.user }],
     // })
     .remove({
-      postedBy: req.body.username,
+      postedByEmail: req.body.email,
       _id: req.params.id,
       // postedBy: { $eq: req.body.user },
     })
