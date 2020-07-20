@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CategorySlider from "./CategorySlider";
 import {updateDietType} from "../../actions/recommendationFilterActions";
+import {updateHealthType} from "../../actions/recommendationFilterActions";
 
 const useStyles = (theme) => ({
     root: {
@@ -20,15 +21,19 @@ const useStyles = (theme) => ({
     },
 });
 
-const cuisineTypes = [
-    "American", "Asian", "British", "Caribbean", "Central Europe", "Chinese", "Eastern Europe", "French",
-    "Indian", "Italian", "Japanese", "Kosher", "Mediterranean", "Mexican", "Middle Eastern", "Nordic",
-    "South American", "South East Asian"
+const healthTypes = [
+    "Alcohol-free", "Immuno-supportive", "Peanut-free", "Sugar-conscious", "Tree-nut-free",
+    "Vegan", "Vegetarian"
 ];
 
-// TODO: high-fiber, low-sodium don't work
+// const cuisineTypes = [
+//     "American", "Asian", "British", "Caribbean", "Central Europe", "Chinese", "Eastern Europe", "French",
+//     "Indian", "Italian", "Japanese", "Kosher", "Mediterranean", "Mexican", "Middle Eastern", "Nordic",
+//     "South American", "South East Asian"
+// ];
+
 const dietTypes = [
-    "balanced", "high-protein", "low-carb", "low-fat"
+    "Balanced", "High-protein", "Low-carb", "Low-fat"
 ];
 
 class CategoryList extends React.Component {
@@ -39,26 +44,88 @@ class CategoryList extends React.Component {
             open: true,
             dietValue: "",
             dietInput: "",
+            healthValue: "",
+            healthInput: "",
+            // cuisineValue: "",
+            // cuisineInput: "",
         }
     };
 
-    makeCuisineBar(searchBarType, filterOptions) {
+    changeHealthValue(newValue) {
+        this.setState({healthValue: (newValue === null ? "" : newValue)});
+        if (newValue !== null && healthTypes.includes(newValue)) {
+            let lowerCaseString = newValue.toLowerCase();
+            this.props.updateHealthType(lowerCaseString);
+        }
+        else {
+            this.props.updateHealthType("alcohol-free");
+        }
+    }
+
+    changeHealthInput(newInputValue) {
+        this.setState({healthInput: (newInputValue === "" ? "" : newInputValue)});
+    };
+
+    makeHealthBar(searchBarType, filterOptions) {
         return (
             <Autocomplete
                 id={searchBarType}
                 options={filterOptions}
                 getOptionLabel={(option) => option}
-                // style={{ width: 300 }}
                 style={{ width: "100%"}}
                 renderInput={(params) => <TextField {...params} label={searchBarType} variant="outlined" />}
+                value={this.state.healthValue}
+                onChange={(event, newValue) => {
+                    this.changeHealthValue(newValue);
+                }}
+                inputValue={this.state.healthInput}
+                onInputChange={(event, newInputValue) => {
+                    this.changeHealthInput(newInputValue);
+                }}
             />
         );
     }
 
+    // changeCuisineValue(newValue) {
+    //     this.setState({cuisineValue: (newValue === null ? "" : newValue)});
+    //     if (newValue !== null && cuisineTypes.includes(newValue)) {
+    //         let lowerCaseString = newValue.toLowerCase();
+    //         this.props.updateCuisineType(lowerCaseString);
+    //     }
+    //     else {
+    //         this.props.updateCuisineType("american");
+    //     }
+    // }
+    //
+    // changeCuisineInput(newInputValue) {
+    //     this.setState({cuisineInput: (newInputValue === "" ? "" : newInputValue)});
+    // };
+    //
+    // makeCuisineBar(searchBarType, filterOptions) {
+    //     return (
+    //         <Autocomplete
+    //             id={searchBarType}
+    //             options={filterOptions}
+    //             getOptionLabel={(option) => option}
+    //             style={{ width: "100%"}}
+    //             renderInput={(params) => <TextField {...params} label={searchBarType} variant="outlined" />}
+    //             value={this.state.cuisineValue}
+    //             onChange={(event, newValue) => {
+    //                 this.changeCuisineValue(newValue);
+    //             }}
+    //             inputValue={this.state.cuisineInput}
+    //             onInputChange={(event, newInputValue) => {
+    //                 this.changeCuisineInput(newInputValue);
+    //             }}
+    //         />
+    //     );
+    // }
+
     changeDietValue(newValue) {
         this.setState({dietValue: (newValue === null ? "" : newValue)});
         if (newValue !== null && dietTypes.includes(newValue)) {
-            this.props.updateDietType(String(newValue));
+            let lowerCaseString = newValue.toLowerCase();
+            this.props.updateDietType(lowerCaseString);
         }
         else {
             this.props.updateDietType("balanced");
@@ -105,7 +172,7 @@ class CategoryList extends React.Component {
                 className={classes.root}
             >
                 <ListItem>
-                    {this.makeCuisineBar("Cuisine", cuisineTypes)}
+                    {this.makeHealthBar("Health", healthTypes)}
                 </ListItem>
 
                 <ListItem>
@@ -132,5 +199,5 @@ const mapStateToProps = (state) => {
 
 export default compose(
     withStyles(useStyles),
-    connect(mapStateToProps, {updateDietType})
+    connect(mapStateToProps, {updateDietType, updateHealthType})
 )(CategoryList);
