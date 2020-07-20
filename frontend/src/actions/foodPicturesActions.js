@@ -1,7 +1,9 @@
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const uploadImageAndCreatePost = (description, image, username) => {
-  // console.log("in getImage and createPost");
+  console.log("in getImage and createPost");
   return async (dispatch) => {
     try {
       const formData = new FormData();
@@ -14,7 +16,11 @@ export const uploadImageAndCreatePost = (description, image, username) => {
       console.log("image data: ", JSON.stringify(imageData));
       dispatch(createNewFoodPicPost(description, imageData, username));
     } catch (error) {
-      console.log("error", error);
+      console.log("Error: ", error);
+      toast.error("API error", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
     }
   };
 };
@@ -32,49 +38,32 @@ export const createNewFoodPicPost = (description, imageData, username) => {
         image: imageData,
         user: username,
       };
-      console.log("create post waiting before");
+      // console.log("create post waiting before");
       // dispatch(postMessagePostingsLoading());
       const res = await axios.post(
         "http://localhost:9000/foodPictures/add",
         params
       );
-      console.log("create post waiting");
+      // console.log("create post waiting");
       const newFoodPicPost = await res.data;
       await dispatch(addNewFoodPicPost(newFoodPicPost));
-      window.location = "/foodPicAllView";
+      toast.success("A new food picture post is addded!", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
+      setTimeout(() => {
+        window.location = "/foodPicAllView";
+      }, 2000);
+      // console.log("in all pic view page");
     } catch (error) {
-      console.log("error", error);
+      console.log("Error: ", error);
+      toast.error("API error", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
     }
   };
 };
-
-// export const createNewFoodPicPost = (description, imageData, username) => {
-//   console.log("in createNewFoodPic");
-//   console.log("description: ", JSON.stringify(description));
-//   console.log("image: ", JSON.stringify(imageData));
-//   console.log("username: ", JSON.stringify(username));
-//   return (dispatch) => {
-//     const params = {
-//       description: description,
-//       image: imageData,
-//       user: username,
-//     };
-//     console.log("create post waiting before");
-//     console.log("params", JSON.stringify(params));
-
-//     // dispatch(postMessagePostingsLoading());
-//     axios
-//       .post("http://localhost:9000/foodPictures/addPost", params)
-//       .then((res) => {
-//         console.log("create post waiting");
-//         const newFoodPicPost = res.data;
-//         dispatch(addNewFoodPicPost(newFoodPicPost));
-//       })
-//       .catch((error) => {
-//         console.log("Error ", error);
-//       });
-//   };
-// };
 
 export const addNewFoodPicPost = (newFoodPicPost) => {
   // console.log("this is to message list: " + JSON.stringify(newPosting));
@@ -85,6 +74,7 @@ export const addNewFoodPicPost = (newFoodPicPost) => {
   };
 };
 
+// get all food pic post request for food post page
 export const getAllFoodPicPost = () => {
   return async (dispatch) => {
     try {
@@ -94,14 +84,18 @@ export const getAllFoodPicPost = () => {
       const allPosts = await res.data;
       dispatch(loadAllFoodPicPost(allPosts));
     } catch (error) {
-      console.log("error", error);
+      console.log("Error: ", error);
+      toast.error("API error", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000,
+      });
     }
   };
 };
 
 export const loadingAllFoodPicPost = () => {
   return {
-    type: "LOADING_ALL_FOODPIC_POSTS",
+    type: "FOODPIC_POSTS_LOADING",
   };
 };
 
@@ -112,9 +106,37 @@ export const loadAllFoodPicPost = (posts) => {
   };
 };
 
+// get one food pic post with highest like to feature on landing page
+export const getFeaturedFoodPicPost = () => {
+  return async (dispatch) => {
+    try {
+      // await dispatch(loadingAllFoodPicPost());
+      const res = await axios.get(
+        "http://localhost:9000/foodPictures/featuredPost"
+      );
+
+      const featuredPosts = await res.data;
+      dispatch(loadFeaturedPicPost(featuredPosts));
+    } catch (error) {
+      console.log("Error: ", error);
+      toast.error("API error", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000,
+      });
+    }
+  };
+};
+
+export const loadFeaturedPicPost = (posts) => {
+  return {
+    type: "LOAD_FEATURED_FOODPIC_POSTS",
+    payload: posts,
+  };
+};
+
 //update like request
 export const updateLike = (idPayload, username) => {
-  console.log("like");
+  // console.log("like");
   return async (dispatch) => {
     try {
       const params = {
@@ -127,7 +149,24 @@ export const updateLike = (idPayload, username) => {
       const updatedFoodPicPost = await res.data;
       dispatch(addUpdatedFoodPicPost(updatedFoodPicPost));
     } catch (error) {
-      console.log("error", error);
+      console.log("Error: ", error);
+      if (error instanceof TypeError) {
+        toast.error("Cannot like the same post twice", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 3000,
+        });
+      } else {
+        console.log("Error: ", error);
+        toast.error("API error", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 3000,
+        });
+      }
+      // console.log("error", error);
+      // toast.error("API error", {
+      //   position: toast.POSITION.TOP_RIGHT,
+      //   autoClose: 3000,
+      // });
     }
   };
 };
@@ -148,7 +187,11 @@ export const updateComment = (idPayload, comment, username) => {
       const updatedFoodPicPost = await res.data;
       dispatch(addUpdatedFoodPicPost(updatedFoodPicPost));
     } catch (error) {
-      console.log("error", error);
+      console.log("Error: ", error);
+      toast.error("API error", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000,
+      });
     }
   };
 };
@@ -163,15 +206,30 @@ export const addUpdatedFoodPicPost = (updatedFoodPicPost) => {
 };
 
 //Delete one post request
-export const deleteOneFoodPicPost = (idPayload) => {
+export const deleteOneFoodPicPost = (idPayload, username) => {
   return async (dispatch) => {
     try {
-      await axios.delete(
-        `http://localhost:9000/foodPictures/delete/${idPayload}`
+      console.log("in action1:", idPayload);
+      console.log("in action2:", username);
+
+      const res = await axios.delete(
+        `http://localhost:9000/foodPictures/delete/${idPayload}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: {
+            username,
+          },
+        }
       );
       dispatch(deleteOne(idPayload));
     } catch (error) {
-      console.log("error", error);
+      console.log("Error: ", error);
+      toast.error("API error", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000,
+      });
     }
   };
 };
@@ -191,7 +249,11 @@ export const deleteAllFoodPicPosts = () => {
 
       dispatch(deleteAll());
     } catch (error) {
-      console.log("error", error);
+      console.log("Error: ", error);
+      toast.error("API error", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000,
+      });
     }
   };
 };

@@ -1,6 +1,7 @@
 const initialfoodPicPostState = {
   loading: false,
   foodPicPosts: [],
+  featuredPosts: [],
 };
 
 export default function foodPicturesReducer(
@@ -13,19 +14,25 @@ export default function foodPicturesReducer(
         ...state,
         foodPicPosts: [...state.foodPicPosts, action.payload],
       };
-    case "LOADING_ALL_FOODPIC_POSTS":
+    case "FOODPIC_POSTS_LOADING":
       return {
         ...state,
         loading: true,
       };
     case "LOAD_ALL_FOODPIC_POSTS":
       return {
+        ...state,
         loading: false,
         foodPicPosts: action.payload,
       };
+    case "LOAD_FEATURED_FOODPIC_POSTS":
+      return {
+        ...state,
+        featuredPosts: action.payload,
+      };
     case "ADD_UPDATED_FOODPIC_POST":
       return {
-        loading: false,
+        ...state,
         foodPicPosts: state.foodPicPosts.map((item) => {
           if (item._id == action.payload._id) {
             return action.payload;
@@ -35,15 +42,16 @@ export default function foodPicturesReducer(
       };
     case "DELETE_ONE_FOODPIC_POST":
       return {
-        loading: false,
+        ...state,
         foodPicPosts: state.foodPicPosts.filter(
           (post) => post._id !== action.payload
         ),
       };
     case "DELETE_ALL_FOODPIC_POSTS":
       return {
-        loading: false,
+        ...state,
         foodPicPosts: [],
+        featuredPosts: [],
       };
     default:
       return state;
