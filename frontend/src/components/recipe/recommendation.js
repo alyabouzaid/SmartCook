@@ -105,7 +105,6 @@ class Recommendation extends React.Component {
                     </Grid>
 
                     {/*right side*/}
-                    {/* TODO: set hit limit to 12*/}
                     <Grid style={{}} item xs={12} sm={8} md={8}>
                         {this.props.recommendation["hits"] &&
                         <Container className={classes.cardGrid}>

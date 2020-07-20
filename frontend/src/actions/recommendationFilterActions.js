@@ -13,3 +13,10 @@ export const updateRange = (name, value) => {
         return null;
     }
 };
+
+export const updateDietType = (value) => {
+    return {
+        type: 'DIET_ENUM',
+        payload: value
+    };
+}

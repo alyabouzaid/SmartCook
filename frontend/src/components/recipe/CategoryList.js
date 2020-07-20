@@ -8,6 +8,7 @@ import {connect} from "react-redux";
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CategorySlider from "./CategorySlider";
+import {updateDietType} from "../../actions/recommendationFilterActions";
 
 const useStyles = (theme) => ({
     root: {
@@ -25,8 +26,9 @@ const cuisineTypes = [
     "South American", "South East Asian"
 ];
 
+// TODO: high-fiber, low-sodium don't work
 const dietTypes = [
-    "Balanced", "High-Fiber", "High-Protein", "Low-Carb", "Low-Fat", "Low-Sodium"
+    "balanced", "high-protein", "low-carb", "low-fat"
 ];
 
 class CategoryList extends React.Component {
@@ -35,10 +37,12 @@ class CategoryList extends React.Component {
         super(props);
         this.state = {
             open: true,
+            dietValue: "",
+            dietInput: "",
         }
     };
 
-    makeSearchBar(searchBarType, filterOptions) {
+    makeCuisineBar(searchBarType, filterOptions) {
         return (
             <Autocomplete
                 id={searchBarType}
@@ -47,6 +51,41 @@ class CategoryList extends React.Component {
                 // style={{ width: 300 }}
                 style={{ width: "100%"}}
                 renderInput={(params) => <TextField {...params} label={searchBarType} variant="outlined" />}
+            />
+        );
+    }
+
+    changeDietValue(newValue) {
+        this.setState({dietValue: (newValue === null ? "" : newValue)});
+        if (newValue !== null && dietTypes.includes(newValue)) {
+            this.props.updateDietType(String(newValue));
+        }
+        else {
+            this.props.updateDietType("balanced");
+        }
+    }
+
+    changeDietInput(newInputValue) {
+        this.setState({dietInput: (newInputValue === "" ? "" : newInputValue)});
+    };
+
+    makeDietBar(searchBarType, filterOptions) {
+
+        return (
+            <Autocomplete
+                id={searchBarType}
+                options={filterOptions}
+                getOptionLabel={(option) => option}
+                style={{ width: "100%"}}
+                renderInput={(params) => <TextField {...params} label={searchBarType} variant="outlined" />}
+                value={this.state.dietValue}
+                onChange={(event, newValue) => {
+                    this.changeDietValue(newValue);
+                }}
+                inputValue={this.state.dietInput}
+                onInputChange={(event, newInputValue) => {
+                    this.changeDietInput(newInputValue);
+                }}
             />
         );
     }
@@ -66,11 +105,11 @@ class CategoryList extends React.Component {
                 className={classes.root}
             >
                 <ListItem>
-                    {this.makeSearchBar("Cuisine", cuisineTypes)}
+                    {this.makeCuisineBar("Cuisine", cuisineTypes)}
                 </ListItem>
 
                 <ListItem>
-                    {this.makeSearchBar("Diet", dietTypes)}
+                    {this.makeDietBar("Diet", dietTypes)}
                 </ListItem>
 
                 <ListItem>
@@ -86,9 +125,12 @@ class CategoryList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    return {
+        recommendationFilter: state.recommendationFilterStore
+    }
 };
 
 export default compose(
     withStyles(useStyles),
-    connect(mapStateToProps)
+    connect(mapStateToProps, {updateDietType})
 )(CategoryList);
