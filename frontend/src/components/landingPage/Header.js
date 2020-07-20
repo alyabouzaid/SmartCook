@@ -131,7 +131,7 @@ class Header extends React.Component {
                 </Link>
 
                 <Link
-                  to={"/journal"}
+                  to={"/journalView"}
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
                   <Button

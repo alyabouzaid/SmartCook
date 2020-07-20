@@ -1,8 +1,8 @@
-export const getRecommendation = (ingredients) => {
+export const getRecommendation = (ingredients, filter) => {
 	return async dispatch => {
 		fetch("http://localhost:9000/recipes/recommendation", {
 			method: 'POST',
-			body: JSON.stringify({ingredients: ingredients}),
+			body: JSON.stringify({ingredients: ingredients, filter: filter}),
 			headers: {'Content-Type': 'application/json'},
 		})
 			.then((res) => res.json())
