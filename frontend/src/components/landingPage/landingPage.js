@@ -68,9 +68,9 @@ class LandingPage extends React.Component {
       title: "Simple and fun way to start your cooking journey",
       title_isAuthenticated: "Welcome back " + this.props.userInfo.firstName,
       description:
-        "Love to cook but always struggle to come up with ideas?  SmartCook is a web app designed for all food lovers who enjoy cooking,exploring new recipes, creating recipe journals, and socializing about food/cooking",
+        "Love to cook but always struggle to come up with ideas?  SmartCook is a web app designed for all food lovers who enjoy cooking, exploring new recipes, creating recipe journals, and socializing about food/cooking",
       description2:
-        "SmartCook is a web app designed for all food lovers who enjoy cooking,exploring new recipes, creating recipe journals, and socializing about food/cooking",
+        "SmartCook is a web app designed for all food lovers who enjoy cooking, exploring new recipes, creating recipe journals, and socializing about food/cooking",
       description_isAuthenticated:
         "Enjoy your cooking experience with SmartCook",
       image: "./gallery/landingPage.jpg",
@@ -90,7 +90,7 @@ class LandingPage extends React.Component {
         <FeaturedPostCarousel
           card={mainCardContent}
           isAuthenticated={this.props.userInfo.isLoggedIn}
-          featuredPosts={this.props.featuredPosts}
+          featuredPost={this.props.featuredPost}
         />
         {/* <div className={classes.gridListHeader}>
           <Typography variant="h4" component="h2">
@@ -119,7 +119,7 @@ const mapStateToProps = (state) => {
   return {
     userInfo: state.userStore,
     foodPicPost: state.foodPicturesStore,
-    featuredPosts: state.foodPicturesStore.featuredPosts,
+    featuredPost: state.foodPicturesStore.featuredPost,
   };
 };
 

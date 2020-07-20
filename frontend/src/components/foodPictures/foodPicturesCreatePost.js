@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core/styles";
@@ -69,10 +69,6 @@ class FoodPicturesCreatePost extends React.Component {
     }
   }
 
-  componentDidMount() {
-    // this.props.loadUserData();
-    // this.props.getAllFoodPicPost();
-  }
   // render() {
   //   const { classes } = this.props;
 
@@ -178,6 +174,7 @@ class FoodPicturesCreatePost extends React.Component {
                   this.state.image.raw,
                   this.props.userInfo.email,
                   this.props.userInfo.firstName,
+                  // console.log("fullname: ", this.props.userInfo.fullName),
                   this.props.userInfo.fullName
                 )
               }
@@ -193,8 +190,22 @@ class FoodPicturesCreatePost extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    uploadImageAndCreatePost: (description, image, email, username) =>
-      dispatch(uploadImageAndCreatePost(description, image, email, username)),
+    uploadImageAndCreatePost: (
+      description,
+      image,
+      email,
+      userFirstName,
+      userFullName
+    ) =>
+      dispatch(
+        uploadImageAndCreatePost(
+          description,
+          image,
+          email,
+          userFirstName,
+          userFullName
+        )
+      ),
     loadUserData: () => dispatch(loadUserData()),
     getAllFoodPicPost: () => dispatch(getAllFoodPicPost()),
   };

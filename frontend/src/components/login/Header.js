@@ -225,12 +225,12 @@ class Header extends React.Component {
                     </ListItem>
                   </StyledMenuItem>
                   <StyledMenuItem>
-                    <ListItem button component="a" href="/foodPicAllView">
+                    <ListItem button component="a" href="/foodPicAllPost">
                       <ListItemText primary="All posts" />
                     </ListItem>
                   </StyledMenuItem>
                   <StyledMenuItem>
-                    <ListItem button component="a" href="">
+                    <ListItem button component="a" href="foodPicMyPost">
                       <ListItemText primary="My posts" />
                     </ListItem>
                   </StyledMenuItem>
@@ -265,7 +265,7 @@ class Header extends React.Component {
                 </NavLink>
 
                 <NavLink
-                  to={"/"}
+                  to={"/about"}
                   activeClassName="selected"
                   activeStyle={{
                     borderBottom: "2px solid #43AA8B",

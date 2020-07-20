@@ -14,6 +14,7 @@ export const uploadImageAndCreatePost = (
     try {
       const formData = new FormData();
       formData.append("file", image);
+
       const res = await axios.post(
         "http://localhost:9000/images/image-upload",
         formData
@@ -74,7 +75,7 @@ export const createNewFoodPicPost = (
         autoClose: 3000,
       });
       setTimeout(() => {
-        window.location = "/foodPicAllView";
+        window.location = "/foodPicAllPost";
       }, 2000);
       // console.log("in all pic view page");
     } catch (error) {
@@ -89,7 +90,7 @@ export const createNewFoodPicPost = (
 
 export const addNewFoodPicPost = (newFoodPicPost) => {
   // console.log("this is to message list: " + JSON.stringify(newPosting));
-  console.log("in addNewFoodPic: " + JSON.stringify(newFoodPicPost));
+  // console.log("in addNewFoodPic: " + JSON.stringify(newFoodPicPost));
   return {
     type: "ADD_NEW_FOODPIC_POST",
     payload: newFoodPicPost,
@@ -101,7 +102,7 @@ export const getAllFoodPicPost = () => {
   return async (dispatch) => {
     try {
       await dispatch(loadingAllFoodPicPost());
-      const res = await axios.get("http://localhost:9000/foodPictures/allpost");
+      const res = await axios.get("http://localhost:9000/foodPictures/allPost");
 
       const allPosts = await res.data;
       dispatch(loadAllFoodPicPost(allPosts));
@@ -125,6 +126,38 @@ export const loadAllFoodPicPost = (posts) => {
   return {
     type: "LOAD_ALL_FOODPIC_POSTS",
     payload: posts,
+  };
+};
+
+export const getMyFoodPicPost = () => {
+  // console.log("action email: ", email);
+  return async (dispatch) => {
+    try {
+      // await dispatch(loadingAllFoodPicPost());
+      const userData = await axios.get("http://localhost:9000/auth/user");
+      // console.log("userData: ", JSON.stringify(userData.data.email));
+
+      const res = await axios.get(`http://localhost:9000/foodPictures/myPost`, {
+        params: {
+          email: userData.data.email,
+        },
+      });
+      const myPosts = await res.data;
+      dispatch(loadMyFoodPicPost(myPosts));
+    } catch (error) {
+      console.log("Error: ", error);
+      toast.error("API error", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000,
+      });
+    }
+  };
+};
+
+export const loadMyFoodPicPost = (myPosts) => {
+  return {
+    type: "LOAD_MY_FOODPIC_POSTS",
+    payload: myPosts,
   };
 };
 
@@ -157,7 +190,7 @@ export const loadFeaturedPicPost = (posts) => {
 };
 
 //update like request
-export const updateLike = (idPayload, email) => {
+export const addLike = (idPayload, email) => {
   // console.log("like");
   return async (dispatch) => {
     try {
@@ -165,7 +198,7 @@ export const updateLike = (idPayload, email) => {
         email: email,
       };
       const res = await axios.put(
-        `http://localhost:9000/foodPictures/like/${idPayload}`,
+        `http://localhost:9000/foodPictures/addLike/${idPayload}`,
         params
       );
       const updatedFoodPicPost = await res.data;
@@ -194,7 +227,7 @@ export const updateLike = (idPayload, email) => {
 };
 
 //update comment request
-export const updateComment = (
+export const addComment = (
   idPayload,
   comment,
   userFirstName,
@@ -211,7 +244,54 @@ export const updateComment = (
         email: email,
       };
       const res = await axios.put(
-        `http://localhost:9000/foodPictures/comment/${idPayload}`,
+        `http://localhost:9000/foodPictures/addComment/${idPayload}`,
+        params
+      );
+      const updatedFoodPicPost = await res.data;
+      dispatch(addUpdatedFoodPicPost(updatedFoodPicPost));
+    } catch (error) {
+      console.log("Error: ", error);
+      toast.error("API error", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000,
+      });
+    }
+  };
+};
+
+export const editPostDescription = (idPayload, editedPostDescription) => {
+  // console.log("like");
+  return async (dispatch) => {
+    try {
+      const params = {
+        editedPostDescription: editedPostDescription,
+      };
+      const res = await axios.put(
+        `http://localhost:9000/foodPictures/editDescription/${idPayload}`,
+        params
+      );
+      const updatedFoodPicPost = await res.data;
+      dispatch(addUpdatedFoodPicPost(updatedFoodPicPost));
+    } catch (error) {
+      console.log("Error: ", error);
+      toast.error("API error", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000,
+      });
+    }
+  };
+};
+
+export const editPostComment = (idPayload, commentId, editedComment) => {
+  // console.log("editedComment: ", commentId, editedComment);
+  return async (dispatch) => {
+    try {
+      const params = {
+        commentId: commentId,
+        editedComment: editedComment,
+      };
+      const res = await axios.put(
+        `http://localhost:9000/foodPictures/editComment/${idPayload}`,
         params
       );
       const updatedFoodPicPost = await res.data;
@@ -239,8 +319,8 @@ export const addUpdatedFoodPicPost = (updatedFoodPicPost) => {
 export const deleteOneFoodPicPost = (idPayload, email) => {
   return async (dispatch) => {
     try {
-      console.log("in action1:", idPayload);
-      console.log("in action2:", email);
+      // console.log("in action1:", idPayload);
+      // console.log("in action2:", email);
 
       const res = await axios.delete(
         `http://localhost:9000/foodPictures/delete/${idPayload}`,

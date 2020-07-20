@@ -24,16 +24,16 @@ function FeaturePostCarousel(props) {
   const posts = [];
   const numLikes = [];
 
-  props.featuredPosts &&
-    props.featuredPosts.map((item) => numLikes.push(item.likesLength));
+  props.featuredPost &&
+    props.featuredPost.map((item) => numLikes.push(item.likesLength));
 
   posts.push(
     <MainCard card={props.card} isAuthenticated={props.isAuthenticated} />
   );
 
   {
-    props.featuredPosts &&
-      props.featuredPosts.map((item) =>
+    props.featuredPost &&
+      props.featuredPost.map((item) =>
         item.image.map((image) =>
           posts.push(
             <img className={classes.featuredPosts} src={image.secure_url} />

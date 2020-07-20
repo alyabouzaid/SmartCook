@@ -8,14 +8,14 @@ const cookieSession = require("cookie-session");
 const clientID = process.env.OAUTH_CLIENT_ID;
 const clientSecret = process.env.OAUTH_CLIENT_SECRET;
 const scope = ["email", "profile"];
-const url = "http://localhost:9000";
-const oauthPath = "/auth/google";
-const callbackPath = "/auth/google/callback";
-const callbackURL = `${url}${callbackPath}`;
+const oauthPath = "/google";
+const callbackPath = "/google/callback";
+const callbackURL = "http://localhost:9000/auth/google/callback";
 
 let isAuthenticated = false;
 let name = "";
 let email = "";
+let fullName = "";
 
 let app = express.Router();
 app.use(express.json());
@@ -39,11 +39,11 @@ passport.use(
     (accessToken, refreshToken, profile, done) => {
       // console.log(accessToken);
       console.log(profile);
-
       // Where you verify user on your application
       // Find or Create a user in your DB and pass it.
       // If you are not using googleapis, you don't need to keep access token anymore.
       // access token is already used to fetch profile info.
+        fullName = profile.displayName;
       name = profile.name.givenName;
       email = profile.emails[0].value;
       done(null, { accessToken, refreshToken, profile });
@@ -97,28 +97,30 @@ app.get(
 //     }
 // }
 
-app.get("/auth/user", (req, res) => {
+app.get("/user", (req, res) => {
   let json = {
     isLoggedIn: isAuthenticated,
     firstName: name,
     email: email,
+      fullName: fullName,
   };
   console.log(json);
   res.send(json);
 });
 
-app.get("/auth/logout", (req, res) => {
+app.get("/logout", (req, res) => {
   req.logout();
   req.session = null;
   isAuthenticated = false;
   name = "";
   email = "";
+  fullName = "";
   if (req.user) {
     console.log("user still authenticated");
   } else {
     console.log("user not authenticated");
   }
-  res.redirect("http://localhost:3000/");
+  res.redirect("http://localhost:3000/"); // TODO: CHANGE TO "/"
 });
 
 // error handler

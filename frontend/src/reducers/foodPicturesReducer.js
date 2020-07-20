@@ -1,7 +1,8 @@
 const initialfoodPicPostState = {
   loading: false,
-  foodPicPosts: [],
-  featuredPosts: [],
+  allPost: [],
+  myPost: [],
+  featuredPost: [],
 };
 
 export default function foodPicturesReducer(
@@ -12,7 +13,7 @@ export default function foodPicturesReducer(
     case "ADD_NEW_FOODPIC_POST":
       return {
         ...state,
-        foodPicPosts: [...state.foodPicPosts, action.payload],
+        allPost: [...state.allPost, action.payload],
       };
     case "FOODPIC_POSTS_LOADING":
       return {
@@ -23,17 +24,29 @@ export default function foodPicturesReducer(
       return {
         ...state,
         loading: false,
-        foodPicPosts: action.payload,
+        allPost: action.payload,
+      };
+    case "LOAD_MY_FOODPIC_POSTS":
+      return {
+        ...state,
+        // loading: false,
+        myPost: action.payload,
       };
     case "LOAD_FEATURED_FOODPIC_POSTS":
       return {
         ...state,
-        featuredPosts: action.payload,
+        featuredPost: action.payload,
       };
     case "ADD_UPDATED_FOODPIC_POST":
       return {
         ...state,
-        foodPicPosts: state.foodPicPosts.map((item) => {
+        allPost: state.allPost.map((item) => {
+          if (item._id == action.payload._id) {
+            return action.payload;
+          }
+          return item;
+        }),
+        myPost: state.myPost.map((item) => {
           if (item._id == action.payload._id) {
             return action.payload;
           }
@@ -43,15 +56,15 @@ export default function foodPicturesReducer(
     case "DELETE_ONE_FOODPIC_POST":
       return {
         ...state,
-        foodPicPosts: state.foodPicPosts.filter(
-          (post) => post._id !== action.payload
-        ),
+        allPost: state.allPost.filter((post) => post._id !== action.payload),
+        myPost: state.myPost.filter((post) => post._id !== action.payload),
       };
     case "DELETE_ALL_FOODPIC_POSTS":
       return {
         ...state,
-        foodPicPosts: [],
-        featuredPosts: [],
+        allPost: [],
+        featuredPost: [],
+        myPost: [],
       };
     default:
       return state;
