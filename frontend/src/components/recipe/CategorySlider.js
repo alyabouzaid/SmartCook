@@ -6,6 +6,7 @@ import Slider from '@material-ui/core/Slider';
 import Input from '@material-ui/core/Input';
 import compose from "recompose/compose";
 import {connect} from "react-redux";
+import {updateRange} from "../../actions/recommendationFilterActions";
 
 const useStyles = (theme) => ({
     root: {
@@ -30,10 +31,14 @@ class CategorySlider extends React.Component {
 
     handleSliderChange(event, newValue) {
         this.setState({value: newValue});
+        this.props.updateRange(this.props.category.name, newValue);
     };
 
     handleInputChange(event) {
         this.setState({value: (event.target.value === '' ? '' : Number(event.target.value))});
+        if (event.target.value !== '') {
+            this.props.updateRange(this.props.category.name, Number(event.target.value))
+        }
     };
 
     handleBlur = () => {
@@ -91,5 +96,5 @@ const mapStateToProps = (state) => {
 
 export default compose(
     withStyles(useStyles),
-    connect(mapStateToProps)
-)(CategorySlider);
+    connect(mapStateToProps, {updateRange}
+))(CategorySlider);

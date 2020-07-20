@@ -151,7 +151,7 @@ class Header extends React.Component {
                 </NavLink>
 
                 <NavLink
-                  to={"/journal"}
+                  to={"/journalView"}
                   activeClassName="selected"
                   activeStyle={{
                     borderBottom: "2px solid #43AA8B",
@@ -192,7 +192,7 @@ class Header extends React.Component {
                       </ListItem>
                     </StyledMenuItem>
                     <StyledMenuItem>
-                      
+
                       <ListItem button component="a" href="/journalView">
                         <ListItemText primary="Collections" />
                       </ListItem>

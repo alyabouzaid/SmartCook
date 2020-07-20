@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from 'react-router';
 import compose from "recompose/compose";
 import {
   editJournal,
@@ -9,21 +10,16 @@ import {
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import "./journal.css";
-
-import parse from "html-react-parser";
 import Header from "../login/Header";
 import JournalImage from "./journalImage";
-
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { loadUserData } from "../../actions/userActions";
-
-import Typography from "@material-ui/core/Typography";
 import pic from "../ingredientInventory/image5.jpg"
 
-const useStyles = (theme) => ({
+const useStyles = () => ({
   root: {
     flexGrow: 1,
   },
@@ -67,7 +63,7 @@ class Journal extends React.Component {
             <Grid item xs={9}>
               <CKEditor
                 editor={ClassicEditor}
-                data="<p>Hello from CKEditor 5!</p>"
+                data=""
                 onInit={(editor) => {
                   // You can store the "editor" and use when it is needed.
                   console.log("Editor is ready to use!", editor);
@@ -80,14 +76,15 @@ class Journal extends React.Component {
               />
             </Grid>
             <Grid item xs={3}>
-              {/*{parse(this.props.editorData.body)}*/}
               <JournalImage />
             </Grid>
           </Grid>
           <Button
             variant="contained"
             color="primary"
-            onClick={() => this.props.addNewJournalData(this.props.editorData)}
+            onClick={() => {this.props.addNewJournalData(this.props.editorData, this.props.userInfo);
+            this.props.history.push('/journalView')
+            }}
           >
             Submit Journal
           </Button>
@@ -105,7 +102,7 @@ const mapStateToProps = (state) => {
 };
 
 export default compose(
-  withStyles(useStyles),
+  withStyles(useStyles), withRouter,
   connect(mapStateToProps, {
     editJournal,
     updateTitle,

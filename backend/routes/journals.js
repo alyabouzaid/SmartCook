@@ -1,37 +1,24 @@
 var express = require("express");
 var router = express.Router();
 
-const mongoose = require("mongoose");
-const { v4: uuidv4 } = require("uuid");
-
 const journals = require("../models/journals.model");
 
-// const uri = "mongodb://localhost:27017/myapp";
-// mongoose.connect(uri, {
-//   useUnifiedTopology: true,
-//   useNewUrlParser: true,
-//   useCreateIndex: true,
-// });
-
-// const connection = mongoose.connection;
-// connection.once("open", () => {
-//   console.log("MongoDB database connection established successfully");
-// });
-
-router.get("/", (req, res) => {
-  journals.find()
+router.get("/:email", (req, res) => {
+  journals.find({email: req.params.email})
       .then((journals) => res.send(journals))
       .catch((err) => res.status(400).json("Error: " + err));
 });
 
 router.post("/add", (req, res) => {
   const author = req.body.author;
+  const email = req.body.email;
   const title = req.body.title;
   const body = req.body.body;
   const images = req.body.images;
 
   const newJournal = new journals({
     author,
+    email,
     title,
     body,
     images,
