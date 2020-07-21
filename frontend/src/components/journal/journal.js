@@ -45,7 +45,7 @@ class Journal extends React.Component {
   render() {
     const { classes } = this.props;
     return this.props.userInfo.isLoggedIn ? (
-      <div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
+      <div style={{backgroundColor: "#FDF5E6", height: 1000, backgroundSize: 'cover'}}>
         <Header />
         <div style={{ margin: "5%" }}>
           &nbsp;

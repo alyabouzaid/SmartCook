@@ -102,10 +102,6 @@ export default function RecipeInfo({recipe}) {
                                 <Typography style={{textAlign: "left"}}>
                                     {recipe["recipe"]["dietLabels"].concat(recipe["recipe"]["healthLabels"]).map( (item) => <li> {item} </li>)}
                                 </Typography>
-                                {/*<p style={{textAlign: "left", backgroundColor: "floralWhite", margin: "3", fontSize: '24px'}}/>*/}
-                                {/*<Typography className={classes.title}>Calories: {Number(recipe["recipe"]["calories"]).toFixed(0)} kcal</Typography>*/}
-                                {/*<p style={{textAlign: "left", backgroundColor: "floralWhite", margin: "3", fontSize: '24px'}}/>*/}
-                                {/*<Typography className={classes.title}>Time: {recipe["recipe"]["totalTime"]} min </Typography>*/}
                             </CardContent>
                         </Card>
                     </Popover>
