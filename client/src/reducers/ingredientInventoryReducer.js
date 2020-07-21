@@ -16,14 +16,14 @@ var removeByAttr = function(arr, attr, value){
 
 export default function counterMessagesReducer (ingredientInventory = [], action)  {
 	if (action.type === 'ADD_INGREDIENT') {
-		axios({url:'http://localhost:9000/inventories',method:'POST',data:action.addingIngredient}).then(res => console.log(res)).catch(err => console.log(err))
+		axios({url:'/inventories',method:'POST',data:action.addingIngredient}).then(res => console.log(res)).catch(err => console.log(err))
 
 		return [...ingredientInventory, action.addingIngredient.inventory[0]];
 
 	}
 
 	if (action.type === 'CLEAR_INGREDIENT') {
-		axios({url:'http://localhost:9000/inventories/'+ action.clearIngredients, method:'DELETE'}).then(res => console.log(res)).catch(err => console.log(err))
+		axios({url:'/inventories/'+ action.clearIngredients, method:'DELETE'}).then(res => console.log(res)).catch(err => console.log(err))
 
 		return [];
 
@@ -33,7 +33,7 @@ export default function counterMessagesReducer (ingredientInventory = [], action
 
 		let temp = ingredientInventory.slice()
 		temp = removeByAttr(temp, "key", action.deleteIngredient.key);
-		axios({url:'http://localhost:9000/inventories/'+ action.deleteIngredient.email +'/'+ action.deleteIngredient.key, method:'DELETE'}).then(res => console.log(res)).catch(err => console.log(err))
+		axios({url:'/inventories/'+ action.deleteIngredient.email +'/'+ action.deleteIngredient.key, method:'DELETE'}).then(res => console.log(res)).catch(err => console.log(err))
 
 		return temp;
 
