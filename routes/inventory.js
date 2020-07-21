@@ -8,16 +8,12 @@ const fetch = require("node-fetch");
 
 const mongoose= require('mongoose');
 
-mongoose.connect('mongodb://localhost/ReactReduxExpressMongo')
-.then(() =>  console.log('connection succesful2222'))
-.catch((err) => console.error(err));
-
-const uri = "mongodb+srv://smartcook_436:SCook-436@smartcook436.sln0r.mongodb.net/dev?retryWrites=true&w=majority"
-mongoose.connect(uri, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-    useCreateIndex: true,
-  });
+// const uri = process.env.
+// mongoose.connect(uri, {
+//     useUnifiedTopology: true,
+//     useNewUrlParser: true,
+//     useCreateIndex: true,
+//   });
 var Schema = mongoose.Schema;
 var streamSchema = new Schema({
 
@@ -34,7 +30,7 @@ var Streams = mongoose.model('inventories', streamSchema);
 
 router.get('/', function(req, res, next) {
 
-    fetch("http://localhost:9000/auth/user", {
+    fetch("/auth/user", {
       method: 'GET',
       headers: {'Content-Type': 'application/json'},
   })  .then((resFetch) => {
@@ -42,7 +38,7 @@ router.get('/', function(req, res, next) {
           Streams.find({ email: userInfo.email }).then(
 
           (data) => {
-          
+
 
           if(data[0] === undefined){
 
@@ -56,7 +52,7 @@ router.get('/', function(req, res, next) {
           res.json(data[0].inventory);
           }
         }
-          
+
   )}) })  .catch((error) => {console.log('error ', error) })
 });
 
@@ -99,7 +95,7 @@ console.log(req.params.email)
 
     Streams.update(
       { email: req.params.email },
-      { $pull: { inventory: {key :req.params.key }}} 
+      { $pull: { inventory: {key :req.params.key }}}
     ).catch(err => console.log(err))
 
   res.setHeader('Content-Type','application/json')
