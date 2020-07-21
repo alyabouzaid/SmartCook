@@ -70,11 +70,7 @@ class FoodPicturesCreatePost extends React.Component {
 
     return (
       <div
-        style={{
-          backgroundImage: `url(${pic})`,
-          height: 1000,
-          backgroundSize: "cover",
-        }}
+          style={{ backgroundColor: "#FDF5E6", height: 1000, backgroundSize: "cover"}}
       >
         <Header />
         <div className={classes.rootContainer}>

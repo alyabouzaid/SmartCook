@@ -74,17 +74,6 @@ const useStyles = (theme) => ({
 
 class JournalView extends Component {
 
-    defaultPage() {
-        return (
-            <div
-                style={{}}
-            >
-                <Header/>
-                <h1>You must log in</h1>
-            </div>
-        );
-    }
-
     componentDidMount() {
         this.props.loadJournalsData(this.props.userInfo.email);
     }
@@ -93,7 +82,6 @@ class JournalView extends Component {
 
         const {classes} = this.props;
         return (
-            this.props.userInfo.isLoggedIn ? (
                 <div style={{}}>
                     <Header/>
 
@@ -173,8 +161,7 @@ class JournalView extends Component {
                         )}
                     </Grid>
                     </div>
-                </div>) : (this.defaultPage()
-            ))
+                </div>);
     }
 }
 

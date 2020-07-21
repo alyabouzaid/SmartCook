@@ -90,7 +90,7 @@ class FoodPicturesMyPost extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div>
+      <div style={{ backgroundColor: "#FDF5E6"}}>
         <Header />
 
         <div className={classes.loading}>

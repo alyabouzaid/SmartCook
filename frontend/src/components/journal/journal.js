@@ -23,28 +23,20 @@ const useStyles = () => ({
   root: {
     flexGrow: 1,
   },
+    button: {
+        textAlign: "left",
+        // width: "100%",
+        textTransform: 'capitalize',
+        justifyContent: "left", // aligns button to left of container
+        fontSize: "16px",
+    },
 });
 
 class Journal extends React.Component {
 
-  defaultPage() {
-    return (
-      <div
-        style={{
-          backgroundImage: `url(${pic})`,
-          height: 1000,
-          backgroundSize: "cover",
-        }}
-      >
-        <Header />
-        <h1>You must log in</h1>
-      </div>
-    );
-  }
-
   render() {
     const { classes } = this.props;
-    return this.props.userInfo.isLoggedIn ? (
+    return (
       <div style={{backgroundColor: "#FDF5E6", height: 1000, backgroundSize: 'cover'}}>
         <Header />
         <div style={{ margin: "5%" }}>
@@ -79,7 +71,7 @@ class Journal extends React.Component {
               <JournalImage />
             </Grid>
           </Grid>
-          <Button
+          <Button className={classes.button}
             variant="contained"
             color="primary"
             onClick={() => {this.props.addNewJournalData(this.props.editorData, this.props.userInfo);
@@ -90,8 +82,6 @@ class Journal extends React.Component {
           </Button>
         </div>
       </div>
-    ) : (
-      this.defaultPage()
     );
   }
 }

@@ -67,16 +67,9 @@ class Recommendation extends React.Component {
         this.props.initialData();
     }
 
-    defaultPage() {
-        return (<div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
-            <Header/>
-            <h1>You must log in</h1>
-        </div>);
-    }
-
     render() {
         const {classes} = this.props;
-        return this.props.userInfo.isLoggedIn ? (
+        return (
             <div>
             <Header/>
             <div style={{margin: "3%"}}>
@@ -125,9 +118,7 @@ class Recommendation extends React.Component {
                 </Grid>
             </div>
         </div>
-    ) : (
-            this.defaultPage()
-        );
+    );
     }
 
     // render() {
