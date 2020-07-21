@@ -19,11 +19,11 @@ export const updateDietType = (value) => {
         type: 'DIET_ENUM',
         payload: value
     };
-}
+};
 
 export const updateHealthType = (value) => {
     return {
         type: 'HEALTH_ENUM',
         payload: value
     }
-}
+};

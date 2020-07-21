@@ -28,7 +28,7 @@ export const deleteIngredient = amount => {
 export const initialData = (email)  => {
 	return  (dispatch) => {
 
-    axios.get('http://localhost:9000/inventories')
+    axios.get('/inventories')
     .then(
 		(res) => {
 			dispatch(initialMessages(res.data))

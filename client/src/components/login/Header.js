@@ -237,7 +237,7 @@ class Header extends React.Component {
                 </StyledMenu>
 
                 <Button
-                  href="http://localhost:9000/auth/logout"
+                  href="/auth/logout"
                   color="inherit"
                   target="_self"
                   size="small"
@@ -278,7 +278,7 @@ class Header extends React.Component {
                 </NavLink>
 
                 <Button
-                  href="http://localhost:9000/auth/google"
+                  href="/auth/google"
                   color="inherit"
                   target="_self"
                   size="small"

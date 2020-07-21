@@ -16,7 +16,7 @@ export const uploadImageAndCreatePost = (
       formData.append("file", image);
 
       const res = await axios.post(
-        "http://localhost:9000/images/image-upload",
+        "/images/image-upload",
         formData
       );
       const imageData = await res.data;
@@ -64,13 +64,13 @@ export const createNewFoodPicPost = (
       // console.log("create post waiting before");
       // dispatch(postMessagePostingsLoading());
       const res = await axios.post(
-        "http://localhost:9000/foodPictures/addPost",
+        "/foodPictures/addPost",
         params
       );
       // console.log("create post waiting");
       const newFoodPicPost = await res.data;
       await dispatch(addNewFoodPicPost(newFoodPicPost));
-      toast.success("A new food picture post is addded!", {
+      toast.success("A new food picture post is added!", {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
       });
@@ -102,7 +102,7 @@ export const getAllFoodPicPost = () => {
   return async (dispatch) => {
     try {
       dispatch(allFoodPicPostLoading());
-      const res = await axios.get("http://localhost:9000/foodPictures/allPost");
+      const res = await axios.get("/foodPictures/allPost");
 
       const allPosts = await res.data;
       dispatch(loadAllFoodPicPost(allPosts));
@@ -134,10 +134,10 @@ export const getMyFoodPicPost = () => {
   return async (dispatch) => {
     try {
       dispatch(myFoodPicPostLoading());
-      const userData = await axios.get("http://localhost:9000/auth/user");
+      const userData = await axios.get("/auth/user");
       // console.log("userData: ", JSON.stringify(userData.data.email));
 
-      const res = await axios.get(`http://localhost:9000/foodPictures/myPost`, {
+      const res = await axios.get(`/foodPictures/myPost`, {
         params: {
           email: userData.data.email,
         },
@@ -173,7 +173,7 @@ export const getFeaturedFoodPicPost = () => {
     try {
       // await dispatch(loadingAllFoodPicPost());
       const res = await axios.get(
-        "http://localhost:9000/foodPictures/featuredPost"
+        "/foodPictures/featuredPost"
       );
 
       const featuredPosts = await res.data;
@@ -204,7 +204,7 @@ export const addLike = (idPayload, email) => {
         email: email,
       };
       const res = await axios.put(
-        `http://localhost:9000/foodPictures/addLike/${idPayload}`,
+        `/foodPictures/addLike/${idPayload}`,
         params
       );
       const updatedFoodPicPost = await res.data;
@@ -250,7 +250,7 @@ export const addComment = (
         email: email,
       };
       const res = await axios.put(
-        `http://localhost:9000/foodPictures/addComment/${idPayload}`,
+        `/foodPictures/addComment/${idPayload}`,
         params
       );
       const updatedFoodPicPost = await res.data;
@@ -273,7 +273,7 @@ export const editPostDescription = (idPayload, editedPostDescription) => {
         editedPostDescription: editedPostDescription,
       };
       const res = await axios.put(
-        `http://localhost:9000/foodPictures/editDescription/${idPayload}`,
+        `/foodPictures/editDescription/${idPayload}`,
         params
       );
       const updatedFoodPicPost = await res.data;
@@ -297,7 +297,7 @@ export const editPostComment = (idPayload, commentId, editedComment) => {
         editedComment: editedComment,
       };
       const res = await axios.put(
-        `http://localhost:9000/foodPictures/editComment/${idPayload}`,
+        `/foodPictures/editComment/${idPayload}`,
         params
       );
       const updatedFoodPicPost = await res.data;
@@ -320,7 +320,7 @@ export const deleteComment = (idPayload, commentId) => {
         commentId: commentId,
       };
       const res = await axios.put(
-        `http://localhost:9000/foodPictures/deleteComment/${idPayload}`,
+        `/foodPictures/deleteComment/${idPayload}`,
         params
       );
 
@@ -353,7 +353,7 @@ export const deleteOneFoodPicPost = (idPayload, email) => {
       // console.log("in action2:", email);
 
       const res = await axios.delete(
-        `http://localhost:9000/foodPictures/deletePost/${idPayload}`,
+        `/foodPictures/deletePost/${idPayload}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -385,7 +385,7 @@ export const deleteOne = (idPayload) => {
 export const deleteAllFoodPicPosts = () => {
   return async (dispatch) => {
     try {
-      await axios.delete("http://localhost:9000/foodPictures/deleteAll");
+      await axios.delete("/foodPictures/deleteAll");
 
       dispatch(deleteAll());
     } catch (error) {
