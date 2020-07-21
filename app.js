@@ -27,7 +27,7 @@ const clientSecret = process.env.OAUTH_CLIENT_SECRET;
 const scope = ["email", "profile"];
 const oauthPath = "/auth/google";
 const callbackPath = "/auth/google/callback";
-const callbackURL = "http://localhost:9000/auth/google/callback";
+const callbackURL = "/auth/google/callback";
 
 let isAuthenticated = false;
 let name = "";
