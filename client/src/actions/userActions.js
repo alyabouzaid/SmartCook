@@ -1,6 +1,6 @@
 export const loadUserData = () => {
     return async dispatch => {
-        fetch("http://localhost:9000/auth/user", {
+        fetch("/auth/user", {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
         })

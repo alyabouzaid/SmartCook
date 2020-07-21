@@ -42,7 +42,7 @@ export const uploadImage = e => {
 
         // formData.append("user", user);
 
-        fetch("http://localhost:9000/images/image-upload", {
+        fetch("/images/image-upload", {
             method: 'POST',
             body: formData
         })
@@ -55,7 +55,7 @@ export const uploadImage = e => {
 
 export const loadJournalsData = (email) => {
     return async dispatch => {
-        fetch(`http://localhost:9000/journals/${email}`, {
+        fetch(`/journals/${email}`, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
         })
@@ -71,7 +71,7 @@ export const addNewJournalData = (editorData, userInfo) => {
     let data = {...editorData, author: userInfo.firstName, email: userInfo.email};
 
     return async dispatch => {
-        fetch("http://localhost:9000/journals/add", {
+        fetch("/journals/add", {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data),
@@ -91,7 +91,7 @@ export const addNewJournalData = (editorData, userInfo) => {
 export const deleteOneJournalData = (id) => {
 
     return async dispatch => {
-        fetch(`http://localhost:9000/journals/delete/${id}`, {
+        fetch(`/journals/delete/${id}`, {
             method: 'DELETE',
             headers: {'Content-Type': 'application/json'},
         })
