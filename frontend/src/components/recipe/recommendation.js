@@ -95,7 +95,7 @@ class Recommendation extends React.Component {
                         <IngredientList/>
                         <p style={{textAlign: "left", backgroundColor: "floralWhite", margin: "3", fontSize: '24px'}}/>
                         <Button className={classes.button} variant="contained" color="primary"
-                                onClick={() => this.props.getRecommendation(this.props.ingredientInventory.filter((ingredient) => ingredient.selected))}>
+                                onClick={() => this.props.getRecommendation(this.props.ingredientInventory.filter((ingredient) => ingredient.selected), this.props.recommendationFilter)}>
                             Generate Recommendation
                         </Button>
                     </Grid>
@@ -105,7 +105,6 @@ class Recommendation extends React.Component {
                     </Grid>
 
                     {/*right side*/}
-                    {/* TODO: set hit limit to 12*/}
                     <Grid style={{}} item xs={12} sm={8} md={8}>
                         {this.props.recommendation["hits"] &&
                         <Container className={classes.cardGrid}>
@@ -185,6 +184,7 @@ const mapStateToProps = (state) => { //name is by convention
     return {
         ingredientInventory: state.ingredientInventory,
         recommendation: state.recommendationStore,
+        recommendationFilter: state.recommendationFilterStore,
         userInfo: state.userStore}; //now it will appear as props
 };
 export default compose(withStyles(useStyles), connect(mapStateToProps, {selectingIngredient, newRecommendation, clearRecommendation, getRecommendation, loadUserData, initialData}))(Recommendation);

@@ -6,6 +6,7 @@ const Schema = mongoose.Schema;
 const usersSchema = new Schema(
   {
     author: { type: String },
+    email: { type: String },
     title: { type: String },
     body: {type: String },
     images: { type : Array , "default" : [] } ,
