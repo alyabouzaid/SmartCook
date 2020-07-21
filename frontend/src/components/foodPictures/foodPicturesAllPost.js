@@ -3,33 +3,27 @@ import Header from "../login/Header";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { withStyles } from "@material-ui/core/styles";
-import { getMyFoodPicPost } from "../../actions/foodPicturesActions";
+import { getAllFoodPicPost } from "../../actions/foodPicturesActions";
 import { css } from "@emotion/core";
 import CircleLoader from "react-spinners/CircleLoader";
 import FoodPicturesPost from "./foodPicturesPost";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
+// import Pagination from "@material-ui/lab/Pagination";
 import SPagination from "simple-react-pagination-js";
 import "simple-react-pagination-js/build/style.css"; // import css
 
 const useStyles = (theme) => ({
-  post: {
-    justifyContent: "center",
-    alignItems: "center",
-    display: "flex",
-    flexWrap: "wrap",
+  pagination: {
+    display: "inline-block",
+    textAlign: "center",
+    marginBottom: 50,
+    // "& > *": {
+    //   marginTop: theme.spacing(2),
+    // },
   },
   loading: {
     justifyContent: "center",
     alignItems: "center",
     display: "flex",
-  },
-  pagination: {
-    display: "inline-block",
-    textAlign: "center",
-    marginBottom: 50,
   },
 });
 
@@ -38,19 +32,19 @@ const override = css`
   margin: 2 auto;
 `;
 
-class FoodPicturesMyPost extends React.Component {
+class FoodPicturesAllPost extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       offset: 0,
       currentPage: 1,
-      perPage: 8,
+      perPage: 5,
     };
   }
 
   componentDidMount() {
-    this.props.getMyFoodPicPost();
+    this.props.getAllFoodPicPost();
   }
 
   handleOnPageChange = (currentPage) => {
@@ -67,7 +61,7 @@ class FoodPicturesMyPost extends React.Component {
 
   displayData = () => {
     // return <div>{JSON.stringify(this.props.allPostLoading)}</div>;
-    const data = this.props.myPost;
+    const data = this.props.allPost;
     const sliceData = data.slice(
       this.state.offset,
       this.state.offset + this.state.perPage
@@ -78,9 +72,10 @@ class FoodPicturesMyPost extends React.Component {
         <FoodPicturesPost
           key={post._id}
           item={post}
-          cardWidth={300}
+          cardWidth={700}
           // cardLeftMargin={0}
           // cardRightMargin={0}
+          style={{ display: "inline-block", textAlign: "center" }}
         />
       );
     });
@@ -90,7 +85,7 @@ class FoodPicturesMyPost extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div>
+      <div style={{ backgroundColor: "#FFFAF0" }}>
         <Header />
 
         <div className={classes.loading}>
@@ -98,64 +93,19 @@ class FoodPicturesMyPost extends React.Component {
             css={override}
             size={80}
             color={"green"}
-            loading={this.props.myPostLoading}
+            loading={this.props.allPostLoading}
           />
         </div>
 
-        {/* <div style={{ maxWidth: "550px", margin: "0px auto" }}>
-          <div
-            style={{
-              margin: "18px 0px",
-              borderBottom: "1px solid grey",
-            }}
-          > */}
-
-        <List style={{ display: "inline-block" }}>
-          <div>
-            <Typography
-              className={classes.postNum}
-              variant="h5"
-              component="p"
-              style={{
-                fontFamily: "Grand Hotel",
-                marginTop: 25,
-                marginBottom: 20,
-              }}
-            >
-              Total {this.props.myPost.length} posts
-            </Typography>
-          </div>
-          {/* <Button variant="contained" color="primary">
-              CREATE NEW POST
-            </Button>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <Button variant="contained" color="primary">
-              VIEW ALL POSTS
-            </Button> */}
-        </List>
-        {/* </div>
-        </div> */}
-
-        <div className={classes.post}>
-          {/* {this.props.myPost.map((post) => (
-            <FoodPicturesPost
-              key={post._id}
-              item={post}
-              cardWidth={300}
-              // cardLeftMargin={30}
-              // cardRightMargin={30}
-            />
-          ))} */}
-          {this.displayData()}
-        </div>
+        {this.displayData()}
 
         <div className={classes.pagination}>
           <SPagination
             page={this.state.currentPage}
             sizePerPage={this.state.perPage}
-            totalSize={this.props.myPost.length}
+            totalSize={this.props.allPost.length}
             pagesNextToActivePage={5}
-            sizePerPageOptions={[8, 12, 16]}
+            sizePerPageOptions={[5, 10, 15, 20]}
             onPageChange={this.handleOnPageChange}
             onSizeChange={this.handleOnSizeChange}
           />
@@ -167,19 +117,19 @@ class FoodPicturesMyPost extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getMyFoodPicPost: () => dispatch(getMyFoodPicPost()),
+    getAllFoodPicPost: () => dispatch(getAllFoodPicPost()),
   };
 };
 
 const mapStateToProps = (state) => {
   return {
     userInfo: state.userStore,
-    myPost: state.foodPicturesStore.myPost,
-    myPostLoading: state.foodPicturesStore.loadingMyPost,
+    allPost: state.foodPicturesStore.allPost,
+    allPostLoading: state.foodPicturesStore.loadingAllPost,
   };
 };
 
 export default compose(
   withStyles(useStyles),
   connect(mapStateToProps, mapDispatchToProps)
-)(FoodPicturesMyPost);
+)(FoodPicturesAllPost);

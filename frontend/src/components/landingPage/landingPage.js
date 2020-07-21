@@ -90,7 +90,7 @@ class LandingPage extends React.Component {
         <FeaturedPostCarousel
           card={mainCardContent}
           isAuthenticated={this.props.userInfo.isLoggedIn}
-          featuredPosts={this.props.featuredPosts}
+          featuredPost={this.props.featuredPost}
         />
         {/* <div className={classes.gridListHeader}>
           <Typography variant="h4" component="h2">
@@ -119,7 +119,7 @@ const mapStateToProps = (state) => {
   return {
     userInfo: state.userStore,
     foodPicPost: state.foodPicturesStore,
-    featuredPosts: state.foodPicturesStore.featuredPosts,
+    featuredPost: state.foodPicturesStore.featuredPost,
   };
 };
 

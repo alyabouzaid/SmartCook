@@ -1,9 +1,7 @@
 import React from "react";
 import Carousel from "react-material-ui-carousel";
 import compose from "recompose/compose";
-import Button from "@material-ui/core/Button";
 import MainCard from "../landingPage/MainCard";
-import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
@@ -24,16 +22,16 @@ function FeaturePostCarousel(props) {
   const posts = [];
   const numLikes = [];
 
-  props.featuredPosts &&
-    props.featuredPosts.map((item) => numLikes.push(item.likesLength));
+  props.featuredPost &&
+    props.featuredPost.map((item) => numLikes.push(item.likesLength));
 
   posts.push(
     <MainCard card={props.card} isAuthenticated={props.isAuthenticated} />
   );
 
   {
-    props.featuredPosts &&
-      props.featuredPosts.map((item) =>
+    props.featuredPost &&
+      props.featuredPost.map((item) =>
         item.image.map((image) =>
           posts.push(
             <img className={classes.featuredPosts} src={image.secure_url} />
@@ -42,26 +40,8 @@ function FeaturePostCarousel(props) {
       );
   }
 
-  //   var items = [
-  //     {
-  //       name: "Random Name #1",
-  //       description: "Probably the most random thing you have ever seen!",
-  //     },
-  //     // {
-  //     //   name: "Random Name #2",
-  //     //   description: "Hello World!",
-  //     // },
-  //   ];
-
   return (
     <Carousel>
-      {/* <MainCard card={props.card} isAuthenticated={props.isAuthenticated} /> */}
-      {/* {items.map((item) => (
-        <Item item={item} />
-      ))} */}
-      {/* {posts.map((item) => (
-        <div>{item}</div>
-      ))} */}
       <div>{posts[0]}</div>
 
       <div>
@@ -102,22 +82,5 @@ function FeaturePostCarousel(props) {
     </Carousel>
   );
 }
-
-// function Item(props) {
-//   return (
-//     <Paper style={{ backgroundImage: `url(${pic})` }}>
-//       <h2>{props.item.name}</h2>
-//       <p>{props.item.description}</p>
-
-//       <Button className="CheckButton">Check it out!</Button>
-//     </Paper>
-//   );
-// }
-
-// const mapStateToProps = (state) => {
-//   return {
-//     foodPicPost: state.foodPicturesStore,
-//   };
-// };
 
 export default compose()(FeaturePostCarousel);
