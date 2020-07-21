@@ -65,6 +65,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static('client/build'));    // Added for deployment
 app.use(formData.parse());
 app.use(bodyParser.json());
 
@@ -147,7 +148,7 @@ app.get(
       // console.log("authenticated callback");
       // console.log(req.user);
       isAuthenticated = true;
-      res.redirect("http://localhost:3000"); // TODO: CHANGE TO "/"
+      res.redirect("/"); // TODO: CHANGE TO "/"
     }
 );
 
@@ -163,7 +164,7 @@ app.get("/auth/logout", (req, res) => {
   } else {
     console.log("user not authenticated");
   }
-  res.redirect("http://localhost:3000"); // TODO: CHANGE TO "/"
+  res.redirect("/"); // TODO: CHANGE TO "/"
 });
 
 // Middleware to check if the user is authenticated
@@ -178,9 +179,9 @@ function isUserAuthenticated(req, res, next) {
 }
 
 // TODO: uncomment before deploy
-// app.get("/*", isUserAuthenticated, (req, res) => {
-//   res.sendFile(path.join(__dirname, '/frontend/build/index.html'));
-// });
+app.get("/*", isUserAuthenticated, (req, res) => {
+  res.sendFile(path.join(__dirname, '/client/build/index.html'));
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
