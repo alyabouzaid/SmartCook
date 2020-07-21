@@ -39,6 +39,7 @@ const mongoose = require("mongoose");
 
 const app = express();
 
+
 // mongoose connection
 const uri = process.env.ATLAS_URL;
 mongoose.connect(uri, {
@@ -83,6 +84,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // OAuth Strategy to get access_token
+
+const users = require("./models/users.model");
+
+
 passport.use(
     new GoogleStrategy(
         { clientID, clientSecret, callbackURL },
@@ -93,10 +98,25 @@ passport.use(
           // Find or Create a user in your DB and pass it.
           // If you are not using googleapis, you don't need to keep access token anymore.
           // access token is already used to fetch profile info.
-          fullName = profile.displayName;
-          name = profile.name.givenName;
-          email = profile.emails[0].value;
-          done(null, { accessToken, refreshToken, profile });
+
+            users.findOrCreate(
+                { email: profile.emails[0].value },
+                {
+                    email : profile.emails[0].value,
+                    firstName: profile.name.givenName,
+                    fullName: profile.displayName,
+                },
+                function (err, user) {
+                    // Updates user picture upon each auth session
+                    user.picture = profile._json.picture;
+                    user.save();
+                    // auth complete
+                    return done(err, user);
+                })
+          // fullName = profile.displayName;
+          // name = profile.name.givenName;
+          // email = profile.emails[0].value;
+          // done(null, { accessToken, refreshToken, profile });
         }
     )
 );
@@ -124,15 +144,11 @@ app.use("/images", imagesRouter);
 app.use("/foodPictures", foodPicturesRouter);
 app.use("/recipes", recipesRouter);
 
-app.get("/auth/user", (req, res) => {
-  let json = {
-    isLoggedIn: isAuthenticated,
-    firstName: name,
-    email: email,
-    fullName: fullName,
-  };
-  console.log(json);
-  res.send(json);
+app.get("/auth/user", isUserAuthenticated, (req, res) => {
+    users.findOne({ email: req.user.email }, function (err, result) {
+        console.log(result);
+        res.send(result);
+    });
 });
 
 // Start oauth flow
@@ -155,15 +171,15 @@ app.get(
 app.get("/auth/logout", (req, res) => {
   req.logout();
   req.session = null;
-  isAuthenticated = false;
-  name = "";
-  email = "";
-  fullName = "";
-  if (req.user) {
-    console.log("user still authenticated");
-  } else {
-    console.log("user not authenticated");
-  }
+  // isAuthenticated = false;
+  // name = "";
+  // email = "";
+  // fullName = "";
+  // if (req.user) {
+  //   console.log("user still authenticated");
+  // } else {
+  //   console.log("user not authenticated");
+  // }
   res.redirect("/"); // TODO: CHANGE TO "/"
 });
 
