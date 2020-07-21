@@ -13,9 +13,10 @@ import { red } from "@material-ui/core/colors";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
+import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import Header from "../login/Header";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { withStyles } from "@material-ui/core/styles";
@@ -26,6 +27,7 @@ import {
   addComment,
   editPostDescription,
   editPostComment,
+  deleteComment,
 } from "../../actions/foodPicturesActions";
 import TextField from "@material-ui/core/TextField";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
@@ -35,18 +37,13 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { deepPurple } from "@material-ui/core/colors";
 import { css } from "@emotion/core";
 import DotLoader from "react-spinners/DotLoader";
-import pic from "../login/landingPage.jpg";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 const useStyles = (theme) => ({
-  // rootContainer: {
-  //   display: "flex",
-  //   justifyContent: "center",
-  //   paddingTop: 50,
-  // },
-  // root: {
-  //   maxWidth: 700,
-  // },
+  root: {
+    display: "block",
+    marginLeft: 20,
+    marginRight: 20,
+  },
   header: {
     marginLeft: 0,
     fontSize: 20,
@@ -106,442 +103,389 @@ class FoodPicturesPost extends React.Component {
       expanded: false,
       anchorEl: null,
       isInEditDescriptionMode: false,
+      showEditOrDeleteCommentBtn: false,
       isInEditCommentMode: false,
       selectedCommentId: null,
     };
-
-    this.handleExpandClick = this.handleExpandClick.bind(this);
-    this.handleClickLike = this.handleClickLike.bind(this);
-    this.trimInitialForNameDisplay = this.trimInitialForNameDisplay.bind(this);
-    this.generate = this.generate.bind(this);
-    this.handleClickDropDownMenu = this.handleClickDropDownMenu.bind(this);
-    this.handleCloseDropDownMenu = this.handleCloseDropDownMenu.bind(this);
-    this.handleClickEditDescription = this.handleClickEditDescription.bind(
-      this
-    );
-    this.handleClickEditComment = this.handleClickEditComment.bind(this);
   }
 
-  handleExpandClick() {
+  handleExpandClick = () => {
     this.setState({
       expanded: !this.state.expanded,
     });
-  }
+  };
 
-  handleClickLike() {
+  handleClickLike = () => {
     this.setState({
       likeIconBgColor: "red",
     });
-  }
+  };
 
-  trimInitialForNameDisplay(fullName) {
+  trimInitialForNameDisplay = (fullName) => {
     const initials = fullName
       .split(/\s/)
       .reduce((res, str) => (res += str.slice(0, 1)), "");
 
     return initials.toUpperCase();
-  }
+  };
 
-  handleClickEditDescription() {
+  handleClickEditDescription = () => {
     this.setState({
       isInEditDescriptionMode: !this.state.isInEditDescriptionMode,
     });
-  }
+  };
 
-  handleClickEditComment(email, commentId) {
+  handleDoubleClickComment = (email, commentId) => {
     // console.log(JSON.stringify(email));
     email === this.props.userInfo.email
       ? //   : console.log("noooo");
         this.setState({
-          isInEditCommentMode: !this.state.isInEditCommentMode,
+          showEditOrDeleteCommentBtn: !this.state.showEditOrDeleteCommentBtn,
           selectedCommentId: commentId,
         })
       : this.setState({
-          isInEditCommentMode: this.state.isInEditCommentMode,
+          showEditOrDeleteCommentBtn: this.state.showEditOrDeleteCommentBtn,
         });
-  }
+  };
 
-  generate(element) {
+  generate = (element) => {
     return [0].map((value) =>
       React.cloneElement(element, {
         key: value,
       })
     );
-  }
+  };
 
-  handleClickDropDownMenu(e) {
+  handleClickDropDownMenu = (e) => {
     this.setState({ anchorEl: e.currentTarget });
-  }
+  };
 
-  handleCloseDropDownMenu() {
+  handleCloseDropDownMenu = () => {
     this.setState({ anchorEl: null });
-  }
+  };
+
+  renderVertIconButtonIfMatchUser = () => {
+    return (
+      <div>
+        <IconButton
+          aria-label="more"
+          aria-controls="long-menu"
+          aria-haspopup="true"
+          onClick={this.handleClickDropDownMenu}
+        >
+          <MoreVertIcon />
+        </IconButton>
+
+        <Menu
+          id="customized-menu"
+          anchorEl={this.state.anchorEl}
+          keepMounted
+          open={Boolean(this.state.anchorEl)}
+          onClose={this.handleCloseDropDownMenu}
+          PaperProps={{
+            style: {
+              maxHeight: 20 * 4.5,
+              width: "10ch",
+            },
+          }}
+        >
+          <MenuItem key={"edit"} onClick={this.handleClickEditDescription}>
+            Edit
+          </MenuItem>
+          <MenuItem
+            key={"delete"}
+            onClick={() => {
+              this.props.deleteOneFoodPicPost(
+                this.props.item._id,
+                this.props.userInfo.email
+              );
+            }}
+          >
+            Delete
+          </MenuItem>
+        </Menu>
+      </div>
+    );
+  };
+
+  renderEditOrDelBtnForComments = (item, comment) => {
+    const { classes } = this.props;
+
+    return (
+      <ListItem>
+        <ListItemAvatar>
+          <Avatar
+            className={classes.commentAvatar}
+            style={{
+              marginRight: 0,
+            }}
+          >
+            {this.trimInitialForNameDisplay(item.postedByFullName)}
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText
+          primary={
+            <Typography align="left" variant="subtitle1" component="h2">
+              {comment.postedByFullName + ": " + " " + comment.text}
+            </Typography>
+          }
+        />
+        <IconButton
+          aria-label="edit"
+          onClick={() => {
+            this.setState({ showEditOrDeleteCommentBtn: false });
+            this.handleClickEditComment();
+          }}
+        >
+          <EditOutlinedIcon />
+        </IconButton>
+
+        <IconButton
+          aria-label="delete"
+          onClick={() => {
+            this.setState({ showEditOrDeleteCommentBtn: false });
+            this.props.deleteComment(this.props.item._id, comment._id);
+          }}
+        >
+          <DeleteOutlineOutlinedIcon />
+        </IconButton>
+      </ListItem>
+    );
+  };
+
+  renderDefaultComment = (item, comment) => {
+    const { classes } = this.props;
+
+    return (
+      <ListItem>
+        <ListItemAvatar>
+          <Avatar
+            className={classes.commentAvatar}
+            style={{
+              marginRight: 0,
+            }}
+          >
+            {/* {comment.postedByFirstName.substring(0, 1)} */}
+            {this.trimInitialForNameDisplay(comment.postedByFullName)}
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText
+          primary={
+            <Typography align="left" variant="subtitle1" component="h2">
+              {comment.postedByFullName + ": " + " " + comment.text}
+            </Typography>
+          }
+        />
+      </ListItem>
+    );
+  };
+
+  handleClickEditComment = () => {
+    this.setState({
+      isInEditCommentMode: !this.state.isInEditCommentMode,
+    });
+  };
+
+  renderEditComment = (item, comment) => {
+    const { classes } = this.props;
+
+    return (
+      <form
+        className={classes.editComment}
+        onSubmit={(e) => {
+          e.preventDefault();
+          this.setState({ isInEditCommentMode: false });
+          this.props.editPostComment(item._id, comment._id, e.target[0].value);
+        }}
+      >
+        <input
+          type="text"
+          placeholder="Edit your comment"
+          style={{
+            width: 500,
+            fontSize: 15,
+            marginLeft: 0,
+            // marginBottom: 10,
+            float: "left",
+          }}
+        />
+      </form>
+    );
+  };
 
   render() {
     const { classes } = this.props;
 
-    //     return (
-    //       <div>
-    //         <Header />
-    //         {this.props.foodPicPost &&
-    //           this.props.foodPicPost.allPost &&
-    //           this.props.foodPicPost.allPost.map((item) => (
-    //             <div>{item.description}</div>
-    //           ))}
-    //       </div>
-    //     );
-    //   }
-    // }
-
     return (
-      // <div
-      //   style={{
-      //     backgroundColor: "#FFFAF0",
-      //     justifyContent: "center",
-      //   }}
-      // >
-      <Card
-        key={this.props.item._id}
-        className={classes.root}
-        style={{
-          maxWidth: this.props.cardWidth,
-          marginTop: 30,
-          marginBottom: 30,
-          marginLeft: this.props.cardLeftMargin,
-          marginRight: this.props.cardRightMargin,
-        }}
-      >
-        <CardHeader
-          className={classes.header}
-          avatar={
-            <Avatar aria-label="recipe" className={classes.avatar}>
-              {/* {item.postedByFirstName.substring(0, 1)} */}
-              {this.trimInitialForNameDisplay(this.props.item.postedByFullName)}
-            </Avatar>
-          }
-          // action={
-          //   this.props.userInfo.email === item.postedByEmail ? (
-          //     <IconButton
-          //       aria-label="settings"
-          //       onClick={() => {
-          //         // console.log("testing:", this.props.userInfo.firstName);
-          //         // console.log("testing2:", item._id);
-          //         this.props.deleteOneFoodPicPost(
-          //           item._id,
-          //           // this.props.userInfo.firstName
-          //           this.props.userInfo.email
-          //         );
-          //       }}
-          //     >
-          //       {/* <MoreVertIcon /> */}
-          //       <DeleteIcon/>
-          //     </IconButton>
-          //   ) : (
-          //     ""
-          //   )
-          action={
-            this.props.userInfo.email === this.props.item.postedByEmail ? (
-              <div>
-                <IconButton
-                  aria-label="more"
-                  aria-controls="long-menu"
-                  aria-haspopup="true"
-                  onClick={this.handleClickDropDownMenu}
-                >
-                  <MoreVertIcon />
-                </IconButton>
+      <div className={classes.root}>
+        <Card
+          key={this.props.item._id}
+          className={classes.root}
+          style={{
+            maxWidth: this.props.cardWidth,
+            marginTop: 30,
+            marginBottom: 30,
+            // marginLeft: this.props.cardLeftMargin,
+            // marginRight: this.props.cardRightMargin,
+            display: "block",
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+        >
+          <CardHeader
+            className={classes.header}
+            avatar={
+              <Avatar aria-label="recipe" className={classes.avatar}>
+                {this.trimInitialForNameDisplay(
+                  this.props.item.postedByFullName
+                )}
+              </Avatar>
+            }
+            action={
+              this.props.userInfo.email === this.props.item.postedByEmail
+                ? this.renderVertIconButtonIfMatchUser()
+                : ""
+            }
+            title={
+              <Typography align="left" variant="h6" component="h2">
+                {this.props.item.postedByFullName}
+              </Typography>
+            }
+            subheader={
+              <Typography align="left" variant="subtitle2" component="h2">
+                {this.props.item.dateTime}
+              </Typography>
+            }
+          />
+          {this.props.item.image.map((image) => (
+            <CardMedia
+              key={image.asset_id}
+              className={classes.media}
+              image={image.secure_url}
+              title="food image"
+            />
+          ))}
+          <CardActions disableSpacing className={classes.actions}>
+            <IconButton
+              aria-label="add to favorites"
+              onClick={() => {
+                this.handleClickLike();
+                this.props.addLike(
+                  this.props.item._id,
+                  this.props.userInfo.email
+                );
+              }}
+              style={{ color: this.state.likeIconBgColor }}
+            >
+              <FavoriteIcon />
+            </IconButton>
+            <Typography>{this.props.item.likes.length} likes</Typography>
+          </CardActions>
 
-                <Menu
-                  id="customized-menu"
-                  anchorEl={this.state.anchorEl}
-                  keepMounted
-                  open={Boolean(this.state.anchorEl)}
-                  onClose={this.handleCloseDropDownMenu}
-                  PaperProps={{
-                    style: {
-                      maxHeight: 20 * 4.5,
-                      width: "10ch",
-                    },
+          {this.state.isInEditDescriptionMode &&
+          this.props.userInfo.email === this.props.item.postedByEmail ? (
+            <form
+              className={classes.editDescription}
+              onSubmit={(e) => {
+                e.preventDefault();
+                this.setState({ isInEditDescriptionMode: false });
+                this.props.editPostDescription(
+                  this.props.item._id,
+                  e.target[0].value
+                );
+              }}
+            >
+              <input
+                type="text"
+                placeholder="Edit post description"
+                style={{
+                  width: 500,
+                  fontSize: 15,
+                  marginLeft: 12,
+                  marginBottom: 10,
+                  float: "left",
+                }}
+              />
+            </form>
+          ) : (
+            <CardContent className={classes.content}>
+              <Typography
+                variant="h6"
+                color="textSecondary"
+                component="p"
+                align="left"
+              >
+                {this.props.item.description}
+              </Typography>
+            </CardContent>
+          )}
+
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: this.state.expanded,
+            })}
+            onClick={this.handleExpandClick}
+            aria-expanded={this.state.expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+
+          <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+            {this.props.item.comments.map((comment) => (
+              <List>
+                <ListItem
+                  key={comment._id}
+                  onDoubleClick={() => {
+                    this.handleDoubleClickComment(
+                      comment.postedByEmail,
+                      comment._id
+                    );
                   }}
                 >
-                  <MenuItem
-                    key={"edit"}
-                    onClick={this.handleClickEditDescription}
-                  >
-                    Edit
-                  </MenuItem>
-                  <MenuItem
-                    key={"delete"}
-                    onClick={() => {
-                      this.props.deleteOneFoodPicPost(
-                        this.props.item._id,
-                        this.props.userInfo.email
-                      );
-                    }}
-                  >
-                    Delete
-                  </MenuItem>
-                </Menu>
-              </div>
-            ) : (
-              ""
-            )
-          }
-          title={
-            <Typography align="left" variant="h6" component="h2">
-              {this.props.item.postedByFullName}
-            </Typography>
-          }
-          subheader={
-            <Typography align="left" variant="subtitle2" component="h2">
-              {this.props.item.dateTime}
-            </Typography>
-          }
-        />
-        {this.props.item.image.map((image) => (
-          <CardMedia
-            key={image.asset_id}
-            className={classes.media}
-            image={image.secure_url}
-            title="food image"
-          />
-        ))}
-        <CardActions disableSpacing className={classes.actions}>
-          <IconButton
-            aria-label="add to favorites"
-            onClick={() => {
-              this.handleClickLike();
-              this.props.addLike(
-                this.props.item._id,
-                // this.props.userInfo.firstName.trim()
-                this.props.userInfo.email
-              );
-            }}
-            style={{ color: this.state.likeIconBgColor }}
-          >
-            <FavoriteIcon />
-          </IconButton>
-          {/* <IconButton aria-label="share">
-            <ShareIcon />
-          </IconButton> */}
+                  {this.state.showEditOrDeleteCommentBtn &&
+                  this.state.selectedCommentId === comment._id
+                    ? this.renderEditOrDelBtnForComments(
+                        this.props.item,
+                        comment
+                      )
+                    : this.state.selectedCommentId === comment._id &&
+                      this.state.isInEditCommentMode
+                    ? this.renderEditComment(this.props.item, comment)
+                    : this.renderDefaultComment(this.props.item, comment)}
+                </ListItem>
+              </List>
+            ))}
 
-          <Typography>{this.props.item.likes.length} likes</Typography>
-        </CardActions>
-
-        {this.state.isInEditDescriptionMode &&
-        this.props.userInfo.email === this.props.item.postedByEmail ? (
-          <form
-            className={classes.editDescription}
-            onSubmit={(e) => {
-              e.preventDefault();
-              this.setState({ isInEditDescriptionMode: false });
-              this.props.editPostDescription(
-                this.props.item._id,
-                e.target[0].value
-              );
-            }}
-          >
-            <input
-              type="text"
-              placeholder="Edit post description"
-              style={{
-                width: 500,
-                fontSize: 15,
-                marginLeft: 12,
-                marginBottom: 10,
-                float: "left",
+            <form
+              className={classes.comment}
+              onSubmit={(e) => {
+                e.preventDefault();
+                this.props.addComment(
+                  this.props.item._id,
+                  e.target[0].value,
+                  this.props.userInfo.firstName,
+                  this.props.userInfo.fullName,
+                  this.props.userInfo.email
+                );
               }}
-            />
-          </form>
-        ) : (
-          <CardContent className={classes.content}>
-            <Typography
-              variant="h6"
-              color="textSecondary"
-              component="p"
-              align="left"
             >
-              {this.props.item.description}
-            </Typography>
-          </CardContent>
-        )}
-
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: this.state.expanded,
-          })}
-          onClick={this.handleExpandClick}
-          aria-expanded={this.state.expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-
-        <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-          {/* <div className={classes.commentList}> */}
-          {this.props.item.comments.map((comment) => (
-            <List>
-              <ListItem
-                key={comment._id}
-                onDoubleClick={() => {
-                  this.handleClickEditComment(
-                    comment.postedByEmail,
-                    comment._id
-                  );
+              <TextField
+                id="standard-basic"
+                label="Add a comment"
+                style={{
+                  border: "none",
+                  width: 500,
+                  fontSize: 15,
+                  marginLeft: 12,
+                  marginBottom: 15,
+                  float: "left",
                 }}
-
-                // comment.postedByEmail ===
-                // this.props.userInfo.email ? (
-                //   <form
-                //     className={classes.editComment}
-                //     onSubmit={(e) => {
-                //       e.preventDefault();
-                //       // this.props.editPostComment(item._id, comment._id, e.target[0].value);
-                //     }}
-                //   >
-                //     <input
-                //       type="text"
-                //       placeholder="Edit your comment"
-                //       style={{
-                //         border: "none",
-                //         width: 500,
-                //         fontSize: 15,
-                //         // display: "block",
-                //         marginLeft: 12,
-                //         marginBottom: 15,
-                //         float: "left",
-                //       }}
-                //     />
-                //   </form>
-                // ) : (
-                //   ""
-                // )
-                // }
-              >
-                {this.state.isInEditCommentMode &&
-                this.state.selectedCommentId === comment._id ? (
-                  <form
-                    className={classes.editComment}
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      this.setState({ isInEditCommentMode: false });
-                      this.props.editPostComment(
-                        this.props.item._id,
-                        comment._id,
-                        e.target[0].value
-                      );
-                    }}
-                  >
-                    <input
-                      type="text"
-                      placeholder="Edit your comment"
-                      style={{
-                        width: 500,
-                        fontSize: 15,
-                        marginLeft: 0,
-                        // marginBottom: 10,
-                        float: "left",
-                      }}
-                    />
-                  </form>
-                ) : (
-                  <ListItem
-                  // key={comment._id}
-                  // onDoubleClick={() => {
-                  //   this.handleClickEditComment(
-                  //     comment.postedByEmail,
-                  //     comment._id
-                  //   );
-                  // }}
-                  >
-                    <ListItemAvatar>
-                      <Avatar
-                        className={classes.commentAvatar}
-                        style={{
-                          marginRight: 0,
-                        }}
-                      >
-                        {/* {comment.postedByFirstName.substring(0, 1)} */}
-                        {this.trimInitialForNameDisplay(
-                          this.props.item.postedByFullName
-                        )}
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={
-                        <Typography
-                          align="left"
-                          variant="subtitle1"
-                          component="h2"
-                        >
-                          {comment.postedByFullName + ": " + " " + comment.text}
-                        </Typography>
-                      }
-                    />
-                  </ListItem>
-                )}
-                {/* <ListItemAvatar>
-                          <Avatar
-                            className={classes.commentAvatar}
-                            style={{
-                              marginRight: 0,
-                            }}
-                          >
-                            {this.trimInitialForNameDisplay(
-                              comment.postedByFullName
-                            )}
-                          </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary={
-                            <Typography
-                              align="left"
-                              variant="subtitle1"
-                              component="h2"
-                            >
-                              {comment.postedByFullName +
-                                ": " +
-                                " " +
-                                comment.text}
-                            </Typography>
-                          }
-                        /> */}
-              </ListItem>
-              {/* )} */}
-            </List>
-          ))}
-
-          <form
-            className={classes.comment}
-            onSubmit={(e) => {
-              e.preventDefault();
-              // this.setState({ dense: e.target.checked });
-              this.props.addComment(
-                this.props.item._id,
-                e.target[0].value,
-                this.props.userInfo.firstName,
-                this.props.userInfo.fullName,
-                this.props.userInfo.email
-              );
-            }}
-          >
-            <TextField
-              id="standard-basic"
-              label="Add a comment"
-              style={{
-                border: "none",
-                width: 500,
-                fontSize: 15,
-                // display: "block",
-                marginLeft: 12,
-                marginBottom: 15,
-                float: "left",
-              }}
-            />
-          </form>
-        </Collapse>
-      </Card>
-      // </div>
+              />
+            </form>
+          </Collapse>
+        </Card>
+      </div>
     );
   }
 }
@@ -560,6 +504,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(editPostDescription(idPayload, editedPostDescription)),
     editPostComment: (idPayload, commentId, editedComment) =>
       dispatch(editPostComment(idPayload, commentId, editedComment)),
+    deleteComment: (idPayload, commentId) =>
+      dispatch(deleteComment(idPayload, commentId)),
     // deleteAllFoodPicPosts: (idPayload) =>
     //   dispatch(deleteAllFoodPicPosts(idPayload)),
   };

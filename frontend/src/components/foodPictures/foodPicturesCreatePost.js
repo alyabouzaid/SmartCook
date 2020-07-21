@@ -1,17 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core/styles";
 import "../../index.css";
 import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Header from "../login/Header";
-import { Input, TextField } from "@material-ui/core";
-import GridList from "@material-ui/core/GridList";
-import GridListTile from "@material-ui/core/GridListTile";
+import { TextField } from "@material-ui/core";
 import { FaImage } from "react-icons/all";
-import { loadUserData } from "../../actions/userActions";
 import {
   uploadImageAndCreatePost,
   getAllFoodPicPost,
@@ -69,27 +65,6 @@ class FoodPicturesCreatePost extends React.Component {
     }
   }
 
-  // render() {
-  //   const { classes } = this.props;
-
-  //   return (
-  //     <div>
-  //       <ul className="message-list">
-  //         {this.props.foodPicPost &&
-  //           this.props.foodPicPost.foodPicPosts &&
-  //           this.props.foodPicPost.foodPicPosts.map((item) => (
-  //             <li key={item._id}>
-  //               {item.image.map((image) => (
-  //                 <img src={image.secure_url} alt="" />
-  //               ))}
-  //               {/* <img src={item.image.secure_url} alt="" /> */}
-  //             </li>
-  //           ))}
-  //       </ul>
-  //     </div>
-  //   );
-  // }
-
   render() {
     const { classes } = this.props;
 
@@ -112,16 +87,9 @@ class FoodPicturesCreatePost extends React.Component {
             >
               Food Picture Post
             </Typography>
-            <form
-              className={classes.description}
-              // onSubmit={(e) => {
-              //   e.preventDefault();
-              //   makeComment(e.target[0].value, item._id);
-              // }}
-            >
+            <form className={classes.description}>
               <TextField
                 multiline
-                // rows={5}
                 type="text"
                 placeholder="Enter post description"
                 value={this.state.description}
@@ -132,14 +100,12 @@ class FoodPicturesCreatePost extends React.Component {
               className={classes.button}
               variant="contained"
               color="primary"
-              // onClick={this.handleClick}
               onClick={() => this.inputRef.click()}
             >
               Upload Pic
             </Button>
             <input
               type="file"
-              // ref={this.hiddenFileInput}
               ref={(inputRef) => {
                 this.inputRef = inputRef;
               }}
@@ -167,14 +133,12 @@ class FoodPicturesCreatePost extends React.Component {
               className={classes.button}
               variant="contained"
               color="primary"
-              // href="http://localhost:3000/foodPic"
               onClick={() =>
                 this.props.uploadImageAndCreatePost(
                   this.state.description,
                   this.state.image.raw,
                   this.props.userInfo.email,
                   this.props.userInfo.firstName,
-                  // console.log("fullname: ", this.props.userInfo.fullName),
                   this.props.userInfo.fullName
                 )
               }
@@ -206,7 +170,6 @@ const mapDispatchToProps = (dispatch) => {
           userFullName
         )
       ),
-    loadUserData: () => dispatch(loadUserData()),
     getAllFoodPicPost: () => dispatch(getAllFoodPicPost()),
   };
 };

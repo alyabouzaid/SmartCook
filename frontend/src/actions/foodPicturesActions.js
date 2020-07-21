@@ -64,7 +64,7 @@ export const createNewFoodPicPost = (
       // console.log("create post waiting before");
       // dispatch(postMessagePostingsLoading());
       const res = await axios.post(
-        "http://localhost:9000/foodPictures/add",
+        "http://localhost:9000/foodPictures/addPost",
         params
       );
       // console.log("create post waiting");
@@ -101,7 +101,7 @@ export const addNewFoodPicPost = (newFoodPicPost) => {
 export const getAllFoodPicPost = () => {
   return async (dispatch) => {
     try {
-      await dispatch(loadingAllFoodPicPost());
+      dispatch(allFoodPicPostLoading());
       const res = await axios.get("http://localhost:9000/foodPictures/allPost");
 
       const allPosts = await res.data;
@@ -116,9 +116,9 @@ export const getAllFoodPicPost = () => {
   };
 };
 
-export const loadingAllFoodPicPost = () => {
+export const allFoodPicPostLoading = () => {
   return {
-    type: "FOODPIC_POSTS_LOADING",
+    type: "ALL_FOODPIC_POSTS_LOADING",
   };
 };
 
@@ -133,7 +133,7 @@ export const getMyFoodPicPost = () => {
   // console.log("action email: ", email);
   return async (dispatch) => {
     try {
-      // await dispatch(loadingAllFoodPicPost());
+      dispatch(myFoodPicPostLoading());
       const userData = await axios.get("http://localhost:9000/auth/user");
       // console.log("userData: ", JSON.stringify(userData.data.email));
 
@@ -151,6 +151,12 @@ export const getMyFoodPicPost = () => {
         autoClose: 3000,
       });
     }
+  };
+};
+
+export const myFoodPicPostLoading = () => {
+  return {
+    type: "MY_FOODPIC_POSTS_LOADING",
   };
 };
 
@@ -306,6 +312,30 @@ export const editPostComment = (idPayload, commentId, editedComment) => {
   };
 };
 
+export const deleteComment = (idPayload, commentId) => {
+  // console.log("editedComment: ", commentId, editedComment);
+  return async (dispatch) => {
+    try {
+      const params = {
+        commentId: commentId,
+      };
+      const res = await axios.put(
+        `http://localhost:9000/foodPictures/deleteComment/${idPayload}`,
+        params
+      );
+
+      const updatedFoodPicPost = await res.data;
+      dispatch(addUpdatedFoodPicPost(updatedFoodPicPost));
+    } catch (error) {
+      console.log("Error: ", error);
+      toast.error("API error", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000,
+      });
+    }
+  };
+};
+
 export const addUpdatedFoodPicPost = (updatedFoodPicPost) => {
   // console.log("this is to message list: " + JSON.stringify(newPosting));
   // console.log("in addNewFoodPic: " + JSON.stringify(newFoodPicPost));
@@ -323,7 +353,7 @@ export const deleteOneFoodPicPost = (idPayload, email) => {
       // console.log("in action2:", email);
 
       const res = await axios.delete(
-        `http://localhost:9000/foodPictures/delete/${idPayload}`,
+        `http://localhost:9000/foodPictures/deletePost/${idPayload}`,
         {
           headers: {
             "Content-Type": "application/json",

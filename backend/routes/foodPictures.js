@@ -4,18 +4,18 @@ var mongoose = require("mongoose");
 const foodPicturePost = require("../models/foodPictures.model");
 var ObjectId = require("mongodb").ObjectID;
 
-// get all postings request
+// get all posts
 router.get("/allPost", (req, res) => {
-  // setTimeout(() => {
-  foodPicturePost
-    .find()
-    .sort("-likesLength")
-    .then((posts) => res.status(200).json(posts))
-    .catch((err) => res.status(400).json("Error: ", err));
-  // }, 4000);
+  setTimeout(() => {
+    foodPicturePost
+      .find()
+      .sort("-likesLength")
+      .then((posts) => res.status(200).json(posts))
+      .catch((err) => res.status(400).json("Error: ", err));
+  }, 2000);
 });
 
-// get highest like post (feature post) request
+// get highest like post (feature post)
 router.get("/featuredPost", (req, res) => {
   foodPicturePost
     .find()
@@ -25,8 +25,8 @@ router.get("/featuredPost", (req, res) => {
     .catch((err) => res.status(400).json("Error: ", err));
 });
 
-// post request
-router.post("/add", (req, res) => {
+// add new post
+router.post("/addPost", (req, res) => {
   const _id = uuid();
   const description = req.body.description;
   const image = req.body.image;
@@ -51,16 +51,18 @@ router.post("/add", (req, res) => {
     .catch((err) => res.status(400).json("Error: ", err));
 });
 
-// get all individual postings request (next sprint)
+// get all individual posts
 router.get("/myPost", (req, res) => {
-  foodPicturePost
-    // .find({ postedBy: req.user })
-    .find({ postedByEmail: req.query.email })
-    .then((posts) => res.status(200).json(posts))
-    .catch((err) => res.status(400).json("Error: ", err));
+  setTimeout(() => {
+    foodPicturePost
+      // .find({ postedBy: req.user })
+      .find({ postedByEmail: req.query.email })
+      .then((posts) => res.status(200).json(posts))
+      .catch((err) => res.status(400).json("Error: ", err));
+  }, 2000);
 });
 
-// update like request
+// add post like
 router.put("/addLike/:id", (req, res) => {
   foodPicturePost
     .findOneAndUpdate(
@@ -86,7 +88,7 @@ router.put("/addLike/:id", (req, res) => {
     });
 });
 
-// update comment request
+// add post comment
 router.put("/addComment/:id", (req, res) => {
   const comment = {
     text: req.body.comment,
@@ -142,12 +144,9 @@ router.put("/editComment/:id", (req, res) => {
     .findOneAndUpdate(
       {
         _id: req.params.id,
-        // comments: { _id: ObjectId(req.body.commentId) },
         "comments._id": ObjectId(req.body.commentId),
-        // "comments.postedByFirstName": req.body.firstName,
       },
       {
-        // $set: { comments: { text: req.body.editedComment } },
         $set: { "comments.$.text": req.body.editedComment },
       },
       {
@@ -164,18 +163,33 @@ router.put("/editComment/:id", (req, res) => {
     });
 });
 
-// delete request
-router.delete("/delete/:id", (req, res) => {
+//delete post comment
+router.put("/deleteComment/:id", (req, res) => {
   // console.log("route:", req.body.username);
   foodPicturePost
-    // .findByIdAndRemove(req.params.id)
-    // .findOneAndDelete({
-    //   _id: req.params.id,
-    //   postedBy: req.body.user,
-    // })
-    // .findOneAndDelete({
-    //   $and: [{ _id: req.params.id }, { postedBy: req.body.user }],
-    // })
+    .findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $pull: { comments: { _id: ObjectId(req.body.commentId) } },
+      },
+      {
+        new: true,
+        useFindAndModify: false,
+      }
+    )
+    .exec((err, result) => {
+      if (err) {
+        return res.status(400).json("Error: ", err);
+      } else {
+        return res.status(200).json(result);
+      }
+    });
+});
+
+// delete food post
+router.delete("/deletePost/:id", (req, res) => {
+  // console.log("route:", req.body.username);
+  foodPicturePost
     .remove({
       postedByEmail: req.body.email,
       _id: req.params.id,
@@ -186,7 +200,7 @@ router.delete("/delete/:id", (req, res) => {
     .catch((err) => res.status(400).json("Error: cannot find user "));
 });
 
-//delete all request
+//delete all post (not implemented in frontend)
 router.delete("/deleteAll", (req, res) => {
   foodPicturePost
     .remove({})

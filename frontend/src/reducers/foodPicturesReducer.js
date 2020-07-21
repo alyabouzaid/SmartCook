@@ -1,5 +1,6 @@
 const initialfoodPicPostState = {
-  loading: false,
+  loadingAllPost: false,
+  loadingMyPost: false,
   allPost: [],
   myPost: [],
   featuredPost: [],
@@ -15,21 +16,26 @@ export default function foodPicturesReducer(
         ...state,
         allPost: [...state.allPost, action.payload],
       };
-    case "FOODPIC_POSTS_LOADING":
+    case "ALL_FOODPIC_POSTS_LOADING":
       return {
         ...state,
-        loading: true,
+        loadingAllPost: true,
       };
     case "LOAD_ALL_FOODPIC_POSTS":
       return {
         ...state,
-        loading: false,
+        loadingAllPost: false,
         allPost: action.payload,
+      };
+    case "MY_FOODPIC_POSTS_LOADING":
+      return {
+        ...state,
+        loadingMyPost: true,
       };
     case "LOAD_MY_FOODPIC_POSTS":
       return {
         ...state,
-        // loading: false,
+        loadingMyPost: false,
         myPost: action.payload,
       };
     case "LOAD_FEATURED_FOODPIC_POSTS":
