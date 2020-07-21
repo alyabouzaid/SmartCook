@@ -34,24 +34,9 @@ const useStyles = () => ({
 
 class Journal extends React.Component {
 
-  defaultPage() {
-    return (
-      <div
-        style={{
-          backgroundImage: `url(${pic})`,
-          height: 1000,
-          backgroundSize: "cover",
-        }}
-      >
-        <Header />
-        <h1>You must log in</h1>
-      </div>
-    );
-  }
-
   render() {
     const { classes } = this.props;
-    return this.props.userInfo.isLoggedIn ? (
+    return (
       <div style={{backgroundColor: "#FDF5E6", height: 1000, backgroundSize: 'cover'}}>
         <Header />
         <div style={{ margin: "5%" }}>
@@ -97,8 +82,6 @@ class Journal extends React.Component {
           </Button>
         </div>
       </div>
-    ) : (
-      this.defaultPage()
     );
   }
 }
