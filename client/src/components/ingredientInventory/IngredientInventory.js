@@ -22,38 +22,40 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Header from "../login/Header";
 import pic from "./image5.jpg";
+import { getInventory } from "../../actions/inventoryListActions-modified"; //comment out
 
 class IngredientInventory extends React.Component {
   componentDidMount() {
-    this.props.initialData();
+    // this.props.initialData();
+    this.props.getInventory();
   }
 
-  addItem() {
-    let inventory = document.getElementById("inventory").value;
-    let amount = document.getElementById("amount").value;
-    let targetAmount = document.getElementById("targetAmount").value;
+  // addItem() {
+  //   let inventory = document.getElementById("inventory").value;
+  //   let amount = document.getElementById("amount").value;
+  //   let targetAmount = document.getElementById("targetAmount").value;
 
-    let key = 0;
-    if (this.props.ingredientInventory.length > 0) {
-      key =
-        this.props.ingredientInventory[
-          this.props.ingredientInventory.length - 1
-        ].key + 1;
-    }
+  //   let key = 0;
+  //   if (this.props.ingredientInventory.length > 0) {
+  //     key =
+  //       this.props.ingredientInventory[
+  //         this.props.ingredientInventory.length - 1
+  //       ].key + 1;
+  //   }
 
-    this.props.addingIngredient({
-      email: this.props.userInfo.email,
-      inventory: [
-        {
-          key: key,
-          description: inventory,
-          amount: amount,
-          targetAmount: targetAmount,
-          selected: false,
-        },
-      ],
-    });
-  }
+  //   this.props.addingIngredient({
+  //     email: this.props.userInfo.email,
+  //     inventory: [
+  //       {
+  //         key: key,
+  //         description: inventory,
+  //         amount: amount,
+  //         targetAmount: targetAmount,
+  //         selected: false,
+  //       },
+  //     ],
+  //   });
+  // }
 
   render() {
     const useStyles = makeStyles((theme) => ({
@@ -64,6 +66,10 @@ class IngredientInventory extends React.Component {
       },
     }));
 
+    // return this.props.ingredientInventory.map((item) => (
+    //   <div>{JSON.stringify(item)}</div>
+    // ));
+
     return (
       <div
         style={{
@@ -73,6 +79,7 @@ class IngredientInventory extends React.Component {
         }}
       >
         <Header />
+
         <Container text-align="center">
           &nbsp;
           <p>
@@ -157,33 +164,35 @@ class IngredientInventory extends React.Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {this.props.ingredientInventory.map((row) => (
-                  <TableRow key={row.name}>
-                    <TableCell style={{ fontSize: "16px" }} align="right">
-                      {row.description}
-                    </TableCell>
-                    <TableCell style={{ fontSize: "16px" }} align="right">
-                      {row.amount}
-                    </TableCell>
-                    <TableCell style={{ fontSize: "16px" }} align="right">
-                      {row.targetAmount}
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() =>
-                          this.props.deleteIngredient({
-                            email: this.props.userInfo.email,
-                            key: row.key,
-                          })
-                        }
-                      >
-                        Delete
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {this.props.ingredientInventory.map((item) =>
+                  item.inventory.map((row) => (
+                    <TableRow key={row.name}>
+                      <TableCell style={{ fontSize: "16px" }} align="right">
+                        {row.description}
+                      </TableCell>
+                      <TableCell style={{ fontSize: "16px" }} align="right">
+                        {row.amount}
+                      </TableCell>
+                      <TableCell style={{ fontSize: "16px" }} align="right">
+                        {row.targetAmount}
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={() =>
+                            this.props.deleteIngredient({
+                              email: this.props.userInfo.email,
+                              key: row.key,
+                            })
+                          }
+                        >
+                          Delete
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
               </TableBody>
             </Table>
           </TableContainer>
@@ -198,7 +207,8 @@ class IngredientInventory extends React.Component {
 const mapStateToProps = (state) => {
   //name is by convention
   return {
-    ingredientInventory: state.ingredientInventory,
+    // ingredientInventory: state.ingredientInventory,
+    ingredientInventory: state.inventoryModified.inventory, //comment out
     userInfo: state.userStore,
   }; //now it will appear as props
 };
@@ -209,4 +219,5 @@ export default connect(mapStateToProps, {
   deleteIngredient,
   initialData,
   loadUserData,
+  getInventory, //comment out
 })(IngredientInventory);
