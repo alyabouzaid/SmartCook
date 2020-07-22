@@ -1,35 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
-import { addingIngredient } from "../../actions/ingredientInventoryActions";
-import {
-  clearIngredients,
-  deleteIngredient,
-  initialData,
-} from "../../actions/ingredientInventoryActions";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import { loadUserData } from "../../actions/userActions";
-
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import Header from "../login/Header";
-import pic from "./image5.jpg";
-import { getInventory } from "../../actions/inventoryListActions-modified"; //comment out
+import { getInventory } from "../../actions/inventoryListActions-modified";
 
 class IngredientInventory extends React.Component {
   componentDidMount() {
-    // this.props.initialData();
     this.props.getInventory();
   }
+
+  //   render() {
+  //     return this.props.inventory.map((item) => (
+  //       <div>{JSON.stringify(item)}</div>
+  //     ));
+  //   }
+  // }
 
   // addItem() {
   //   let inventory = document.getElementById("inventory").value;
@@ -204,20 +188,19 @@ class IngredientInventory extends React.Component {
   }
 }
 
-//state has entire state of app!!
-const mapStateToProps = (state) => {
-  //name is by convention
-  return {
-    // ingredientInventory: state.ingredientInventory,
-    ingredientInventory: state.inventoryModified.inventory, //comment out
-    userInfo: state.userStore,
-  }; //now it will appear as props
-};
-
 const mapDispatchToProps = (dispatch) => {
   return {
     getInventory: () => dispatch(getInventory()),
   };
+};
+
+//state has entire state of app!!
+const mapStateToProps = (state) => {
+  //name is by convention
+  return {
+    inventory: state.inventoryModified.inventory,
+    userInfo: state.userStore,
+  }; //now it will appear as props
 };
 
 export default compose(connect(mapStateToProps, mapDispatchToProps))(
