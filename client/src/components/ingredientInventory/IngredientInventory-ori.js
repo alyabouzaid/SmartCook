@@ -1,46 +1,60 @@
 import React from "react";
 import { connect } from "react-redux";
-import compose from "recompose/compose";
-import { getInventory } from "../../actions/inventoryListActions-modified";
+import { addingIngredient } from "../../actions/ingredientInventoryActions";
+import {
+  clearIngredients,
+  deleteIngredient,
+  initialData,
+} from "../../actions/ingredientInventoryActions";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import { loadUserData } from "../../actions/userActions";
+
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Header from "../login/Header";
+import pic from "./image5.jpg";
+import { getInventory } from "../../actions/inventoryListActions-modified"; //comment out
 
 class IngredientInventory extends React.Component {
   componentDidMount() {
-    this.props.getInventory();
+    this.props.initialData();
   }
 
-  //   render() {
-  //     return this.props.inventory.map((item) => (
-  //       <div>{JSON.stringify(item)}</div>
-  //     ));
-  //   }
-  // }
+  addItem() {
+    let inventory = document.getElementById("inventory").value;
+    let amount = document.getElementById("amount").value;
+    let targetAmount = document.getElementById("targetAmount").value;
 
-  // addItem() {
-  //   let inventory = document.getElementById("inventory").value;
-  //   let amount = document.getElementById("amount").value;
-  //   let targetAmount = document.getElementById("targetAmount").value;
+    let key = 0;
+    if (this.props.ingredientInventory.length > 0) {
+      key =
+        this.props.ingredientInventory[
+          this.props.ingredientInventory.length - 1
+        ].key + 1;
+    }
 
-  //   let key = 0;
-  //   if (this.props.ingredientInventory.length > 0) {
-  //     key =
-  //       this.props.ingredientInventory[
-  //         this.props.ingredientInventory.length - 1
-  //       ].key + 1;
-  //   }
-
-  //   this.props.addingIngredient({
-  //     email: this.props.userInfo.email,
-  //     inventory: [
-  //       {
-  //         key: key,
-  //         description: inventory,
-  //         amount: amount,
-  //         targetAmount: targetAmount,
-  //         selected: false,
-  //       },
-  //     ],
-  //   });
-  // }
+    this.props.addingIngredient({
+      email: this.props.userInfo.email,
+      inventory: [
+        {
+          key: key,
+          description: inventory,
+          amount: amount,
+          targetAmount: targetAmount,
+          selected: false,
+        },
+      ],
+    });
+  }
 
   render() {
     const useStyles = makeStyles((theme) => ({
@@ -51,9 +65,6 @@ class IngredientInventory extends React.Component {
       },
     }));
 
-    // return this.props.ingredientInventory.map((item) => (
-    //   <div>{JSON.stringify(item)}</div>
-    // ));
 
     return (
       <div
@@ -149,8 +160,7 @@ class IngredientInventory extends React.Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {this.props.ingredientInventory.map((item) =>
-                  item.inventory.map((row) => (
+              {this.props.ingredientInventory.map((row) => (
                     <TableRow key={row.name}>
                       <TableCell style={{ fontSize: "16px" }} align="right">
                         {row.description}
@@ -188,21 +198,21 @@ class IngredientInventory extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getInventory: () => dispatch(getInventory()),
-  };
-};
-
 //state has entire state of app!!
 const mapStateToProps = (state) => {
   //name is by convention
   return {
-    inventory: state.inventoryModified.inventory,
+    ingredientInventory: state.ingredientInventory,
+    // ingredientInventory: state.inventoryModified.inventory, //sheena added
     userInfo: state.userStore,
   }; //now it will appear as props
 };
 
-export default compose(connect(mapStateToProps, mapDispatchToProps))(
-  IngredientInventory
-);
+export default connect(mapStateToProps, {
+  addingIngredient,
+  clearIngredients,
+  deleteIngredient,
+  initialData,
+  loadUserData,
+  // getInventory, //sheena added 
+})(IngredientInventory);
