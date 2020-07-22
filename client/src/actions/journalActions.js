@@ -127,3 +127,10 @@ export const deleteAllJournal = () => {
         type: 'JOURNALS_DELETE_ALL',
     };
 };
+
+export const annotateJournal = (recipe) => {
+    return{
+       type: 'RECIPE_ANNOTATION',
+       payload: recipe
+    };
+};
