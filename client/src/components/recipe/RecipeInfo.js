@@ -14,6 +14,7 @@ import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import SaveOutlinedIcon from '@material-ui/icons/Save';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
 const useStyles = makeStyles((theme) => ({
     cardGrid: {
@@ -115,6 +116,9 @@ export default function RecipeInfo({recipe}) {
                     </IconButton>
                     <IconButton aria-label="share" onClick={() => {dispatch({type:'RECIPE_ANNOTATION', payload: recipe["recipe"]}); history.push('/journal')}} >
                         <SaveOutlinedIcon size="medium" />
+                    </IconButton>
+                    <IconButton aria-label="share">
+                        <EditOutlinedIcon size="small" />
                     </IconButton>
                 </CardActions>
             </Card>
