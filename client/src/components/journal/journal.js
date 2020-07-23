@@ -52,10 +52,10 @@ class Journal extends React.Component {
               <CKEditor
                 editor={ClassicEditor}
                 data={this.props.editorData.initialData}
-                onInit={(editor) => {
-                  // You can store the "editor" and use when it is needed.
-                  console.log("Editor is ready to use!", editor);
-                }}
+                // onInit={(editor) => {
+                  //                 //   // You can store the "editor" and use when it is needed.
+                  //                 //   console.log("Editor is ready to use!", editor);
+                  //                 // }}
                 onChange={(event, editor) => {
                   const data = editor.getData();
                   this.props.editJournal(data);
@@ -84,7 +84,7 @@ class Journal extends React.Component {
 
 const mapStateToProps = (state) => {
   //name is by convention
-  return { editorData: state.journalEditorStore, userInfo: state.userStore }; //now it will appear as props
+  return { editorData: state.journalEditorStore, userInfo: state.userStore, darkMode: state.colorStore}; //now it will appear as props
 };
 
 export default compose(
