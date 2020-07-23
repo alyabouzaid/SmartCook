@@ -20,26 +20,28 @@ import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import { FaEdit } from "react-icons/all";
 import Grid from "@material-ui/core/Grid";
+import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = (theme) => ({
   root: {
     height: "100vh",
     flexGrow: 1,
     // marginLeft: "3%",
+    justifyContent: "center",
   },
   cardGrid: {
     // paddingTop: theme.spacing(8), // removed this
     // paddingBottom: theme.spacing(8),
   },
   card: {
-    height: "100%",
+    height: "80%",
     display: "flex",
     flexDirection: "column",
   },
-  cardMedia: {
-    height: 100, // increases image height
-    paddingTop: "56.25%", // 16:9
-  },
+  //   cardMedia: {
+  //     height: 100, // increases image height
+  //     paddingTop: "56.25%", // 16:9
+  //   },
   cardContent: {
     flexGrow: 1,
     // height: '150px',
@@ -59,7 +61,8 @@ const useStyles = (theme) => ({
   //     width: '70%',
   // },
   media: {
-    height: 300,
+    height: 0,
+    paddingTop: "56.25%", // 16:9
   },
   test: {
     "& > *": {
@@ -78,39 +81,70 @@ class JournalView extends Component {
     const { classes } = this.props;
     return (
       <div>
-        <div style={{ margin: "5%" }}>
+        <p
+          style={{
+            textAlign: "left",
+            backgroundColor: "transparent",
+            margin: "3",
+            fontSize: "24px",
+          }}
+        />
+
+        <Link
+          to={"/journal"}
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <label htmlFor="icon-button-file" style={{ justifyContent: "right" }}>
+            {/*TODO: change icon position by modifying right param: 35 or 215*/}
+            <IconButton
+              aria-label="upload picture"
+              component="span"
+              color="black"
+              style={{ position: "fixed", right: 215 }}
+            >
+              {/*TODO: change icon size by modifying width and height*/}
+              <AddIcon size="large" style={{ width: 40, height: 40 }} />
+            </IconButton>
+          </label>
+        </Link>
+        <p
+          style={{
+            textAlign: "left",
+            backgroundColor: "transparent",
+            margin: "3",
+            fontSize: "24px",
+          }}
+        />
+        <div>
           <Grid container component="main" className={classes.root} spacing={3}>
             <Grid style={{ textAlign: "right" }} item xs={false} sm={4} md={12}>
               <div className={classes.test}>
-                <label>
-                  <Link
-                    to={"/journal"}
-                    style={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    <Button
-                      className={classes.button}
-                      variant="contained"
-                      color="primary"
-                    >
-                      NEW ENTRY
-                    </Button>
-                  </Link>
-                </label>
-                {/*<Link*/}
-                {/*    to={"/journal"}*/}
-                {/*    style={{textDecoration: "none", color: "inherit"}}*/}
-                {/*>*/}
-                {/*    <label htmlFor="icon-button-file">*/}
-                {/*        <IconButton aria-label="upload picture" component="span">*/}
-                {/*            <AddIcon size="large" />*/}
-                {/*        </IconButton>*/}
-                {/*    </label>*/}
-                {/*</Link>*/}
+                <p
+                  style={{
+                    textAlign: "left",
+                    backgroundColor: "transparent",
+                    margin: "3",
+                    fontSize: "24px",
+                  }}
+                />
+              </div>
+            </Grid>
+
+            <Grid style={{ textAlign: "right" }} item xs={false} sm={4} md={12}>
+              <div className={classes.test}>
+                <p
+                  style={{
+                    textAlign: "left",
+                    backgroundColor: "transparent",
+                    margin: "3",
+                    fontSize: "24px",
+                  }}
+                />
               </div>
             </Grid>
 
             {this.props.journals.map((journal) => (
-              <Grid item xs={false} sm={4} md={12}>
+              <Grid item xs={false} sm={4} md={8}>
                 <Card
                   key={journal.id}
                   className={classes.card}
@@ -156,14 +190,14 @@ class JournalView extends Component {
                     </div>
                   </CardContent>
                   {/*TODO: add functionality to buttons*/}
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      Share
-                    </Button>
-                    <Button size="small" color="primary">
-                      Learn More
-                    </Button>
-                  </CardActions>
+                  {/*<CardActions>*/}
+                  {/*    <Button size="small" color="primary">*/}
+                  {/*        Share*/}
+                  {/*    </Button>*/}
+                  {/*    <Button size="small" color="primary">*/}
+                  {/*        Learn More*/}
+                  {/*    </Button>*/}
+                  {/*</CardActions>*/}
                 </Card>
               </Grid>
             ))}
