@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Button from "@material-ui/core/Button";
-import Header from "../login/Header";
-import pic from "../login/landingPage.jpg";
 import {selectingIngredient} from "../../actions/selectIngredientActions";
 import {newRecommendation, clearRecommendation} from "../../actions/recommendationActions";
 import {getRecommendation} from "../../actions/recommendationActions";
@@ -71,7 +69,6 @@ class Recommendation extends React.Component {
         const {classes} = this.props;
         return (
             <div>
-            <Header/>
             <div style={{margin: "3%"}}>
                 {/*<h1 style={{backgroundColor: "tan", textAlign: "center"}}>Test</h1>*/}
 

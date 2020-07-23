@@ -7,6 +7,7 @@ import journalsReducer from "./journalsReducer";
 import userReducer from "./userReducer";
 import foodPicturesReducer from "./foodPicturesReducer";
 import recommendationFilterReducer from "./recommendationFilterReducer";
+import colorReducer from "./colorReducer";
 
 export default combineReducers({
   formStore: formReducer,
@@ -17,4 +18,5 @@ export default combineReducers({
   journalsStore: journalsReducer,
   userStore: userReducer,
   foodPicturesStore: foodPicturesReducer,
+  colorStore: colorReducer,
 });

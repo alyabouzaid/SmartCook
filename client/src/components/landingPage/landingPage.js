@@ -6,8 +6,6 @@ import GridPost from "./GridPost";
 import GridList from "@material-ui/core/GridList";
 import Typography from "@material-ui/core/Typography";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
-import Header from "../login/Header";
-import pic from "../login/landingPage.jpg";
 import compose from "recompose/compose";
 import { connect } from "react-redux";
 import { getFeaturedFoodPicPost } from "../../actions/foodPicturesActions";
@@ -78,7 +76,6 @@ class LandingPage extends React.Component {
 
     return (
       <div>
-        <Header />
         <img
           style={{ display: "none" }}
           src="./frontend/gallery/homePage.png"

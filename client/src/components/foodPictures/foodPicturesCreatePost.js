@@ -5,7 +5,6 @@ import "../../index.css";
 import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import Header from "../login/Header";
 import { TextField } from "@material-ui/core";
 import { FaImage } from "react-icons/all";
 import {
@@ -13,7 +12,6 @@ import {
   getAllFoodPicPost,
 } from "../../actions/foodPicturesActions";
 import compose from "recompose/compose";
-import pic from "../login/landingPage.jpg";
 
 const useStyles = (theme) => ({
   rootContainer: {
@@ -69,10 +67,7 @@ class FoodPicturesCreatePost extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div
-          style={{ backgroundColor: "#FDF5E6", height: 1000, backgroundSize: "cover"}}
-      >
-        <Header />
+      <div>
         <div className={classes.rootContainer}>
           <Card className={classes.rootCard}>
             <Typography
