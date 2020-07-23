@@ -28,25 +28,14 @@ class FilterSearchBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            filterValue: "",
-            filterInput: "",
+            filterList: [],
         }
     };
 
-    // TODO: replace calls to filterOptions with redux
-    changeFilterValue(newValue) {
-        this.setState({filterValue: (newValue === null ? "" : newValue)});
-        if (newValue !== null && filterOptions.includes(newValue)) {
-            // TODO: update filtered inventory list state here
-        }
-        else {
-            // TODO: set filtered inventory list to default state here
-        }
+    updateFilters(newValue) {
+        this.setState({filterList: (newValue === null ? [] : newValue)});
+
     }
-
-    changeFilterInput(newInputValue) {
-        this.setState({filterInput: (newInputValue === "" ? "" : newInputValue)});
-    };
 
     render() {
         const { classes } = this.props;
@@ -60,25 +49,28 @@ class FilterSearchBar extends React.Component {
                     <ListSubheader style={{fontSize: "18px", textAlign: "left"}} component="div" id="nested-list-subheader">
                         Select Ingredient Filter:
                         {/*TODO: use for debugging*/}
-                        {/*{this.state.filterValue}*/}
+                        {/*{this.state.filterList}*/}
                     </ListSubheader>
                 }
                 className={classes.root}
             >
                 <ListItem>
                     <Autocomplete
-                        id="search-filter"
+                        multiple
+                        id="multiple-search-filter"
+                        style={{width: "100%"}}
                         options={filterOptions}
                         getOptionLabel={(option) => option}
-                        style={{ width: "100%"}}
-                        renderInput={(params) => <TextField {...params} label="Filter" variant="outlined" />}
-                        value={this.state.filterValue}
+                        filterSelectedOptions
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                variant="outlined"
+                                label="Filter"
+                            />
+                        )}
                         onChange={(event, newValue) => {
-                            this.changeFilterValue(newValue);
-                        }}
-                        inputValue={this.state.filterInput}
-                        onInputChange={(event, newInputValue) => {
-                            this.changeFilterInput(newInputValue);
+                            this.updateFilters(newValue);
                         }}
                     />
                 </ListItem>
@@ -86,6 +78,71 @@ class FilterSearchBar extends React.Component {
         );
     }
 }
+
+// TODO: use this filter bar instead if you want to select only one filter at a time
+// class FilterSearchBar extends React.Component {
+//
+//     constructor(props) {
+//         super(props);
+//         this.state = {
+//             filterValue: "",
+//             filterInput: "",
+//         }
+//     };
+//
+//     // TODO: replace calls to filterOptions with redux
+//     changeFilterValue(newValue) {
+//         this.setState({filterValue: (newValue === null ? "" : newValue)});
+//         if (newValue !== null && filterOptions.includes(newValue)) {
+//             // TODO: update filtered inventory list state here
+//         }
+//         else {
+//             // TODO: set filtered inventory list to default state here
+//         }
+//     }
+//
+//     changeFilterInput(newInputValue) {
+//         this.setState({filterInput: (newInputValue === "" ? "" : newInputValue)});
+//     };
+//
+//     render() {
+//         const { classes } = this.props;
+//
+//         // TODO: replace calls to filterOptions with redux
+//         return (
+//             <List
+//                 component="nav"
+//                 aria-labelledby="nested-list-subheader"
+//                 subheader={
+//                     <ListSubheader style={{fontSize: "18px", textAlign: "left"}} component="div" id="nested-list-subheader">
+//                         Select Ingredient Filter:
+//                         {/*TODO: use for debugging*/}
+//                         {/*{this.state.filterValue}*/}
+//                     </ListSubheader>
+//                 }
+//                 className={classes.root}
+//             >
+//                 <ListItem>
+//                     <Autocomplete
+//                         id="search-filter"
+//                         options={filterOptions}
+//                         getOptionLabel={(option) => option}
+//                         style={{ width: "100%"}}
+//                         renderInput={(params) => <TextField {...params} label="Filter" variant="outlined" />}
+//                         value={this.state.filterValue}
+//                         onChange={(event, newValue) => {
+//                             this.changeFilterValue(newValue);
+//                         }}
+//                         inputValue={this.state.filterInput}
+//                         onInputChange={(event, newInputValue) => {
+//                             this.changeFilterInput(newInputValue);
+//                         }}
+//                     />
+//                 </ListItem>
+//             </List>
+//         );
+//     }
+// }
 
 const mapStateToProps = (state) => {
 };
