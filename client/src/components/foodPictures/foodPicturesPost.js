@@ -185,12 +185,12 @@ class FoodPicturesPost extends React.Component {
           PaperProps={{
             style: {
               maxHeight: 20 * 4.5,
-              width: "10ch",
+              width: "18ch",
             },
           }}
         >
           <MenuItem key={"edit"} onClick={this.handleClickEditDescription}>
-            Edit
+            Edit caption
           </MenuItem>
           <MenuItem
             key={"delete"}

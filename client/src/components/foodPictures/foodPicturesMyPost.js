@@ -90,7 +90,6 @@ class FoodPicturesMyPost extends React.Component {
 
     return (
       <div>
-
         <div className={classes.loading}>
           <CircleLoader
             css={override}
@@ -153,7 +152,7 @@ class FoodPicturesMyPost extends React.Component {
             sizePerPage={this.state.perPage}
             totalSize={this.props.myPost.length}
             pagesNextToActivePage={5}
-            sizePerPageOptions={[8, 12, 16]}
+            sizePerPageOptions={[8, 12, 16, 20]}
             onPageChange={this.handleOnPageChange}
             onSizeChange={this.handleOnSizeChange}
           />
