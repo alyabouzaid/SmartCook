@@ -12,13 +12,12 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const formData = require("express-form-data");
 
-
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const journalsRouter = require('./routes/journals');
-const imagesRouter = require('./routes/images');
-const inventoryRouter = require('./routes/inventory');
-const  recipesRouter = require('./routes/recipes');
+const indexRouter = require("./routes/index");
+const usersRouter = require("./routes/users");
+const journalsRouter = require("./routes/journals");
+const imagesRouter = require("./routes/images");
+const inventoryRouter = require("./routes/inventory");
+const recipesRouter = require("./routes/recipes");
 const foodPicturesRouter = require("./routes/foodPictures");
 
 // configuration constants. Make sure it matches what you registered.
@@ -38,7 +37,6 @@ let fullName = "";
 const mongoose = require("mongoose");
 
 const app = express();
-
 
 // mongoose connection
 const uri = process.env.ATLAS_URL;
@@ -66,7 +64,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static('client/build'));    // Added for deployment
+app.use(express.static("client/build")); // Added for deployment
 app.use(formData.parse());
 app.use(bodyParser.json());
 
@@ -75,10 +73,10 @@ app.use(bodyParser.json());
 
 // To use cookie session
 app.use(
-    cookieSession({
-      maxAge: 24 * 60 * 60 * 1000, // One day in milliseconds
-      keys: [process.env.COOKIE_KEY], // use to sign & verify cookie values
-    })
+  cookieSession({
+    maxAge: 24 * 60 * 60 * 1000, // One day in milliseconds
+    keys: [process.env.COOKIE_KEY], // use to sign & verify cookie values
+  })
 );
 app.use(passport.initialize());
 app.use(passport.session());
@@ -87,38 +85,38 @@ app.use(passport.session());
 
 const users = require("./models/users.model");
 
-
 passport.use(
-    new GoogleStrategy(
-        { clientID, clientSecret, callbackURL },
-        (accessToken, refreshToken, profile, done) => {
-          // console.log(accessToken);
-          console.log(profile);
-          // Where you verify user on your application
-          // Find or Create a user in your DB and pass it.
-          // If you are not using googleapis, you don't need to keep access token anymore.
-          // access token is already used to fetch profile info.
+  new GoogleStrategy(
+    { clientID, clientSecret, callbackURL },
+    (accessToken, refreshToken, profile, done) => {
+      // console.log(accessToken);
+      console.log(profile);
+      // Where you verify user on your application
+      // Find or Create a user in your DB and pass it.
+      // If you are not using googleapis, you don't need to keep access token anymore.
+      // access token is already used to fetch profile info.
 
-            users.findOrCreate(
-                { email: profile.emails[0].value },
-                {
-                    email : profile.emails[0].value,
-                    firstName: profile.name.givenName,
-                    fullName: profile.displayName,
-                },
-                function (err, user) {
-                    // Updates user picture upon each auth session
-                    user.picture = profile._json.picture;
-                    user.save();
-                    // auth complete
-                    return done(err, user);
-                })
-          // fullName = profile.displayName;
-          // name = profile.name.givenName;
-          // email = profile.emails[0].value;
-          // done(null, { accessToken, refreshToken, profile });
+      users.findOrCreate(
+        { email: profile.emails[0].value },
+        {
+          email: profile.emails[0].value,
+          firstName: profile.name.givenName,
+          fullName: profile.displayName,
+        },
+        function (err, user) {
+          // Updates user picture upon each auth session
+          user.picture = profile._json.picture;
+          user.save();
+          // auth complete
+          return done(err, user);
         }
-    )
+      );
+      // fullName = profile.displayName;
+      // name = profile.name.givenName;
+      // email = profile.emails[0].value;
+      // done(null, { accessToken, refreshToken, profile });
+    }
+  )
 );
 
 // Used to stuff a piece of information into a cookie
@@ -136,7 +134,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 // google authentication routes
 // app.use("/auth", serverRouter);
-app.use('/inventories', inventoryRouter);
+app.use("/inventories", inventoryRouter);
 // journal feature routes
 app.use("/journals", journalsRouter);
 app.use("/images", imagesRouter);
@@ -145,10 +143,10 @@ app.use("/foodPictures", foodPicturesRouter);
 app.use("/recipes", recipesRouter);
 
 app.get("/auth/user", isUserAuthenticated, (req, res) => {
-    users.findOne({ email: req.user.email }, function (err, result) {
-        console.log(result);
-        res.send(result);
-    });
+  users.findOne({ email: req.user.email }, function (err, result) {
+    console.log(result);
+    res.send(result);
+  });
 });
 
 // Start oauth flow
@@ -157,15 +155,15 @@ app.get(oauthPath, passport.authenticate("google", { scope }));
 // Path receiving Auth Code
 // This callback path must be registered to Auth Server
 app.get(
-    callbackPath,
-    passport.authenticate("google"), // Will use Auth Code to get Access Token
-    (req, res) => {
-      // NOTE: if using jwt, you'd set the token here.
-      // console.log("authenticated callback");
-      // console.log(req.user);
-      isAuthenticated = true;
-      res.redirect("/"); // TODO: CHANGE TO "/"
-    }
+  callbackPath,
+  passport.authenticate("google"), // Will use Auth Code to get Access Token
+  (req, res) => {
+    // NOTE: if using jwt, you'd set the token here.
+    // console.log("authenticated callback");
+    // console.log(req.user);
+    isAuthenticated = true;
+    res.redirect("/"); // TODO: CHANGE TO "/"
+  }
 );
 
 app.get("/auth/logout", (req, res) => {
@@ -196,7 +194,7 @@ function isUserAuthenticated(req, res, next) {
 
 // TODO: uncomment before deploy
 app.get("/*", isUserAuthenticated, (req, res) => {
-  res.sendFile(path.join(__dirname, '/client/build/index.html'));
+  res.sendFile(path.join(__dirname, "/client/build/index.html"));
 });
 
 // catch 404 and forward to error handler
