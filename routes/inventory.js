@@ -1,90 +1,38 @@
 var express = require("express");
 var router = express.Router();
-const fetch = require("node-fetch");
-const mongoose = require("mongoose");
+const inventoryList = require("../models/inventoryList.model");
 
-var Schema = mongoose.Schema;
-var streamSchema = new Schema(
-  {
-    email: String,
-    inventory: [
-      {
-        key: Number,
-        description: String,
-        amount: Number,
-        targetAmount: Number,
-        selected: Boolean,
-      },
-    ],
-  },
-  { versionKey: false }
-);
+router.get("/:email", function (req, res, next) {
+  inventoryList
+  .find({ email: req.params.email })
+  .then((userInventory) => res.send(userInventory[0].inventory))
+  .catch((err) => res.json( err));
 
-var Streams = mongoose.model("inventories", streamSchema);
-
-router.get("/", function (req, res, next) {
-  fetch("/auth/user", {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  })
-    .then((resFetch) => {
-      resFetch.json().then((userInfo) => {
-        Streams.find({ email: userInfo.email }).then((data) => {
-          if (data[0] === undefined) {
-            newUser = [
-              {
-                email: userInfo.email,
-                inventory: [],
-              },
-            ];
-            Streams.insertMany(newUser, function (error, docs) {});
-            res.json([]);
-          } else {
-            res.json(data[0].inventory);
-          }
-        });
-      });
-    })
-    .catch((error) => {
-      console.log("error ", error);
-    });
 });
 
 router.post("/", function (req, res, next) {
-  console.log(req.body.email);
-  console.log(req.body.inventory[0]);
-
-  Streams.update(
+  inventoryList.updateOne(
     { email: req.body.email },
-    { $push: { inventory: req.body.inventory[0] } }
-  ).catch((err) => console.log(err));
-
-  res.setHeader("Content-Type", "application/json");
-  res.send({});
+    { $push: { inventory: req.body.inventory[0] }}, {upsert:true}
+  ).then((ret) => res.json(ret))
+  .catch((err) => res.json(err));
 });
 
 router.delete("/:email", function (req, res, next) {
-  console.log(req.params.email);
-
-  Streams.update(
+  inventoryList.updateOne(
     { email: req.params.email },
     { $set: { inventory: [] } }
-  ).catch((err) => console.log(err));
+  ).then((ret) => res.json(ret))
+  .catch((err) => res.json(err));
 
-  res.setHeader("Content-Type", "application/json");
-  res.send({});
 });
 
 router.delete("/:email/:key", function (req, res, next) {
-  console.log(req.params.email);
-
-  Streams.update(
+  inventoryList.updateOne(
     { email: req.params.email },
     { $pull: { inventory: { key: req.params.key } } }
-  ).catch((err) => console.log(err));
-
-  res.setHeader("Content-Type", "application/json");
-  res.send({});
+  ).then((ret) => res.json(ret))
+  .catch((err) => res.json(err));
 });
 
 module.exports = router;

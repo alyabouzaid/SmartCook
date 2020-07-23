@@ -16,8 +16,7 @@ const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const journalsRouter = require("./routes/journals");
 const imagesRouter = require("./routes/images");
-// const inventoryRouter = require("./routes/inventory");
-const inventoryModifiedRouter = require("./routes/inventory-modified");
+const inventoryRouter = require("./routes/inventory");
 const recipesRouter = require("./routes/recipes");
 const foodPicturesRouter = require("./routes/foodPictures");
 
@@ -135,8 +134,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 // google authentication routes
 // app.use("/auth", serverRouter);
-// app.use("/inventories", inventoryRouter);
-app.use("/inventories", inventoryModifiedRouter);
+app.use("/inventories", inventoryRouter);
 // journal feature routes
 app.use("/journals", journalsRouter);
 app.use("/images", imagesRouter);

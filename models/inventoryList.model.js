@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-var streamSchema = new Schema(
+var inventorySchema = new Schema(
   {
     email: String,
     inventory: [
@@ -17,4 +17,4 @@ var streamSchema = new Schema(
   { versionKey: false }
 );
 
-module.exports = mongoose.model("Inventories", streamSchema);
+module.exports = mongoose.model("Inventories", inventorySchema);

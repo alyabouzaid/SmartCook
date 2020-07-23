@@ -1,126 +1,140 @@
-import React from "react";
-import { connect } from "react-redux";
-import compose from "recompose/compose";
-import { getInventory } from "../../actions/inventoryListActions-modified";
+import React from 'react';
+import { connect } from 'react-redux';
+
+import { addingIngredient } from '../../actions/ingredientInventoryActions';
+import { clearIngredients,deleteIngredient,initialData } from '../../actions/ingredientInventoryActions';
+import { makeStyles } from "@material-ui/core/styles";
+import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+
+
+
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Header from "../login/Header";
+import pic from "../login/landingPage.jpg";
+
+
+
 
 class IngredientInventory extends React.Component {
-  componentDidMount() {
-    this.props.getInventory();
-  }
 
-  //   render() {
-  //     return this.props.inventory.map((item) => (
-  //       <div>{JSON.stringify(item)}</div>
-  //     ));
-  //   }
-  // }
+    componentDidMount(){
+        this.props.initialData()
+    }
 
-  // addItem() {
-  //   let inventory = document.getElementById("inventory").value;
-  //   let amount = document.getElementById("amount").value;
-  //   let targetAmount = document.getElementById("targetAmount").value;
+    addItem() {
+        let inventory =  document.getElementById("inventory").value
+        let amount =  document.getElementById("amount").value
+        let targetAmount =  document.getElementById("targetAmount").value
 
-  //   let key = 0;
-  //   if (this.props.ingredientInventory.length > 0) {
-  //     key =
-  //       this.props.ingredientInventory[
-  //         this.props.ingredientInventory.length - 1
-  //       ].key + 1;
-  //   }
+        let key = 0
+        if (this.props.ingredientInventory.length>0){
+            key = this.props.ingredientInventory[this.props.ingredientInventory.length - 1].key +1
+        }
 
-  //   this.props.addingIngredient({
-  //     email: this.props.userInfo.email,
-  //     inventory: [
-  //       {
-  //         key: key,
-  //         description: inventory,
-  //         amount: amount,
-  //         targetAmount: targetAmount,
-  //         selected: false,
-  //       },
-  //     ],
-  //   });
-  // }
+        this.props.addingIngredient({
+            "email" : this.props.userInfo.email,
+            "inventory":[{
+            "key": key,
+            "description": inventory,
+            "amount": amount,
+            "targetAmount": targetAmount,
+            "selected": false}]
+        })
 
-  render() {
-    const useStyles = makeStyles((theme) => ({
-      root: {
-        backgroundColor: "#FF0000",
-        color: "black",
-        position: "sticky",
-      },
-    }));
+    }
 
-    // return this.props.ingredientInventory.map((item) => (
-    //   <div>{JSON.stringify(item)}</div>
-    // ));
 
-    return (
-      <div
-        style={{
-          backgroundImage: `url(${pic})`,
-          height: 1000,
-          backgroundSize: "cover",
-        }}
-      >
-        <Header />
+    render() {
 
-        <Container text-align="center">
-          &nbsp;
-          <p>
-            <TextField
-              style={{ background: "rgba(255, 255, 255, 0.6)" }}
-              label="Ingredient"
-              variant="filled"
-              type="text"
-              id="inventory"
-              name="fname"
-              size="100"
-            />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <TextField
-              style={{ background: "rgba(255, 255, 255, 0.6)" }}
-              label="Amount"
-              variant="filled"
-              type="text"
-              id="amount"
-              name="fname"
-              size="100"
-            />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <TextField
-              style={{ background: "rgba(255, 255, 255, 0.6)" }}
-              label="Target Amount"
-              variant="filled"
-              type="text"
-              id="targetAmount"
-              name="fname"
-              size="100"
-            />
-          </p>
-          <p>
-            <Button
-              variant="contained"
-              color="primary"
-              disableElevation
-              onClick={() => {
-                this.addItem();
-              }}
-            >
-              add ingredient
-            </Button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() =>
-                this.props.clearIngredients(this.props.userInfo.email)
-              }
-            >
-              clear inventory
-            </Button>
-          </p>
-          <TableContainer
+
+        const useStyles = makeStyles((theme) => ({
+            root: {
+                backgroundColor: "#FF0000",
+                color: "black",
+                position: "sticky",
+
+
+            },
+        }));
+
+
+
+        return (
+
+          <div
+          style={{
+            backgroundImage: `url(${pic})`,
+            height: 1000,
+            backgroundSize: "cover",
+          }}
+        >
+          <Header />
+  
+          <Container text-align="center">
+            &nbsp;
+            <p>
+              <TextField
+                style={{ background: "rgba(255, 255, 255, 0.6)" }}
+                label="Ingredient"
+                variant="filled"
+                type="text"
+                id="inventory"
+                name="fname"
+                size="100"
+              />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <TextField
+                style={{ background: "rgba(255, 255, 255, 0.6)" }}
+                label="Amount"
+                variant="filled"
+                type="text"
+                id="amount"
+                name="fname"
+                size="100"
+              />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <TextField
+                style={{ background: "rgba(255, 255, 255, 0.6)" }}
+                label="Target Amount"
+                variant="filled"
+                type="text"
+                id="targetAmount"
+                name="fname"
+                size="100"
+              />
+            </p>
+            <p>
+              <Button
+                variant="contained"
+                color="primary"
+                disableElevation
+                onClick={() => {
+                  this.addItem();
+                }}
+              >
+                add ingredient
+              </Button>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() =>
+                  this.props.clearIngredients(this.props.userInfo.email)
+                }
+              >
+                clear inventory
+              </Button>
+            </p>
+            <TableContainer
             style={{ background: "rgba(255, 255, 255, 0.6)" }}
             component={Paper}
           >
@@ -149,17 +163,16 @@ class IngredientInventory extends React.Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {this.props.ingredientInventory.map((item) =>
-                  item.inventory.map((row) => (
-                    <TableRow key={row.name}>
+                  {this.props.ingredientInventory.map((item) => (
+                    <TableRow key={item.name}>
                       <TableCell style={{ fontSize: "16px" }} align="right">
-                        {row.description}
+                        {item.description}
                       </TableCell>
                       <TableCell style={{ fontSize: "16px" }} align="right">
-                        {row.amount}
+                        {item.amount}
                       </TableCell>
                       <TableCell style={{ fontSize: "16px" }} align="right">
-                        {row.targetAmount}
+                        {item.targetAmount}
                       </TableCell>
                       <TableCell component="th" scope="row">
                         <Button
@@ -168,41 +181,45 @@ class IngredientInventory extends React.Component {
                           onClick={() =>
                             this.props.deleteIngredient({
                               email: this.props.userInfo.email,
-                              key: row.key,
-                            })
+                              key: item.key,
+                            },this.props.ingredientInventory)
                           }
                         >
                           Delete
                         </Button>
                       </TableCell>
                     </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          &nbsp;
-        </Container>
-      </div>
-    );
-  }
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    &nbsp;
+                </Container>
+            </div>
+
+        );
+    }
 }
+
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getInventory: () => dispatch(getInventory()),
+    initialData: () => dispatch(initialData()),
+    addingIngredient:(emailAndIngredientObject) =>dispatch(addingIngredient(emailAndIngredientObject)),
+    clearIngredients:(email) =>dispatch(clearIngredients(email)),
+    deleteIngredient:(emailAndKeyObject,ingredientInventory) =>dispatch(deleteIngredient(emailAndKeyObject,ingredientInventory))
   };
 };
 
-//state has entire state of app!!
-const mapStateToProps = (state) => {
-  //name is by convention
-  return {
-    inventory: state.inventoryModified.inventory,
-    userInfo: state.userStore,
-  }; //now it will appear as props
-};
 
-export default compose(connect(mapStateToProps, mapDispatchToProps))(
-  IngredientInventory
-);
+//state has entire state of app!!
+const mapStateToProps = (state) => { //name is by convention
+    return { ingredientInventory: state.ingredientInventory,
+            userInfo: state.userStore}; //now it will appear as props
+}
+
+
+export default  connect(mapStateToProps, mapDispatchToProps)(IngredientInventory);
+
+
+
