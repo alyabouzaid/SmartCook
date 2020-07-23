@@ -6,13 +6,13 @@ var ObjectId = require("mongodb").ObjectID;
 
 // get all posts
 router.get("/allPost", (req, res) => {
-  setTimeout(() => {
-    foodPicturePost
-      .find()
-      .sort("-likesLength")
-      .then((posts) => res.status(200).json(posts))
-      .catch((err) => res.status(400).json("Error: ", err));
-  }, 2000);
+  // setTimeout(() => {
+  foodPicturePost
+    .find()
+    .sort("-likesLength")
+    .then((posts) => res.status(200).json(posts))
+    .catch((err) => res.status(400).json("Error: ", err));
+  // }, 2000);
 });
 
 // get highest like post (feature post)
@@ -53,13 +53,13 @@ router.post("/addPost", (req, res) => {
 
 // get all individual posts
 router.get("/myPost", (req, res) => {
-  setTimeout(() => {
-    foodPicturePost
-      // .find({ postedBy: req.user })
-      .find({ postedByEmail: req.query.email })
-      .then((posts) => res.status(200).json(posts))
-      .catch((err) => res.status(400).json("Error: ", err));
-  }, 2000);
+  // setTimeout(() => {
+  foodPicturePost
+    // .find({ postedBy: req.user })
+    .find({ postedByEmail: req.query.email })
+    .then((posts) => res.status(200).json(posts))
+    .catch((err) => res.status(400).json("Error: ", err));
+  // }, 2000);
 });
 
 // add post like
