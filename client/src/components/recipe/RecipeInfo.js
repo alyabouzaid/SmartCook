@@ -11,6 +11,9 @@ import CardActions from '@material-ui/core/CardActions';
 import LinkIcon from '@material-ui/icons/Link';
 import IconButton from "@material-ui/core/IconButton";
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import SaveOutlinedIcon from '@material-ui/icons/Save';
 
 const useStyles = makeStyles((theme) => ({
     cardGrid: {
@@ -41,6 +44,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RecipeInfo({recipe}) {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const history = useHistory();
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = (event) => {
@@ -58,7 +63,7 @@ export default function RecipeInfo({recipe}) {
         <div>
             <Card className={classes.card} variant="outlined">
                 <CardActionArea disableRipple>
-                    <Link href={recipe["recipe"]["shareAs"]}>
+                    <Link href={recipe["recipe"]["shareAs"]} target="_blank">
                         <CardMedia
                             className={classes.cardMedia}
                             image={recipe["recipe"]["image"]}
@@ -68,7 +73,7 @@ export default function RecipeInfo({recipe}) {
                 </CardActionArea>
                 <CardContent className={classes.cardContent} style={{height: "80px"}}>
                     <Typography gutterBottom variant="h5" component="h2" style={{textAlign: "left"}}>
-                        <Link href={recipe["recipe"]["shareAs"]} title={recipe["recipe"]["label"]} style={{ textDecoration: "none", color: "inherit" }}>
+                        <Link href={recipe["recipe"]["shareAs"]} target="_blank" title={recipe["recipe"]["label"]} style={{ textDecoration: "none", color: "inherit" }}>
                             {recipe["recipe"]["label"]}
                         </Link>
                     </Typography>
@@ -105,8 +110,11 @@ export default function RecipeInfo({recipe}) {
                             </CardContent>
                         </Card>
                     </Popover>
-                    <IconButton aria-label="share" href={recipe["recipe"]["shareAs"]} >
+                    <IconButton aria-label="share" href={recipe["recipe"]["shareAs"]} target="_blank">
                         <LinkIcon size="small" />
+                    </IconButton>
+                    <IconButton aria-label="share" onClick={() => {dispatch({type:'RECIPE_ANNOTATION', payload: recipe["recipe"]}); history.push('/journal')}} >
+                        <SaveOutlinedIcon size="medium" />
                     </IconButton>
                 </CardActions>
             </Card>

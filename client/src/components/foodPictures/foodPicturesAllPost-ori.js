@@ -15,7 +15,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import Header from "../login/Header";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { withStyles } from "@material-ui/core/styles";
@@ -196,8 +195,7 @@ class FoodPicturesAllPost extends React.Component {
     // }
 
     return (
-      <div style={{ backgroundColor: "#FFFAF0" }}>
-        <Header />
+      <div>
         {/* <div className="sweet-loading">
           <DotLoader
             css={override}
