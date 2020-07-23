@@ -10,14 +10,12 @@ import {
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import "./journal.css";
-import Header from "../login/Header";
 import JournalImage from "./journalImage";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { loadUserData } from "../../actions/userActions";
-import pic from "../ingredientInventory/image5.jpg"
 
 const useStyles = () => ({
   root: {
@@ -37,8 +35,7 @@ class Journal extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div style={{backgroundColor: "#FDF5E6", height: 1000, backgroundSize: 'cover'}}>
-        <Header />
+      <div>
         <div style={{ margin: "5%" }}>
           &nbsp;
           <form noValidate autoComplete="off" style={{ marginBottom: "5%" }}>
@@ -48,7 +45,6 @@ class Journal extends React.Component {
               fullWidth
               value={this.props.editorData.title}
               onChange={(e) => this.props.updateTitle(e.target.value)}
-              style={{background: 'rgba(255, 255, 255, 0.6)'}}
             />
           </form>
           <Grid container spacing={2} className={classes.root}>

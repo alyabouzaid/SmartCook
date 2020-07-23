@@ -1,5 +1,4 @@
 import React from "react";
-import Header from "../login/Header";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { withStyles } from "@material-ui/core/styles";
@@ -85,8 +84,7 @@ class FoodPicturesAllPost extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div style={{ backgroundColor: "#FDF5E6" }}>
-        <Header />
+      <div>
 
         <div className={classes.loading}>
           <CircleLoader

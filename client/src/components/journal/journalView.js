@@ -15,12 +15,7 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Typography from "@material-ui/core/Typography";
 import {Link} from "react-router-dom";
 import {FaEdit} from "react-icons/all";
-import pic from "../ingredientInventory/image5.jpg";
-import Header from "../login/Header";
-import Container from "@material-ui/core/Container";
 import Grid from '@material-ui/core/Grid';
-import LinkIcon from "@material-ui/icons/Link";
-import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = (theme) => ({
     root: {
@@ -82,12 +77,11 @@ class JournalView extends Component {
 
         const {classes} = this.props;
         return (
-                <div style={{}}>
-                    <Header/>
+                <div>
 
                     <div style={{margin: '5%'}}>
                     <Grid container component="main" className={classes.root} spacing={3}>
-                        <Grid style={{backgroundColor: "#FDF5E6", textAlign: "right"}} item xs={false} sm={4} md={12}>
+                        <Grid style={{textAlign: "right"}} item xs={false} sm={4} md={12}>
 
                             <div className={classes.test}>
                                 <label>
@@ -114,8 +108,8 @@ class JournalView extends Component {
                         </Grid>
 
                         {this.props.journals.map((journal) =>
-                            <Grid style={{backgroundColor: "#FDF5E6"}} item xs={false} sm={4} md={12}>
-                            <Card key={journal.id} className={classes.card}>
+                            <Grid item xs={false} sm={4} md={12}>
+                            <Card key={journal.id} className={classes.card} varient="outlined">
                                 <CardHeader
                                     action={
                                         // this.props.userInfo.email === journal.email &&

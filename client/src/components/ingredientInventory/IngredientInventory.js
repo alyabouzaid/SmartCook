@@ -18,10 +18,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import Header from "../login/Header";
-import pic from "../login/landingPage.jpg";
 
-
+import DeleteIcon from "@material-ui/icons/Delete";
+import IconButton from "@material-ui/core/IconButton";
 
 
 class IngredientInventory extends React.Component {
@@ -70,20 +69,12 @@ class IngredientInventory extends React.Component {
 
         return (
 
-          <div
-          style={{
-            backgroundImage: `url(${pic})`,
-            height: 1000,
-            backgroundSize: "cover",
-          }}
-        >
-          <Header />
+          <div>
   
           <Container text-align="center">
             &nbsp;
             <p>
               <TextField
-                style={{ background: "rgba(255, 255, 255, 0.6)" }}
                 label="Ingredient"
                 variant="filled"
                 type="text"
@@ -93,7 +84,6 @@ class IngredientInventory extends React.Component {
               />
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <TextField
-                style={{ background: "rgba(255, 255, 255, 0.6)" }}
                 label="Amount"
                 variant="filled"
                 type="text"
@@ -103,7 +93,6 @@ class IngredientInventory extends React.Component {
               />
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <TextField
-                style={{ background: "rgba(255, 255, 255, 0.6)" }}
                 label="Target Amount"
                 variant="filled"
                 type="text"
@@ -135,7 +124,6 @@ class IngredientInventory extends React.Component {
               </Button>
             </p>
             <TableContainer
-            style={{ background: "rgba(255, 255, 255, 0.6)" }}
             component={Paper}
           >
             <Table className={useStyles.table} aria-label="simple table">
@@ -174,19 +162,29 @@ class IngredientInventory extends React.Component {
                       <TableCell style={{ fontSize: "16px" }} align="right">
                         {item.targetAmount}
                       </TableCell>
-                      <TableCell component="th" scope="row">
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={() =>
-                            this.props.deleteIngredient({
-                              email: this.props.userInfo.email,
-                              key: item.key,
-                            },this.props.ingredientInventory)
-                          }
-                        >
-                          Delete
-                        </Button>
+                      <TableCell component="th" scope="row" align="center">
+                          <IconButton aria-label="delete">
+                              <DeleteIcon
+                                  onClick={() =>
+                                      this.props.deleteIngredient({
+                                          email: this.props.userInfo.email,
+                                          key: item.key,
+                                      },this.props.ingredientInventory)
+                                  }
+                              />
+                          </IconButton>
+                        {/*<Button*/}
+                        {/*  variant="contained"*/}
+                        {/*  color="primary"*/}
+                        {/*  onClick={() =>*/}
+                        {/*    this.props.deleteIngredient({*/}
+                        {/*      email: this.props.userInfo.email,*/}
+                        {/*      key: item.key,*/}
+                        {/*    },this.props.ingredientInventory)*/}
+                        {/*  }*/}
+                        {/*>*/}
+                        {/*  Delete*/}
+                        {/*</Button>*/}
                       </TableCell>
                     </TableRow>
                                 ))}

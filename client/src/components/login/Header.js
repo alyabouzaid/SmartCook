@@ -18,12 +18,13 @@ import MenuList from "@material-ui/core/MenuList";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import "../../index.css";
+import Toggle from "./Toggle";
 
 const useStyles = (theme) => ({
   appbar: {
-    backgroundColor: "#e0f2f1",
+    // backgroundColor: "#e0f2f1",
     // "#e3f2fd",
-    color: "black",
+    color: "secondary",
     position: "sticky",
   },
   toolbar: {
@@ -58,12 +59,25 @@ const StyledMenu = withStyles({
 const StyledMenuItem = withStyles((theme) => ({
   root: {
     "&:focus": {
-      backgroundColor: theme.palette.primary.main,
+      // backgroundColor: theme.palette.primary.main,
       "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
-        color: theme.palette.common.white,
+        color: theme.palette.primary.main,
       },
     },
+    "&:hover": {
+      backgroundColor: theme.palette.primary.main,
+      color: "white",
+    },
+    justifyContent: "center",
   },
+  // root: {
+  //   "&:focus": {
+  //     backgroundColor: theme.palette.primary.main,
+  //     "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
+  //       color: theme.palette.common.white,
+  //     },
+  //   },
+  // },
 }))(MenuItem);
 
 class Header extends React.Component {
@@ -95,7 +109,7 @@ class Header extends React.Component {
     const { pathname } = window.location.pathname;
 
     return (
-      <AppBar className={classes.appbar}>
+      <AppBar className={classes.appbar} color="secondary">
         <Toolbar className={classes.toolbar}>
           <Typography
             style={{ textAlign: "left" }}
@@ -220,19 +234,46 @@ class Header extends React.Component {
                     {/* <ListItemIcon>
                           <SendIcon fontSize="small" />
                         </ListItemIcon> */}
-                    <ListItem button component="a" href="/foodPicNewPost">
-                      <ListItemText primary="New post" />
-                    </ListItem>
+                    <Link
+                        to={"/foodPicNewPost"}
+                        style={{
+                          textDecoration: "none",
+                          color: "inherit",
+                        }}
+                    >
+                      New post
+                    </Link>
+                    {/*<ListItem button component="a" href="/foodPicNewPost">*/}
+                    {/*  <ListItemText primary="New post" />*/}
+                    {/*</ListItem>*/}
                   </StyledMenuItem>
                   <StyledMenuItem>
-                    <ListItem button component="a" href="/foodPicAllPost">
-                      <ListItemText primary="All posts" />
-                    </ListItem>
+                    <Link
+                        to={"/foodPicAllPost"}
+                        style={{
+                          textDecoration: "none",
+                          color: "inherit",
+                        }}
+                    >
+                      All posts
+                    </Link>
+                    {/*<ListItem button component="a" href="/foodPicAllPost">*/}
+                    {/*  <ListItemText primary="All posts" />*/}
+                    {/*</ListItem>*/}
                   </StyledMenuItem>
                   <StyledMenuItem>
-                    <ListItem button component="a" href="foodPicMyPost">
-                      <ListItemText primary="My posts" />
-                    </ListItem>
+                    <Link
+                        to={"/foodPicMyPost"}
+                        style={{
+                          textDecoration: "none",
+                          color: "inherit",
+                        }}
+                    >
+                      My posts
+                    </Link>
+                    {/*<ListItem button component="a" href="foodPicMyPost">*/}
+                    {/*  <ListItemText primary="My posts" />*/}
+                    {/*</ListItem>*/}
                   </StyledMenuItem>
                 </StyledMenu>
 
@@ -248,6 +289,7 @@ class Header extends React.Component {
                 >
                   Logout
                 </Button>
+                <Toggle/>
               </ListItem>
             ) : (
               <ListItem>
