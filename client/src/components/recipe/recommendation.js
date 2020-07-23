@@ -55,7 +55,7 @@ const useStyles = (theme) => ({
   },
   button: {
     textAlign: "left",
-    width: "100%",
+    // width: "100%",
     textTransform: "capitalize",
     justifyContent: "left", // aligns button to left of container
     fontSize: "16px",
@@ -164,7 +164,7 @@ class Recommendation extends React.Component {
                   )
                 }
               >
-                Generate Recommendation
+                RECOMMEND
               </Button>
             </Grid>
 

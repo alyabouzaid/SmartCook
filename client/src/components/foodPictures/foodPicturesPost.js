@@ -431,6 +431,19 @@ class FoodPicturesPost extends React.Component {
             <ExpandMoreIcon />
           </IconButton>
 
+          {this.state.expanded ? (
+            ""
+          ) : (
+            <div>
+              <Typography
+                variant="subtitle2"
+                align="center"
+                style={{ color: "#adb5bd", marginBottom: 5 }}
+              >
+                view comments
+              </Typography>
+            </div>
+          )}
           <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
             {this.props.item.comments.map((comment) => (
               <List>
