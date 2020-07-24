@@ -25,6 +25,9 @@ const useStyles = (theme) => ({
     },
 });
 
+
+let currentCategoryItems = []
+
 class IngredientList extends React.Component {
 
     constructor(props) {
@@ -33,6 +36,22 @@ class IngredientList extends React.Component {
             open: false,
         }
     };
+
+
+    filter(ingredientInventory) {
+        if (Array.isArray(ingredientInventory)){
+                currentCategoryItems = this.props.ingredientInventory.filter((ingredient) => 
+                    {
+                        for (var i = 0; i < this.props.filter.length; i++) {
+                            if (ingredient.category == this.props.filter[i]){
+                                return true
+                            }
+                        }
+                        return false
+                    }
+                    )
+                }
+    } 
 
     render() {
         const { classes } = this.props;
@@ -65,7 +84,8 @@ class IngredientList extends React.Component {
                         <FormControl component="fieldset" >
                             {/*<FormLabel component="legend">Select Your Ingredients</FormLabel>*/}
                             <FormGroup>
-                                {this.props.ingredientInventory.map((ingredient) =>
+                                {this.filter(this.props.ingredientInventory)}
+                                {currentCategoryItems.map((ingredient) =>
                                     <FormControlLabel className={classes.nested} key={ingredient.id}
                                                       control={<Checkbox checked={ingredient.selected}
                                                                          onChange={() => {this.props.selectingIngredient(ingredient.key);}}
@@ -86,7 +106,9 @@ class IngredientList extends React.Component {
 
 const mapStateToProps = (state) => {
     //name is by convention
-    return { ingredientInventory: state.ingredientInventory}; //now it will appear as props
+    return { 
+        ingredientInventory: state.ingredientInventory,
+        filter: state.filterStore }; //now it will appear as props
 };
 
 export default compose(

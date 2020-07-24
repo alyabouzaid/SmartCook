@@ -10,7 +10,9 @@ var inventorySchema = new Schema(
         description: String,
         amount: Number,
         targetAmount: Number,
+        category : String,
         selected: Boolean,
+
       },
     ],
   },

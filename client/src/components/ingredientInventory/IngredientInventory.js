@@ -7,6 +7,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import ListItem from '@material-ui/core/ListItem';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 
 
@@ -22,7 +24,11 @@ import Typography from '@material-ui/core/Typography';
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 
+const filterOptions = [
+  "Dairy", "Fruits", "Grains", "Meat", "Seafood", "Vegetables"
+];
 
+let currentCategory = []
 class IngredientInventory extends React.Component {
 
     componentDidMount(){
@@ -32,7 +38,8 @@ class IngredientInventory extends React.Component {
     addItem() {
         let inventory =  document.getElementById("inventory").value
         let amount =  document.getElementById("amount").value
-        let targetAmount =  document.getElementById("targetAmount").value
+        // let targetAmount =  document.getElementById("targetAmount").value
+        let category =  document.getElementById("category").value
 
         let key = 0
         if (this.props.ingredientInventory.length>0){
@@ -45,11 +52,17 @@ class IngredientInventory extends React.Component {
             "key": key,
             "description": inventory,
             "amount": amount,
-            "targetAmount": targetAmount,
+            "category":category,
+            "targetAmount": 0,
             "selected": false}]
         })
 
     }
+
+
+
+
+        // TODO: temporary mock filters, replace with redux
 
 
     render() {
@@ -76,7 +89,7 @@ class IngredientInventory extends React.Component {
             <p>
               <TextField
                 label="Ingredient"
-                variant="filled"
+                // variant="filled"
                 type="text"
                 id="inventory"
                 name="fname"
@@ -85,14 +98,14 @@ class IngredientInventory extends React.Component {
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <TextField
                 label="Amount"
-                variant="filled"
+                // variant="filled"
                 type="text"
                 id="amount"
                 name="fname"
                 size="100"
               />
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <TextField
+              {/* <TextField
                 label="Target Amount"
                 variant="filled"
                 type="text"
@@ -100,7 +113,22 @@ class IngredientInventory extends React.Component {
                 name="fname"
                 size="100"
               />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */}
+
+                <ListItem>
+                    <Autocomplete
+                        id="category"
+                        style={{width: "100%"}}
+                        options={filterOptions}
+                        getOptionLabel={(option) => option}
+                        renderInput={(params) => <TextField {...params} label="Category" variant="outlined" />}
+                    />
+                </ListItem>
             </p>
+
+
+
+
             <p>
               <Button
                 variant="contained"
@@ -123,6 +151,7 @@ class IngredientInventory extends React.Component {
                 clear inventory
               </Button>
             </p>
+
             <TableContainer
             component={Paper}
           >
@@ -145,13 +174,18 @@ class IngredientInventory extends React.Component {
                     style={{ fontWeight: "bold", fontSize: "16px" }}
                     align="right"
                   >
-                    Target Amount&nbsp;(kg/quantity)
+                    Category &nbsp;
                   </TableCell>
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
+
               <TableBody>
-                  {this.props.ingredientInventory.map((item) => (
+
+
+
+                  {this.props.ingredientInventory.map(item => (
+                  
                     <TableRow key={item.name}>
                       <TableCell style={{ fontSize: "16px" }} align="right">
                         {item.description}
@@ -160,7 +194,7 @@ class IngredientInventory extends React.Component {
                         {item.amount}
                       </TableCell>
                       <TableCell style={{ fontSize: "16px" }} align="right">
-                        {item.targetAmount}
+                        {item.category}
                       </TableCell>
                       <TableCell component="th" scope="row" align="center">
                           <IconButton aria-label="delete">
@@ -187,10 +221,12 @@ class IngredientInventory extends React.Component {
                         {/*</Button>*/}
                       </TableCell>
                     </TableRow>
-                                ))}
+    ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
+
+
                     &nbsp;
                 </Container>
             </div>
