@@ -34,7 +34,7 @@ const useStyles = (theme) => ({
     // paddingBottom: theme.spacing(8),
   },
   card: {
-    height: "80%",
+    height: "100%",
     display: "flex",
     flexDirection: "column",
   },
@@ -100,10 +100,10 @@ class JournalView extends Component {
               aria-label="upload picture"
               component="span"
               color="black"
-              style={{ position: "fixed", right: 215 }}
+              style={{ position: "fixed", right: "5%" }}
             >
               {/*TODO: change icon size by modifying width and height*/}
-              <AddIcon size="large" style={{ width: 40, height: 40 }} />
+              <AddIcon size="large" style={{ width: 100, height: 100 }} />
             </IconButton>
           </label>
         </Link>

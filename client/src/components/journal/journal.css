@@ -8,4 +8,7 @@ table, th, td {
 
 .ck-editor__editable {
     height: 400px;
+    background: #FDF5E6;
+    color: #333333;
 }
+
