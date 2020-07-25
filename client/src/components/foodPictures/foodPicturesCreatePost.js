@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
+import { withRouter } from "react-router";
 import "../../index.css";
 import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
@@ -124,15 +125,18 @@ class FoodPicturesCreatePost extends React.Component {
               className={classes.button}
               variant="contained"
               color="primary"
-              onClick={() =>
+              onClick={() => {
                 this.props.uploadImageAndCreatePost(
                   this.state.description,
                   this.state.image.raw,
                   this.props.userInfo.email,
                   this.props.userInfo.firstName,
                   this.props.userInfo.fullName
-                )
-              }
+                );
+                setTimeout(() => {
+                  this.props.history.push("/foodPicAllPost");
+                }, 1300);
+              }}
             >
               SUBMIT POST
             </Button>
