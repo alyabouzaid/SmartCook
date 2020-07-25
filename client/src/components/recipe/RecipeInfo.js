@@ -72,7 +72,7 @@ export default function RecipeInfo({recipe}) {
                         />
                     </Link>
                 </CardActionArea>
-                <CardContent className={classes.cardContent} style={{height: "80px"}}>
+                <CardContent className={classes.cardContent} style={{height: "120px"}}>
                     <Typography gutterBottom variant="h5" component="h2" style={{textAlign: "left"}}>
                         <Link href={recipe["recipe"]["shareAs"]} target="_blank" title={recipe["recipe"]["label"]} style={{ textDecoration: "none", color: "inherit" }}>
                             {recipe["recipe"]["label"]}

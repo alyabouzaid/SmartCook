@@ -7,6 +7,7 @@ import ListItem from "@material-ui/core/ListItem";
 import compose from "recompose/compose";
 import {withStyles} from "@material-ui/core/styles";
 import {connect} from "react-redux";
+import {addFilter} from "../../actions/filterActions";
 
 const useStyles = (theme) => ({
     root: {
@@ -25,16 +26,15 @@ const filterOptions = [
 
 class FilterSearchBar extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            filterList: [],
-        }
-    };
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         filterList: [],
+    //     }
+    // };
 
     updateFilters(newValue) {
-        this.setState({filterList: (newValue === null ? [] : newValue)});
-
+        this.props.addFilter(newValue)
     }
 
     render() {
@@ -145,9 +145,10 @@ class FilterSearchBar extends React.Component {
 // }
 
 const mapStateToProps = (state) => {
+    return { filter: state.filterStore };
 };
 
 export default compose(
     withStyles(useStyles),
-    connect(mapStateToProps)
+    connect(mapStateToProps, { addFilter })
 )(FilterSearchBar);

@@ -8,6 +8,7 @@ import userReducer from "./userReducer";
 import foodPicturesReducer from "./foodPicturesReducer";
 import recommendationFilterReducer from "./recommendationFilterReducer";
 import colorReducer from "./colorReducer";
+import filterReducer from "./filterReducer";
 
 export default combineReducers({
   formStore: formReducer,
@@ -19,4 +20,5 @@ export default combineReducers({
   userStore: userReducer,
   foodPicturesStore: foodPicturesReducer,
   colorStore: colorReducer,
+  filterStore:filterReducer,
 });

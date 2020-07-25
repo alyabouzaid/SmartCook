@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build",
+    "dev": "cd client && npm run build && cd .. && npm start"
   },
   "dependencies": {
     "axios": "^0.19.2",
