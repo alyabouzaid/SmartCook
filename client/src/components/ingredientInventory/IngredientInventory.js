@@ -193,7 +193,6 @@ class IngredientInventory extends React.Component {
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
-
               <TableBody>
                 {this.props.ingredientInventory.map((item) => (
                   <TableRow key={item.name}>
