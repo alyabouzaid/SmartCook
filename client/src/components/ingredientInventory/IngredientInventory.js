@@ -90,7 +90,11 @@ class IngredientInventory extends React.Component {
     });
   }
 
-  handleDelete(rowIndex) {
+  handleDelete = (rowIndex) => {
+    console.log("checkIndex ", rowIndex);
+    // console.log("check user ", this.props.userInfo.email);
+    // console.log("check list ", this.props.ingredientInventory);
+
     this.props.deleteIngredient(
       {
         email: this.props.userInfo.email,
@@ -98,7 +102,7 @@ class IngredientInventory extends React.Component {
       },
       this.props.ingredientInventory
     );
-  }
+  };
 
   // TODO: temporary mock filters, replace with redux
 
@@ -162,7 +166,7 @@ class IngredientInventory extends React.Component {
           </div>
           <IngredientInventoryTable
             inventory={this.props.ingredientInventory}
-            // onDelete={this.handleDelete}
+            onDelete={this.handleDelete}
           />
           {/* <TableContainer component={Paper}>
             <Table className={useStyles.table} aria-label="simple table">

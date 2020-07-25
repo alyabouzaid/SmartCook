@@ -173,7 +173,7 @@ const EnhancedTableToolbar = (props) => {
       </Typography>
       null} */}
 
-      {numSelected > 0 ? (
+      {/* {numSelected > 0 ? (
         <Tooltip title="Delete">
           <IconButton
             aria-label="delete"
@@ -185,12 +185,12 @@ const EnhancedTableToolbar = (props) => {
           </IconButton>
         </Tooltip>
       ) : // need to change this
-      // <Tooltip title="Filter list">
-      //   <IconButton aria-label="filter list">
-      //     <FilterListIcon />
-      //   </IconButton>
-      // </Tooltip>
-      null}
+      <Tooltip title="Filter list">
+        <IconButton aria-label="filter list">
+          <FilterListIcon />
+        </IconButton>
+      </Tooltip>
+      null} */}
     </Toolbar>
   );
 };
@@ -246,12 +246,12 @@ export default function IngredientInventoryTable(props) {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [rowIndexToDel, setRowIndexToDel] = React.useState(null);
+  const [isRowSelected, setIsRowSelected] = React.useState(false);
 
   const dispatch = useDispatch();
 
   const rows = props.inventory;
-  //   const delFunc = props.onDelete;
+  // const delFunc = props.onDelete;
   console.log("ori ", JSON.stringify(props.inventory));
   //   console.log("del func ", JSON.stringify(delFunc));
 
@@ -274,9 +274,9 @@ export default function IngredientInventoryTable(props) {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
 
-    setRowIndexToDel(rowIndex);
+    setIsRowSelected(!isRowSelected);
     console.log("rowIndex: ", JSON.stringify(rowIndex));
-    console.log("rowIndexState: ", JSON.stringify(rowIndexToDel));
+    // console.log("rowIndexState: ", JSON.stringify(rowIndexToDel));
 
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, name);
@@ -317,7 +317,7 @@ export default function IngredientInventoryTable(props) {
       <Paper className={classes.paper}>
         <EnhancedTableToolbar
           numSelected={selected.length}
-          rowIndexToDel={rowIndexToDel}
+          //   rowIndexToDel={rowIndexToDel}
           //   delFunc={const delFunc = props.onDelete;}
         />
         <TableContainer>
@@ -375,14 +375,24 @@ export default function IngredientInventoryTable(props) {
                       <TableCell align="right" style={{ marginRight: 20 }}>
                         {row.amount}
                       </TableCell>
-                      {/* <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell> */}
+                      {isRowSelected ? (
+                        <TableCell component="th" scope="row" align="center">
+                          <IconButton aria-label="delete">
+                            <DeleteIcon
+                              onClick={() => {
+                                props.onDelete(row.key);
+                                setIsRowSelected(false);
+                              }}
+                            />
+                          </IconButton>
+                        </TableCell>
+                      ) : null}
                     </TableRow>
                   );
                 })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                  <TableCell colSpan={4} />
+                  <TableCell colSpan={5} />
                 </TableRow>
               )}
             </TableBody>
