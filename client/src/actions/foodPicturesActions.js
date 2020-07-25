@@ -15,10 +15,7 @@ export const uploadImageAndCreatePost = (
       const formData = new FormData();
       formData.append("file", image);
 
-      const res = await axios.post(
-        "/images/image-upload",
-        formData
-      );
+      const res = await axios.post("/images/image-upload", formData);
       const imageData = await res.data;
       console.log("image data: ", JSON.stringify(imageData));
       dispatch(
@@ -63,10 +60,7 @@ export const createNewFoodPicPost = (
       };
       // console.log("create post waiting before");
       // dispatch(postMessagePostingsLoading());
-      const res = await axios.post(
-        "/foodPictures/addPost",
-        params
-      );
+      const res = await axios.post("/foodPictures/addPost", params);
       // console.log("create post waiting");
       const newFoodPicPost = await res.data;
       await dispatch(addNewFoodPicPost(newFoodPicPost));
@@ -74,9 +68,9 @@ export const createNewFoodPicPost = (
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
       });
-      setTimeout(() => {
-        window.location = "/foodPicAllPost";
-      }, 2000);
+      // setTimeout(() => {
+      //   window.location = "/foodPicAllPost";
+      // }, 2000);
       // console.log("in all pic view page");
     } catch (error) {
       console.log("Error: ", error);
@@ -172,9 +166,7 @@ export const getFeaturedFoodPicPost = () => {
   return async (dispatch) => {
     try {
       // await dispatch(loadingAllFoodPicPost());
-      const res = await axios.get(
-        "/foodPictures/featuredPost"
-      );
+      const res = await axios.get("/foodPictures/featuredPost");
 
       const featuredPosts = await res.data;
       dispatch(loadFeaturedPicPost(featuredPosts));
@@ -203,10 +195,7 @@ export const addLike = (idPayload, email) => {
       const params = {
         email: email,
       };
-      const res = await axios.put(
-        `/foodPictures/addLike/${idPayload}`,
-        params
-      );
+      const res = await axios.put(`/foodPictures/addLike/${idPayload}`, params);
       const updatedFoodPicPost = await res.data;
       dispatch(addUpdatedFoodPicPost(updatedFoodPicPost));
     } catch (error) {
@@ -352,17 +341,14 @@ export const deleteOneFoodPicPost = (idPayload, email) => {
       // console.log("in action1:", idPayload);
       // console.log("in action2:", email);
 
-      const res = await axios.delete(
-        `/foodPictures/deletePost/${idPayload}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          data: {
-            email,
-          },
-        }
-      );
+      const res = await axios.delete(`/foodPictures/deletePost/${idPayload}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: {
+          email,
+        },
+      });
       dispatch(deleteOne(idPayload));
     } catch (error) {
       console.log("Error: ", error);

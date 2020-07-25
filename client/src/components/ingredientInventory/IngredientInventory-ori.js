@@ -1,7 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import compose from "recompose/compose";
-import { withStyles } from "@material-ui/core/styles";
 
 import { addingIngredient } from "../../actions/ingredientInventoryActions";
 import {
@@ -13,7 +11,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
@@ -25,7 +22,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import IngredientInventoryTable from "./ingredientInventoryTable";
 
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
@@ -40,22 +36,6 @@ const filterOptions = [
 ];
 
 let currentCategory = [];
-
-const useStyles = (theme) => ({
-  root: {
-    display: "flex",
-    alignItems: "center",
-    textAlign: "center",
-    justifyContent: "center",
-    marginTop: 20,
-    marginBottom: 30,
-  },
-  buttons: {
-    marginTop: 10,
-    marginBottom: 25,
-  },
-});
-
 class IngredientInventory extends React.Component {
   componentDidMount() {
     this.props.initialData();
@@ -90,55 +70,62 @@ class IngredientInventory extends React.Component {
     });
   }
 
-  handleDelete(rowIndex) {
-    this.props.deleteIngredient(
-      {
-        email: this.props.userInfo.email,
-        key: rowIndex,
-      },
-      this.props.ingredientInventory
-    );
-  }
-
   // TODO: temporary mock filters, replace with redux
 
   render() {
-    const { classes } = this.props;
+    const useStyles = makeStyles((theme) => ({
+      root: {
+        backgroundColor: "#FF0000",
+        color: "black",
+        position: "sticky",
+      },
+    }));
 
     return (
       <div>
         <Container text-align="center">
-          <div className={classes.root}>
+          &nbsp;
+          <p>
             <TextField
               label="Ingredient"
               // variant="filled"
               type="text"
               id="inventory"
-              style={{ width: 100 }}
-              //   name="fname"
+              name="fname"
+              size="100"
             />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <TextField
               label="Amount"
               // variant="filled"
               type="text"
               id="amount"
-              style={{ width: 100 }}
-              //   name="fname"
+              name="fname"
+              size="100"
             />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <Autocomplete
-              id="category"
-              style={{ width: "17%" }}
-              //   size="medium"
-              options={filterOptions}
-              getOptionLabel={(option) => option}
-              renderInput={(params) => (
-                <TextField {...params} label="Category" />
-              )}
-            />
-          </div>
-          <div className={classes.buttons}>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {/* <TextField
+                label="Target Amount"
+                variant="filled"
+                type="text"
+                id="targetAmount"
+                name="fname"
+                size="100"
+              />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */}
+            <ListItem>
+              <Autocomplete
+                id="category"
+                style={{ width: "100%" }}
+                options={filterOptions}
+                getOptionLabel={(option) => option}
+                renderInput={(params) => (
+                  <TextField {...params} label="Category" variant="outlined" />
+                )}
+              />
+            </ListItem>
+          </p>
+          <p>
             <Button
               variant="contained"
               color="primary"
@@ -147,7 +134,7 @@ class IngredientInventory extends React.Component {
                 this.addItem();
               }}
             >
-              ADD
+              add ingredient
             </Button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <Button
@@ -157,14 +144,10 @@ class IngredientInventory extends React.Component {
                 this.props.clearIngredients(this.props.userInfo.email)
               }
             >
-              CLEAR ALL
+              clear inventory
             </Button>
-          </div>
-          <IngredientInventoryTable
-            inventory={this.props.ingredientInventory}
-            // onDelete={this.handleDelete}
-          />
-          {/* <TableContainer component={Paper}>
+          </p>
+          <TableContainer component={Paper}>
             <Table className={useStyles.table} aria-label="simple table">
               <TableHead>
                 <TableRow>
@@ -216,12 +199,24 @@ class IngredientInventory extends React.Component {
                           }
                         />
                       </IconButton>
+                      {/*<Button*/}
+                      {/*  variant="contained"*/}
+                      {/*  color="primary"*/}
+                      {/*  onClick={() =>*/}
+                      {/*    this.props.deleteIngredient({*/}
+                      {/*      email: this.props.userInfo.email,*/}
+                      {/*      key: item.key,*/}
+                      {/*    },this.props.ingredientInventory)*/}
+                      {/*  }*/}
+                      {/*>*/}
+                      {/*  Delete*/}
+                      {/*</Button>*/}
                     </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
-          </TableContainer> */}
+          </TableContainer>
           &nbsp;
         </Container>
       </div>
@@ -249,7 +244,7 @@ const mapStateToProps = (state) => {
   }; //now it will appear as props
 };
 
-export default compose(
-  withStyles(useStyles),
-  connect(mapStateToProps, mapDispatchToProps)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
 )(IngredientInventory);
