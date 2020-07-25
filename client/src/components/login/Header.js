@@ -306,18 +306,18 @@ class Header extends React.Component {
                   </Button>
                 </NavLink>
 
-                <NavLink
-                  to={"/about"}
-                  activeClassName="selected"
-                  activeStyle={{
-                    borderBottom: "2px solid #43AA8B",
-                  }}
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
-                  <Button href="" color="inherit" target="_blank" size="small">
-                    About
-                  </Button>
-                </NavLink>
+                {/*<NavLink*/}
+                {/*  to={"/about"}*/}
+                {/*  activeClassName="selected"*/}
+                {/*  activeStyle={{*/}
+                {/*    borderBottom: "2px solid #43AA8B",*/}
+                {/*  }}*/}
+                {/*  style={{ textDecoration: "none", color: "inherit" }}*/}
+                {/*>*/}
+                {/*  <Button href="" color="inherit" target="_blank" size="small">*/}
+                {/*    About*/}
+                {/*  </Button>*/}
+                {/*</NavLink>*/}
 
                 <Button
                   href="/auth/google"
