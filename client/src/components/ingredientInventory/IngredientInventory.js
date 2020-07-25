@@ -161,7 +161,7 @@ class IngredientInventory extends React.Component {
                 this.props.clearIngredients(this.props.userInfo.email)
               }
             >
-              CLEAR ALL
+              CLEAR
             </Button>
           </div>
           <IngredientInventoryTable
