@@ -116,7 +116,7 @@ class JournalView extends Component {
           }}
         />
         <div>
-          <Grid container component="main" className={classes.root} spacing={3}>
+          <Grid container component="main" className={classes.root} spacing={5}>
             <Grid style={{ textAlign: "right" }} item xs={false} sm={4} md={12}>
               <div className={classes.test}>
                 <p
@@ -144,7 +144,7 @@ class JournalView extends Component {
             </Grid>
 
             {this.props.journals.map((journal) => (
-              <Grid item xs={false} sm={4} md={8}>
+              <Grid item xs={false} sm={4} md={7}>
                 <Card
                   key={journal.id}
                   className={classes.card}
