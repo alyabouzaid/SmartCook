@@ -21,6 +21,7 @@ import { Link } from "react-router-dom";
 import { FaEdit } from "react-icons/all";
 import Grid from "@material-ui/core/Grid";
 import AddIcon from "@material-ui/icons/Add";
+import Container from "@material-ui/core/Container";
 
 const useStyles = (theme) => ({
   root: {
@@ -143,8 +144,14 @@ class JournalView extends Component {
               </div>
             </Grid>
 
-            {this.props.journals.map((journal) => (
               <Grid item xs={false} sm={4} md={7}>
+                  <Container>
+                      <Grid
+                          container
+                          spacing={5}
+                      >
+            {this.props.journals.map((journal) => (
+                <Grid item xs={false} sm={4} md={12}>
                 <Card
                   key={journal.id}
                   className={classes.card}
@@ -199,8 +206,22 @@ class JournalView extends Component {
                   {/*    </Button>*/}
                   {/*</CardActions>*/}
                 </Card>
-              </Grid>
+                </Grid>
             ))}
+                      </Grid>
+                      </Container>
+                  <p
+                      style={{
+                          textAlign: "left",
+                          backgroundColor: "transparent",
+                          margin: "3",
+                          fontSize: "24px",
+                      }}
+                  />
+                  <div>
+                      Pagination here
+                  </div>
+              </Grid>
           </Grid>
         </div>
       </div>
