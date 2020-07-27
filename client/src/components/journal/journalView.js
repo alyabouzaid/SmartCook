@@ -21,6 +21,9 @@ import { Link } from "react-router-dom";
 import { FaEdit } from "react-icons/all";
 import Grid from "@material-ui/core/Grid";
 import AddIcon from "@material-ui/icons/Add";
+import Container from "@material-ui/core/Container";
+import SPagination from "simple-react-pagination-js";
+import "simple-react-pagination-js/build/style.css"; // import css
 
 const useStyles = (theme) => ({
   root: {
@@ -70,14 +73,50 @@ const useStyles = (theme) => ({
     },
     textAlign: "right",
   },
+    pagination: {
+        display: "inline-block",
+        textAlign: "center",
+        marginBottom: 50,
+    },
 });
 
 class JournalView extends Component {
-  componentDidMount() {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            offset: 0,
+            currentPage: 1,
+            perPage: 5,
+        };
+    }
+
+    componentDidMount() {
     this.props.loadJournalsData(this.props.userInfo.email);
   }
 
-  render() {
+    handleOnPageChange = (currentPage) => {
+        const selectedPage = currentPage;
+        const offset = (selectedPage - 1) * this.state.perPage;
+        this.setState({ currentPage: selectedPage });
+        this.setState({ offset: offset });
+        this.displayData();
+    };
+
+    handleOnSizeChange = (perPage) => {
+        this.setState({ perPage, currentPage: 1 });
+    };
+
+    displayData = () => {
+        const data = this.props.journals;
+        const sliceData = data.slice(
+            this.state.offset,
+            this.state.offset + this.state.perPage
+        );
+        return sliceData;
+    };
+
+    render() {
     const { classes } = this.props;
     return (
       <div>
@@ -143,8 +182,15 @@ class JournalView extends Component {
               </div>
             </Grid>
 
-            {this.props.journals.map((journal) => (
               <Grid item xs={false} sm={4} md={7}>
+                  <Container>
+                      <Grid
+                          container
+                          spacing={5}
+                      >
+            {/*{this.props.journals.map((journal) => (*/}
+                          {this.displayData().map((journal) => (
+                <Grid item xs={false} sm={4} md={12}>
                 <Card
                   key={journal.id}
                   className={classes.card}
@@ -199,8 +245,30 @@ class JournalView extends Component {
                   {/*    </Button>*/}
                   {/*</CardActions>*/}
                 </Card>
-              </Grid>
+                </Grid>
             ))}
+                      </Grid>
+                      </Container>
+                  <p
+                      style={{
+                          textAlign: "left",
+                          backgroundColor: "transparent",
+                          margin: "3",
+                          fontSize: "24px",
+                      }}
+                  />
+                  <div className={classes.pagination}>
+                      <SPagination
+                          page={this.state.currentPage}
+                          sizePerPage={this.state.perPage}
+                          totalSize={this.props.journals ? this.props.journals.length : 0}
+                          pagesNextToActivePage={5}
+                          sizePerPageOptions={[5, 8, 12]}
+                          onPageChange={this.handleOnPageChange}
+                          onSizeChange={this.handleOnSizeChange}
+                      />
+                  </div>
+              </Grid>
           </Grid>
         </div>
       </div>
