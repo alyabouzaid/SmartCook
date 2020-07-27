@@ -111,14 +111,14 @@ export default function RecipeInfo({recipe}) {
                             </CardContent>
                         </Card>
                     </Popover>
-                    <IconButton aria-label="share" href={recipe["recipe"]["shareAs"]} target="_blank">
+                    <IconButton aria-label="share" href={recipe["recipe"]["url"]} target="_blank">
                         <LinkIcon size="small" />
                     </IconButton>
-                    <IconButton aria-label="share" onClick={() => {dispatch({type:'RECIPE_ANNOTATION', payload: recipe["recipe"]}); history.push('/journal')}} >
-                        <SaveOutlinedIcon size="medium" />
+                    <IconButton aria-label="share" onClick={() => {dispatch({type:'RECIPE_ANNOTATION', payload: recipe["recipe"]}); history.push('/journal')}}>
+                        <EditOutlinedIcon size="small" />
                     </IconButton>
                     <IconButton aria-label="share">
-                        <EditOutlinedIcon size="small" />
+                        <SaveOutlinedIcon size="medium" />
                     </IconButton>
                 </CardActions>
             </Card>
