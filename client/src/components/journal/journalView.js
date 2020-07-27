@@ -34,7 +34,7 @@ const useStyles = (theme) => ({
     // paddingBottom: theme.spacing(8),
   },
   card: {
-    height: "80%",
+    height: "100%",
     display: "flex",
     flexDirection: "column",
   },
