@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from 'react-router';
+import { withRouter } from "react-router";
 import compose from "recompose/compose";
 import {
   editJournal,
@@ -21,17 +21,16 @@ const useStyles = () => ({
   root: {
     flexGrow: 1,
   },
-    button: {
-        textAlign: "left",
-        // width: "100%",
-        textTransform: 'capitalize',
-        justifyContent: "left", // aligns button to left of container
-        fontSize: "16px",
-    },
+  button: {
+    textAlign: "left",
+    // width: "100%",
+    textTransform: "capitalize",
+    justifyContent: "left", // aligns button to left of container
+    fontSize: "16px",
+  },
 });
 
 class Journal extends React.Component {
-
   render() {
     const { classes } = this.props;
     return (
@@ -53,9 +52,9 @@ class Journal extends React.Component {
                 editor={ClassicEditor}
                 data={this.props.editorData.initialData}
                 // onInit={(editor) => {
-                  //                 //   // You can store the "editor" and use when it is needed.
-                  //                 //   console.log("Editor is ready to use!", editor);
-                  //                 // }}
+                //                 //   // You can store the "editor" and use when it is needed.
+                //                 //   console.log("Editor is ready to use!", editor);
+                //                 // }}
                 onChange={(event, editor) => {
                   const data = editor.getData();
                   this.props.editJournal(data);
@@ -67,14 +66,19 @@ class Journal extends React.Component {
               <JournalImage />
             </Grid>
           </Grid>
-          <Button className={classes.button}
+          <Button
+            className={classes.button}
             variant="contained"
             color="primary"
-            onClick={() => {this.props.addNewJournalData(this.props.editorData, this.props.userInfo);
-            this.props.history.push('/journalView')
+            onClick={() => {
+              this.props.addNewJournalData(
+                this.props.editorData,
+                this.props.userInfo
+              );
+              this.props.history.push("/journalView");
             }}
           >
-            Submit Journal
+            SUBMIT
           </Button>
         </div>
       </div>
@@ -84,11 +88,16 @@ class Journal extends React.Component {
 
 const mapStateToProps = (state) => {
   //name is by convention
-  return { editorData: state.journalEditorStore, userInfo: state.userStore, darkMode: state.colorStore}; //now it will appear as props
+  return {
+    editorData: state.journalEditorStore,
+    userInfo: state.userStore,
+    darkMode: state.colorStore,
+  }; //now it will appear as props
 };
 
 export default compose(
-  withStyles(useStyles), withRouter,
+  withStyles(useStyles),
+  withRouter,
   connect(mapStateToProps, {
     editJournal,
     updateTitle,

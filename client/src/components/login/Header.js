@@ -19,6 +19,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import "../../index.css";
 import Toggle from "./Toggle";
+import SettingsIcon from "@material-ui/icons/Settings";
 
 const useStyles = (theme) => ({
   appbar: {
@@ -121,8 +122,6 @@ class Header extends React.Component {
               style={{
                 textDecoration: "none",
                 color: "inherit",
-                // fontFamily: "Grand Hotel",
-                // fontSize: 30,
               }}
             >
               SmartCook
@@ -235,11 +234,11 @@ class Header extends React.Component {
                           <SendIcon fontSize="small" />
                         </ListItemIcon> */}
                     <Link
-                        to={"/foodPicNewPost"}
-                        style={{
-                          textDecoration: "none",
-                          color: "inherit",
-                        }}
+                      to={"/foodPicNewPost"}
+                      style={{
+                        textDecoration: "none",
+                        color: "inherit",
+                      }}
                     >
                       New post
                     </Link>
@@ -249,11 +248,11 @@ class Header extends React.Component {
                   </StyledMenuItem>
                   <StyledMenuItem>
                     <Link
-                        to={"/foodPicAllPost"}
-                        style={{
-                          textDecoration: "none",
-                          color: "inherit",
-                        }}
+                      to={"/foodPicAllPost"}
+                      style={{
+                        textDecoration: "none",
+                        color: "inherit",
+                      }}
                     >
                       All posts
                     </Link>
@@ -263,11 +262,11 @@ class Header extends React.Component {
                   </StyledMenuItem>
                   <StyledMenuItem>
                     <Link
-                        to={"/foodPicMyPost"}
-                        style={{
-                          textDecoration: "none",
-                          color: "inherit",
-                        }}
+                      to={"/foodPicMyPost"}
+                      style={{
+                        textDecoration: "none",
+                        color: "inherit",
+                      }}
                     >
                       My posts
                     </Link>
@@ -289,7 +288,12 @@ class Header extends React.Component {
                 >
                   Logout
                 </Button>
-                <Toggle/>
+                <Toggle />
+                <SettingsIcon
+                  style={{
+                    color: "#00bfa5",
+                  }}
+                />
               </ListItem>
             ) : (
               <ListItem>

@@ -99,14 +99,6 @@ class FoodPicturesMyPost extends React.Component {
           />
         </div>
 
-        {/* <div style={{ maxWidth: "550px", margin: "0px auto" }}>
-          <div
-            style={{
-              margin: "18px 0px",
-              borderBottom: "1px solid grey",
-            }}
-          > */}
-
         <List style={{ display: "inline-block" }}>
           <div>
             <Typography
@@ -133,18 +125,7 @@ class FoodPicturesMyPost extends React.Component {
         {/* </div>
         </div> */}
 
-        <div className={classes.post}>
-          {/* {this.props.myPost.map((post) => (
-            <FoodPicturesPost
-              key={post._id}
-              item={post}
-              cardWidth={300}
-              // cardLeftMargin={30}
-              // cardRightMargin={30}
-            />
-          ))} */}
-          {this.displayData()}
-        </div>
+        <div className={classes.post}>{this.displayData()}</div>
 
         <div className={classes.pagination}>
           <SPagination

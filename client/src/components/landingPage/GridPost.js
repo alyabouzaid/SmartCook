@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   card: {
@@ -18,10 +19,10 @@ const useStyles = makeStyles(() => ({
       },
     },
   },
-  title: {
-    marginBottom: 16,
-    fontSize: 14,
-  },
+  // title: {
+  //   marginBottom: 16,
+  //   fontSize: 14,
+  // },
   pos: {
     marginBottom: 12,
   },
@@ -34,17 +35,27 @@ export default function GridPost(props) {
     <div>
       <Card className={classes.card} variant="outline" p={1}>
         <CardContent>
-          <Typography
-            variant="h4"
-            component="h2"
-            color="inherit"
-            style={{ color: "#4db6ac" }}
+          <Link
+            to={props.content.link}
+            style={{
+              textDecoration: "none",
+              color: "inherit",
+            }}
           >
-            {props.content.heading}
-          </Typography>
+            <Typography
+              variant="h4"
+              component="h2"
+              color="inherit"
+              style={{ color: "#4db6ac" }}
+            >
+              {props.content.header}
+            </Typography>
+          </Link>
+
           <Typography variant="h5" color="inherit" paragraph>
             {props.content.title}
           </Typography>
+
           <Typography component="p">{props.content.description}</Typography>
         </CardContent>
       </Card>
