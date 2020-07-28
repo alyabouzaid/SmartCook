@@ -26,7 +26,7 @@ const useStyles = (theme) => ({
 });
 
 
-let currentCategoryItems = []
+let currentCategoryItems = [];
 
 class IngredientList extends React.Component {
 
@@ -44,10 +44,10 @@ class IngredientList extends React.Component {
                     {
                         for (var i = 0; i < this.props.filter.length; i++) {
                             if (ingredient.category == this.props.filter[i]){
-                                return true
+                                return true;
                             }
                         }
-                        return false
+                        return false;
                     }
                     )
                 }
