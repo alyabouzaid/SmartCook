@@ -51,7 +51,7 @@ router.delete("/deleteall", (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.post("/update/:id", (req, res) => {
+router.put("/update/:id", (req, res) => {
   journals.findById(req.params.id)
       .then((journal) => {
         journal.author = req.body.author;

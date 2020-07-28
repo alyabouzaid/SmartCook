@@ -1,4 +1,5 @@
 const initialState = {
+    _id: "",
     author: "",
     title: "",
     body: "",
@@ -23,8 +24,12 @@ export default function formReducer(state = initialState, action){
         case 'JOURNAL_EDITOR_TITLE':
             return {...state, title: action.payload};
         case 'RECIPE_ANNOTATION':
-            return {...state, title: action.payload.label, images: [{secure_url: action.payload.image}], initialData: parseRecipe(action.payload)};
-        case 'JOURNAL_EDITOR_SUBMIT':
+            return {...state, title: action.payload.label, images: [{secure_url: action.payload.image}],
+                    body: parseRecipe(action.payload), initialData: parseRecipe(action.payload)};
+        case 'JOURNAL_IMPORT':
+            return {...state, _id: action.payload._id, author: action.payload.author, title: action.payload.title,
+                     body: action.payload.body, images: action.payload.images, initialData: action.payload.body};
+        case 'JOURNAL_EDITOR_CLEAR':
             return initialState;
         default:
             return state;
