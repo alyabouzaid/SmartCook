@@ -26,12 +26,6 @@ const healthTypes = [
     "Vegan", "Vegetarian"
 ];
 
-// const cuisineTypes = [
-//     "American", "Asian", "British", "Caribbean", "Central Europe", "Chinese", "Eastern Europe", "French",
-//     "Indian", "Italian", "Japanese", "Kosher", "Mediterranean", "Mexican", "Middle Eastern", "Nordic",
-//     "South American", "South East Asian"
-// ];
-
 const dietTypes = [
     "Balanced", "High-protein", "Low-carb", "Low-fat"
 ];
@@ -46,8 +40,6 @@ class CategoryList extends React.Component {
             dietInput: "",
             healthValue: "",
             healthInput: "",
-            // cuisineValue: "",
-            // cuisineInput: "",
         }
     };
 
@@ -85,41 +77,6 @@ class CategoryList extends React.Component {
             />
         );
     }
-
-    // changeCuisineValue(newValue) {
-    //     this.setState({cuisineValue: (newValue === null ? "" : newValue)});
-    //     if (newValue !== null && cuisineTypes.includes(newValue)) {
-    //         let lowerCaseString = newValue.toLowerCase();
-    //         this.props.updateCuisineType(lowerCaseString);
-    //     }
-    //     else {
-    //         this.props.updateCuisineType("american");
-    //     }
-    // }
-    //
-    // changeCuisineInput(newInputValue) {
-    //     this.setState({cuisineInput: (newInputValue === "" ? "" : newInputValue)});
-    // };
-    //
-    // makeCuisineBar(searchBarType, filterOptions) {
-    //     return (
-    //         <Autocomplete
-    //             id={searchBarType}
-    //             options={filterOptions}
-    //             getOptionLabel={(option) => option}
-    //             style={{ width: "100%"}}
-    //             renderInput={(params) => <TextField {...params} label={searchBarType} variant="outlined" />}
-    //             value={this.state.cuisineValue}
-    //             onChange={(event, newValue) => {
-    //                 this.changeCuisineValue(newValue);
-    //             }}
-    //             inputValue={this.state.cuisineInput}
-    //             onInputChange={(event, newInputValue) => {
-    //                 this.changeCuisineInput(newInputValue);
-    //             }}
-    //         />
-    //     );
-    // }
 
     changeDietValue(newValue) {
         this.setState({dietValue: (newValue === null ? "" : newValue)});
