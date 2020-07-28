@@ -111,6 +111,35 @@ class Recommendation extends React.Component {
     });
   };
 
+  updateIngredients() {
+    if (this.props.filter.length !== 0) {
+      for (let ingredient of this.props.ingredientInventory) {
+        let found = false;
+        for (let i = 0; i < this.props.filter.length; i++) {
+          if (ingredient.category === this.props.filter[i]) {
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          if (ingredient.selected) {
+            this.props.selectingIngredient(ingredient.key);
+          }
+        }
+      }
+    }
+  }
+
+  generateRecommendation = () => {
+    this.updateIngredients();
+        this.props.getRecommendation(
+            this.props.ingredientInventory.filter(
+                (ingredient) => ingredient.selected
+            ),
+            this.props.recommendationFilter
+        )
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -155,14 +184,15 @@ class Recommendation extends React.Component {
                 className={classes.button}
                 variant="contained"
                 color="primary"
-                onClick={() =>
-                  this.props.getRecommendation(
-                    this.props.ingredientInventory.filter(
-                      (ingredient) => ingredient.selected
-                    ),
-                    this.props.recommendationFilter
-                  )
-                }
+                onClick={this.generateRecommendation}
+                // onClick={() =>
+                //   this.props.getRecommendation(
+                //     this.props.ingredientInventory.filter(
+                //       (ingredient) => ingredient.selected
+                //     ),
+                //     this.props.recommendationFilter
+                //   )
+                // }
               >
                 RECOMMEND
               </Button>
@@ -273,6 +303,7 @@ const mapStateToProps = (state) => {
     recommendation: state.recommendationStore,
     recommendationFilter: state.recommendationFilterStore,
     userInfo: state.userStore,
+    filter: state.filterStore,
   }; //now it will appear as props
 };
 export default compose(

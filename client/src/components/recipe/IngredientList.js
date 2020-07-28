@@ -40,16 +40,17 @@ class IngredientList extends React.Component {
 
     filter(ingredientInventory) {
         if (Array.isArray(ingredientInventory)){
-                currentCategoryItems = this.props.ingredientInventory.filter((ingredient) => 
+            currentCategoryItems = this.props.filter.length === 0 ? this.props.ingredientInventory :
+                (this.props.ingredientInventory.filter((ingredient) =>
                     {
-                        for (var i = 0; i < this.props.filter.length; i++) {
+                        for (let i = 0; i < this.props.filter.length; i++) {
                             if (ingredient.category == this.props.filter[i]){
                                 return true;
                             }
                         }
                         return false;
                     }
-                    )
+                    ))
                 }
     } 
 

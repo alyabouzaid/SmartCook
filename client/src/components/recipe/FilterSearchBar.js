@@ -20,7 +20,6 @@ const useStyles = (theme) => ({
     },
 });
 
-// TODO: temporary mock filters, replace with redux
 const filterOptions = [
     "Dairy", "Fruits", "Grains", "Meat", "Seafood", "Vegetables"
 ];
@@ -38,16 +37,16 @@ class FilterSearchBar extends React.Component {
             {
                 let found = false;
                 for (let i = 0; i < this.props.filter.length; i++) {
-                    // if (ingredient.category !== this.props.filter[i]){
-                    //     ingredient.selected = false;
-                    // }
                     if (ingredient.category === this.props.filter[i]) {
                         found = true;
                         break;
                     }
                 }
-                if (!found)
-                    ingredient.selected = false;
+                if (!found) {
+                    if (ingredient.selected) {
+                        this.props.selectingIngredient(ingredient.key);
+                    }
+                }
             }
     }
 
