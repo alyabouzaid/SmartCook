@@ -123,7 +123,7 @@ class CategoryList extends React.Component {
                 aria-labelledby="nested-list-subheader"
                 subheader={
                     <ListSubheader style={{fontSize: "18px", textAlign: "left"}} component="div" id="nested-list-subheader">
-                        Select Categories:
+                        Recipe Filters:
                     </ListSubheader>
                 }
                 className={classes.root}

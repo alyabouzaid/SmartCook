@@ -59,7 +59,7 @@ class FilterSearchBar extends React.Component {
                 aria-labelledby="nested-list-subheader"
                 subheader={
                     <ListSubheader style={{fontSize: "18px", textAlign: "left"}} component="div" id="nested-list-subheader">
-                        Select Ingredient Filter:
+                        Ingredient Categories:
                         {/*TODO: use for debugging*/}
                         {/*{this.props.filter}*/}
                     </ListSubheader>
