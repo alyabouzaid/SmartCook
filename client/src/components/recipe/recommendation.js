@@ -105,7 +105,7 @@ class Recommendation extends React.Component {
     return sliceData.map((recipe) => {
       return (
         <Grid item xs={12} sm={6} md={4}>
-          <RecipeInfo recipe={recipe} />
+          <RecipeInfo recipe={recipe} userInfo={this.props.userInfo} />
         </Grid>
       );
     });
