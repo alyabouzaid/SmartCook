@@ -21,6 +21,7 @@ import { Link } from "react-router-dom";
 import { FaEdit } from "react-icons/all";
 import Grid from "@material-ui/core/Grid";
 import AddIcon from "@material-ui/icons/Add";
+import Container from "@material-ui/core/Container";
 import SPagination from "simple-react-pagination-js";
 import "simple-react-pagination-js/build/style.css"; // import css
 
@@ -117,6 +118,7 @@ class JournalView extends Component {
 
   render() {
     const { classes } = this.props;
+
     return (
       <div>
         <p
@@ -154,7 +156,7 @@ class JournalView extends Component {
           }}
         />
         <div>
-          <Grid container component="main" className={classes.root} spacing={3}>
+          <Grid container component="main" className={classes.root} spacing={5}>
             <Grid style={{ textAlign: "right" }} item xs={false} sm={4} md={12}>
               <div className={classes.test}>
                 <p
@@ -181,65 +183,96 @@ class JournalView extends Component {
               </div>
             </Grid>
 
-            {/* {this.props.journals.map((journal) => ( */}
-            {this.displayData().map((journal) => (
-              <Grid item xs={false} sm={4} md={8}>
-                <Card
-                  key={journal.id}
-                  className={classes.card}
-                  varient="outlined"
-                >
-                  <CardHeader
-                    action={
-                      // this.props.userInfo.email === journal.email &&
-                      <IconButton aria-label="settings">
-                        <DeleteIcon
-                          onClick={() =>
-                            this.props.deleteOneJournalData(journal._id)
+            <Grid item xs={false} sm={4} md={7}>
+              <Container>
+                <Grid container spacing={5}>
+                  {/*{this.props.journals.map((journal) => (*/}
+                  {this.displayData().map((journal) => (
+                    <Grid item xs={false} sm={4} md={12}>
+                      <Card
+                        key={journal.id}
+                        className={classes.card}
+                        varient="outlined"
+                      >
+                        <CardHeader
+                          action={
+                            // this.props.userInfo.email === journal.email &&
+                            <IconButton aria-label="settings">
+                              <DeleteIcon
+                                onClick={() =>
+                                  this.props.deleteOneJournalData(journal._id)
+                                }
+                              />
+                            </IconButton>
+                          }
+                          title={
+                            <Typography
+                              align="left"
+                              variant="h6"
+                              component="h2"
+                            >
+                              {journal.title}
+                            </Typography>
+                          }
+                          subheader={
+                            <Typography
+                              align="left"
+                              variant="subtitle2"
+                              component="h2"
+                            >
+                              {journal.author}{" "}
+                              {journal.createdAt.slice(0, -5).replace("T", " ")}
+                            </Typography>
                           }
                         />
-                      </IconButton>
-                    }
-                    title={
-                      <Typography align="left" variant="h6" component="h2">
-                        {journal.title}
-                      </Typography>
-                    }
-                    subheader={
-                      <Typography
-                        align="left"
-                        variant="subtitle2"
-                        component="h2"
-                      >
-                        {journal.author}{" "}
-                        {journal.createdAt.slice(0, -5).replace("T", " ")}
-                      </Typography>
-                    }
-                  />
-                  {journal.images.length > 0 && (
-                    <CardMedia
-                      className={classes.media}
-                      image={journal.images[0].secure_url}
-                      title={journal.title}
-                    />
-                  )}
-                  <CardContent>
-                    <div style={{ textAlign: "left" }}>
-                      {parse(journal.body)}
-                    </div>
-                  </CardContent>
-                  {/*TODO: add functionality to buttons*/}
-                  {/*<CardActions>*/}
-                  {/*    <Button size="small" color="primary">*/}
-                  {/*        Share*/}
-                  {/*    </Button>*/}
-                  {/*    <Button size="small" color="primary">*/}
-                  {/*        Learn More*/}
-                  {/*    </Button>*/}
-                  {/*</CardActions>*/}
-                </Card>
-              </Grid>
-            ))}
+                        {journal.images.length > 0 && (
+                          <CardMedia
+                            className={classes.media}
+                            image={journal.images[0].secure_url}
+                            title={journal.title}
+                          />
+                        )}
+                        <CardContent>
+                          <div style={{ textAlign: "left" }}>
+                            {parse(journal.body)}
+                          </div>
+                        </CardContent>
+                        {/*TODO: add functionality to buttons*/}
+                        {/*<CardActions>*/}
+                        {/*    <Button size="small" color="primary">*/}
+                        {/*        Share*/}
+                        {/*    </Button>*/}
+                        {/*    <Button size="small" color="primary">*/}
+                        {/*        Learn More*/}
+                        {/*    </Button>*/}
+                        {/*</CardActions>*/}
+                      </Card>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Container>
+              <p
+                style={{
+                  textAlign: "left",
+                  backgroundColor: "transparent",
+                  margin: "3",
+                  fontSize: "24px",
+                }}
+              />
+              <div className={classes.pagination}>
+                <SPagination
+                  page={this.state.currentPage}
+                  sizePerPage={this.state.perPage}
+                  totalSize={
+                    this.props.journals ? this.props.journals.length : 0
+                  }
+                  pagesNextToActivePage={5}
+                  sizePerPageOptions={[5, 8, 12]}
+                  onPageChange={this.handleOnPageChange}
+                  onSizeChange={this.handleOnSizeChange}
+                />
+              </div>
+            </Grid>
           </Grid>
           <div className={classes.pagination}>
             <SPagination

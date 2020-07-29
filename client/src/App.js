@@ -12,17 +12,17 @@ import FoodPicturesMyPost from "./components/foodPictures/foodPicturesMyPost";
 import FeaturedPostCarousel from "./components/foodPictures/featuredPostCarousel";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import compose from "recompose/compose";
-import {connect} from "react-redux";
-import {changeColor} from "./actions/colorActions";
+import { connect } from "react-redux";
+import { changeColor } from "./actions/colorActions";
 import Header from "./components/login/Header";
+import Settings from "./components/login/settings";
 
 toast.configure();
 class App extends React.Component {
   render() {
-
     // pink
     // const mainPrimaryColor = this.props.isDark ? "#f48fb1" : "#3f50b5"; // button
     // const mainSecondaryColor = this.props.isDark ? "#aa647b" : "#e0f2f1"; // header
@@ -52,28 +52,32 @@ class App extends React.Component {
         secondary: {
           main: mainSecondaryColor,
           contrastText: secondaryContrastText,
-        }
-      }
+        },
+      },
     });
 
     return (
-        <ThemeProvider theme={darkTheme}>
-      <div className={"App"}>
-        <CssBaseline />
-        <Header/>
-        <Switch>
-          <Route exact path="/" component={LandingPage} />
-          <Route path="/ingredientInventory" component={IngredientInventory} />
-          <Route path="/recommendation" component={Recommendation} />
-          <Route path="/journal" component={Journal} />
-          <Route path="/journalView" component={JournalView} />
-          <Route path="/foodPicNewPost" component={FoodPicturesCreatePost} />
-          <Route path="/foodPicAllPost" component={FoodPicturesAllPost} />
-          <Route path="/foodPicMyPost" component={FoodPicturesMyPost} />
-          <Route path="/foodPicFeatured" component={FeaturedPostCarousel} />
-        </Switch>
-      </div>
-        </ThemeProvider>
+      <ThemeProvider theme={darkTheme}>
+        <div className={"App"}>
+          <CssBaseline />
+          <Header />
+          <Switch>
+            <Route exact path="/" component={LandingPage} />
+            <Route
+              path="/ingredientInventory"
+              component={IngredientInventory}
+            />
+            <Route path="/recommendation" component={Recommendation} />
+            <Route path="/journal" component={Journal} />
+            <Route path="/journalView" component={JournalView} />
+            <Route path="/foodPicNewPost" component={FoodPicturesCreatePost} />
+            <Route path="/foodPicAllPost" component={FoodPicturesAllPost} />
+            <Route path="/foodPicMyPost" component={FoodPicturesMyPost} />
+            <Route path="/foodPicFeatured" component={FeaturedPostCarousel} />
+            <Route path="/settings" component={Settings} />
+          </Switch>
+        </div>
+      </ThemeProvider>
     );
   }
 }
@@ -82,5 +86,4 @@ const mapStateToProps = (state) => {
   return { isDark: state.colorStore }; //now it will appear as props
 };
 
-export default compose(connect(mapStateToProps, { changeColor })
-)(App);
+export default compose(connect(mapStateToProps, { changeColor }))(App);

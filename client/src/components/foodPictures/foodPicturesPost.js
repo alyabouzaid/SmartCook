@@ -77,8 +77,8 @@ const useStyles = (theme) => ({
     justifyContent: "left",
   },
   commentAvatar: {
-    color: theme.palette.getContrastText(deepPurple[500]),
-    backgroundColor: deepPurple[500],
+    // color: theme.palette.getContrastText(deepPurple[500]),
+    // backgroundColor: deepPurple[500],
     width: theme.spacing(4),
     height: theme.spacing(4),
   },
@@ -214,14 +214,22 @@ class FoodPicturesPost extends React.Component {
     return (
       <ListItem>
         <ListItemAvatar>
-          <Avatar
+          {/* <Avatar
             className={classes.commentAvatar}
             style={{
               marginRight: 0,
             }}
           >
             {this.trimInitialForNameDisplay(item.postedByFullName)}
-          </Avatar>
+          </Avatar> */}
+          <Avatar
+            className={classes.commentAvatar}
+            style={{
+              marginRight: 0,
+            }}
+            alt={comment.postedByFullName}
+            src={comment.postedByGoogleDefaultPic}
+          />
         </ListItemAvatar>
         <ListItemText
           primary={
@@ -259,15 +267,22 @@ class FoodPicturesPost extends React.Component {
     return (
       <ListItem>
         <ListItemAvatar>
-          <Avatar
+          {/* <Avatar
             className={classes.commentAvatar}
             style={{
               marginRight: 0,
             }}
           >
-            {/* {comment.postedByFirstName.substring(0, 1)} */}
-            {this.trimInitialForNameDisplay(comment.postedByFullName)}
-          </Avatar>
+            {this.props.userInfo.googleDefaultPic}
+          </Avatar> */}
+          <Avatar
+            className={classes.commentAvatar}
+            style={{
+              marginRight: 0,
+            }}
+            alt={comment.postedByFullName}
+            src={comment.postedByGoogleDefaultPic}
+          />
         </ListItemAvatar>
         <ListItemText
           primary={
@@ -335,11 +350,23 @@ class FoodPicturesPost extends React.Component {
           <CardHeader
             className={classes.header}
             avatar={
-              <Avatar aria-label="recipe" className={classes.avatar}>
-                {this.trimInitialForNameDisplay(
-                  this.props.item.postedByFullName
-                )}
-              </Avatar>
+              // <Avatar aria-label="recipe" className={classes.avatar}>
+              //   {this.trimInitialForNameDisplay(
+              //     this.props.item.postedByFullName
+              //   )}
+              // </Avatar>
+              this.props.userInfo.userUploadedPic &&
+              this.props.userInfo.email === this.props.item.postedByEmail ? (
+                <Avatar
+                  alt={this.props.item.postedByFullName}
+                  src={this.props.userInfo.userUploadedPic}
+                />
+              ) : (
+                <Avatar
+                  alt={this.props.item.postedByFullName}
+                  src={this.props.item.postedByGoogleDefaultPic}
+                />
+              )
             }
             action={
               this.props.userInfo.email === this.props.item.postedByEmail
@@ -479,7 +506,9 @@ class FoodPicturesPost extends React.Component {
                   e.target[0].value,
                   this.props.userInfo.firstName,
                   this.props.userInfo.fullName,
-                  this.props.userInfo.email
+                  this.props.userInfo.email,
+                  this.props.userInfo.googleDefaultPic,
+                  this.props.userInfo.userUploadedPic
                 );
               }}
             >
@@ -509,9 +538,25 @@ const mapDispatchToProps = (dispatch) => {
     deleteOneFoodPicPost: (idPayload, email) =>
       dispatch(deleteOneFoodPicPost(idPayload, email)),
     addLike: (idPayload, email) => dispatch(addLike(idPayload, email)),
-    addComment: (idPayload, comment, userFirstName, userFullName, email) =>
+    addComment: (
+      idPayload,
+      comment,
+      userFirstName,
+      userFullName,
+      email,
+      googleDefaultPic,
+      userUploadedPic
+    ) =>
       dispatch(
-        addComment(idPayload, comment, userFirstName, userFullName, email)
+        addComment(
+          idPayload,
+          comment,
+          userFirstName,
+          userFullName,
+          email,
+          googleDefaultPic,
+          userUploadedPic
+        )
       ),
     editPostDescription: (idPayload, editedPostDescription) =>
       dispatch(editPostDescription(idPayload, editedPostDescription)),

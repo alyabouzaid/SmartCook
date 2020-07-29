@@ -33,6 +33,8 @@ router.post("/addPost", (req, res) => {
   const postedByFirstName = req.body.userFirstName;
   const postedByFullName = req.body.userFullName;
   const postedByEmail = req.body.email;
+  const postedByGoogleDefaultPic = req.body.googleDefaultPic;
+  const postedByUploadedPic = req.body.userUploadedPic;
   const dateTime = new Date().toLocaleString();
 
   const post = new foodPicturePost({
@@ -42,6 +44,8 @@ router.post("/addPost", (req, res) => {
     postedByFirstName,
     postedByFullName,
     postedByEmail,
+    postedByGoogleDefaultPic,
+    postedByUploadedPic,
     dateTime,
   });
   post
@@ -95,6 +99,8 @@ router.put("/addComment/:id", (req, res) => {
     postedByFirstName: req.body.userFirstName,
     postedByFullName: req.body.userFullName,
     postedByEmail: req.body.email,
+    postedByGoogleDefaultPic: req.body.googleDefaultPic,
+    postedByUploadedPic: req.body.userUploadedPic,
   };
   foodPicturePost
     .findByIdAndUpdate(

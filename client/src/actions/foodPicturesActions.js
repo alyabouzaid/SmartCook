@@ -7,9 +7,11 @@ export const uploadImageAndCreatePost = (
   image,
   email,
   userFirstName,
-  userFullName
+  userFullName,
+  googleDefaultPic,
+  userUploadedPic
 ) => {
-  console.log("in getImage and createPost");
+  console.log("in getImage and createPost ", JSON.stringify(googleDefaultPic));
   return async (dispatch) => {
     try {
       const formData = new FormData();
@@ -18,13 +20,17 @@ export const uploadImageAndCreatePost = (
       const res = await axios.post("/images/image-upload", formData);
       const imageData = await res.data;
       console.log("image data: ", JSON.stringify(imageData));
+      console.log("single image data: ", JSON.stringify(imageData[0]));
+
       dispatch(
         createNewFoodPicPost(
           description,
           imageData,
           email,
           userFirstName,
-          userFullName
+          userFullName,
+          googleDefaultPic,
+          userUploadedPic
         )
       );
     } catch (error) {
@@ -43,12 +49,15 @@ export const createNewFoodPicPost = (
   imageData,
   email,
   userFirstName,
-  userFullName
+  userFullName,
+  googleDefaultPic,
+  userUploadedPic
 ) => {
   // console.log("in createNewFoodPic");
   // console.log("description: ", JSON.stringify(description));
   // console.log("image: ", JSON.stringify(imageData));
   // console.log("username: ", JSON.stringify(username));
+  console.log("in createNewPost ", JSON.stringify(googleDefaultPic));
   return async (dispatch) => {
     try {
       const params = {
@@ -57,6 +66,8 @@ export const createNewFoodPicPost = (
         email: email,
         userFirstName: userFirstName,
         userFullName: userFullName,
+        googleDefaultPic: googleDefaultPic,
+        userUploadedPic: userUploadedPic,
       };
       // console.log("create post waiting before");
       // dispatch(postMessagePostingsLoading());
@@ -227,7 +238,9 @@ export const addComment = (
   comment,
   userFirstName,
   userFullName,
-  email
+  email,
+  googleDefaultPic,
+  userUploadedPic
 ) => {
   // console.log("comment");
   return async (dispatch) => {
@@ -237,6 +250,8 @@ export const addComment = (
         userFirstName: userFirstName,
         userFullName: userFullName,
         email: email,
+        googleDefaultPic: googleDefaultPic,
+        userUploadedPic: userUploadedPic,
       };
       const res = await axios.put(
         `/foodPictures/addComment/${idPayload}`,
