@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const fetch = require("node-fetch");
+const recipes = require("../models/recipes.model");
 
 const queryBuilder = (ingredients) => {
   let items = ingredients.map((ingredient) => ingredient.description);
@@ -33,6 +34,48 @@ router.post("/recommendation", (req, res) => {
       res.json(results);
     })
     .catch((err) => console.log(err));
+});
+
+router.get("/:email", (req, res) => {
+  recipes.find({email: req.params.email})
+      .then((journals) => res.send(journals))
+      .catch((err) => res.status(400).json("Error: " + err));
+});
+
+router.post("/add", (req, res) => {
+  const email = req.body.email;
+  const recipe = req.body.recipe;
+
+  const newRecipe = new recipes({
+    email,
+    recipe,
+  });
+
+  newRecipe
+      .save()
+      .then((recipe) => res.send(recipe))
+      .catch((err) => res.status(400).json("Error: " + err))     // Some recipe contains key with '.', which is unacceptable by mongo
+});
+
+router.get("/search/:id", (req, res) => {
+  console.log(req.params.id);
+  recipes.findById(req.params.id)
+      .then((recipe) => res.json(recipe))
+      .catch((err) => res.status(400).json("Error: " + err));
+});
+
+router.delete("/delete/:id", (req, res) => {
+  recipes
+      .findByIdAndDelete(req.params.id)
+      .then(() => res.json("Posting is deleted."))
+      .catch((err) => res.status(400).json("Error: " + err));
+});
+
+router.delete("/deleteall", (req, res) => {
+  recipes
+      .remove({})
+      .then(() => res.json("All Postings are deleted."))
+      .catch((err) => res.status(400).json("Error: " + err));
 });
 
 module.exports = router;
