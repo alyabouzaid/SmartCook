@@ -14,7 +14,7 @@ import { withStyles } from "@material-ui/core/styles";
 import compose from "recompose/compose";
 import IngredientList from "./IngredientList";
 import { initialData } from "../../actions/ingredientInventoryActions";
-import { loadRecipesData} from "../../actions/recipesAction";
+import { loadRecipesData, addNewRecipeData} from "../../actions/recipesAction";
 import CategoryList from "./CategoryList";
 import FilterSearchBar from "./FilterSearchBar";
 import RecipeInfo from "./RecipeInfo";
@@ -107,7 +107,7 @@ class Recommendation extends React.Component {
     return sliceData.map((recipe) => {
       return (
         <Grid item xs={12} sm={6} md={4}>
-          <RecipeInfo recipe={recipe} userInfo={this.props.userInfo} />
+          <RecipeInfo recipe={recipe} userInfo={this.props.userInfo} saveRecipe={this.props.addNewRecipeData} />
         </Grid>
       );
     });
@@ -239,6 +239,7 @@ export default compose(
     getRecommendation,
     loadUserData,
     initialData,
-    loadRecipesData
+    loadRecipesData,
+    addNewRecipeData
   })
 )(Recommendation);

@@ -15,7 +15,6 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import SaveOutlinedIcon from '@material-ui/icons/Save';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import {addNewRecipeData} from "../../actions/recipesAction";
 
 const useStyles = makeStyles((theme) => ({
     cardGrid: {
@@ -44,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function RecipeInfo({recipe, userInfo}) {
+export default function RecipeInfo({recipe, userInfo, saveRecipe}) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -118,7 +117,7 @@ export default function RecipeInfo({recipe, userInfo}) {
                     <IconButton aria-label="share" onClick={() => {dispatch({type:'RECIPE_ANNOTATION', payload: recipe["recipe"]}); history.push('/journal')}}>
                         <EditOutlinedIcon size="small" />
                     </IconButton>
-                    <IconButton aria-label="share" onClick={addNewRecipeData(recipe, userInfo)}>
+                    <IconButton aria-label="share" onClick={() => saveRecipe(recipe, userInfo)}>
                         <SaveOutlinedIcon size="medium" />
                     </IconButton>
                 </CardActions>
