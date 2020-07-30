@@ -38,13 +38,13 @@ export default function DisplayTabs({switchHandler}) {
                 textColor="primary"
                 aria-label="icon label tabs example"
             >
-                <Tooltip title="Click to see new recommendations">
+                <Tooltip title="Click to see new recommendations" arrow>
                 <Tab icon={<FormatListBulletedIcon />}/>
                 </Tooltip>
-                <Tooltip title="Click to see your favourite recipes">
+                <Tooltip title="Click to see your favourite recipes" arrow>
                 <Tab icon={<FavoriteIcon />}/>
                 </Tooltip>
-                <Tooltip title="Click to see the most popular recipes">
+                <Tooltip title="Click to see the most popular recipes" arrow>
                 <Tab icon={<GradeIcon />}/>
                 </Tooltip>
             </Tabs>

@@ -139,17 +139,17 @@ export default function RecipeInfo({ingredientInventory, getRecipeIngredients, r
                         </Card>
                     </Popover>
                     <Container className={classes.icon}>
-                        <Tooltip title="Click to see ingredients and health labels" placement="top">
+                        <Tooltip title="Click to see ingredients and health labels" placement="top" arrow>
                             <IconButton aria-label="more info" onClick={handleClick}>
                                 <InfoOutlinedIcon size="small"/>
                             </IconButton>
                         </Tooltip>
-                        <Tooltip title="Click for recipe link" placement="top">
+                        <Tooltip title="Click for recipe link" placement="top" arrow>
                             <IconButton aria-label="share" href={recipe["recipe"]["url"]} target="_blank">
                                 <LinkIcon size="small"/>
                             </IconButton>
                         </Tooltip>
-                        <Tooltip title="Click to edit and save recipe to journal" placement="top">
+                        <Tooltip title="Click to edit and save recipe to journal" placement="top" arrow>
                             <IconButton aria-label="share" onClick={() => {
                                 dispatch({type: 'RECIPE_ANNOTATION', payload: recipe["recipe"]});
                                 history.push('/journal')
@@ -159,20 +159,20 @@ export default function RecipeInfo({ingredientInventory, getRecipeIngredients, r
                         </Tooltip>
 
                         {switchDisplay === "hits" &&
-                        <Tooltip title="Click to save recipe to favourites" placement="top">
+                        <Tooltip title="Click to save recipe to favourites" placement="top" arrow>
                             <IconButton aria-label="share" onClick={() => saveRecipe(recipe, userInfo)}>
                                 <FavoriteBorderOutlinedIcon size="small"/>
                             </IconButton>
                         </Tooltip>
                         }
                         {switchDisplay === "recipes" &&
-                        <Tooltip title="Click to delete recipe from favourites" placement="top">
+                        <Tooltip title="Click to delete recipe from favourites" placement="top" arrow>
                             <IconButton aria-label="share" onClick={() => deleteRecipe(recipe["_id"])}>
                                 <DeleteOutlinedIcon size="small"/>
                             </IconButton>
                         </Tooltip>
                         }
-                        <Tooltip title="Click to check for ingredients in inventory" placement="top">
+                        <Tooltip title="Click to check for ingredients in inventory" placement="top" arrow>
                             <IconButton aria-label="moreinfo" onClick={
                                 handleClickDone
                             }>
