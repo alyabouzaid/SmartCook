@@ -9,6 +9,9 @@ import FoodPicturesPost from "./foodPicturesPost";
 // import Pagination from "@material-ui/lab/Pagination";
 import SPagination from "simple-react-pagination-js";
 import "simple-react-pagination-js/build/style.css"; // import css
+import {Link} from "react-router-dom";
+import IconButton from "@material-ui/core/IconButton";
+import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = (theme) => ({
   pagination: {
@@ -93,6 +96,39 @@ class FoodPicturesAllPost extends React.Component {
             loading={this.props.allPostLoading}
           />
         </div>
+
+        <p
+            style={{
+              textAlign: "left",
+              backgroundColor: "transparent",
+              margin: "3",
+              fontSize: "24px",
+            }}
+        />
+
+        <Link
+            to={"/foodPicNewPost"}
+            style={{textDecoration: "none", color: "inherit"}}
+        >
+          <label htmlFor="icon-button-file" style={{justifyContent: "right"}}>
+            <IconButton
+                aria-label="upload picture"
+                component="span"
+                color="black"
+                style={{position: "fixed", right: "5%"}}
+            >
+              <AddIcon size="large" style={{width: 100, height: 100}}/>
+            </IconButton>
+          </label>
+        </Link>
+        <p
+            style={{
+              textAlign: "left",
+              backgroundColor: "transparent",
+              margin: "3",
+              fontSize: "24px",
+            }}
+        />
 
         {this.displayData()}
 

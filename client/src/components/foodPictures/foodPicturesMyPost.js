@@ -12,6 +12,10 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import SPagination from "simple-react-pagination-js";
 import "simple-react-pagination-js/build/style.css"; // import css
+import {Link} from "react-router-dom";
+import IconButton from "@material-ui/core/IconButton";
+import AddIcon from "@material-ui/icons/Add";
+import Tooltip from '@material-ui/core/Tooltip';
 
 const useStyles = (theme) => ({
   post: {
@@ -97,6 +101,23 @@ class FoodPicturesMyPost extends React.Component {
             color={"green"}
             loading={this.props.myPostLoading}
           />
+            <Tooltip title="Click to create new post" placement="right-end">
+            <Link
+                to={"/foodPicNewPost"}
+                style={{textDecoration: "none", color: "inherit"}}
+            >
+                <label htmlFor="icon-button-file">
+                    <IconButton
+                        aria-label="upload picture"
+                        component="span"
+                        color="black"
+                        style={{position: "fixed", right: "41%", top: "76px"}}
+                    >
+                        <AddIcon size="large" style={{width: 60, height: 60}}/>
+                    </IconButton>
+                </label>
+            </Link>
+            </Tooltip>
         </div>
 
         <List style={{ display: "inline-block" }}>

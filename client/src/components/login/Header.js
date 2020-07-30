@@ -237,23 +237,23 @@ class Header extends React.Component {
                   open={Boolean(this.state.anchorEl)}
                   onClose={this.handleClickCloseDropDownMenu}
                 >
-                  <StyledMenuItem>
-                    {/* <ListItemIcon>
+                  {/*<StyledMenuItem>*/}
+                  {/* <ListItemIcon>
                           <SendIcon fontSize="small" />
                         </ListItemIcon> */}
-                    <Link
-                      to={"/foodPicNewPost"}
-                      style={{
-                        textDecoration: "none",
-                        color: "inherit",
-                      }}
-                    >
-                      New post
-                    </Link>
-                    {/*<ListItem button component="a" href="/foodPicNewPost">*/}
-                    {/*  <ListItemText primary="New post" />*/}
-                    {/*</ListItem>*/}
-                  </StyledMenuItem>
+                  {/*<Link*/}
+                  {/*    to={"/foodPicNewPost"}*/}
+                  {/*    style={{*/}
+                  {/*      textDecoration: "none",*/}
+                  {/*      color: "inherit",*/}
+                  {/*    }}*/}
+                  {/*>*/}
+                  {/*  New post*/}
+                  {/*</Link>*/}
+                  {/*<ListItem button component="a" href="/foodPicNewPost">*/}
+                  {/*  <ListItemText primary="New post" />*/}
+                  {/*</ListItem>*/}
+                  {/*</StyledMenuItem>*/}
                   <StyledMenuItem>
                     <Link
                       to={"/foodPicAllPost"}

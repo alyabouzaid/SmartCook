@@ -21,9 +21,9 @@ export const addImage = (image) => {
     };
 };
 
-export const submitJournal = () => {
+export const clearJournal = () => {
     return {
-        type: 'JOURNAL_EDITOR_SUBMIT',
+        type: 'JOURNAL_EDITOR_CLEAR',
     };
 };
 
@@ -78,12 +78,32 @@ export const addNewJournalData = (editorData, userInfo) => {
         })
             .then((res) => res.json())
             .then((res) => {
-               dispatch(submitJournal());
+               dispatch(clearJournal());
                dispatch(addJournal(res));
                toast.success("A new journal has been added", {
                    position: toast.POSITION.TOP_CENTER,
                    autoClose: 3000
                });
+            })
+    }
+};
+
+export const updateJournalData = (editorData) => {
+
+    return async dispatch => {
+        fetch(`/journals/update/${editorData._id}`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(editorData),
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                dispatch(clearJournal());
+                dispatch(updateJournal(res));
+                toast.success("The journal has been updated", {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 3000
+                });
             })
     }
 };
@@ -115,6 +135,13 @@ export const addJournal = (journal) => {
     };
 };
 
+export const updateJournal = (journal) => {
+    return {
+        type: 'JOURNALS_UPDATE',
+        payload: journal
+    };
+};
+
 export const deleteOneJournal = (id) => {
     return {
         type: 'JOURNALS_DELETE_ONE',
@@ -133,4 +160,11 @@ export const annotateJournal = (recipe) => {
        type: 'RECIPE_ANNOTATION',
        payload: recipe
     };
+};
+
+export const importJournal = (journal) => {
+    return{
+      type: 'JOURNAL_IMPORT',
+      payload: journal
+    }
 };

@@ -6,6 +6,8 @@ import {
   editJournal,
   updateTitle,
   addNewJournalData,
+  updateJournalData,
+  clearJournal,
 } from "../../actions/journalActions";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -31,6 +33,10 @@ const useStyles = () => ({
 });
 
 class Journal extends React.Component {
+  componentWillUnmount() {
+    this.props.clearJournal();
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -66,20 +72,34 @@ class Journal extends React.Component {
               <JournalImage />
             </Grid>
           </Grid>
-          <Button
-            className={classes.button}
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              this.props.addNewJournalData(
-                this.props.editorData,
-                this.props.userInfo
-              );
-              this.props.history.push("/journalView");
-            }}
-          >
-            SUBMIT
-          </Button>
+          {this.props.editorData._id.length === 0 ? (
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                this.props.addNewJournalData(
+                  this.props.editorData,
+                  this.props.userInfo
+                );
+                this.props.history.push("/journalView");
+              }}
+            >
+              Submit Journal
+            </Button>
+          ) : (
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                this.props.updateJournalData(this.props.editorData);
+                this.props.history.push("/journalView");
+              }}
+            >
+              Update Journal
+            </Button>
+          )}
         </div>
       </div>
     );
@@ -102,6 +122,8 @@ export default compose(
     editJournal,
     updateTitle,
     addNewJournalData,
+    updateJournalData,
     loadUserData,
+    clearJournal,
   })
 )(Journal);

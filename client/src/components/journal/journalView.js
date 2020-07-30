@@ -1,29 +1,30 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router";
 import compose from "recompose/compose";
 import {
   loadJournalsData,
   addNewJournalData,
   deleteOneJournalData,
+  importJournal,
 } from "../../actions/journalActions";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Button from "@material-ui/core/Button";
 import parse from "html-react-parser";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CardHeader from "@material-ui/core/CardHeader";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
-import { FaEdit } from "react-icons/all";
 import Grid from "@material-ui/core/Grid";
 import AddIcon from "@material-ui/icons/Add";
 import Container from "@material-ui/core/Container";
 import SPagination from "simple-react-pagination-js";
-import "simple-react-pagination-js/build/style.css"; // import css
+import "simple-react-pagination-js/build/style.css";
+import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
+import CardActions from "@material-ui/core/CardActions"; // import css
 
 const useStyles = (theme) => ({
   root: {
@@ -118,7 +119,6 @@ class JournalView extends Component {
 
   render() {
     const { classes } = this.props;
-
     return (
       <div>
         <p
@@ -197,13 +197,23 @@ class JournalView extends Component {
                         <CardHeader
                           action={
                             // this.props.userInfo.email === journal.email &&
-                            <IconButton aria-label="settings">
-                              <DeleteIcon
-                                onClick={() =>
-                                  this.props.deleteOneJournalData(journal._id)
-                                }
-                              />
-                            </IconButton>
+                            <div>
+                              <IconButton aria-label="settings">
+                                <EditOutlinedIcon
+                                  onClick={() => {
+                                    this.props.importJournal(journal);
+                                    this.props.history.push("/journal");
+                                  }}
+                                />
+                              </IconButton>
+                              <IconButton aria-label="settings">
+                                <DeleteIcon
+                                  onClick={() =>
+                                    this.props.deleteOneJournalData(journal._id)
+                                  }
+                                />
+                              </IconButton>
+                            </div>
                           }
                           title={
                             <Typography
@@ -274,17 +284,6 @@ class JournalView extends Component {
               </div>
             </Grid>
           </Grid>
-          <div className={classes.pagination}>
-            <SPagination
-              page={this.state.currentPage}
-              sizePerPage={this.state.perPage}
-              totalSize={this.props.journals ? this.props.journals.length : 0}
-              pagesNextToActivePage={5}
-              sizePerPageOptions={[5, 8, 12]}
-              onPageChange={this.handleOnPageChange}
-              onSizeChange={this.handleOnSizeChange}
-            />
-          </div>
         </div>
       </div>
     );
@@ -293,17 +292,16 @@ class JournalView extends Component {
 
 const mapStateToProps = (state) => {
   //name is by convention
-  return {
-    journals: state.journalsStore.journals,
-    userInfo: state.userStore,
-  };
+  return { journals: state.journalsStore.journals, userInfo: state.userStore }; //now it will appear as props
 };
 
 export default compose(
   withStyles(useStyles),
+  withRouter,
   connect(mapStateToProps, {
     loadJournalsData,
     addNewJournalData,
     deleteOneJournalData,
+    importJournal,
   })
 )(JournalView);

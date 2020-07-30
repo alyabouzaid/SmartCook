@@ -9,7 +9,8 @@ router.get("/allPost", (req, res) => {
   // setTimeout(() => {
   foodPicturePost
     .find()
-    .sort("-likesLength")
+    // .sort("-likesLength")
+    .sort("-createdAt")
     .then((posts) => res.status(200).json(posts))
     .catch((err) => res.status(400).json("Error: ", err));
   // }, 2000);
@@ -72,10 +73,11 @@ router.put("/addLike/:id", (req, res) => {
     .findOneAndUpdate(
       {
         _id: req.params.id,
-        likes: { $ne: req.body.email },
+        likesByEmail: { $ne: req.body.email },
+        likesByFullName: { $ne: req.body.name },
       },
       {
-        $push: { likes: req.body.email },
+        $push: { likesByEmail: req.body.email, likesByFullName: req.body.name },
         $inc: { likesLength: 1 },
       },
       {

@@ -199,12 +199,13 @@ export const loadFeaturedPicPost = (posts) => {
 };
 
 //update like request
-export const addLike = (idPayload, email) => {
+export const addLike = (idPayload, email, name) => {
   // console.log("like");
   return async (dispatch) => {
     try {
       const params = {
         email: email,
+        name: name,
       };
       const res = await axios.put(`/foodPictures/addLike/${idPayload}`, params);
       const updatedFoodPicPost = await res.data;

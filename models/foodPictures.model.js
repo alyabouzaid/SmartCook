@@ -11,7 +11,8 @@ const foodPicPostSchema = new Schema(
       type: Array,
       default: [],
     },
-    likes: [{ type: String }],
+    likesByEmail: [{ type: String }],
+    likesByFullName: [{ type: String }],
     likesLength: {
       type: Number,
       default: 0,

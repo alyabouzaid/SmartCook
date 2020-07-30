@@ -38,6 +38,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { deepPurple } from "@material-ui/core/colors";
 import { css } from "@emotion/core";
 import DotLoader from "react-spinners/DotLoader";
+import Popover from "@material-ui/core/Popover";
 
 const useStyles = (theme) => ({
   root: {
@@ -86,6 +87,12 @@ const useStyles = (theme) => ({
   content: {
     marginTop: 0,
   },
+  popover: {
+    pointerEvents: "none",
+  },
+  paper: {
+    padding: theme.spacing(1),
+  },
 });
 
 const override = css`
@@ -103,6 +110,7 @@ class FoodPicturesPost extends React.Component {
       likeIconBgColor: "default",
       expanded: false,
       anchorEl: null,
+      anchorElLikesHover: null,
       isInEditDescriptionMode: false,
       showEditOrDeleteCommentBtn: false,
       isInEditCommentMode: false,
@@ -126,12 +134,24 @@ class FoodPicturesPost extends React.Component {
     });
   };
 
-  trimInitialForNameDisplay = (fullName) => {
-    const initials = fullName
-      .split(/\s/)
-      .reduce((res, str) => (res += str.slice(0, 1)), "");
+  // trimInitialForNameDisplay = (fullName) => {
+  //   const initials = fullName
+  //     .split(/\s/)
+  //     .reduce((res, str) => (res += str.slice(0, 1)), "");
 
-    return initials.toUpperCase();
+  //   return initials.toUpperCase();
+  // };
+
+  handlePopoverOpen = (event) => {
+    this.setState({
+      anchorElLikesHover: event.currentTarget,
+    });
+  };
+
+  handlePopoverClose = () => {
+    this.setState({
+      anchorElLikesHover: null,
+    });
   };
 
   handleClickEditDescription = () => {
@@ -343,6 +363,7 @@ class FoodPicturesPost extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const open = Boolean(this.state.anchorElLikesHover);
 
     return (
       <div className={classes.root}>
@@ -405,21 +426,53 @@ class FoodPicturesPost extends React.Component {
               title="food image"
             />
           ))}
+
           <CardActions disableSpacing className={classes.actions}>
             <IconButton
               aria-label="add to favorites"
+              aria-owns={open ? "mouse-over-popover" : undefined}
+              aria-haspopup="true"
+              onMouseEnter={this.handlePopoverOpen}
+              onMouseLeave={this.handlePopoverClose}
               onClick={() => {
                 this.handleClickLike();
                 this.props.addLike(
                   this.props.item._id,
-                  this.props.userInfo.email
+                  this.props.userInfo.email,
+                  this.props.userInfo.fullName
                 );
               }}
               style={{ color: this.state.likeIconBgColor }}
             >
               <FavoriteIcon />
             </IconButton>
-            <Typography>{this.props.item.likes.length} likes</Typography>
+            <Popover
+              id="mouse-over-popover"
+              className={classes.popover}
+              classes={{
+                paper: classes.paper,
+              }}
+              open={open}
+              anchorEl={this.state.anchorElLikesHover}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              onClose={this.handlePopoverClose}
+              disableRestoreFocus
+            >
+              <Typography style={{ textAlign: "left" }}>
+                {this.props.item.likesByFullName.map((name) => (
+                  <li style={{ listStyle: "none" }}>{name}</li>
+                ))}
+              </Typography>
+            </Popover>
+
+            <Typography>{this.props.item.likesLength} likes</Typography>
           </CardActions>
 
           {this.state.isInEditDescriptionMode &&
@@ -550,7 +603,8 @@ const mapDispatchToProps = (dispatch) => {
     getAllFoodPicPost: () => dispatch(getAllFoodPicPost()),
     deleteOneFoodPicPost: (idPayload, email) =>
       dispatch(deleteOneFoodPicPost(idPayload, email)),
-    addLike: (idPayload, email) => dispatch(addLike(idPayload, email)),
+    addLike: (idPayload, email, name) =>
+      dispatch(addLike(idPayload, email, name)),
     addComment: (
       idPayload,
       comment,
