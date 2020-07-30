@@ -1,6 +1,5 @@
 import { combineReducers } from "redux";
-import formReducer from "./formReducer";
-import ingrecientInventoryReducer from "./ingredientInventoryReducer";
+import ingredientInventoryReducer from "./ingredientInventoryReducer";
 import recommendationReducer from "./recommendationReducer";
 import journalEditorReducer from "./journalEditorReducer";
 import journalsReducer from "./journalsReducer";
@@ -11,8 +10,7 @@ import colorReducer from "./colorReducer";
 import filterReducer from "./filterReducer";
 
 export default combineReducers({
-  formStore: formReducer,
-  ingredientInventory: ingrecientInventoryReducer,
+  ingredientInventory: ingredientInventoryReducer,
   recommendationStore: recommendationReducer,
   recommendationFilterStore: recommendationFilterReducer,
   journalEditorStore: journalEditorReducer,

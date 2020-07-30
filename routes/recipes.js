@@ -54,7 +54,7 @@ router.post("/add", (req, res) => {
   newRecipe
       .save()
       .then((recipe) => res.send(recipe))
-      .catch((err) => res.status(400).json("Error: " + err))     // Some recipe contains key with '.', which is unacceptable by mongo
+      .catch((err) => res.status(400).json("Error: " + err))
 });
 
 router.get("/search/:id", (req, res) => {

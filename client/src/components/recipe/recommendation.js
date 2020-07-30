@@ -8,17 +8,11 @@ import {
 } from "../../actions/recommendationActions";
 import { getRecommendation } from "../../actions/recommendationActions";
 import { loadUserData } from "../../actions/userActions";
-import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 import compose from "recompose/compose";
-import Card from "@material-ui/core/Card";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
 import IngredientList from "./IngredientList";
-import Link from "@material-ui/core/Link";
-import CardActionArea from "@material-ui/core/CardActionArea";
 import { initialData } from "../../actions/ingredientInventoryActions";
 import { loadRecipesData} from "../../actions/recipesAction";
 import CategoryList from "./CategoryList";
