@@ -227,7 +227,17 @@ class Recommendation extends React.Component {
 
             {/*right side*/}
             <Grid style={{}} item xs={12} sm={8} md={8}>
+              <Grid container item xs={12} spacing={3} justify="center">
               <DisplayTabs switchHandler={this.handleSwitchEnum}/>
+              </Grid>
+              <p
+                  style={{
+                    textAlign: "left",
+                    backgroundColor: "transparent",
+                    margin: "3",
+                    fontSize: "24px",
+                  }}
+              />
               {this.props.recommendation[this.state.switch] && (
                 <Container className={classes.cardGrid}>
                   <Grid
@@ -239,6 +249,17 @@ class Recommendation extends React.Component {
                     container
                     spacing={3}
                   >
+                    {/*<Grid container item xs={12} spacing={3} justify="left">*/}
+                    {/*  <DisplayTabs switchHandler={this.handleSwitchEnum}/>*/}
+                    {/*</Grid>*/}
+                    {/*<p*/}
+                    {/*    style={{*/}
+                    {/*      textAlign: "left",*/}
+                    {/*      backgroundColor: "transparent",*/}
+                    {/*      margin: "3",*/}
+                    {/*      fontSize: "24px",*/}
+                    {/*    }}*/}
+                    {/*/>*/}
                     <Grid container item xs={12} spacing={3} justify="center">
                       {/* {this.props.recommendation["hits"].map((recipe) => (
                         <Grid item xs={12} sm={6} md={4}>

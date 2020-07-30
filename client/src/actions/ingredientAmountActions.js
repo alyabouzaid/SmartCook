@@ -48,7 +48,7 @@ export const getRecipeIngredients = (ingredientLinesArray,email,ingredientInvent
                     autoClose: false
                 });
 
-                toast.error(<div>Items with no enough found in inventory:       
+                toast.error(<div>Items with not enough found in inventory:
                     <br />       {missingFoodNamesString.map(item =><div> {item} <br /></div>  )}     </div>, {
                     position: toast.POSITION.TOP_CENTER,
                     autoClose: false

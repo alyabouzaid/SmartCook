@@ -25,6 +25,10 @@ import { getRecipeIngredients } from "../../actions/ingredientAmountActions";
 import { connect } from "react-redux";
 import compose from "recompose/compose";
 import {addNewRecipeData} from "../../actions/recipesAction";
+import Container from "@material-ui/core/Container";
+import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import FavoriteOutlinedIcon from '@material-ui/icons/FavoriteOutlined';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const useStyles = makeStyles((theme) => ({
     cardGrid: {
@@ -50,6 +54,11 @@ const useStyles = makeStyles((theme) => ({
     title: {
         fontSize: "16px",
         fontWeight: "bold",
+    },
+    icon: {
+        flexGrow: 1,
+        paddingLeft: 0,
+        textAlign: 'left',
     },
 }));
 
@@ -108,9 +117,6 @@ const useStyles = makeStyles((theme) => ({
                     </Typography>
                 </CardContent>
                 <CardActions disableRipple>
-                    <IconButton aria-label="more info" onClick={handleClick}>
-                        <InfoOutlinedIcon size="small"/>
-                    </IconButton>
                     <Popover
                         id={id}
                         open={open}
@@ -139,24 +145,35 @@ const useStyles = makeStyles((theme) => ({
                             </CardContent>
                         </Card>
                     </Popover>
+                    <Container className={classes.icon}>
+                        <Tooltip title="Click to see ingredients and health labels"  placement="top">
+                        <IconButton aria-label="more info" onClick={handleClick}>
+                            <InfoOutlinedIcon size="small"/>
+                        </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Click for recipe link"  placement="top">
                     <IconButton aria-label="share" href={props.recipe["recipe"]["url"]} target="_blank">
                         <LinkIcon size="small" />
                     </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Click to edit and save recipe to journal"  placement="top">
                     <IconButton aria-label="share" onClick={() => {dispatch({type:'RECIPE_ANNOTATION', payload: props.recipe["recipe"]}); history.push('/journal')}}>
                         <EditOutlinedIcon size="small" />
                     </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Click to save recipe to favourites"  placement="top">
                     <IconButton aria-label="share" onClick={addNewRecipeData(props.recipe, props.userInfo)}>
-                        <SaveOutlinedIcon size="medium" />
+                        <FavoriteBorderOutlinedIcon size="small" />
                     </IconButton>
-                    
-
-
+                        </Tooltip>
+                        <Tooltip title="Click to check for ingredients in inventory"  placement="top">
                     <IconButton aria-label="moreinfo" onClick={
                         handleClickDone
                         }>
                         <DoneIcon size="small"/>
                     </IconButton>
-
+                        </Tooltip>
+                    </Container>
 
 
 
