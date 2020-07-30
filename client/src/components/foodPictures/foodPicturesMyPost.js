@@ -101,12 +101,12 @@ class FoodPicturesMyPost extends React.Component {
             color={"green"}
             loading={this.props.myPostLoading}
           />
-            <Tooltip title="Click to create new post" placement="right-end">
             <Link
                 to={"/foodPicNewPost"}
                 style={{textDecoration: "none", color: "inherit"}}
             >
                 <label htmlFor="icon-button-file">
+                  <Tooltip title="Click to create new post" placement="right" arrow>
                     <IconButton
                         aria-label="upload picture"
                         component="span"
@@ -115,9 +115,9 @@ class FoodPicturesMyPost extends React.Component {
                     >
                         <AddIcon size="large" style={{width: 60, height: 60}}/>
                     </IconButton>
+                  </Tooltip>
                 </label>
             </Link>
-            </Tooltip>
         </div>
 
         {/* <div style={{ maxWidth: "550px", margin: "0px auto" }}>

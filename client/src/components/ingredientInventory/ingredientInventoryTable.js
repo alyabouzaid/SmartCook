@@ -23,7 +23,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import TextField from "@material-ui/core/TextField";
-
+import Container from "@material-ui/core/Container";
 
 import FilterListIcon from "@material-ui/icons/FilterList";
 import { useDispatch } from "react-redux";
@@ -222,6 +222,11 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     top: 20,
     width: 1,
+  },
+  icon: {
+    flexGrow: 1,
+    textAlign: 'center',
+    paddingTop: theme.spacing(3),
   },
 }));
 
@@ -472,13 +477,16 @@ export default function IngredientInventoryTable(props) {
           </Table>
         </TableContainer>
 
+        <Container className={classes.icon}>
+          <Tooltip title="Enter amount" arrow>
                           <TextField
                             type="text"
                             id="amountEdit"
                             style={{ width: 100 }}
                             onChange={handleChangeEdit}
                           />
-
+          </Tooltip>
+          <Tooltip title="Add amount to selected items">
                           <IconButton aria-label="add">
                             <AddIcon
                               onClick={() => {
@@ -487,7 +495,8 @@ export default function IngredientInventoryTable(props) {
                             />
 
                           </IconButton>
-
+          </Tooltip>
+          <Tooltip title="Subtract amount from selected items">
                           <IconButton aria-label="remove">
 
                             <RemoveIcon
@@ -497,7 +506,8 @@ export default function IngredientInventoryTable(props) {
                             />
 
                           </IconButton>
-
+          </Tooltip>
+          <Tooltip title="Delete selected items">
                         <IconButton aria-label="delete">
 
                             <DeleteIcon
@@ -506,6 +516,8 @@ export default function IngredientInventoryTable(props) {
                               }}
                             />
                           </IconButton>
+          </Tooltip>
+        </Container>
         {/* <div
           className={classes.toggleEdit}
           style={{ marginLeft: 10, float: "left" }}

@@ -12,6 +12,7 @@ import "simple-react-pagination-js/build/style.css"; // import css
 import {Link} from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = (theme) => ({
   pagination: {
@@ -112,14 +113,16 @@ class FoodPicturesAllPost extends React.Component {
             style={{textDecoration: "none", color: "inherit"}}
         >
           <label htmlFor="icon-button-file" style={{justifyContent: "right"}}>
+              <Tooltip title="Click to create new post" arrow>
             <IconButton
                 aria-label="upload picture"
                 component="span"
                 color="black"
                 style={{position: "fixed", right: "5%"}}
             >
-              <AddIcon size="large" style={{width: 100, height: 100}}/>
+              <AddIcon size="large" style={{width: 60, height: 60}}/>
             </IconButton>
+              </Tooltip>
           </label>
         </Link>
         <p
