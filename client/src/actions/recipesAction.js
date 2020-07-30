@@ -54,10 +54,10 @@ export const loadRecipes = (recipes) => {
     };
 };
 
-export const addRecipe = (recipes) => {
+export const addRecipe = (recipe) => {
     return {
         type: 'RECIPES_ADD',
-        payload: recipes
+        payload: recipe
     };
 };
 
