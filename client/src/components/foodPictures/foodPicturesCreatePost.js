@@ -131,7 +131,9 @@ class FoodPicturesCreatePost extends React.Component {
                   this.state.image.raw,
                   this.props.userInfo.email,
                   this.props.userInfo.firstName,
-                  this.props.userInfo.fullName
+                  this.props.userInfo.fullName,
+                  this.props.userInfo.googleDefaultPic,
+                  this.props.userInfo.userUploadedPic
                 );
                 setTimeout(() => {
                   this.props.history.push("/foodPicAllPost");
@@ -154,7 +156,9 @@ const mapDispatchToProps = (dispatch) => {
       image,
       email,
       userFirstName,
-      userFullName
+      userFullName,
+      googleDefaultPic,
+      userUploadedPic
     ) =>
       dispatch(
         uploadImageAndCreatePost(
@@ -162,7 +166,9 @@ const mapDispatchToProps = (dispatch) => {
           image,
           email,
           userFirstName,
-          userFullName
+          userFullName,
+          googleDefaultPic,
+          userUploadedPic
         )
       ),
     getAllFoodPicPost: () => dispatch(getAllFoodPicPost()),

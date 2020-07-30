@@ -29,6 +29,7 @@ import {
   editPostComment,
   deleteComment,
 } from "../../actions/foodPicturesActions";
+import { getProfilePic } from "../../actions/userProfilePicActions";
 import TextField from "@material-ui/core/TextField";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import List from "@material-ui/core/List";
@@ -37,6 +38,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { deepPurple } from "@material-ui/core/colors";
 import { css } from "@emotion/core";
 import DotLoader from "react-spinners/DotLoader";
+import Popover from "@material-ui/core/Popover";
 
 const useStyles = (theme) => ({
   root: {
@@ -77,13 +79,17 @@ const useStyles = (theme) => ({
     justifyContent: "left",
   },
   commentAvatar: {
-    color: theme.palette.getContrastText(deepPurple[500]),
-    backgroundColor: deepPurple[500],
     width: theme.spacing(4),
     height: theme.spacing(4),
   },
   content: {
     marginTop: 0,
+  },
+  popover: {
+    pointerEvents: "none",
+  },
+  paper: {
+    padding: theme.spacing(1),
   },
 });
 
@@ -102,11 +108,16 @@ class FoodPicturesPost extends React.Component {
       likeIconBgColor: "default",
       expanded: false,
       anchorEl: null,
+      anchorElLikesHover: null,
       isInEditDescriptionMode: false,
       showEditOrDeleteCommentBtn: false,
       isInEditCommentMode: false,
       selectedCommentId: null,
     };
+  }
+
+  componentDidMount() {
+    this.props.getProfilePic();
   }
 
   handleExpandClick = () => {
@@ -121,12 +132,16 @@ class FoodPicturesPost extends React.Component {
     });
   };
 
-  trimInitialForNameDisplay = (fullName) => {
-    const initials = fullName
-      .split(/\s/)
-      .reduce((res, str) => (res += str.slice(0, 1)), "");
+  handlePopoverOpen = (event) => {
+    this.setState({
+      anchorElLikesHover: event.currentTarget,
+    });
+  };
 
-    return initials.toUpperCase();
+  handlePopoverClose = () => {
+    this.setState({
+      anchorElLikesHover: null,
+    });
   };
 
   handleClickEditDescription = () => {
@@ -136,10 +151,8 @@ class FoodPicturesPost extends React.Component {
   };
 
   handleDoubleClickComment = (email, commentId) => {
-    // console.log(JSON.stringify(email));
     email === this.props.userInfo.email
-      ? //   : console.log("noooo");
-        this.setState({
+      ? this.setState({
           showEditOrDeleteCommentBtn: !this.state.showEditOrDeleteCommentBtn,
           selectedCommentId: commentId,
         })
@@ -214,14 +227,26 @@ class FoodPicturesPost extends React.Component {
     return (
       <ListItem>
         <ListItemAvatar>
-          <Avatar
-            className={classes.commentAvatar}
-            style={{
-              marginRight: 0,
-            }}
-          >
-            {this.trimInitialForNameDisplay(item.postedByFullName)}
-          </Avatar>
+          {this.props.userInfo.userUploadedPic &&
+          this.props.userInfo.email === comment.postedByEmail ? (
+            <Avatar
+              className={classes.commentAvatar}
+              style={{
+                marginRight: 0,
+              }}
+              alt={this.props.item.postedByFullName}
+              src={this.props.userInfo.userUploadedPic}
+            />
+          ) : (
+            <Avatar
+              className={classes.commentAvatar}
+              style={{
+                marginRight: 0,
+              }}
+              alt={comment.postedByFullName}
+              src={comment.postedByGoogleDefaultPic}
+            />
+          )}
         </ListItemAvatar>
         <ListItemText
           primary={
@@ -259,15 +284,26 @@ class FoodPicturesPost extends React.Component {
     return (
       <ListItem>
         <ListItemAvatar>
-          <Avatar
-            className={classes.commentAvatar}
-            style={{
-              marginRight: 0,
-            }}
-          >
-            {/* {comment.postedByFirstName.substring(0, 1)} */}
-            {this.trimInitialForNameDisplay(comment.postedByFullName)}
-          </Avatar>
+          {this.props.userInfo.userUploadedPic &&
+          this.props.userInfo.email === comment.postedByEmail ? (
+            <Avatar
+              className={classes.commentAvatar}
+              style={{
+                marginRight: 0,
+              }}
+              alt={this.props.item.postedByFullName}
+              src={this.props.userInfo.userUploadedPic}
+            />
+          ) : (
+            <Avatar
+              className={classes.commentAvatar}
+              style={{
+                marginRight: 0,
+              }}
+              alt={comment.postedByFullName}
+              src={comment.postedByGoogleDefaultPic}
+            />
+          )}
         </ListItemAvatar>
         <ListItemText
           primary={
@@ -315,6 +351,7 @@ class FoodPicturesPost extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const open = Boolean(this.state.anchorElLikesHover);
 
     return (
       <div className={classes.root}>
@@ -325,8 +362,6 @@ class FoodPicturesPost extends React.Component {
             maxWidth: this.props.cardWidth,
             marginTop: 30,
             marginBottom: 30,
-            // marginLeft: this.props.cardLeftMargin,
-            // marginRight: this.props.cardRightMargin,
             display: "block",
             marginLeft: "auto",
             marginRight: "auto",
@@ -335,11 +370,18 @@ class FoodPicturesPost extends React.Component {
           <CardHeader
             className={classes.header}
             avatar={
-              <Avatar aria-label="recipe" className={classes.avatar}>
-                {this.trimInitialForNameDisplay(
-                  this.props.item.postedByFullName
-                )}
-              </Avatar>
+              this.props.userInfo.userUploadedPic &&
+              this.props.userInfo.email === this.props.item.postedByEmail ? (
+                <Avatar
+                  alt={this.props.item.postedByFullName}
+                  src={this.props.userInfo.userUploadedPic}
+                />
+              ) : (
+                <Avatar
+                  alt={this.props.item.postedByFullName}
+                  src={this.props.item.postedByGoogleDefaultPic}
+                />
+              )
             }
             action={
               this.props.userInfo.email === this.props.item.postedByEmail
@@ -365,21 +407,53 @@ class FoodPicturesPost extends React.Component {
               title="food image"
             />
           ))}
+
           <CardActions disableSpacing className={classes.actions}>
             <IconButton
               aria-label="add to favorites"
+              aria-owns={open ? "mouse-over-popover" : undefined}
+              aria-haspopup="true"
+              onMouseEnter={this.handlePopoverOpen}
+              onMouseLeave={this.handlePopoverClose}
               onClick={() => {
                 this.handleClickLike();
                 this.props.addLike(
                   this.props.item._id,
-                  this.props.userInfo.email
+                  this.props.userInfo.email,
+                  this.props.userInfo.fullName
                 );
               }}
               style={{ color: this.state.likeIconBgColor }}
             >
               <FavoriteIcon />
             </IconButton>
-            <Typography>{this.props.item.likes.length} likes</Typography>
+            <Popover
+              id="mouse-over-popover"
+              className={classes.popover}
+              classes={{
+                paper: classes.paper,
+              }}
+              open={open}
+              anchorEl={this.state.anchorElLikesHover}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              onClose={this.handlePopoverClose}
+              disableRestoreFocus
+            >
+              <Typography style={{ textAlign: "left", fontSize: 12 }}>
+                {this.props.item.likesByFullName.map((name) => (
+                  <li style={{ listStyle: "none" }}>{name}</li>
+                ))}
+              </Typography>
+            </Popover>
+
+            <Typography>{this.props.item.likesLength} likes</Typography>
           </CardActions>
 
           {this.state.isInEditDescriptionMode &&
@@ -479,7 +553,9 @@ class FoodPicturesPost extends React.Component {
                   e.target[0].value,
                   this.props.userInfo.firstName,
                   this.props.userInfo.fullName,
-                  this.props.userInfo.email
+                  this.props.userInfo.email,
+                  this.props.userInfo.googleDefaultPic,
+                  this.props.userInfo.userUploadedPic
                 );
               }}
             >
@@ -508,10 +584,27 @@ const mapDispatchToProps = (dispatch) => {
     getAllFoodPicPost: () => dispatch(getAllFoodPicPost()),
     deleteOneFoodPicPost: (idPayload, email) =>
       dispatch(deleteOneFoodPicPost(idPayload, email)),
-    addLike: (idPayload, email) => dispatch(addLike(idPayload, email)),
-    addComment: (idPayload, comment, userFirstName, userFullName, email) =>
+    addLike: (idPayload, email, name) =>
+      dispatch(addLike(idPayload, email, name)),
+    addComment: (
+      idPayload,
+      comment,
+      userFirstName,
+      userFullName,
+      email,
+      googleDefaultPic,
+      userUploadedPic
+    ) =>
       dispatch(
-        addComment(idPayload, comment, userFirstName, userFullName, email)
+        addComment(
+          idPayload,
+          comment,
+          userFirstName,
+          userFullName,
+          email,
+          googleDefaultPic,
+          userUploadedPic
+        )
       ),
     editPostDescription: (idPayload, editedPostDescription) =>
       dispatch(editPostDescription(idPayload, editedPostDescription)),
@@ -519,6 +612,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(editPostComment(idPayload, commentId, editedComment)),
     deleteComment: (idPayload, commentId) =>
       dispatch(deleteComment(idPayload, commentId)),
+    getProfilePic: () => dispatch(getProfilePic()),
     // deleteAllFoodPicPosts: (idPayload) =>
     //   dispatch(deleteAllFoodPicPosts(idPayload)),
   };

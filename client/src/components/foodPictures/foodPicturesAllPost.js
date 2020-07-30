@@ -89,7 +89,6 @@ class FoodPicturesAllPost extends React.Component {
 
     return (
       <div>
-
         <div className={classes.loading}>
           <CircleLoader
             css={override}

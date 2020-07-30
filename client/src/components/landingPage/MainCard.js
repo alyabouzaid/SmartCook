@@ -8,7 +8,6 @@ import pic from "./landingPage.jpg";
 const useStyles = makeStyles((theme) => ({
   mainCard: {
     position: "relative",
-    // backgroundColor: theme.palette.grey[800],
     color: theme.palette.common.white,
     marginBottom: theme.spacing(4),
     backgroundImage: "./gallery/landingPage.jpg",

@@ -10,9 +10,9 @@ const foodPicPostSchema = new Schema(
     image: {
       type: Array,
       default: [],
-      // default: "no photo",
     },
-    likes: [{ type: String }],
+    likesByEmail: [{ type: String }],
+    likesByFullName: [{ type: String }],
     likesLength: {
       type: Number,
       default: 0,
@@ -23,11 +23,19 @@ const foodPicPostSchema = new Schema(
         postedByFirstName: String,
         postedByFullName: String,
         postedByEmail: String,
+        postedByGoogleDefaultPic: {
+          type: String,
+          default: "",
+        },
       },
     ],
     postedByFirstName: { type: String },
     postedByFullName: { type: String },
     postedByEmail: { type: String },
+    postedByGoogleDefaultPic: {
+      type: String,
+      default: "",
+    },
     dateTime: { type: String },
   },
   { timestamps: true }

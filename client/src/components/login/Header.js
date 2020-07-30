@@ -19,6 +19,9 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import "../../index.css";
 import Toggle from "./Toggle";
+import IconButton from "@material-ui/core/IconButton";
+import SettingsIcon from "@material-ui/icons/Settings";
+import Settings from "./settings";
 
 const useStyles = (theme) => ({
   appbar: {
@@ -86,23 +89,29 @@ class Header extends React.Component {
 
     this.state = {
       anchorEl: null,
+      isOpen: false,
     };
-
-    this.handleClick = this.handleClick.bind(this);
-    this.handleClose = this.handleClose.bind(this);
   }
 
   componentDidMount() {
     this.props.loadUserData();
   }
 
-  handleClick(e) {
+  handleClickOpenDropDownMenu = (e) => {
     this.setState({ anchorEl: e.currentTarget });
-  }
+  };
 
-  handleClose() {
+  handleClickCloseDropDownMenu = () => {
     this.setState({ anchorEl: null });
-  }
+  };
+
+  handleClickOpenSettingsIcon = () => {
+    this.setState({ isOpen: true });
+  };
+
+  handleClickCloseSettingsIcon = () => {
+    this.setState({ isOpen: false });
+  };
 
   render() {
     const { classes } = this.props;
@@ -121,8 +130,6 @@ class Header extends React.Component {
               style={{
                 textDecoration: "none",
                 color: "inherit",
-                // fontFamily: "Grand Hotel",
-                // fontSize: 30,
               }}
             >
               SmartCook
@@ -219,7 +226,7 @@ class Header extends React.Component {
                   color="inherit"
                   target="_blank"
                   size="small"
-                  onClick={this.handleClick}
+                  onClick={this.handleClickOpenDropDownMenu}
                 >
                   Food Pictures
                 </Button>
@@ -228,32 +235,32 @@ class Header extends React.Component {
                   anchorEl={this.state.anchorEl}
                   keepMounted
                   open={Boolean(this.state.anchorEl)}
-                  onClose={this.handleClose}
+                  onClose={this.handleClickCloseDropDownMenu}
                 >
                   {/*<StyledMenuItem>*/}
-                    {/* <ListItemIcon>
+                  {/* <ListItemIcon>
                           <SendIcon fontSize="small" />
                         </ListItemIcon> */}
-                    {/*<Link*/}
-                    {/*    to={"/foodPicNewPost"}*/}
-                    {/*    style={{*/}
-                    {/*      textDecoration: "none",*/}
-                    {/*      color: "inherit",*/}
-                    {/*    }}*/}
-                    {/*>*/}
-                    {/*  New post*/}
-                    {/*</Link>*/}
-                    {/*<ListItem button component="a" href="/foodPicNewPost">*/}
-                    {/*  <ListItemText primary="New post" />*/}
-                    {/*</ListItem>*/}
+                  {/*<Link*/}
+                  {/*    to={"/foodPicNewPost"}*/}
+                  {/*    style={{*/}
+                  {/*      textDecoration: "none",*/}
+                  {/*      color: "inherit",*/}
+                  {/*    }}*/}
+                  {/*>*/}
+                  {/*  New post*/}
+                  {/*</Link>*/}
+                  {/*<ListItem button component="a" href="/foodPicNewPost">*/}
+                  {/*  <ListItemText primary="New post" />*/}
+                  {/*</ListItem>*/}
                   {/*</StyledMenuItem>*/}
                   <StyledMenuItem>
                     <Link
-                        to={"/foodPicAllPost"}
-                        style={{
-                          textDecoration: "none",
-                          color: "inherit",
-                        }}
+                      to={"/foodPicAllPost"}
+                      style={{
+                        textDecoration: "none",
+                        color: "inherit",
+                      }}
                     >
                       All posts
                     </Link>
@@ -263,11 +270,11 @@ class Header extends React.Component {
                   </StyledMenuItem>
                   <StyledMenuItem>
                     <Link
-                        to={"/foodPicMyPost"}
-                        style={{
-                          textDecoration: "none",
-                          color: "inherit",
-                        }}
+                      to={"/foodPicMyPost"}
+                      style={{
+                        textDecoration: "none",
+                        color: "inherit",
+                      }}
                     >
                       My posts
                     </Link>
@@ -289,7 +296,32 @@ class Header extends React.Component {
                 >
                   Logout
                 </Button>
-                <Toggle/>
+                {/* <Toggle /> */}
+
+                {/* <Link
+                  to={"/settings"}
+                  style={{
+                    textDecoration: "none",
+                    color: "inherit",
+                  }}
+                > */}
+                <IconButton
+                  className={classes.settingsIcon}
+                  onClick={this.handleClickOpenSettingsIcon}
+                >
+                  <SettingsIcon
+                    style={{
+                      color: "#00bfa5",
+                    }}
+                  />
+                </IconButton>
+                {/* </Link> */}
+                {this.state.isOpen ? (
+                  <Settings
+                    isOpen={this.state.isOpen}
+                    isClose={this.handleClickCloseSettingsIcon}
+                  />
+                ) : null}
               </ListItem>
             ) : (
               <ListItem>

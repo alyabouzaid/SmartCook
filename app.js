@@ -19,6 +19,7 @@ const imagesRouter = require("./routes/images");
 const inventoryRouter = require("./routes/inventory");
 const recipesRouter = require("./routes/recipes");
 const foodPicturesRouter = require("./routes/foodPictures");
+const userProfilePicRouter = require("./routes/userProfilePic");
 
 // configuration constants. Make sure it matches what you registered.
 const clientID = process.env.OAUTH_CLIENT_ID;
@@ -102,6 +103,7 @@ passport.use(
           email: profile.emails[0].value,
           firstName: profile.name.givenName,
           fullName: profile.displayName,
+          googleDefaultPic: profile.photos[0].value,
         },
         function (err, user) {
           // Updates user picture upon each auth session
@@ -141,6 +143,7 @@ app.use("/images", imagesRouter);
 // food pictures feature routes
 app.use("/foodPictures", foodPicturesRouter);
 app.use("/recipes", recipesRouter);
+app.use("/userProfilePic", userProfilePicRouter);
 
 app.get("/auth/user", isUserAuthenticated, (req, res) => {
   users.findOne({ email: req.user.email }, function (err, result) {

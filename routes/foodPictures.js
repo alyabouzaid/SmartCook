@@ -9,7 +9,8 @@ router.get("/allPost", (req, res) => {
   // setTimeout(() => {
   foodPicturePost
     .find()
-    .sort("-likesLength")
+    // .sort("-likesLength")
+    .sort("-createdAt")
     .then((posts) => res.status(200).json(posts))
     .catch((err) => res.status(400).json("Error: ", err));
   // }, 2000);
@@ -33,6 +34,8 @@ router.post("/addPost", (req, res) => {
   const postedByFirstName = req.body.userFirstName;
   const postedByFullName = req.body.userFullName;
   const postedByEmail = req.body.email;
+  const postedByGoogleDefaultPic = req.body.googleDefaultPic;
+  const postedByUploadedPic = req.body.userUploadedPic;
   const dateTime = new Date().toLocaleString();
 
   const post = new foodPicturePost({
@@ -42,6 +45,8 @@ router.post("/addPost", (req, res) => {
     postedByFirstName,
     postedByFullName,
     postedByEmail,
+    postedByGoogleDefaultPic,
+    postedByUploadedPic,
     dateTime,
   });
   post
@@ -68,10 +73,11 @@ router.put("/addLike/:id", (req, res) => {
     .findOneAndUpdate(
       {
         _id: req.params.id,
-        likes: { $ne: req.body.email },
+        likesByEmail: { $ne: req.body.email },
+        likesByFullName: { $ne: req.body.name },
       },
       {
-        $push: { likes: req.body.email },
+        $push: { likesByEmail: req.body.email, likesByFullName: req.body.name },
         $inc: { likesLength: 1 },
       },
       {
@@ -95,6 +101,8 @@ router.put("/addComment/:id", (req, res) => {
     postedByFirstName: req.body.userFirstName,
     postedByFullName: req.body.userFullName,
     postedByEmail: req.body.email,
+    postedByGoogleDefaultPic: req.body.googleDefaultPic,
+    postedByUploadedPic: req.body.userUploadedPic,
   };
   foodPicturePost
     .findByIdAndUpdate(
