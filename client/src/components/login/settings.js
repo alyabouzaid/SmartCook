@@ -100,7 +100,7 @@ class Settings extends React.Component {
             style={{ cursor: "move" }}
             id="draggable-dialog-title"
           >
-            Quick Settings
+            Settings
           </DialogTitle>
           <DialogContent>
             <Divider />
