@@ -13,14 +13,9 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 import compose from "recompose/compose";
-import Card from "@material-ui/core/Card";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
 import IngredientList from "./IngredientList";
-import Link from "@material-ui/core/Link";
-import CardActionArea from "@material-ui/core/CardActionArea";
 import { initialData } from "../../actions/ingredientInventoryActions";
-import { loadRecipesData} from "../../actions/recipesAction";
+import { loadRecipesData, addNewRecipeData, deleteOneRecipeData} from "../../actions/recipesAction";
 import CategoryList from "./CategoryList";
 import FilterSearchBar from "./FilterSearchBar";
 import RecipeInfo from "./RecipeInfo";
@@ -123,12 +118,15 @@ class Recommendation extends React.Component {
     return sliceData.map((recipe) => {
       return (
         <Grid item xs={12} sm={6} md={4}>
-          <RecipeInfo 
+          <RecipeInfo
           recipe={recipe}
           ingredientInventory = {this.props.ingredientInventory}
           userInfo = {this.props.userInfo}
           getRecipeIngredients={this.handleGetRecipeIngredients}
           ingredientAmountStore={this.props.ingredientAmountStore}
+          saveRecipe={this.props.addNewRecipeData}
+          deleteRecipe={this.props.deleteOneRecipeData}
+          switchDisplay={this.state.switch}
           />
         </Grid>
       );
@@ -209,14 +207,6 @@ class Recommendation extends React.Component {
                 variant="contained"
                 color="primary"
                 onClick={this.generateRecommendation}
-                // onClick={() =>
-                //   this.props.getRecommendation(
-                //     this.props.ingredientInventory.filter(
-                //       (ingredient) => ingredient.selected
-                //     ),
-                //     this.props.recommendationFilter
-                //   )
-                // }
               >
                 RECOMMEND
               </Button>
@@ -249,23 +239,7 @@ class Recommendation extends React.Component {
                     container
                     spacing={3}
                   >
-                    {/*<Grid container item xs={12} spacing={3} justify="left">*/}
-                    {/*  <DisplayTabs switchHandler={this.handleSwitchEnum}/>*/}
-                    {/*</Grid>*/}
-                    {/*<p*/}
-                    {/*    style={{*/}
-                    {/*      textAlign: "left",*/}
-                    {/*      backgroundColor: "transparent",*/}
-                    {/*      margin: "3",*/}
-                    {/*      fontSize: "24px",*/}
-                    {/*    }}*/}
-                    {/*/>*/}
                     <Grid container item xs={12} spacing={3} justify="center">
-                      {/* {this.props.recommendation["hits"].map((recipe) => (
-                        <Grid item xs={12} sm={6} md={4}>
-                          <RecipeInfo recipe={recipe} />
-                        </Grid>
-                      ))} */}
                       {this.displayData()}
                     </Grid>
                   </Grid>
@@ -316,6 +290,8 @@ export default compose(
     loadUserData,
     initialData,
     getRecipeIngredients,
-    loadRecipesData
+    loadRecipesData,
+    addNewRecipeData,
+    deleteOneRecipeData,
   })
 )(Recommendation);

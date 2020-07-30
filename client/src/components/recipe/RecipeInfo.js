@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import CardContent from "@material-ui/core/CardContent";
@@ -11,23 +11,13 @@ import CardActions from '@material-ui/core/CardActions';
 import LinkIcon from '@material-ui/icons/Link';
 import IconButton from "@material-ui/core/IconButton";
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import SaveOutlinedIcon from '@material-ui/icons/Save';
+import {useDispatch} from 'react-redux';
+import {useHistory} from 'react-router-dom';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DoneIcon from '@material-ui/icons/Done';
-import Modal from '@material-ui/core/Modal';
-import Button from '@material-ui/core/Button';
-import { useState } from 'react';
-
-import { getRecipeIngredients } from "../../actions/ingredientAmountActions";
-
-import { connect } from "react-redux";
-import compose from "recompose/compose";
-import {addNewRecipeData} from "../../actions/recipesAction";
 import Container from "@material-ui/core/Container";
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
-import FavoriteOutlinedIcon from '@material-ui/icons/FavoriteOutlined';
+import DeleteOutlinedIcon from '@material-ui/icons/Delete';
 import Tooltip from '@material-ui/core/Tooltip';
 
 const useStyles = makeStyles((theme) => ({
@@ -62,9 +52,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-    export default function RecipeInfo(props) {
+export default function RecipeInfo({ingredientInventory, getRecipeIngredients, recipe, userInfo, saveRecipe, switchDisplay, deleteRecipe}) {
 
-    
+
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -86,33 +76,30 @@ const useStyles = makeStyles((theme) => ({
 
 
     const handleClickDone = (event) => {
-        props.getRecipeIngredients(props.recipe)
-        console.log(props.ingredientInventory)
+        getRecipeIngredients(recipe)
+        console.log(ingredientInventory)
     };
-
-
 
 
     return (
         <div>
 
 
-
-
             <Card className={classes.card} variant="outlined">
                 <CardActionArea disableRipple>
-                    <Link href={props.recipe["recipe"]["shareAs"]} target="_blank">
+                    <Link href={recipe["recipe"]["shareAs"]} target="_blank">
                         <CardMedia
                             className={classes.cardMedia}
-                            image={props.recipe["recipe"]["image"]}
-                            title={props.recipe["recipe"]["label"]}
+                            image={recipe["recipe"]["image"]}
+                            title={recipe["recipe"]["label"]}
                         />
                     </Link>
                 </CardActionArea>
                 <CardContent className={classes.cardContent} style={{height: "150px"}}>
                     <Typography gutterBottom variant="h5" component="h2" style={{textAlign: "left"}}>
-                        <Link href={props.recipe["recipe"]["shareAs"]} target="_blank" title={props.recipe["recipe"]["label"]} style={{ textDecoration: "none", color: "inherit" }}>
-                            {props.recipe["recipe"]["label"]}
+                        <Link href={recipe["recipe"]["shareAs"]} target="_blank" title={recipe["recipe"]["label"]}
+                              style={{textDecoration: "none", color: "inherit"}}>
+                            {recipe["recipe"]["label"]}
                         </Link>
                     </Typography>
                 </CardContent>
@@ -133,50 +120,66 @@ const useStyles = makeStyles((theme) => ({
                     >
                         <Card className={classes.card} variant="outlined">
                             <CardContent className={classes.cardContent}>
-                                <Typography className={classes.title} paragraph >Ingredients:</Typography>
+                                <Typography className={classes.title} paragraph>Ingredients:</Typography>
                                 <Typography style={{textAlign: "left"}}>
-                                    {props.recipe["recipe"]["ingredientLines"].map( (item) => <li> {item} </li>)}
+                                    {recipe["recipe"]["ingredientLines"].map((item) => <li> {item} </li>)}
                                 </Typography>
-                                <p style={{textAlign: "left", backgroundColor: "transparent", margin: "3", fontSize: '24px'}}/>
+                                <p style={{
+                                    textAlign: "left",
+                                    backgroundColor: "transparent",
+                                    margin: "3",
+                                    fontSize: '24px'
+                                }}/>
                                 <Typography className={classes.title} paragraph>Health Labels:</Typography>
                                 <Typography style={{textAlign: "left"}}>
-                                    {props.recipe["recipe"]["dietLabels"].concat(props.recipe["recipe"]["healthLabels"]).map( (item) => <li> {item} </li>)}
+                                    {recipe["recipe"]["dietLabels"].concat(recipe["recipe"]["healthLabels"]).map((item) =>
+                                        <li> {item} </li>)}
                                 </Typography>
                             </CardContent>
                         </Card>
                     </Popover>
                     <Container className={classes.icon}>
-                        <Tooltip title="Click to see ingredients and health labels"  placement="top">
-                        <IconButton aria-label="more info" onClick={handleClick}>
-                            <InfoOutlinedIcon size="small"/>
-                        </IconButton>
+                        <Tooltip title="Click to see ingredients and health labels" placement="top">
+                            <IconButton aria-label="more info" onClick={handleClick}>
+                                <InfoOutlinedIcon size="small"/>
+                            </IconButton>
                         </Tooltip>
-                        <Tooltip title="Click for recipe link"  placement="top">
-                    <IconButton aria-label="share" href={props.recipe["recipe"]["url"]} target="_blank">
-                        <LinkIcon size="small" />
-                    </IconButton>
+                        <Tooltip title="Click for recipe link" placement="top">
+                            <IconButton aria-label="share" href={recipe["recipe"]["url"]} target="_blank">
+                                <LinkIcon size="small"/>
+                            </IconButton>
                         </Tooltip>
-                        <Tooltip title="Click to edit and save recipe to journal"  placement="top">
-                    <IconButton aria-label="share" onClick={() => {dispatch({type:'RECIPE_ANNOTATION', payload: props.recipe["recipe"]}); history.push('/journal')}}>
-                        <EditOutlinedIcon size="small" />
-                    </IconButton>
+                        <Tooltip title="Click to edit and save recipe to journal" placement="top">
+                            <IconButton aria-label="share" onClick={() => {
+                                dispatch({type: 'RECIPE_ANNOTATION', payload: recipe["recipe"]});
+                                history.push('/journal')
+                            }}>
+                                <EditOutlinedIcon size="small"/>
+                            </IconButton>
                         </Tooltip>
-                        <Tooltip title="Click to save recipe to favourites"  placement="top">
-                    <IconButton aria-label="share" onClick={addNewRecipeData(props.recipe, props.userInfo)}>
-                        <FavoriteBorderOutlinedIcon size="small" />
-                    </IconButton>
+
+                        {switchDisplay === "hits" &&
+                        <Tooltip title="Click to save recipe to favourites" placement="top">
+                            <IconButton aria-label="share" onClick={() => saveRecipe(recipe, userInfo)}>
+                                <FavoriteBorderOutlinedIcon size="small"/>
+                            </IconButton>
                         </Tooltip>
-                        <Tooltip title="Click to check for ingredients in inventory"  placement="top">
-                    <IconButton aria-label="moreinfo" onClick={
-                        handleClickDone
-                        }>
-                        <DoneIcon size="small"/>
-                    </IconButton>
+                        }
+                        {switchDisplay === "recipes" &&
+                        <Tooltip title="Click to delete recipe from favourites" placement="top">
+                            <IconButton aria-label="share" onClick={() => deleteRecipe(recipe["_id"])}>
+                                <DeleteOutlinedIcon size="small"/>
+                            </IconButton>
+                        </Tooltip>
+                        }
+                        <Tooltip title="Click to check for ingredients in inventory" placement="top">
+                            <IconButton aria-label="moreinfo" onClick={
+                                handleClickDone
+                            }>
+                                <DoneIcon size="small"/>
+                            </IconButton>
                         </Tooltip>
                     </Container>
-
-
-
 
 
                 </CardActions>
