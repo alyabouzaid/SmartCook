@@ -9,8 +9,8 @@ const initialState = {
 
 const parseRecipe = (recipe) => {
   let link = `<a href=${recipe.url} target="_blank"> ${recipe.url} </a>`;
-  let ingredients = recipe.ingredientLines.map(ingredient => `<p>${ingredient}</p>`);
-  let healthLabels = recipe.healthLabels.map(label => `<p>${label}</p>`);
+  let ingredients = '<ul>' + recipe.ingredientLines.map(ingredient => `<li>${ingredient}</li>`).join('') + '<ul>';
+  let healthLabels ='<ul>' + recipe.healthLabels.map(label => `<li>${label}</li>`).join('') + '<ul>';
   let ret = link + ingredients + healthLabels;
   return ret;
 };
