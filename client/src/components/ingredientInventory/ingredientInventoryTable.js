@@ -398,6 +398,8 @@ export default function IngredientInventoryTable(props) {
                         <Checkbox
                           checked={isItemSelected}
                           inputProps={{ "aria-labelledby": labelId }}
+                          color= "primary"
+
                         />
                       </TableCell>
                       <TableCell
