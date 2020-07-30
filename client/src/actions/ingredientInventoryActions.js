@@ -87,37 +87,7 @@ export const deleteIngredient = (emailAndKeyObject,ingredientInventory) => {
   };
 
 
-
-export const initialData = () => {
-	return async (dispatch) => {
-	  try {
-		const userData = await axios.get("/auth/user");
-  
-		const res = await axios.get(`/inventories/${userData.data.email}`);
-  
-		const inventory = await res.data;
-
-		if(!Array.isArray(inventory)){
-			inventory =[]
-		}
-
-		dispatch(loadAllInventory(inventory));
-
-	  } catch (error) {
-		console.log("Error: ", error);
-	  }
-	};
-  };
-
-export const loadAllInventory = (inventory) => {
-	return {
-		type: 'LOAD_ALL_INVENTORY',
-		payload: inventory
-	};
-};
-
-
-export const editingIngredient = (emailAndIngredientAndAmountObject,ingredientInventory) => {
+  export const editingIngredient = (emailAndIngredientAndAmountObject,ingredientInventory) => {
 
 
 	return async (dispatch) => {
@@ -126,7 +96,6 @@ export const editingIngredient = (emailAndIngredientAndAmountObject,ingredientIn
 
 		let inventoryTemp = ingredientInventory.slice()
 		inventoryTemp =   inventoryTemp.map(item =>{
-
 
 			if(emailAndIngredientAndAmountObject.description.includes(item.description)){
 				if(!(item.amount+emailAndIngredientAndAmountObject.amount <0)){
@@ -157,3 +126,34 @@ export const editingIngredient = (emailAndIngredientAndAmountObject,ingredientIn
 	
 	};
   };
+
+
+export const initialData = () => {
+	return async (dispatch) => {
+	  try {
+		const userData = await axios.get("/auth/user");
+  
+		const res = await axios.get(`/inventories/${userData.data.email}`);
+  
+		const inventory = await res.data;
+
+		if(!Array.isArray(inventory)){
+			inventory =[]
+		}
+
+		dispatch(loadAllInventory(inventory));
+
+	  } catch (error) {
+		console.log("Error: ", error);
+	  }
+	};
+  };
+
+export const loadAllInventory = (inventory) => {
+	return {
+		type: 'LOAD_ALL_INVENTORY',
+		payload: inventory
+	};
+};
+
+

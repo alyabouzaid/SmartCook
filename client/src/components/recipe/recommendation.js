@@ -20,11 +20,13 @@ import IngredientList from "./IngredientList";
 import Link from "@material-ui/core/Link";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import { initialData } from "../../actions/ingredientInventoryActions";
+import { loadRecipesData} from "../../actions/recipesAction";
 import CategoryList from "./CategoryList";
 import FilterSearchBar from "./FilterSearchBar";
 import RecipeInfo from "./RecipeInfo";
 import SPagination from "simple-react-pagination-js";
-import "simple-react-pagination-js/build/style.css"; // import css
+import "simple-react-pagination-js/build/style.css";
+import DisplayTabs from "./DisplayTabs";
 
 import { getRecipeIngredients } from "../../actions/ingredientAmountActions";
 
@@ -77,12 +79,18 @@ class Recommendation extends React.Component {
       offset: 0,
       currentPage: 1,
       perPage: 9,
+      switch: "hits",
     };
   }
 
   componentDidMount() {
     this.props.initialData();
+    this.props.loadRecipesData(this.props.userInfo.email);
   }
+
+  handleSwitchEnum = (s) => {
+    this.setState({ switch: s} );
+  };
 
   handleOnPageChange = (currentPage) => {
     const selectedPage = currentPage;
@@ -106,7 +114,7 @@ class Recommendation extends React.Component {
 
   displayData = () => {
     // return <div>{JSON.stringify(this.props.allPostLoading)}</div>;
-    const data = this.props.recommendation["hits"];
+    const data = this.props.recommendation[this.state.switch];
     const sliceData = data.slice(
       this.state.offset,
       this.state.offset + this.state.perPage
@@ -127,9 +135,34 @@ class Recommendation extends React.Component {
     });
   };
 
+  updateIngredients() {
+    if (this.props.filter.length !== 0) {
+      for (let ingredient of this.props.ingredientInventory) {
+        let found = false;
+        for (let i = 0; i < this.props.filter.length; i++) {
+          if (ingredient.category === this.props.filter[i]) {
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          if (ingredient.selected) {
+            this.props.selectingIngredient(ingredient.key);
+          }
+        }
+      }
+    }
+  }
 
-
-
+  generateRecommendation = () => {
+    this.updateIngredients();
+        this.props.getRecommendation(
+            this.props.ingredientInventory.filter(
+                (ingredient) => ingredient.selected
+            ),
+            this.props.recommendationFilter
+        )
+  };
 
   render() {
     const { classes } = this.props;
@@ -175,14 +208,15 @@ class Recommendation extends React.Component {
                 className={classes.button}
                 variant="contained"
                 color="primary"
-                onClick={() =>
-                  this.props.getRecommendation(
-                    this.props.ingredientInventory.filter(
-                      (ingredient) => ingredient.selected
-                    ),
-                    this.props.recommendationFilter
-                  )
-                }
+                onClick={this.generateRecommendation}
+                // onClick={() =>
+                //   this.props.getRecommendation(
+                //     this.props.ingredientInventory.filter(
+                //       (ingredient) => ingredient.selected
+                //     ),
+                //     this.props.recommendationFilter
+                //   )
+                // }
               >
                 RECOMMEND
               </Button>
@@ -193,7 +227,8 @@ class Recommendation extends React.Component {
 
             {/*right side*/}
             <Grid style={{}} item xs={12} sm={8} md={8}>
-              {this.props.recommendation["hits"] && (
+              <DisplayTabs switchHandler={this.handleSwitchEnum}/>
+              {this.props.recommendation[this.state.switch] && (
                 <Container className={classes.cardGrid}>
                   <Grid
                     style={{
@@ -220,8 +255,8 @@ class Recommendation extends React.Component {
                   page={this.state.currentPage}
                   sizePerPage={this.state.perPage}
                   totalSize={
-                    this.props.recommendation["hits"]
-                      ? this.props.recommendation["hits"].length
+                    this.props.recommendation[this.state.switch]
+                      ? this.props.recommendation[this.state.switch].length
                       : 0
                   }
                   pagesNextToActivePage={5}
@@ -236,54 +271,6 @@ class Recommendation extends React.Component {
       </div>
     );
   }
-
-  // render() {
-  //     const {classes} = this.props;
-  //     return (this.props.userInfo.isLoggedIn ?
-  //             (<div style={{backgroundImage: `url(${pic})`, height: 1000, backgroundSize: 'cover'}}>
-  //                 <Header/>
-  //                 <div style={{display: 'flex', flexWrap: 'wrap', margin: '3%', background: 'rgba(255, 255, 255, 0.6)'}}>
-  //                     <FormControl component="fieldset" style={{margin: '3%'}}>
-  //                         <FormLabel component="legend">Select Your Ingredients</FormLabel>
-  //                         <FormGroup>
-  //                             {this.props.ingredientInventory.map((ingredient) =>
-  //                                 <FormControlLabel key={ingredient.id}
-  //                                                   control={<Checkbox checked={ingredient.selected}
-  //                                                                      onChange={() => {this.props.selectingIngredient(ingredient.key);}}
-  //                                                                      name={ingredient.description}
-  //                                                                      color="primary"/>}
-  //                                                   label={ingredient.description}
-  //                                 />
-  //                             )}
-  //                         </FormGroup>
-  //                     </FormControl>
-  //                 </div>
-  //                 <div>
-  //                     <Button variant="contained" color="primary"
-  //                             onClick={() => this.props.getRecommendation(this.props.ingredientInventory.filter((ingredient) => ingredient.selected))}>
-  //                         Generate Recommendation
-  //                     </Button>
-  //                 </div>
-  //                 <div style={{backgroundColor: 'white'}}>
-  //                     {this.props.recommendation["hits"] &&
-  //                     <Container className={classes.cardGrid}>
-  //                         <Grid style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', margin: '3%'}} container spacing={3}>
-  //                             {/*<div style={{display: 'flex', flexWrap: 'wrap', margin: '3%'}}>*/}
-  //                             {this.props.recommendation["hits"].map(recipe =>
-  //                                 <Grid item xs={10} sm={6} md={4}>
-  //                                     <RecipeCard className={classes.card} recipe={recipe}/>
-  //                                 </Grid>
-  //                             )
-  //                             }
-  //                             {/*</div>*/}
-  //                         </Grid>
-  //                     </Container>
-  //                     }
-  //                 </div>
-  //             </div>) : (this.defaultPage())
-  //
-  //     );
-  // }
 }
 
 const mapStateToProps = (state) => {
@@ -295,6 +282,7 @@ const mapStateToProps = (state) => {
     userInfo: state.userStore,
     ingredientAmountStore: state.ingredientAmountStore,
 
+    filter: state.filterStore,
   }; //now it will appear as props
 };
 export default compose(
@@ -307,7 +295,6 @@ export default compose(
     loadUserData,
     initialData,
     getRecipeIngredients,
+    loadRecipesData
   })
 )(Recommendation);
-
-// export default connect(mapStateToProps, {selectingIngredient, newRecommendation, clearRecommendation, getRecommendation, loadUserData})(Recommendation);

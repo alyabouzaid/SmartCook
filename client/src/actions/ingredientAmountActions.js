@@ -9,8 +9,9 @@ export const getRecipeIngredients = (ingredientLinesArray,email,ingredientInvent
 	return async (dispatch) => {
 	  try {
         let retArray = []
-
-        retArray =  ingredientLinesArray.map((item) =>    {return fetch(`https://api.edamam.com/api/food-database/v2/parser?nutrition-type=logging&ingr=${item.replace(/ /g,"%20")}&app_id=bcf76032&app_key=935b4ba268d89ad8e604ad7e26c4187e`).then(ret => ret.json().then(ret => ret))})
+        retArray =  ingredientLinesArray.map((item) =>    {
+            return fetch(`https://api.edamam.com/api/food-database/v2/parser?nutrition-type=logging&ingr=${item.replace(/ /g,"%20")}&app_id=bcf76032&app_key=935b4ba268d89ad8e604ad7e26c4187e`).then(ret => ret.json().then(ret => ret))
+        })
 
         let foodNameArray = []
         let foodAmountArray = []
@@ -18,14 +19,11 @@ export const getRecipeIngredients = (ingredientLinesArray,email,ingredientInvent
         Promise.all(retArray).then(ret => {
             foodAmountArray = ret.map((item) => item.parsed[0].quantity) 
             foodNameArray = ret.map((item) => item.parsed[0].food.label)})
-        .then(ret => dispatch(getRecipeIngredientsDispatch(foodNameArray)))
+        // .then(ret => dispatch(getRecipeIngredientsDispatch(foodNameArray)))
         .then(res => 
             
             {
                 let arr = Array.from(Array(foodNameArray.length).keys())
-
-
-                
                 let foodNamesString = []
                 let missingFoodNamesString =[]
 
@@ -39,20 +37,19 @@ export const getRecipeIngredients = (ingredientLinesArray,email,ingredientInvent
                         } 
                     })
                     
-                    
-                    if(tempArray.length ===0)
-                    {
+                    if(tempArray.length ===0){
                         missingFoodNamesString.push(foodNameArray[item]) 
-
                     }
-                          return item})
+                    return item})
 
-                toast.success(<div>Items used from inventory:       <br />       {foodNamesString.map(item =><div> {item} <br /></div>  )}     </div>, {
+                toast.success(<div>Items used from inventory:      
+                    <br />       {foodNamesString.map(item =><div> {item} <br /></div>  )}     </div>, {
                     position: toast.POSITION.TOP_CENTER,
                     autoClose: false
                 });
 
-                toast.error(<div>Items with no enough found in inventory:       <br />       {missingFoodNamesString.map(item =><div> {item} <br /></div>  )}     </div>, {
+                toast.error(<div>Items with no enough found in inventory:       
+                    <br />       {missingFoodNamesString.map(item =><div> {item} <br /></div>  )}     </div>, {
                     position: toast.POSITION.TOP_CENTER,
                     autoClose: false
                 });

@@ -8,6 +8,7 @@ import compose from "recompose/compose";
 import {withStyles} from "@material-ui/core/styles";
 import {connect} from "react-redux";
 import {addFilter} from "../../actions/filterActions";
+import {selectingIngredient} from "../../actions/selectIngredientActions";
 
 const useStyles = (theme) => ({
     root: {
@@ -33,15 +34,28 @@ let filterOptionsMain = [
 
 class FilterSearchBar extends React.Component {
 
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         filterList: [],
-    //     }
-    // };
-
     updateFilters(newValue) {
-        this.props.addFilter(newValue)
+        this.props.addFilter(newValue);
+        this.updateIngredients();
+
+    }
+
+    updateIngredients() {
+        for (let ingredient of this.props.ingredientInventory)
+            {
+                let found = false;
+                for (let i = 0; i < this.props.filter.length; i++) {
+                    if (ingredient.category === this.props.filter[i]) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    if (ingredient.selected) {
+                        this.props.selectingIngredient(ingredient.key);
+                    }
+                }
+            }
     }
 
 
@@ -58,7 +72,6 @@ class FilterSearchBar extends React.Component {
     render() {
         const { classes } = this.props;
 
-        // TODO: replace calls to filterOptions with redux
         return (
 
             
@@ -67,9 +80,9 @@ class FilterSearchBar extends React.Component {
                 aria-labelledby="nested-list-subheader"
                 subheader={
                     <ListSubheader style={{fontSize: "18px", textAlign: "left"}} component="div" id="nested-list-subheader">
-                        Select Ingredient Filter:
+                        Ingredient Categories:
                         {/*TODO: use for debugging*/}
-                        {/*{this.state.filterList}*/}
+                        {/*{this.props.filter}*/}
                     </ListSubheader>
                 }
                 className={classes.root}
@@ -83,6 +96,7 @@ class FilterSearchBar extends React.Component {
                         id="multiple-search-filter"
                         style={{width: "100%"}}
                         options={filterOptions}
+                        value={this.props.filter}
                         getOptionLabel={(option) => option}
                         filterSelectedOptions
                         renderInput={(params) => (
@@ -102,71 +116,6 @@ class FilterSearchBar extends React.Component {
     }
 }
 
-// TODO: use this filter bar instead if you want to select only one filter at a time
-// class FilterSearchBar extends React.Component {
-//
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             filterValue: "",
-//             filterInput: "",
-//         }
-//     };
-//
-//     // TODO: replace calls to filterOptions with redux
-//     changeFilterValue(newValue) {
-//         this.setState({filterValue: (newValue === null ? "" : newValue)});
-//         if (newValue !== null && filterOptions.includes(newValue)) {
-//             // TODO: update filtered inventory list state here
-//         }
-//         else {
-//             // TODO: set filtered inventory list to default state here
-//         }
-//     }
-//
-//     changeFilterInput(newInputValue) {
-//         this.setState({filterInput: (newInputValue === "" ? "" : newInputValue)});
-//     };
-//
-//     render() {
-//         const { classes } = this.props;
-//
-//         // TODO: replace calls to filterOptions with redux
-//         return (
-//             <List
-//                 component="nav"
-//                 aria-labelledby="nested-list-subheader"
-//                 subheader={
-//                     <ListSubheader style={{fontSize: "18px", textAlign: "left"}} component="div" id="nested-list-subheader">
-//                         Select Ingredient Filter:
-//                         {/*TODO: use for debugging*/}
-//                         {/*{this.state.filterValue}*/}
-//                     </ListSubheader>
-//                 }
-//                 className={classes.root}
-//             >
-//                 <ListItem>
-//                     <Autocomplete
-//                         id="search-filter"
-//                         options={filterOptions}
-//                         getOptionLabel={(option) => option}
-//                         style={{ width: "100%"}}
-//                         renderInput={(params) => <TextField {...params} label="Filter" variant="outlined" />}
-//                         value={this.state.filterValue}
-//                         onChange={(event, newValue) => {
-//                             this.changeFilterValue(newValue);
-//                         }}
-//                         inputValue={this.state.filterInput}
-//                         onInputChange={(event, newInputValue) => {
-//                             this.changeFilterInput(newInputValue);
-//                         }}
-//                     />
-//                 </ListItem>
-//             </List>
-//         );
-//     }
-// }
-
 const mapStateToProps = (state) => {
     return { filter: state.filterStore,
         ingredientInventory: state.ingredientInventory,
@@ -175,5 +124,5 @@ const mapStateToProps = (state) => {
 
 export default compose(
     withStyles(useStyles),
-    connect(mapStateToProps, { addFilter })
+    connect(mapStateToProps, { addFilter, selectingIngredient })
 )(FilterSearchBar);

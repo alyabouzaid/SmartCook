@@ -24,6 +24,7 @@ import { getRecipeIngredients } from "../../actions/ingredientAmountActions";
 
 import { connect } from "react-redux";
 import compose from "recompose/compose";
+import {addNewRecipeData} from "../../actions/recipesAction";
 
 const useStyles = makeStyles((theme) => ({
     cardGrid: {
@@ -78,22 +79,15 @@ const useStyles = makeStyles((theme) => ({
     const handleClickDone = (event) => {
         props.getRecipeIngredients(props.recipe)
         console.log(props.ingredientInventory)
-        // console.log(props.getRecipeIngredients(props.recipe))
-
     };
 
-    // const [show, setShow] = useState(false);
 
-    // // const handleClose = () => setShow(false);
-    // const handleShow = () => setShow(true);
 
-// --------------------------
 
     return (
         <div>
 
 
-            {console.log(props.recipe["recipe"]["ingredientLines"][0].replace(/ /g,"%20"))} */}
 
 
             <Card className={classes.card} variant="outlined">
@@ -106,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
                         />
                     </Link>
                 </CardActionArea>
-                <CardContent className={classes.cardContent} style={{height: "120px"}}>
+                <CardContent className={classes.cardContent} style={{height: "150px"}}>
                     <Typography gutterBottom variant="h5" component="h2" style={{textAlign: "left"}}>
                         <Link href={props.recipe["recipe"]["shareAs"]} target="_blank" title={props.recipe["recipe"]["label"]} style={{ textDecoration: "none", color: "inherit" }}>
                             {props.recipe["recipe"]["label"]}
@@ -151,7 +145,7 @@ const useStyles = makeStyles((theme) => ({
                     <IconButton aria-label="share" onClick={() => {dispatch({type:'RECIPE_ANNOTATION', payload: props.recipe["recipe"]}); history.push('/journal')}}>
                         <EditOutlinedIcon size="small" />
                     </IconButton>
-                    <IconButton aria-label="share">
+                    <IconButton aria-label="share" onClick={addNewRecipeData(props.recipe, props.userInfo)}>
                         <SaveOutlinedIcon size="medium" />
                     </IconButton>
                     
@@ -163,60 +157,7 @@ const useStyles = makeStyles((theme) => ({
                         <DoneIcon size="small"/>
                     </IconButton>
 
-                    {/* toast.success("A new journal has been added", {
-                   position: toast.POSITION.TOP_CENTER,
-                   autoClose: 3000
-               }); */}
-                    {/* <Button variant="primary" onClick={handleShow}>
-                            Launch demo modal
-                        </Button>
 
-                        <Modal show={show} onHide={handleClose}>
-                            <Modal.Header closeButton>
-                            <Modal.Title>Modal heading</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-                            <Modal.Footer>
-                            <Button variant="secondary" onClick={handleClose}>
-                                Close
-                            </Button>
-                            <Button variant="primary" onClick={handleClose}>
-                                Save Changes
-                            </Button>
-                            </Modal.Footer>
-                        </Modal> */}
-
-
-                    {/* <Popover
-                        id={idd}
-                        open={openn}
-                        anchorEl={anchorEll}
-                        onClose={handleClosee}
-                        anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'left',
-                        }}
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'left',
-                        }}
-                    >
-                        <Card  variant="outlined">
-                            <CardContent >
-                                <Typography className={classes.title} paragraph >Ingredients:</Typography>
-                                <Typography style={{textAlign: "left"}}> */}
-                                    {/* {this.props.getRecipeIngredients(recipe["recipe"]["ingredientLines"])} */}
-                                    {/* {this.props.ingredientAmountStore.map((item) => <li>{item}</li>)} */}
-                                    {/* <RecipeIngredientsAmounts recipe = {recipe}/>
-                                </Typography> */}
-                                {/* <p style={{textAlign: "left", backgroundColor: "transparent", margin: "3", fontSize: '24px'}}/>
-                                <Typography className={classes.title} paragraph>Health Labels:</Typography>
-                                <Typography style={{textAlign: "left"}}>
-                                    {recipe["recipe"]["dietLabels"].concat(recipe["recipe"]["healthLabels"]).map( (item) => <li> {item} </li>)}
-                                </Typography> */}
-                            {/* </CardContent>
-                        </Card>
-                    </Popover> */}
 
 
 
@@ -227,26 +168,4 @@ const useStyles = makeStyles((theme) => ({
     );
 }
 
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//     //   initialData: () => dispatch(initialData()),
-//     //   addingIngredient: (emailAndIngredientObject) =>
-//     //     dispatch(addingIngredient(emailAndIngredientObject)),
-//     getRecipeIngredients: (ingredientLinesArray) => dispatch(getRecipeIngredients(ingredientLinesArray)),
-//     //   deleteIngredient: (emailAndKeyObject, ingredientInventory) =>
-//     //     dispatch(deleteIngredient(emailAndKeyObject, ingredientInventory)),
-//     };
-//   };
-  
-//   //state has entire state of app!!
-//   const mapStateToProps = (state) => {
-//     //name is by convention
-//     return {
-//       ingredientInventory: state.ingredientInventory,
-//       ingredientAmountStore: state.ingredientAmountStore,
-//     }; //now it will appear as props
-//   };
-  
-//   export default compose(
-//     // withStyles(useStyles),
-//     connect(mapStateToProps, mapDispatchToProps))(RecipeInfo);
+
