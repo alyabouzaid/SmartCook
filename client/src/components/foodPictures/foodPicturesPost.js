@@ -79,8 +79,6 @@ const useStyles = (theme) => ({
     justifyContent: "left",
   },
   commentAvatar: {
-    // color: theme.palette.getContrastText(deepPurple[500]),
-    // backgroundColor: deepPurple[500],
     width: theme.spacing(4),
     height: theme.spacing(4),
   },
@@ -134,14 +132,6 @@ class FoodPicturesPost extends React.Component {
     });
   };
 
-  // trimInitialForNameDisplay = (fullName) => {
-  //   const initials = fullName
-  //     .split(/\s/)
-  //     .reduce((res, str) => (res += str.slice(0, 1)), "");
-
-  //   return initials.toUpperCase();
-  // };
-
   handlePopoverOpen = (event) => {
     this.setState({
       anchorElLikesHover: event.currentTarget,
@@ -161,10 +151,8 @@ class FoodPicturesPost extends React.Component {
   };
 
   handleDoubleClickComment = (email, commentId) => {
-    // console.log(JSON.stringify(email));
     email === this.props.userInfo.email
-      ? //   : console.log("noooo");
-        this.setState({
+      ? this.setState({
           showEditOrDeleteCommentBtn: !this.state.showEditOrDeleteCommentBtn,
           selectedCommentId: commentId,
         })
@@ -374,8 +362,6 @@ class FoodPicturesPost extends React.Component {
             maxWidth: this.props.cardWidth,
             marginTop: 30,
             marginBottom: 30,
-            // marginLeft: this.props.cardLeftMargin,
-            // marginRight: this.props.cardRightMargin,
             display: "block",
             marginLeft: "auto",
             marginRight: "auto",
@@ -384,11 +370,6 @@ class FoodPicturesPost extends React.Component {
           <CardHeader
             className={classes.header}
             avatar={
-              // <Avatar aria-label="recipe" className={classes.avatar}>
-              //   {this.trimInitialForNameDisplay(
-              //     this.props.item.postedByFullName
-              //   )}
-              // </Avatar>
               this.props.userInfo.userUploadedPic &&
               this.props.userInfo.email === this.props.item.postedByEmail ? (
                 <Avatar
@@ -465,7 +446,7 @@ class FoodPicturesPost extends React.Component {
               onClose={this.handlePopoverClose}
               disableRestoreFocus
             >
-              <Typography style={{ textAlign: "left" }}>
+              <Typography style={{ textAlign: "left", fontSize: 12 }}>
                 {this.props.item.likesByFullName.map((name) => (
                   <li style={{ listStyle: "none" }}>{name}</li>
                 ))}

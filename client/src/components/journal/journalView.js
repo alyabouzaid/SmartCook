@@ -24,7 +24,8 @@ import Container from "@material-ui/core/Container";
 import SPagination from "simple-react-pagination-js";
 import "simple-react-pagination-js/build/style.css";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
-import CardActions from "@material-ui/core/CardActions"; // import css
+import CardActions from "@material-ui/core/CardActions";
+import Tooltip from "@material-ui/core/Tooltip"; // import css
 
 const useStyles = (theme) => ({
   root: {
@@ -132,19 +133,19 @@ class JournalView extends Component {
 
         <Link
           to={"/journal"}
-          style={{ textDecoration: "none", color: "inherit" }}
+          style={{ textDecoration: "none", color: "inherit", padding: "5%" }}
         >
           <label htmlFor="icon-button-file" style={{ justifyContent: "right" }}>
-            {/*TODO: change icon position by modifying right param: 35 or 215*/}
-            <IconButton
-              aria-label="upload picture"
-              component="span"
-              color="black"
-              style={{ position: "fixed", right: "5%" }}
-            >
-              {/*TODO: change icon size by modifying width and height*/}
-              <AddIcon size="large" style={{ width: 100, height: 100 }} />
-            </IconButton>
+            <Tooltip title="Click to create new post" arrow>
+              <IconButton
+                aria-label="upload picture"
+                component="span"
+                color="black"
+                style={{ position: "fixed", right: "5%" }}
+              >
+                <AddIcon size="large" style={{ width: 60, height: 60 }} />
+              </IconButton>
+            </Tooltip>
           </label>
         </Link>
         <p
