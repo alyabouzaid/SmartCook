@@ -3,34 +3,22 @@ import { connect } from "react-redux";
 import compose from "recompose/compose";
 import { withStyles } from "@material-ui/core/styles";
 
-import { addingIngredient } from "../../actions/ingredientInventoryActions";
 import {
   clearIngredients,
   deleteIngredient,
   initialData,
+  addingIngredient,
+  editingIngredient
 } from "../../actions/ingredientInventoryActions";
-import { makeStyles } from "@material-ui/core/styles";
+
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
 import IngredientInventoryTable from "./ingredientInventoryTable";
 
-import DeleteIcon from "@material-ui/icons/Delete";
-import IconButton from "@material-ui/core/IconButton";
 
-const filterOptions = [
+ let filterOptionsMain = [
   "Dairy",
   "Fruits",
   "Grains",
@@ -39,7 +27,13 @@ const filterOptions = [
   "Vegetables",
 ];
 
-let currentCategory = [];
+let filterOptions = []
+
+
+let amount=0
+let inventory = ""
+let category = ""
+
 
 const useStyles = (theme) => ({
   root: {
@@ -62,10 +56,7 @@ class IngredientInventory extends React.Component {
   }
 
   addItem() {
-    let inventory = document.getElementById("inventory").value;
-    let amount = document.getElementById("amount").value;
-    // let targetAmount =  document.getElementById("targetAmount").value
-    let category = document.getElementById("category").value;
+
 
     let key = 0;
     if (this.props.ingredientInventory.length > 0) {
@@ -75,6 +66,9 @@ class IngredientInventory extends React.Component {
         ].key + 1;
     }
 
+    let allIngredientsArray = this.props.ingredientInventory.map(item=>item.description)
+
+    if(!(inventory==="" || allIngredientsArray.includes(inventory)) ){
     this.props.addingIngredient({
       email: this.props.userInfo.email,
       inventory: [
@@ -89,11 +83,20 @@ class IngredientInventory extends React.Component {
       ],
     });
   }
+  }
+
+  setFilterCategories() {
+    filterOptions = filterOptionsMain.concat(this.props.ingredientInventory.map(item => item.category).filter(item => {
+      if(filterOptionsMain.includes(item)){return false}else{return true}
+    }))
+
+    let tempArray=[]
+    filterOptions = filterOptions.filter(item => {if(tempArray.includes(item)){return false}else{tempArray.push(item);return true}})
+  }
+
 
   handleDelete = (rowIndex) => {
-    console.log("checkIndex ", rowIndex);
-    // console.log("check user ", this.props.userInfo.email);
-    // console.log("check list ", this.props.ingredientInventory);
+
 
     this.props.deleteIngredient(
       {
@@ -104,6 +107,35 @@ class IngredientInventory extends React.Component {
     );
   };
 
+  handleEdit= (rowDescription,rowAmount) => {
+
+
+    this.props.editingIngredient(
+      {
+        email: this.props.userInfo.email,
+        description: rowDescription,
+        amount: rowAmount,
+      },
+      this.props.ingredientInventory
+    );
+  };
+
+  handleOnChangeIngredient = event => {
+    inventory = event.target.value
+  };
+
+  handleOnChangeAmount = event => {
+    amount= event.target.value
+  };
+
+  handleOnChangeCategory = event => {
+    category= event.target.value
+  }
+
+  updateFilters(newValue) {
+    category= newValue
+  }
+
   // TODO: temporary mock filters, replace with redux
 
   render() {
@@ -111,37 +143,45 @@ class IngredientInventory extends React.Component {
 
     return (
       <div>
+        
         <Container text-align="center">
           <div className={classes.root}>
+
+          {this.setFilterCategories()}
+
             <TextField
               label="Ingredient"
-              // variant="filled"
               type="text"
               id="inventory"
               style={{ width: 100 }}
-              //   name="fname"
+              onChange={this.handleOnChangeIngredient}
             />
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <TextField
               label="Amount"
-              // variant="filled"
               type="text"
               id="amount"
               style={{ width: 100 }}
-              //   name="fname"
+              onChange={this.handleOnChangeAmount}
             />
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <Autocomplete
               id="category"
               style={{ width: "17%" }}
-              //   size="medium"
               options={filterOptions}
               getOptionLabel={(option) => option}
+              debug
               renderInput={(params) => (
-                <TextField {...params} label="Category" />
+                <TextField {...params} label="Category"   onChange={this.handleOnChangeCategory}
+                />
               )}
+              onChange={(event, newValue) => {
+                this.updateFilters(newValue);
+            }}
             />
           </div>
+
+
           <div className={classes.buttons}>
             <Button
               variant="contained"
@@ -167,65 +207,9 @@ class IngredientInventory extends React.Component {
           <IngredientInventoryTable
             inventory={this.props.ingredientInventory}
             onDelete={this.handleDelete}
+            onEdit={this.handleEdit}
           />
-          {/* <TableContainer component={Paper}>
-            <Table className={useStyles.table} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell
-                    style={{ fontWeight: "bold", fontSize: "16px" }}
-                    align="right"
-                  >
-                    Ingredient
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", fontSize: "16px" }}
-                    align="right"
-                  >
-                    Amount&nbsp;(kg/quantity)
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", fontSize: "16px" }}
-                    align="right"
-                  >
-                    Category &nbsp;
-                  </TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {this.props.ingredientInventory.map((item) => (
-                  <TableRow key={item.name}>
-                    <TableCell style={{ fontSize: "16px" }} align="right">
-                      {item.description}
-                    </TableCell>
-                    <TableCell style={{ fontSize: "16px" }} align="right">
-                      {item.amount}
-                    </TableCell>
-                    <TableCell style={{ fontSize: "16px" }} align="right">
-                      {item.category}
-                    </TableCell>
-                    <TableCell component="th" scope="row" align="center">
-                      <IconButton aria-label="delete">
-                        <DeleteIcon
-                          onClick={() =>
-                            this.props.deleteIngredient(
-                              {
-                                email: this.props.userInfo.email,
-                                key: item.key,
-                              },
-                              this.props.ingredientInventory
-                            )
-                          }
-                        />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer> */}
-          &nbsp;
+        
         </Container>
       </div>
     );
@@ -236,10 +220,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     initialData: () => dispatch(initialData()),
     addingIngredient: (emailAndIngredientObject) =>
-      dispatch(addingIngredient(emailAndIngredientObject)),
+    dispatch(addingIngredient(emailAndIngredientObject)),
     clearIngredients: (email) => dispatch(clearIngredients(email)),
     deleteIngredient: (emailAndKeyObject, ingredientInventory) =>
-      dispatch(deleteIngredient(emailAndKeyObject, ingredientInventory)),
+    dispatch(deleteIngredient(emailAndKeyObject, ingredientInventory)),
+    editingIngredient: (emailAndIngredientAndAmountObject,ingredientInventory)=>
+    dispatch(editingIngredient(emailAndIngredientAndAmountObject,ingredientInventory)),
   };
 };
 

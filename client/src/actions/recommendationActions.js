@@ -1,3 +1,6 @@
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export const getRecommendation = (ingredients, filter) => {
 	return async dispatch => {
 		fetch("/recipes/recommendation", {
@@ -7,6 +10,12 @@ export const getRecommendation = (ingredients, filter) => {
 		})
 			.then((res) => res.json())
 			.then((res) => {
+				if (res.count === 0 || res.status === "error") {
+					toast.info("No recipe found with the selected filters and ingredients. Try again!", {
+						position: toast.POSITION.TOP_CENTER,
+						autoClose: 4000,
+					});
+				}
 				dispatch(newRecommendation(res));
 			})
 	}

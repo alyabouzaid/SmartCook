@@ -8,19 +8,27 @@ import {
 } from "../../actions/recommendationActions";
 import { getRecommendation } from "../../actions/recommendationActions";
 import { loadUserData } from "../../actions/userActions";
+import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 import compose from "recompose/compose";
+import Card from "@material-ui/core/Card";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
 import IngredientList from "./IngredientList";
+import Link from "@material-ui/core/Link";
+import CardActionArea from "@material-ui/core/CardActionArea";
 import { initialData } from "../../actions/ingredientInventoryActions";
-import { loadRecipesData, addNewRecipeData, deleteOneRecipeData} from "../../actions/recipesAction";
+import { loadRecipesData} from "../../actions/recipesAction";
 import CategoryList from "./CategoryList";
 import FilterSearchBar from "./FilterSearchBar";
 import RecipeInfo from "./RecipeInfo";
 import SPagination from "simple-react-pagination-js";
 import "simple-react-pagination-js/build/style.css";
 import DisplayTabs from "./DisplayTabs";
+
+import { getRecipeIngredients } from "../../actions/ingredientAmountActions";
 
 const useStyles = (theme) => ({
   root: {
@@ -96,22 +104,64 @@ class Recommendation extends React.Component {
     this.setState({ perPage, currentPage: 1 });
   };
 
+
+  handleGetRecipeIngredients= (recipe) => {
+
+    this.props.getRecipeIngredients(recipe["recipe"]["ingredientLines"],this.props.userInfo.email,this.props.ingredientInventory)
+
+  };
+
+
   displayData = () => {
+    // return <div>{JSON.stringify(this.props.allPostLoading)}</div>;
     const data = this.props.recommendation[this.state.switch];
     const sliceData = data.slice(
       this.state.offset,
       this.state.offset + this.state.perPage
     );
+    // return <div>{JSON.stringify(sliceData[0])}</div>;
     return sliceData.map((recipe) => {
       return (
         <Grid item xs={12} sm={6} md={4}>
-          <RecipeInfo recipe={recipe} userInfo={this.props.userInfo}
-                      saveRecipe={this.props.addNewRecipeData} switchDisplay={this.state.switch}
-                      deleteRecipe={this.props.deleteOneRecipeData}
+          <RecipeInfo 
+          recipe={recipe}
+          ingredientInventory = {this.props.ingredientInventory}
+          userInfo = {this.props.userInfo}
+          getRecipeIngredients={this.handleGetRecipeIngredients}
+          ingredientAmountStore={this.props.ingredientAmountStore}
           />
         </Grid>
       );
     });
+  };
+
+  updateIngredients() {
+    if (this.props.filter.length !== 0) {
+      for (let ingredient of this.props.ingredientInventory) {
+        let found = false;
+        for (let i = 0; i < this.props.filter.length; i++) {
+          if (ingredient.category === this.props.filter[i]) {
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          if (ingredient.selected) {
+            this.props.selectingIngredient(ingredient.key);
+          }
+        }
+      }
+    }
+  }
+
+  generateRecommendation = () => {
+    this.updateIngredients();
+        this.props.getRecommendation(
+            this.props.ingredientInventory.filter(
+                (ingredient) => ingredient.selected
+            ),
+            this.props.recommendationFilter
+        )
   };
 
   render() {
@@ -158,14 +208,15 @@ class Recommendation extends React.Component {
                 className={classes.button}
                 variant="contained"
                 color="primary"
-                onClick={() =>
-                  this.props.getRecommendation(
-                    this.props.ingredientInventory.filter(
-                      (ingredient) => ingredient.selected
-                    ),
-                    this.props.recommendationFilter
-                  )
-                }
+                onClick={this.generateRecommendation}
+                // onClick={() =>
+                //   this.props.getRecommendation(
+                //     this.props.ingredientInventory.filter(
+                //       (ingredient) => ingredient.selected
+                //     ),
+                //     this.props.recommendationFilter
+                //   )
+                // }
               >
                 RECOMMEND
               </Button>
@@ -176,7 +227,17 @@ class Recommendation extends React.Component {
 
             {/*right side*/}
             <Grid style={{}} item xs={12} sm={8} md={8}>
+              <Grid container item xs={12} spacing={3} justify="center">
               <DisplayTabs switchHandler={this.handleSwitchEnum}/>
+              </Grid>
+              <p
+                  style={{
+                    textAlign: "left",
+                    backgroundColor: "transparent",
+                    margin: "3",
+                    fontSize: "24px",
+                  }}
+              />
               {this.props.recommendation[this.state.switch] && (
                 <Container className={classes.cardGrid}>
                   <Grid
@@ -188,7 +249,23 @@ class Recommendation extends React.Component {
                     container
                     spacing={3}
                   >
+                    {/*<Grid container item xs={12} spacing={3} justify="left">*/}
+                    {/*  <DisplayTabs switchHandler={this.handleSwitchEnum}/>*/}
+                    {/*</Grid>*/}
+                    {/*<p*/}
+                    {/*    style={{*/}
+                    {/*      textAlign: "left",*/}
+                    {/*      backgroundColor: "transparent",*/}
+                    {/*      margin: "3",*/}
+                    {/*      fontSize: "24px",*/}
+                    {/*    }}*/}
+                    {/*/>*/}
                     <Grid container item xs={12} spacing={3} justify="center">
+                      {/* {this.props.recommendation["hits"].map((recipe) => (
+                        <Grid item xs={12} sm={6} md={4}>
+                          <RecipeInfo recipe={recipe} />
+                        </Grid>
+                      ))} */}
                       {this.displayData()}
                     </Grid>
                   </Grid>
@@ -224,6 +301,9 @@ const mapStateToProps = (state) => {
     recommendation: state.recommendationStore,
     recommendationFilter: state.recommendationFilterStore,
     userInfo: state.userStore,
+    ingredientAmountStore: state.ingredientAmountStore,
+
+    filter: state.filterStore,
   }; //now it will appear as props
 };
 export default compose(
@@ -235,8 +315,7 @@ export default compose(
     getRecommendation,
     loadUserData,
     initialData,
-    loadRecipesData,
-    addNewRecipeData,
-    deleteOneRecipeData
+    getRecipeIngredients,
+    loadRecipesData
   })
 )(Recommendation);

@@ -8,6 +8,8 @@ import foodPicturesReducer from "./foodPicturesReducer";
 import recommendationFilterReducer from "./recommendationFilterReducer";
 import colorReducer from "./colorReducer";
 import filterReducer from "./filterReducer";
+import ingredientAmountReducer from "./ingredientAmountReducer";
+
 
 export default combineReducers({
   ingredientInventory: ingredientInventoryReducer,
@@ -19,4 +21,5 @@ export default combineReducers({
   foodPicturesStore: foodPicturesReducer,
   colorStore: colorReducer,
   filterStore:filterReducer,
+  ingredientAmountStore:ingredientAmountReducer,
 });
