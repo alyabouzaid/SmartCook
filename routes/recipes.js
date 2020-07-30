@@ -27,7 +27,13 @@ router.post("/recommendation", (req, res) => {
   const ingredients = req.body.ingredients;
   const filter = req.body.filter;
   getRecommendation(ingredients, filter)
-    .then((results) => results.json())
+    // .then((results) => {console.log("666666666666666666") ; return fetch('https://api.edamam.com/api/food-database/v2/parser?nutrition-type=logging&ingr=2%20red%20apple&app_id=bcf76032&app_key=935b4ba268d89ad8e604ad7e26c4187e')
+    .then(result2 => {
+      console.log("7777777777777"); 
+      // console.log(result2.json());
+      return result2.json()})
+    // })
+    // .then((results) => results.json())
     .then((results) => {
       console.log(results);
       res.json(results);

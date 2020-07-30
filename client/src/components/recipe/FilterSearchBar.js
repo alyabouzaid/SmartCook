@@ -20,9 +20,16 @@ const useStyles = (theme) => ({
 });
 
 // TODO: temporary mock filters, replace with redux
-const filterOptions = [
-    "Dairy", "Fruits", "Grains", "Meat", "Seafood", "Vegetables"
-];
+let filterOptionsMain = [
+    "Dairy",
+    "Fruits",
+    "Grains",
+    "Meat",
+    "Seafood",
+    "Vegetables",
+  ];
+  
+  let filterOptions = []
 
 class FilterSearchBar extends React.Component {
 
@@ -37,11 +44,24 @@ class FilterSearchBar extends React.Component {
         this.props.addFilter(newValue)
     }
 
+
+    setFilterCategories() {
+        filterOptions = filterOptionsMain.concat(this.props.ingredientInventory.map(item => item.category).filter(item => {
+          if(filterOptionsMain.includes(item)){return false}else{return true}
+        }))
+    
+        let tempArray=[]
+        filterOptions = filterOptions.filter(item => {if(tempArray.includes(item)){return false}else{tempArray.push(item);return true}})
+      }
+
+
     render() {
         const { classes } = this.props;
 
         // TODO: replace calls to filterOptions with redux
         return (
+
+            
             <List
                 component="nav"
                 aria-labelledby="nested-list-subheader"
@@ -54,6 +74,9 @@ class FilterSearchBar extends React.Component {
                 }
                 className={classes.root}
             >
+
+                {this.setFilterCategories()}
+
                 <ListItem>
                     <Autocomplete
                         multiple
@@ -145,7 +168,9 @@ class FilterSearchBar extends React.Component {
 // }
 
 const mapStateToProps = (state) => {
-    return { filter: state.filterStore };
+    return { filter: state.filterStore,
+        ingredientInventory: state.ingredientInventory,
+ };
 };
 
 export default compose(

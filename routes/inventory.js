@@ -18,6 +18,15 @@ router.post("/", function (req, res, next) {
   .catch((err) => res.json(err));
 });
 
+router.post("/edit", function (req, res, next) {
+  console.log(String(req.params.description))
+  inventoryList.updateOne(
+  { email: req.body.email,"inventory.description": req.body.description},
+  { $inc:  {"inventory.$.amount":req.body.amount }  }
+  ).then((ret) => res.json(ret))
+  .catch((err) => res.json(err));
+});
+
 router.delete("/:email", function (req, res, next) {
   inventoryList.updateOne(
     { email: req.params.email },

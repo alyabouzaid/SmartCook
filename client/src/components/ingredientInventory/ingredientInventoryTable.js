@@ -19,6 +19,12 @@ import Tooltip from "@material-ui/core/Tooltip";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from '@material-ui/icons/Edit';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
+import TextField from "@material-ui/core/TextField";
+
+
 import FilterListIcon from "@material-ui/icons/FilterList";
 import { useDispatch } from "react-redux";
 
@@ -49,14 +55,11 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  {
-    id: "description",
-    numeric: false,
-    disablePadding: false,
-    label: "Ingredients",
-  },
+  {id: "description",numeric: false,disablePadding: false,label: "Ingredients"},
   { id: "category", numeric: false, disablePadding: false, label: "Category" },
   { id: "amount", numeric: true, disablePadding: false, label: "Amount" },
+  // { id: "edit", numeric: true, disablePadding: false, label: "Edit" },
+
 ];
 
 function EnhancedTableHead(props) {
@@ -77,12 +80,12 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         <TableCell padding="15">
-          <Checkbox
+          {/* <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{ "aria-label": "select all ingredients" }}
-          />
+          /> */}
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
@@ -237,13 +240,19 @@ const useStyles = makeStyles((theme) => ({
 //       });
 //   }
 
+let amountEdit=0
+
+
 export default function IngredientInventoryTable(props) {
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("amount");
+  const [orderBy, setOrderBy] = React.useState("category");
   const [selected, setSelected] = React.useState([]);
+  const [selectedEdit, setSelectedEdit] = React.useState([]);
+
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
+  const [edit, setEdit] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [isRowSelected, setIsRowSelected] = React.useState(false);
 
@@ -267,13 +276,12 @@ export default function IngredientInventoryTable(props) {
     setSelected([]);
   };
 
-  const handleClick = (event, name, rowIndex) => {
+  const handleClickDescription = (event, name, rowIndex) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
 
     setIsRowSelected(!isRowSelected);
     console.log("rowIndex: ", JSON.stringify(rowIndex));
-    // console.log("rowIndexState: ", JSON.stringify(rowIndexToDel));
 
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, name);
@@ -289,6 +297,33 @@ export default function IngredientInventoryTable(props) {
     }
 
     setSelected(newSelected);
+
+  };
+
+
+
+  const handleClickKey = (event, name, rowIndex) => {
+    const selectedIndex = selectedEdit.indexOf(name);
+    let newSelected = [];
+
+    setIsRowSelected(!isRowSelected);
+    console.log("rowIndex: ", JSON.stringify(rowIndex));
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selectedEdit, name);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selectedEdit.slice(1));
+    } else if (selectedIndex === selectedEdit.length - 1) {
+      newSelected = newSelected.concat(selectedEdit.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selectedEdit.slice(0, selectedIndex),
+        selectedEdit.slice(selectedIndex + 1)
+      );
+    }
+
+    setSelectedEdit(newSelected);
+
   };
 
   const handleChangePage = (event, newPage) => {
@@ -302,6 +337,12 @@ export default function IngredientInventoryTable(props) {
 
   const handleChangeDense = (event) => {
     setDense(event.target.checked);
+  };
+
+
+  const handleChangeEdit = (event) => {
+    amountEdit = event.target.value
+    console.log(amountEdit)
   };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
@@ -344,7 +385,8 @@ export default function IngredientInventoryTable(props) {
                     <TableRow
                       hover
                       onClick={(event) =>
-                        handleClick(event, row.description, row.key)
+                       { handleClickDescription(event, row.description, row.key)
+                        handleClickKey(event, row.key, row.key)}
                       }
                       role="checkbox"
                       aria-checked={isItemSelected}
@@ -360,10 +402,10 @@ export default function IngredientInventoryTable(props) {
                       </TableCell>
                       <TableCell
                         component="th"
-                        id={labelId}
-                        scope="row"
+                        // id={labelId}
+                        // scope="row"
                         padding="20"
-                        // marginLeft="20"
+                        marginLeft="20"
                       >
                         {row.description}
                       </TableCell>
@@ -371,29 +413,106 @@ export default function IngredientInventoryTable(props) {
                       <TableCell align="right" style={{ marginRight: 20 }}>
                         {row.amount}
                       </TableCell>
-                      {isRowSelected ? (
-                        <TableCell component="th" scope="row" align="center">
-                          <IconButton aria-label="delete">
+
+                      {/* {edit ? (
+                      <TableCell component="th" scope="row" align="center">
+                          <TextField
+                            // label="Amount"
+                            // variant="filled"
+                            type="text"
+                            id = {`amountEdit-${index}`}
+                            style={{ width: 100 }}
+                            //   name="fname"
+                          />
+
+                          <IconButton aria-label="add">
+                            <AddIcon
+                              onClick={() => {
+                                props.onEdit([row.description],Number(document.getElementById(`amountEdit-${index}`).value));
+                               }}
+                            />
+
+                          </IconButton>
+
+                          <IconButton aria-label="remove">
+
+                            <RemoveIcon
+                              onClick={() => {
+                                props.onEdit([row.description],-Number(document.getElementById(`amountEdit-${index}`).value));
+                               }}
+                            />
+
+                          </IconButton>
+
+                        <IconButton aria-label="delete">
+
                             <DeleteIcon
                               onClick={() => {
-                                props.onDelete(row.key);
-                                setIsRowSelected(false);
+                                 props.onDelete([row.key]);
                               }}
                             />
                           </IconButton>
+
+                          
                         </TableCell>
-                      ) : null}
+
+                      ) : null} */}
+
                     </TableRow>
                   );
                 })}
               {emptyRows > 0 && (
-                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                <TableRow style={{ height: (dense ? 50 : 70) * emptyRows }}>
                   <TableCell colSpan={5} />
                 </TableRow>
               )}
             </TableBody>
           </Table>
         </TableContainer>
+
+                          <TextField
+                            type="text"
+                            id="amountEdit"
+                            style={{ width: 100 }}
+                            onChange={handleChangeEdit}
+                          />
+
+                          <IconButton aria-label="add">
+                            <AddIcon
+                              onClick={() => {
+                                props.onEdit(selected,Number(amountEdit))
+                               }}
+                            />
+
+                          </IconButton>
+
+                          <IconButton aria-label="remove">
+
+                            <RemoveIcon
+                              onClick={() => {
+                                props.onEdit(selected,-Number(amountEdit))
+                               }}
+                            />
+
+                          </IconButton>
+
+                        <IconButton aria-label="delete">
+
+                            <DeleteIcon
+                              onClick={() => {
+                                props.onDelete(selectedEdit)
+                              }}
+                            />
+                          </IconButton>
+        {/* <div
+          className={classes.toggleEdit}
+          style={{ marginLeft: 10, float: "left" }}
+        >
+          <FormControlLabel
+            control={<Switch checked={edit} onChange={handleChangeEdit} />}
+            label="Edit mode"
+          />
+        </div> */}
 
         <div
           className={classes.toggleDense}
@@ -404,6 +523,10 @@ export default function IngredientInventoryTable(props) {
             label="Dense padding"
           />
         </div>
+
+        
+
+
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"

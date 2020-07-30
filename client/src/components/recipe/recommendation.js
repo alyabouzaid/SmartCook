@@ -26,6 +26,8 @@ import RecipeInfo from "./RecipeInfo";
 import SPagination from "simple-react-pagination-js";
 import "simple-react-pagination-js/build/style.css"; // import css
 
+import { getRecipeIngredients } from "../../actions/ingredientAmountActions";
+
 const useStyles = (theme) => ({
   root: {
     height: "100vh",
@@ -94,6 +96,14 @@ class Recommendation extends React.Component {
     this.setState({ perPage, currentPage: 1 });
   };
 
+
+  handleGetRecipeIngredients= (recipe) => {
+
+    this.props.getRecipeIngredients(recipe["recipe"]["ingredientLines"],this.props.userInfo.email,this.props.ingredientInventory)
+
+  };
+
+
   displayData = () => {
     // return <div>{JSON.stringify(this.props.allPostLoading)}</div>;
     const data = this.props.recommendation["hits"];
@@ -105,11 +115,21 @@ class Recommendation extends React.Component {
     return sliceData.map((recipe) => {
       return (
         <Grid item xs={12} sm={6} md={4}>
-          <RecipeInfo recipe={recipe} />
+          <RecipeInfo 
+          recipe={recipe}
+          ingredientInventory = {this.props.ingredientInventory}
+          userInfo = {this.props.userInfo}
+          getRecipeIngredients={this.handleGetRecipeIngredients}
+          ingredientAmountStore={this.props.ingredientAmountStore}
+          />
         </Grid>
       );
     });
   };
+
+
+
+
 
   render() {
     const { classes } = this.props;
@@ -273,6 +293,8 @@ const mapStateToProps = (state) => {
     recommendation: state.recommendationStore,
     recommendationFilter: state.recommendationFilterStore,
     userInfo: state.userStore,
+    ingredientAmountStore: state.ingredientAmountStore,
+
   }; //now it will appear as props
 };
 export default compose(
@@ -284,6 +306,7 @@ export default compose(
     getRecommendation,
     loadUserData,
     initialData,
+    getRecipeIngredients,
   })
 )(Recommendation);
 

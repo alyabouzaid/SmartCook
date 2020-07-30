@@ -1,19 +1,5 @@
 import axios from 'axios'
 
-var removeByAttr = function(arr, attr, value){
-    var i = arr.length;
-    while(i--){
-       if( arr[i]
-           && arr[i].hasOwnProperty(attr)
-           && (arguments.length > 2 && arr[i][attr] === value ) ){
-
-           arr.splice(i,1);
-
-       }
-    }
-    return arr;
-}
-
 
 
 export const addingIngredient = emailAndIngredientObject => {
@@ -32,6 +18,8 @@ export const addingIngredient = emailAndIngredientObject => {
 	};
   };
 
+
+  
 
 export const addingIngredientDispatch= ingredient => {
 	return {
@@ -71,13 +59,24 @@ export const deleteIngredient = (emailAndKeyObject,ingredientInventory) => {
 	return async (dispatch) => {
 	  try {
 
-		axios({url:'/inventories/'+ emailAndKeyObject.email +'/'+ emailAndKeyObject.key, method:'DELETE'})
-		.then(res => console.log(res))
-		.catch(err => console.log(err))
 
 		let inventoryTemp = ingredientInventory.slice()
-		inventoryTemp = removeByAttr(inventoryTemp, "key", emailAndKeyObject.key);
-  
+
+		inventoryTemp =   inventoryTemp.filter(item =>{
+			
+			if( emailAndKeyObject.key.includes(item.key)){
+
+				axios({url:'/inventories/'+ emailAndKeyObject.email +'/'+ item.key, method:'DELETE'})
+				.then(res => console.log(res))
+				.catch(err => console.log(err))
+
+				
+				return false
+			}
+			return true})
+
+
+
 
 		dispatch(loadAllInventory(inventoryTemp));
 
@@ -116,3 +115,45 @@ export const loadAllInventory = (inventory) => {
 		payload: inventory
 	};
 };
+
+
+export const editingIngredient = (emailAndIngredientAndAmountObject,ingredientInventory) => {
+
+
+	return async (dispatch) => {
+
+	  try {
+
+		let inventoryTemp = ingredientInventory.slice()
+		inventoryTemp =   inventoryTemp.map(item =>{
+
+
+			if(emailAndIngredientAndAmountObject.description.includes(item.description)){
+				if(!(item.amount+emailAndIngredientAndAmountObject.amount <0)){
+					
+				item.amount = item.amount + emailAndIngredientAndAmountObject.amount
+				
+				axios({url:'/inventories/edit',method:'POST',data:{
+					email: emailAndIngredientAndAmountObject.email,
+					description: item.description,
+					amount: emailAndIngredientAndAmountObject.amount,
+				  }})
+				.then(res => console.log(res))
+				.catch(err => console.log(err))
+				
+
+				}
+			}
+			return item
+		})
+		
+
+		dispatch(loadAllInventory(inventoryTemp));
+
+	  } catch (error) {
+		console.log("Error: ", error);
+	  }
+
+	
+	};
+  };

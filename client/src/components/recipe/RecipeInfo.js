@@ -15,6 +15,15 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import SaveOutlinedIcon from '@material-ui/icons/Save';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import DoneIcon from '@material-ui/icons/Done';
+import Modal from '@material-ui/core/Modal';
+import Button from '@material-ui/core/Button';
+import { useState } from 'react';
+
+import { getRecipeIngredients } from "../../actions/ingredientAmountActions";
+
+import { connect } from "react-redux";
+import compose from "recompose/compose";
 
 const useStyles = makeStyles((theme) => ({
     cardGrid: {
@@ -43,7 +52,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function RecipeInfo({recipe}) {
+    export default function RecipeInfo(props) {
+
+    
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -60,22 +71,45 @@ export default function RecipeInfo({recipe}) {
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
+
+// -----------------------------
+
+
+    const handleClickDone = (event) => {
+        props.getRecipeIngredients(props.recipe)
+        console.log(props.ingredientInventory)
+        // console.log(props.getRecipeIngredients(props.recipe))
+
+    };
+
+    // const [show, setShow] = useState(false);
+
+    // // const handleClose = () => setShow(false);
+    // const handleShow = () => setShow(true);
+
+// --------------------------
+
     return (
         <div>
+
+
+            {console.log(props.recipe["recipe"]["ingredientLines"][0].replace(/ /g,"%20"))} */}
+
+
             <Card className={classes.card} variant="outlined">
                 <CardActionArea disableRipple>
-                    <Link href={recipe["recipe"]["shareAs"]} target="_blank">
+                    <Link href={props.recipe["recipe"]["shareAs"]} target="_blank">
                         <CardMedia
                             className={classes.cardMedia}
-                            image={recipe["recipe"]["image"]}
-                            title={recipe["recipe"]["label"]}
+                            image={props.recipe["recipe"]["image"]}
+                            title={props.recipe["recipe"]["label"]}
                         />
                     </Link>
                 </CardActionArea>
                 <CardContent className={classes.cardContent} style={{height: "120px"}}>
                     <Typography gutterBottom variant="h5" component="h2" style={{textAlign: "left"}}>
-                        <Link href={recipe["recipe"]["shareAs"]} target="_blank" title={recipe["recipe"]["label"]} style={{ textDecoration: "none", color: "inherit" }}>
-                            {recipe["recipe"]["label"]}
+                        <Link href={props.recipe["recipe"]["shareAs"]} target="_blank" title={props.recipe["recipe"]["label"]} style={{ textDecoration: "none", color: "inherit" }}>
+                            {props.recipe["recipe"]["label"]}
                         </Link>
                     </Typography>
                 </CardContent>
@@ -101,27 +135,118 @@ export default function RecipeInfo({recipe}) {
                             <CardContent className={classes.cardContent}>
                                 <Typography className={classes.title} paragraph >Ingredients:</Typography>
                                 <Typography style={{textAlign: "left"}}>
-                                    {recipe["recipe"]["ingredientLines"].map( (item) => <li> {item} </li>)}
+                                    {props.recipe["recipe"]["ingredientLines"].map( (item) => <li> {item} </li>)}
                                 </Typography>
                                 <p style={{textAlign: "left", backgroundColor: "transparent", margin: "3", fontSize: '24px'}}/>
                                 <Typography className={classes.title} paragraph>Health Labels:</Typography>
                                 <Typography style={{textAlign: "left"}}>
-                                    {recipe["recipe"]["dietLabels"].concat(recipe["recipe"]["healthLabels"]).map( (item) => <li> {item} </li>)}
+                                    {props.recipe["recipe"]["dietLabels"].concat(props.recipe["recipe"]["healthLabels"]).map( (item) => <li> {item} </li>)}
                                 </Typography>
                             </CardContent>
                         </Card>
                     </Popover>
-                    <IconButton aria-label="share" href={recipe["recipe"]["url"]} target="_blank">
+                    <IconButton aria-label="share" href={props.recipe["recipe"]["url"]} target="_blank">
                         <LinkIcon size="small" />
                     </IconButton>
-                    <IconButton aria-label="share" onClick={() => {dispatch({type:'RECIPE_ANNOTATION', payload: recipe["recipe"]}); history.push('/journal')}}>
+                    <IconButton aria-label="share" onClick={() => {dispatch({type:'RECIPE_ANNOTATION', payload: props.recipe["recipe"]}); history.push('/journal')}}>
                         <EditOutlinedIcon size="small" />
                     </IconButton>
                     <IconButton aria-label="share">
                         <SaveOutlinedIcon size="medium" />
                     </IconButton>
+                    
+
+
+                    <IconButton aria-label="moreinfo" onClick={
+                        handleClickDone
+                        }>
+                        <DoneIcon size="small"/>
+                    </IconButton>
+
+                    {/* toast.success("A new journal has been added", {
+                   position: toast.POSITION.TOP_CENTER,
+                   autoClose: 3000
+               }); */}
+                    {/* <Button variant="primary" onClick={handleShow}>
+                            Launch demo modal
+                        </Button>
+
+                        <Modal show={show} onHide={handleClose}>
+                            <Modal.Header closeButton>
+                            <Modal.Title>Modal heading</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                            <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>
+                                Close
+                            </Button>
+                            <Button variant="primary" onClick={handleClose}>
+                                Save Changes
+                            </Button>
+                            </Modal.Footer>
+                        </Modal> */}
+
+
+                    {/* <Popover
+                        id={idd}
+                        open={openn}
+                        anchorEl={anchorEll}
+                        onClose={handleClosee}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                    >
+                        <Card  variant="outlined">
+                            <CardContent >
+                                <Typography className={classes.title} paragraph >Ingredients:</Typography>
+                                <Typography style={{textAlign: "left"}}> */}
+                                    {/* {this.props.getRecipeIngredients(recipe["recipe"]["ingredientLines"])} */}
+                                    {/* {this.props.ingredientAmountStore.map((item) => <li>{item}</li>)} */}
+                                    {/* <RecipeIngredientsAmounts recipe = {recipe}/>
+                                </Typography> */}
+                                {/* <p style={{textAlign: "left", backgroundColor: "transparent", margin: "3", fontSize: '24px'}}/>
+                                <Typography className={classes.title} paragraph>Health Labels:</Typography>
+                                <Typography style={{textAlign: "left"}}>
+                                    {recipe["recipe"]["dietLabels"].concat(recipe["recipe"]["healthLabels"]).map( (item) => <li> {item} </li>)}
+                                </Typography> */}
+                            {/* </CardContent>
+                        </Card>
+                    </Popover> */}
+
+
+
+
                 </CardActions>
             </Card>
         </div>
     );
 }
+
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//     //   initialData: () => dispatch(initialData()),
+//     //   addingIngredient: (emailAndIngredientObject) =>
+//     //     dispatch(addingIngredient(emailAndIngredientObject)),
+//     getRecipeIngredients: (ingredientLinesArray) => dispatch(getRecipeIngredients(ingredientLinesArray)),
+//     //   deleteIngredient: (emailAndKeyObject, ingredientInventory) =>
+//     //     dispatch(deleteIngredient(emailAndKeyObject, ingredientInventory)),
+//     };
+//   };
+  
+//   //state has entire state of app!!
+//   const mapStateToProps = (state) => {
+//     //name is by convention
+//     return {
+//       ingredientInventory: state.ingredientInventory,
+//       ingredientAmountStore: state.ingredientAmountStore,
+//     }; //now it will appear as props
+//   };
+  
+//   export default compose(
+//     // withStyles(useStyles),
+//     connect(mapStateToProps, mapDispatchToProps))(RecipeInfo);
