@@ -29,6 +29,7 @@ import {
   editPostComment,
   deleteComment,
 } from "../../actions/foodPicturesActions";
+import { getProfilePic } from "../../actions/userProfilePicActions";
 import TextField from "@material-ui/core/TextField";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import List from "@material-ui/core/List";
@@ -107,6 +108,10 @@ class FoodPicturesPost extends React.Component {
       isInEditCommentMode: false,
       selectedCommentId: null,
     };
+  }
+
+  componentDidMount() {
+    this.props.getProfilePic();
   }
 
   handleExpandClick = () => {
@@ -214,22 +219,26 @@ class FoodPicturesPost extends React.Component {
     return (
       <ListItem>
         <ListItemAvatar>
-          {/* <Avatar
-            className={classes.commentAvatar}
-            style={{
-              marginRight: 0,
-            }}
-          >
-            {this.trimInitialForNameDisplay(item.postedByFullName)}
-          </Avatar> */}
-          <Avatar
-            className={classes.commentAvatar}
-            style={{
-              marginRight: 0,
-            }}
-            alt={comment.postedByFullName}
-            src={comment.postedByGoogleDefaultPic}
-          />
+          {this.props.userInfo.userUploadedPic &&
+          this.props.userInfo.email === comment.postedByEmail ? (
+            <Avatar
+              className={classes.commentAvatar}
+              style={{
+                marginRight: 0,
+              }}
+              alt={this.props.item.postedByFullName}
+              src={this.props.userInfo.userUploadedPic}
+            />
+          ) : (
+            <Avatar
+              className={classes.commentAvatar}
+              style={{
+                marginRight: 0,
+              }}
+              alt={comment.postedByFullName}
+              src={comment.postedByGoogleDefaultPic}
+            />
+          )}
         </ListItemAvatar>
         <ListItemText
           primary={
@@ -267,22 +276,26 @@ class FoodPicturesPost extends React.Component {
     return (
       <ListItem>
         <ListItemAvatar>
-          {/* <Avatar
-            className={classes.commentAvatar}
-            style={{
-              marginRight: 0,
-            }}
-          >
-            {this.props.userInfo.googleDefaultPic}
-          </Avatar> */}
-          <Avatar
-            className={classes.commentAvatar}
-            style={{
-              marginRight: 0,
-            }}
-            alt={comment.postedByFullName}
-            src={comment.postedByGoogleDefaultPic}
-          />
+          {this.props.userInfo.userUploadedPic &&
+          this.props.userInfo.email === comment.postedByEmail ? (
+            <Avatar
+              className={classes.commentAvatar}
+              style={{
+                marginRight: 0,
+              }}
+              alt={this.props.item.postedByFullName}
+              src={this.props.userInfo.userUploadedPic}
+            />
+          ) : (
+            <Avatar
+              className={classes.commentAvatar}
+              style={{
+                marginRight: 0,
+              }}
+              alt={comment.postedByFullName}
+              src={comment.postedByGoogleDefaultPic}
+            />
+          )}
         </ListItemAvatar>
         <ListItemText
           primary={
@@ -564,6 +577,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(editPostComment(idPayload, commentId, editedComment)),
     deleteComment: (idPayload, commentId) =>
       dispatch(deleteComment(idPayload, commentId)),
+    getProfilePic: () => dispatch(getProfilePic()),
     // deleteAllFoodPicPosts: (idPayload) =>
     //   dispatch(deleteAllFoodPicPosts(idPayload)),
   };

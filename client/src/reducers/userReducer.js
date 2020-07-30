@@ -21,7 +21,7 @@ export default function userReducer(state = initialState, action) {
     case "ADD_PROFILE_PIC":
       return {
         ...state,
-        userUploadedPic: action.payload.userUploadedPic,
+        userUploadedPic: action.payload,
       };
     default:
       return state;

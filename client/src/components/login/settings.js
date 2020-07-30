@@ -76,6 +76,14 @@ class Settings extends React.Component {
     }
   };
 
+  handleClick = () => {
+    this.props.uploadProfilePicImage(
+      this.state.image.raw,
+      this.props.userInfo.email
+    );
+    this.props.isClose();
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -144,18 +152,19 @@ class Settings extends React.Component {
           <DialogActions>
             <Button
               color="primary"
-              onClick={() => {
-                this.props.uploadProfilePicImage(
-                  this.state.image.raw,
-                  this.props.userInfo.email
-                );
-              }}
+              onClick={this.handleClick}
+              //   this.props.uploadProfilePicImage(
+              //     this.state.image.raw,
+              //     this.props.userInfo.email
+              //   );
+              //   {this.prop.isClose}
+              // }}
             >
               Save
             </Button>
-            <Button onClick={this.props.isClose} color="primary">
+            {/* <Button onClick={this.props.isClose} color="primary">
               Close
-            </Button>
+            </Button> */}
           </DialogActions>
         </Dialog>
       </div>

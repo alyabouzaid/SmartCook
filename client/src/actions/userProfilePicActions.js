@@ -3,8 +3,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const uploadProfilePicImage = (image, email) => {
-  console.log("in profile pic ", JSON.stringify(image));
-  console.log("in profile pic email ", JSON.stringify(email));
+  // console.log("in profile pic ", JSON.stringify(image));
+  // console.log("in profile pic email ", JSON.stringify(email));
   return async (dispatch) => {
     try {
       const formData = new FormData();
@@ -13,8 +13,8 @@ export const uploadProfilePicImage = (image, email) => {
       const res = await axios.post("/images/image-upload", formData);
       const imageData = await res.data;
       const singleImageData = imageData[0];
-      console.log("image data: ", JSON.stringify(imageData));
-      console.log("single image: ", JSON.stringify(singleImageData));
+      // console.log("image data: ", JSON.stringify(imageData));
+      // console.log("single image: ", JSON.stringify(singleImageData));
       dispatch(addProfilePic(singleImageData, email));
       // dispatch(get());
     } catch (error) {
@@ -28,16 +28,18 @@ export const uploadProfilePicImage = (image, email) => {
 };
 
 export const addProfilePic = (uploadedImage, userEmail) => {
-  console.log("image", uploadedImage.secure_url);
+  // console.log("image", uploadedImage.secure_url);
   return async (dispatch) => {
     try {
       const params = {
         image: uploadedImage.secure_url,
       };
       const res = await axios.put(`/userProfilePic/add/${userEmail}`, params);
-      const updatedUserInfo = await res.data;
-      console.log("updatedUserInfo:", updatedUserInfo);
-      dispatch(updateUserInfo(updatedUserInfo));
+      // const res2 = await axios.put(`/userProfilePic/updatePost/${userEmail}`, params);
+      const allUserData = await res.data;
+      const userProfilePic = allUserData.userUploadedPic;
+      console.log("user pic:", userProfilePic);
+      dispatch(updateUserInfo(userProfilePic));
     } catch (error) {
       console.log("Error: ", error);
       toast.error("API error", {
@@ -48,14 +50,41 @@ export const addProfilePic = (uploadedImage, userEmail) => {
   };
 };
 
-// just to test endpoints
-export const get = () => {
+// // just to test endpoints
+// export const get = () => {
+//   return async (dispatch) => {
+//     try {
+//       const res = await axios.get("/userProfilePic/");
+
+//       const allPosts = await res.data;
+//       // console.log("check data get", JSON.stringify(allPosts));
+//     } catch (error) {
+//       console.log("Error: ", error);
+//       toast.error("API error", {
+//         position: toast.POSITION.TOP_RIGHT,
+//         autoClose: 3000,
+//       });
+//     }
+//   };
+// };
+
+export const getProfilePic = () => {
   return async (dispatch) => {
     try {
-      const res = await axios.get("/userProfilePic/");
+      const userData = await axios.get("/auth/user");
+      // console.log("check email", JSON.stringify(userData.data.email));
 
-      const allPosts = await res.data;
-      console.log("check data get", JSON.stringify(allPosts));
+      const res = await axios.get("/userProfilePic/", {
+        params: {
+          email: userData.data.email,
+        },
+      });
+
+      const allUserData = await res.data;
+      // console.log("check all data", JSON.stringify(allUserData));
+      const userProfilePic = allUserData.userUploadedPic;
+      // console.log("check data get", JSON.stringify(userProfilePic));
+      dispatch(updateUserInfo(userProfilePic));
     } catch (error) {
       console.log("Error: ", error);
       toast.error("API error", {
@@ -66,11 +95,9 @@ export const get = () => {
   };
 };
 
-export const updateUserInfo = (updatedUserInfo) => {
-  // console.log("this is to message list: " + JSON.stringify(newPosting));
-  // console.log("in addNewFoodPic: " + JSON.stringify(newFoodPicPost));
+export const updateUserInfo = (userProfilePic) => {
   return {
     type: "ADD_PROFILE_PIC",
-    payload: updatedUserInfo,
+    payload: userProfilePic,
   };
 };

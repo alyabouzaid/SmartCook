@@ -26,10 +26,6 @@ const foodPicPostSchema = new Schema(
           type: String,
           default: "",
         },
-        postedByUploadedPic: {
-          type: String,
-          default: "",
-        },
       },
     ],
     postedByFirstName: { type: String },
@@ -39,11 +35,6 @@ const foodPicPostSchema = new Schema(
       type: String,
       default: "",
     },
-    postedByUploadedPic: {
-      type: String,
-      default: "",
-    },
-
     dateTime: { type: String },
   },
   { timestamps: true }
