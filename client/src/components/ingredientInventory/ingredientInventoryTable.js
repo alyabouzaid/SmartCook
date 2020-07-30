@@ -521,7 +521,7 @@ export default function IngredientInventoryTable(props) {
           style={{ marginLeft: 10, float: "left" }}
         >
           <FormControlLabel
-            control={<Switch checked={dense} onChange={handleChangeDense} />}
+            control={<Switch color="primary" checked={dense} onChange={handleChangeDense} />}
             label="Dense padding"
           />
         </div>
