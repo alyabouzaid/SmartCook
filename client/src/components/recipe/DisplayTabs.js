@@ -3,7 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import PhoneIcon from '@material-ui/icons/Phone';
+import BeenhereOutlinedIcon from '@material-ui/icons/BeenhereOutlined';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import PersonPinIcon from '@material-ui/icons/PersonPin';
 
@@ -37,7 +37,7 @@ export default function DisplayTabs({switchHandler}) {
                 textColor="primary"
                 aria-label="icon label tabs example"
             >
-                <Tab icon={<PhoneIcon />} label="New Recommendation" />
+                <Tab icon={<BeenhereOutlinedIcon />} label="New Recommendation" />
                 <Tab icon={<FavoriteIcon />} label="Saved Recipes" />
                 <Tab icon={<PersonPinIcon />} label="Most Popular" />
             </Tabs>

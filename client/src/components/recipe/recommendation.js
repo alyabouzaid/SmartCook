@@ -14,7 +14,7 @@ import { withStyles } from "@material-ui/core/styles";
 import compose from "recompose/compose";
 import IngredientList from "./IngredientList";
 import { initialData } from "../../actions/ingredientInventoryActions";
-import { loadRecipesData, addNewRecipeData} from "../../actions/recipesAction";
+import { loadRecipesData, addNewRecipeData, deleteOneRecipeData} from "../../actions/recipesAction";
 import CategoryList from "./CategoryList";
 import FilterSearchBar from "./FilterSearchBar";
 import RecipeInfo from "./RecipeInfo";
@@ -97,17 +97,18 @@ class Recommendation extends React.Component {
   };
 
   displayData = () => {
-    // return <div>{JSON.stringify(this.props.allPostLoading)}</div>;
     const data = this.props.recommendation[this.state.switch];
     const sliceData = data.slice(
       this.state.offset,
       this.state.offset + this.state.perPage
     );
-    // return <div>{JSON.stringify(sliceData[0])}</div>;
     return sliceData.map((recipe) => {
       return (
         <Grid item xs={12} sm={6} md={4}>
-          <RecipeInfo recipe={recipe} userInfo={this.props.userInfo} saveRecipe={this.props.addNewRecipeData} />
+          <RecipeInfo recipe={recipe} userInfo={this.props.userInfo}
+                      saveRecipe={this.props.addNewRecipeData} switchDisplay={this.state.switch}
+                      deleteRecipe={this.props.deleteOneRecipeData}
+          />
         </Grid>
       );
     });
@@ -188,11 +189,6 @@ class Recommendation extends React.Component {
                     spacing={3}
                   >
                     <Grid container item xs={12} spacing={3} justify="center">
-                      {/* {this.props.recommendation["hits"].map((recipe) => (
-                        <Grid item xs={12} sm={6} md={4}>
-                          <RecipeInfo recipe={recipe} />
-                        </Grid>
-                      ))} */}
                       {this.displayData()}
                     </Grid>
                   </Grid>
@@ -240,6 +236,7 @@ export default compose(
     loadUserData,
     initialData,
     loadRecipesData,
-    addNewRecipeData
+    addNewRecipeData,
+    deleteOneRecipeData
   })
 )(Recommendation);
