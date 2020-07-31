@@ -28,13 +28,8 @@ router.post("/recommendation", (req, res) => {
   const ingredients = req.body.ingredients;
   const filter = req.body.filter;
   getRecommendation(ingredients, filter)
-    // .then((results) => {console.log("666666666666666666") ; return fetch('https://api.edamam.com/api/food-database/v2/parser?nutrition-type=logging&ingr=2%20red%20apple&app_id=bcf76032&app_key=935b4ba268d89ad8e604ad7e26c4187e')
-    .then(result2 => {
-      console.log("7777777777777"); 
-      // console.log(result2.json());
-      return result2.json()})
-    // })
-    // .then((results) => results.json())
+    .then(result => {
+      return result.json()})
     .then((results) => {
       console.log(results);
       res.json(results);
@@ -42,18 +37,36 @@ router.post("/recommendation", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-router.get("/:email", (req, res) => {
+router.get("/users/:email", (req, res) => {
   recipes.find({email: req.params.email})
       .then((journals) => res.send(journals))
       .catch((err) => res.status(400).json("Error: " + err));
 });
 
 router.post("/add", (req, res) => {
-  const email = req.body.email;
-  const recipe = req.body.recipe;
 
+  const rq = req.body.recipe;
+  const email = req.body.email;
+  const recipe = {
+      uri: rq.uri,
+      label: rq.label,
+      image: rq.image,
+      source: rq.source,
+      url: rq.url,
+      sharedAs: rq.sharedAs,
+      yield: rq.yield,
+      dietLabels: rq.dietLabels,
+      healthLabels: rq.healthLabels,
+      ingredientLines: rq.ingredientLines,
+      ingredients: rq.ingredients,
+      calories: rq.calories,
+      totalWeight: rq.totalWeight,
+      totalTime: rq.totalTime
+  };
+  const name = rq.label;
   const newRecipe = new recipes({
     email,
+    name,
     recipe,
   });
 
@@ -82,6 +95,26 @@ router.delete("/deleteall", (req, res) => {
       .remove({})
       .then(() => res.json("All Postings are deleted."))
       .catch((err) => res.status(400).json("Error: " + err));
+});
+
+router.get("/popular", (req, res) => {
+  recipes.find({})
+      .then((recipes) => {
+         let dict = {};
+         for(const recipe of recipes){
+            if(!dict[recipe.name]){
+               dict[recipe.name] = recipe;
+               dict[recipe.name]["count"] = 0;
+            }
+            dict[recipe.name]["count"]++;
+         }
+         let rets = Object.values(dict).sort((a, b) => (a["count"] - b["count"]));
+         if(rets.length > 50){
+           rets = rets.slice(0, 50);
+         }
+         res.json(rets);
+      })
+      .catch((err) => {res.status(400).json("Error: " + err); console.log(err);});
 });
 
 module.exports = router;
