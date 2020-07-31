@@ -77,7 +77,6 @@ export default function RecipeInfo({ingredientInventory, getRecipeIngredients, r
 
     const handleClickDone = (event) => {
         getRecipeIngredients(recipe)
-        console.log(ingredientInventory)
     };
 
 
@@ -158,7 +157,7 @@ export default function RecipeInfo({ingredientInventory, getRecipeIngredients, r
                             </IconButton>
                         </Tooltip>
 
-                        {switchDisplay === "hits" &&
+                        {(switchDisplay === "hits" || switchDisplay === "popular") &&
                         <Tooltip title="Click to save recipe to favourites" placement="top" arrow>
                             <IconButton aria-label="share" onClick={() => saveRecipe(recipe, userInfo)}>
                                 <FavoriteBorderOutlinedIcon size="small"/>

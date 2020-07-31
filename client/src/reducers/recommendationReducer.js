@@ -1,6 +1,7 @@
 const initialState = {
         hits: [],
         recipes: [],
+        popular: [],
 };
 
 export default function recommendationReducer(state = initialState, action){
@@ -11,6 +12,8 @@ export default function recommendationReducer(state = initialState, action){
             return {...state, recipes: [...state.recipes, action.payload]};
         case 'RECIPES_LOAD':
             return {...state, recipes: action.payload};
+        case 'RECIPES_POPULAR':
+            return {...state, popular: action.payload};
         case 'RECIPES_DELETE_ONE':
             return {...state, recipes: state.recipes.filter((recipe) => recipe._id !== action.payload)};
         case 'CLEAR_RECOMMENDATION':

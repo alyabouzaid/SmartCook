@@ -25,6 +25,8 @@ export default function DisplayTabs({switchHandler}) {
             switchHandler("hits");
         }else if (newValue === 1){
             switchHandler("recipes");
+        }else if (newValue === 2){
+            switchHandler("popular");
         }
     };
 

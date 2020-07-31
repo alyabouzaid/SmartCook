@@ -15,7 +15,7 @@ import { withStyles } from "@material-ui/core/styles";
 import compose from "recompose/compose";
 import IngredientList from "./IngredientList";
 import { initialData } from "../../actions/ingredientInventoryActions";
-import { loadRecipesData, addNewRecipeData, deleteOneRecipeData} from "../../actions/recipesAction";
+import { loadRecipesData, loadRecipesPopularData, addNewRecipeData, deleteOneRecipeData} from "../../actions/recipesAction";
 import CategoryList from "./CategoryList";
 import FilterSearchBar from "./FilterSearchBar";
 import RecipeInfo from "./RecipeInfo";
@@ -81,6 +81,7 @@ class Recommendation extends React.Component {
   componentDidMount() {
     this.props.initialData();
     this.props.loadRecipesData(this.props.userInfo.email);
+    this.props.loadRecipesPopularData();
   }
 
   handleSwitchEnum = (s) => {
@@ -291,6 +292,7 @@ export default compose(
     initialData,
     getRecipeIngredients,
     loadRecipesData,
+    loadRecipesPopularData,
     addNewRecipeData,
     deleteOneRecipeData,
   })
