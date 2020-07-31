@@ -9,10 +9,11 @@ import FoodPicturesPost from "./foodPicturesPost";
 // import Pagination from "@material-ui/lab/Pagination";
 import SPagination from "simple-react-pagination-js";
 import "simple-react-pagination-js/build/style.css"; // import css
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import Tooltip from "@material-ui/core/Tooltip";
+import FoodPicturesAnnouncement from "./foodPicturesAnnouncement";
 
 const useStyles = (theme) => ({
   pagination: {
@@ -99,41 +100,43 @@ class FoodPicturesAllPost extends React.Component {
         </div>
 
         <p
-            style={{
-              textAlign: "left",
-              backgroundColor: "transparent",
-              margin: "3",
-              fontSize: "24px",
-            }}
+          style={{
+            textAlign: "left",
+            backgroundColor: "transparent",
+            margin: "3",
+            fontSize: "24px",
+          }}
         />
 
         <Link
-            to={"/foodPicNewPost"}
-            style={{textDecoration: "none", color: "inherit"}}
+          to={"/foodPicNewPost"}
+          style={{ textDecoration: "none", color: "inherit" }}
         >
-          <label htmlFor="icon-button-file" style={{justifyContent: "right"}}>
-              <Tooltip title="Click to create new post" arrow>
-            <IconButton
+          <label htmlFor="icon-button-file" style={{ justifyContent: "right" }}>
+            <Tooltip title="Click to create new post" arrow>
+              <IconButton
                 aria-label="upload picture"
                 component="span"
                 color="black"
-                style={{position: "fixed", right: "5%"}}
-            >
-              <AddIcon size="large" style={{width: 60, height: 60}}/>
-            </IconButton>
-              </Tooltip>
+                style={{ position: "fixed", right: "5%" }}
+              >
+                <AddIcon size="large" style={{ width: 60, height: 60 }} />
+              </IconButton>
+            </Tooltip>
           </label>
         </Link>
         <p
-            style={{
-              textAlign: "left",
-              backgroundColor: "transparent",
-              margin: "3",
-              fontSize: "24px",
-            }}
+          style={{
+            textAlign: "left",
+            backgroundColor: "transparent",
+            margin: "3",
+            fontSize: "24px",
+          }}
         />
 
         {this.displayData()}
+
+        <FoodPicturesAnnouncement />
 
         <div className={classes.pagination}>
           <SPagination

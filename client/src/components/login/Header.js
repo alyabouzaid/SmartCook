@@ -22,6 +22,7 @@ import Toggle from "./Toggle";
 import IconButton from "@material-ui/core/IconButton";
 import SettingsIcon from "@material-ui/icons/Settings";
 import Settings from "./settings";
+import pic from "./smartcookLogo.png";
 
 const useStyles = (theme) => ({
   appbar: {
@@ -120,9 +121,10 @@ class Header extends React.Component {
     return (
       <AppBar className={classes.appbar} color="secondary">
         <Toolbar className={classes.toolbar}>
+          <img src={pic} style={{ width: 50, height: 50 }}></img>
           <Typography
-            style={{ textAlign: "left" }}
-            variant="h5"
+            style={{ textAlign: "left", fontFamily: "Grand Hotel" }}
+            variant="h4"
             className={classes.websiteTitle}
           >
             <Link

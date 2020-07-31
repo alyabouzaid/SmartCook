@@ -46,7 +46,7 @@ export default function GridPost(props) {
               variant="h4"
               component="h2"
               color="inherit"
-              style={{ color: "#4db6ac" }}
+              style={{ color: "#4db6ac", fontFamily: "Grand Hotel" }}
             >
               {props.content.header}
             </Typography>

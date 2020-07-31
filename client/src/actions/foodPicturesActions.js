@@ -180,6 +180,7 @@ export const getFeaturedFoodPicPost = () => {
       const res = await axios.get("/foodPictures/featuredPost");
 
       const featuredPosts = await res.data;
+      console.log("check pics within one week ", featuredPosts);
       dispatch(loadFeaturedPicPost(featuredPosts));
     } catch (error) {
       console.log("Error: ", error);

@@ -13,6 +13,7 @@
     "axios": "^0.19.2",
     "dotenv": "^8.2.0",
     "react": "^16.13.1",
+    "react-announcement": "^1.1.2",
     "react-dom": "^16.13.1",
     "react-draggable": "^4.4.3",
     "react-elastic-carousel": "^0.6.4",

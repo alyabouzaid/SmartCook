@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
-    height: 320,
+    height: 350,
   },
   mainCardTitle: {
     paddingTop: 50,

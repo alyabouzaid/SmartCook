@@ -19,7 +19,10 @@ router.get("/allPost", (req, res) => {
 // get highest like post (feature post)
 router.get("/featuredPost", (req, res) => {
   foodPicturePost
-    .find()
+    // .find()
+    .find({
+      createdAt: { $gte: new Date(new Date() - 7 * 60 * 60 * 24 * 1000) },
+    })
     .sort("-likesLength")
     .limit(3)
     .then((posts) => res.status(200).json(posts))
