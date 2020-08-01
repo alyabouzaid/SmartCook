@@ -5,8 +5,11 @@ const Schema = mongoose.Schema;
 
 const usersSchema = new Schema(
   {
-    email: { type: String },
-    recipe: { type: Object },
+    email: String,
+    name: String,
+    recipe: {uri: String,  label: String, image: String, source: String, url: String, sharedAs: String,
+    yield: Number, dietLabels: Array, healthLabels: Array, ingredientLines: Array,
+    ingredients: Array, calories: Number, totalWeight: Number, totalTime: Number},
   },
   {
     timestamps: true,

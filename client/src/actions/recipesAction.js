@@ -2,13 +2,26 @@ import { toast } from 'react-toastify';
 
 export const loadRecipesData = (email) => {
     return async dispatch => {
-        fetch(`/recipes/${email}`, {
+        fetch(`/recipes/users/${email}`, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
         })
             .then((res) => res.json())
             .then((res) => {
                 dispatch(loadRecipes(res));
+            })
+    }
+};
+
+export const loadRecipesPopularData = () => {
+    return async dispatch => {
+        fetch('/recipes/popular', {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'},
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                dispatch(loadRecipesPopular(res));
             })
     }
 };
@@ -30,7 +43,11 @@ export const addNewRecipeData = (recipe, userInfo) => {
                     position: toast.POSITION.TOP_CENTER,
                     autoClose: 3000
                 });
-            })
+            }).catch((err) => {
+                toast.error(err, {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 3000})
+        })
     }
 };
 
@@ -50,6 +67,13 @@ export const deleteOneRecipeData = (id) => {
 export const loadRecipes = (recipes) => {
     return {
         type: 'RECIPES_LOAD',
+        payload: recipes
+    };
+};
+
+export const loadRecipesPopular = (recipes) => {
+    return {
+        type: 'RECIPES_POPULAR',
         payload: recipes
     };
 };
