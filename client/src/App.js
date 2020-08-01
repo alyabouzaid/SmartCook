@@ -77,7 +77,7 @@ class App extends React.Component {
             <Route path="/foodPicFeatured" component={FeaturedPostCarousel} />
             <Route path="/settings" component={Settings} />
           </Switch>
-          <Footer />
+          {/*<Footer />*/}
         </div>
       </ThemeProvider>
     );

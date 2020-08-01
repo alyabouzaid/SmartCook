@@ -13,6 +13,7 @@ import {
   getAllFoodPicPost,
 } from "../../actions/foodPicturesActions";
 import compose from "recompose/compose";
+import Footer from "../footer/footer";
 
 const useStyles = (theme) => ({
   rootContainer: {
@@ -144,6 +145,7 @@ class FoodPicturesCreatePost extends React.Component {
             </Button>
           </Card>
         </div>
+        <Footer/>
       </div>
     );
   }
