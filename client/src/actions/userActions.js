@@ -6,7 +6,7 @@ export const loadUserData = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         dispatch(loadUserInfo(res));
       });
   };

@@ -19,10 +19,11 @@ import Tooltip from "@material-ui/core/Tooltip";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from '@material-ui/icons/Edit';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
+import EditIcon from "@material-ui/icons/Edit";
+import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
 import TextField from "@material-ui/core/TextField";
+import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 
 import FilterListIcon from "@material-ui/icons/FilterList";
@@ -55,11 +56,15 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  {id: "description",numeric: false,disablePadding: false,label: "Ingredients"},
+  {
+    id: "description",
+    numeric: false,
+    disablePadding: false,
+    label: "Ingredients",
+  },
   { id: "category", numeric: false, disablePadding: false, label: "Category" },
   { id: "amount", numeric: true, disablePadding: false, label: "Amount" },
   // { id: "edit", numeric: true, disablePadding: false, label: "Edit" },
-
 ];
 
 function EnhancedTableHead(props) {
@@ -123,84 +128,6 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-// const useToolbarStyles = makeStyles((theme) => ({
-//   root: {
-//     paddingLeft: theme.spacing(2),
-//     paddingRight: theme.spacing(1),
-//   },
-//   highlight:
-//     theme.palette.type === "light"
-//       ? {
-//           color: theme.palette.secondary.main,
-//           backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-//         }
-//       : {
-//           color: theme.palette.text.primary,
-//           backgroundColor: theme.palette.secondary.dark,
-//         },
-//   title: {
-//     color: "black",
-//   },
-// }));
-
-// const EnhancedTableToolbar = (props) => {
-//   const classes = useToolbarStyles();
-//   const { numSelected } = props;
-//   const { rowIndexToDel } = props;
-//   const { delFunc } = props;
-
-//   return (
-//     <Toolbar
-//       className={clsx(classes.root, {
-//         [classes.highlight]: numSelected > 0,
-//       })}
-//     >
-//       {/* {numSelected > 0 ? (
-//         <Typography
-//           className={classes.title}
-//           //   color="black"
-//           variant="subtitle1"
-//           component="div"
-//         >
-//           {numSelected} item selected
-//         </Typography>
-//       ) : // Need to change this
-//       <Typography
-//         className={classes.title}
-//         variant="h6"
-//         id="tableTitle"
-//         component="div"
-//       >
-//         Nutrition
-//       </Typography>
-//       null} */}
-
-//       {/* {numSelected > 0 ? (
-//         <Tooltip title="Delete">
-//           <IconButton
-//             aria-label="delete"
-//             onClick={() => {
-//               delFunc({ rowIndexToDel });
-//             }}
-//           >
-//             <DeleteIcon />
-//           </IconButton>
-//         </Tooltip>
-//       ) : // need to change this
-//       <Tooltip title="Filter list">
-//         <IconButton aria-label="filter list">
-//           <FilterListIcon />
-//         </IconButton>
-//       </Tooltip>
-//       null} */}
-//     </Toolbar>
-//   );
-// };
-
-// EnhancedTableToolbar.propTypes = {
-//   numSelected: PropTypes.number.isRequired,
-// };
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -223,11 +150,20 @@ const useStyles = makeStyles((theme) => ({
     top: 20,
     width: 1,
   },
-  icon: {
-    flexGrow: 1,
-    textAlign: 'center',
-    paddingTop: theme.spacing(3),
+  editAmountPanel: {
+    display: "inline-block",
+    float: "center",
+    marginTop: 35,
   },
+  toggleDense: {
+    marginLeft: 10,
+    float: "left",
+    marginTop: 35,
+  },
+  // bottomContainer: {
+  //   display: "flex",
+  //   textAlign: "center",
+  // },
 }));
 
 // {
@@ -245,8 +181,7 @@ const useStyles = makeStyles((theme) => ({
 //       });
 //   }
 
-let amountEdit=0
-
+let amountEdit = 0;
 
 export default function IngredientInventoryTable(props) {
   const classes = useStyles();
@@ -302,10 +237,7 @@ export default function IngredientInventoryTable(props) {
     }
 
     setSelected(newSelected);
-
   };
-
-
 
   const handleClickKey = (event, name, rowIndex) => {
     const selectedIndex = selectedEdit.indexOf(name);
@@ -328,7 +260,6 @@ export default function IngredientInventoryTable(props) {
     }
 
     setSelectedEdit(newSelected);
-
   };
 
   const handleChangePage = (event, newPage) => {
@@ -344,10 +275,9 @@ export default function IngredientInventoryTable(props) {
     setDense(event.target.checked);
   };
 
-
   const handleChangeEdit = (event) => {
-    amountEdit = event.target.value
-    console.log(amountEdit)
+    amountEdit = event.target.value;
+    console.log(amountEdit);
   };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
@@ -389,10 +319,10 @@ export default function IngredientInventoryTable(props) {
                   return (
                     <TableRow
                       hover
-                      onClick={(event) =>
-                       { handleClickDescription(event, row.description, row.key)
-                        handleClickKey(event, row.key, row.key)}
-                      }
+                      onClick={(event) => {
+                        handleClickDescription(event, row.description, row.key);
+                        handleClickKey(event, row.key, row.key);
+                      }}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -403,8 +333,7 @@ export default function IngredientInventoryTable(props) {
                         <Checkbox
                           checked={isItemSelected}
                           inputProps={{ "aria-labelledby": labelId }}
-                          color= "primary"
-
+                          color="primary"
                         />
                       </TableCell>
                       <TableCell
@@ -420,51 +349,6 @@ export default function IngredientInventoryTable(props) {
                       <TableCell align="right" style={{ marginRight: 20 }}>
                         {row.amount}
                       </TableCell>
-
-                      {/* {edit ? (
-                      <TableCell component="th" scope="row" align="center">
-                          <TextField
-                            // label="Amount"
-                            // variant="filled"
-                            type="text"
-                            id = {`amountEdit-${index}`}
-                            style={{ width: 100 }}
-                            //   name="fname"
-                          />
-
-                          <IconButton aria-label="add">
-                            <AddIcon
-                              onClick={() => {
-                                props.onEdit([row.description],Number(document.getElementById(`amountEdit-${index}`).value));
-                               }}
-                            />
-
-                          </IconButton>
-
-                          <IconButton aria-label="remove">
-
-                            <RemoveIcon
-                              onClick={() => {
-                                props.onEdit([row.description],-Number(document.getElementById(`amountEdit-${index}`).value));
-                               }}
-                            />
-
-                          </IconButton>
-
-                        <IconButton aria-label="delete">
-
-                            <DeleteIcon
-                              onClick={() => {
-                                 props.onDelete([row.key]);
-                              }}
-                            />
-                          </IconButton>
-
-                          
-                        </TableCell>
-
-                      ) : null} */}
-
                     </TableRow>
                   );
                 })}
@@ -477,69 +361,100 @@ export default function IngredientInventoryTable(props) {
           </Table>
         </TableContainer>
 
-        <Container className={classes.icon}>
+        {/* <Container className={classes.editAmountPanel}> */}
+        {/* <Box display="flex" justifyContent="left" m={1} p={1}>
+          <Box className={classes.editAmountPanel}> */}
+        {/* <div className={classes.editAmountPanel}>
           <Tooltip title="Enter amount" arrow>
-                          <TextField
-                            type="text"
-                            id="amountEdit"
-                            style={{ width: 100 }}
-                            onChange={handleChangeEdit}
-                          />
+            <TextField
+              type="text"
+              id="amountEdit"
+              style={{ width: 100 }}
+              onChange={handleChangeEdit}
+            />
           </Tooltip>
           <Tooltip title="Add amount to selected items">
-                          <IconButton aria-label="add">
-                            <AddIcon
-                              onClick={() => {
-                                props.onEdit(selected,Number(amountEdit))
-                               }}
-                            />
-
-                          </IconButton>
+            <IconButton aria-label="add">
+              <AddIcon
+                onClick={() => {
+                  props.onEdit(selected, Number(amountEdit));
+                }}
+              />
+            </IconButton>
           </Tooltip>
           <Tooltip title="Subtract amount from selected items">
-                          <IconButton aria-label="remove">
-
-                            <RemoveIcon
-                              onClick={() => {
-                                props.onEdit(selected,-Number(amountEdit))
-                               }}
-                            />
-
-                          </IconButton>
+            <IconButton aria-label="remove">
+              <RemoveIcon
+                onClick={() => {
+                  props.onEdit(selected, -Number(amountEdit));
+                }}
+              />
+            </IconButton>
           </Tooltip>
           <Tooltip title="Delete selected items">
-                        <IconButton aria-label="delete">
-
-                            <DeleteIcon
-                              onClick={() => {
-                                props.onDelete(selectedEdit)
-                              }}
-                            />
-                          </IconButton>
+            <IconButton aria-label="delete">
+              <DeleteIcon
+                onClick={() => {
+                  props.onDelete(selectedEdit);
+                }}
+              />
+            </IconButton>
           </Tooltip>
-        </Container>
-        {/* <div
-          className={classes.toggleEdit}
-          style={{ marginLeft: 10, float: "left" }}
-        >
-          <FormControlLabel
-            control={<Switch checked={edit} onChange={handleChangeEdit} />}
-            label="Edit mode"
-          />
         </div> */}
+        {/* </Box> */}
+        {/* </Container> */}
 
-        <div
-          className={classes.toggleDense}
-          style={{ marginLeft: 10, float: "left" }}
-        >
+        <div className={classes.toggleDense}>
           <FormControlLabel
-            control={<Switch color="primary" checked={dense} onChange={handleChangeDense} />}
+            control={
+              <Switch
+                color="primary"
+                checked={dense}
+                onChange={handleChangeDense}
+              />
+            }
             label="Dense padding"
           />
         </div>
+        {/* </Box> */}
 
-        
-
+        <div className={classes.editAmountPanel}>
+          <Tooltip title="Enter amount" arrow>
+            <TextField
+              type="text"
+              id="amountEdit"
+              style={{ width: 100 }}
+              onChange={handleChangeEdit}
+            />
+          </Tooltip>
+          <Tooltip title="Add amount to selected items">
+            <IconButton aria-label="add">
+              <AddIcon
+                onClick={() => {
+                  props.onEdit(selected, Number(amountEdit));
+                }}
+              />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Subtract amount from selected items">
+            <IconButton aria-label="remove">
+              <RemoveIcon
+                onClick={() => {
+                  props.onEdit(selected, -Number(amountEdit));
+                }}
+              />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Delete selected items">
+            <IconButton aria-label="delete">
+              <DeleteIcon
+                onClick={() => {
+                  props.onDelete(selectedEdit);
+                }}
+              />
+            </IconButton>
+          </Tooltip>
+        </div>
 
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}

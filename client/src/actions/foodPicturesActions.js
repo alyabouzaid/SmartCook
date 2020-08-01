@@ -225,11 +225,6 @@ export const addLike = (idPayload, email, name) => {
           autoClose: 3000,
         });
       }
-      // console.log("error", error);
-      // toast.error("API error", {
-      //   position: toast.POSITION.TOP_RIGHT,
-      //   autoClose: 3000,
-      // });
     }
   };
 };

@@ -26,8 +26,6 @@ import pic from "./smartcookLogo.png";
 
 const useStyles = (theme) => ({
   appbar: {
-    // backgroundColor: "#e0f2f1",
-    // "#e3f2fd",
     color: "secondary",
     position: "sticky",
   },
@@ -63,7 +61,6 @@ const StyledMenu = withStyles({
 const StyledMenuItem = withStyles((theme) => ({
   root: {
     "&:focus": {
-      // backgroundColor: theme.palette.primary.main,
       "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
         color: theme.palette.primary.main,
       },
@@ -74,14 +71,6 @@ const StyledMenuItem = withStyles((theme) => ({
     },
     justifyContent: "center",
   },
-  // root: {
-  //   "&:focus": {
-  //     backgroundColor: theme.palette.primary.main,
-  //     "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
-  //       color: theme.palette.common.white,
-  //     },
-  //   },
-  // },
 }))(MenuItem);
 
 class Header extends React.Component {

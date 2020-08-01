@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { Link } from "react-router-dom";
+import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles(() => ({
   card: {
@@ -19,10 +20,10 @@ const useStyles = makeStyles(() => ({
       },
     },
   },
-  // title: {
-  //   marginBottom: 16,
-  //   fontSize: 14,
-  // },
+  contentHeader: {
+    color: "#4db6ac",
+    fontFamily: "Grand Hotel",
+  },
   pos: {
     marginBottom: 12,
   },
@@ -33,32 +34,43 @@ export default function GridPost(props) {
 
   return (
     <div>
-      <Card className={classes.card} variant="outline" p={1}>
-        <CardContent>
-          <Link
-            to={props.content.link}
-            style={{
-              textDecoration: "none",
-              color: "inherit",
-            }}
-          >
-            <Typography
-              variant="h4"
-              component="h2"
-              color="inherit"
-              style={{ color: "#4db6ac", fontFamily: "Grand Hotel" }}
-            >
-              {props.content.header}
+      {props.isAuthenticated ? (
+        <Card className={classes.card} variant="outline" p={1}>
+          <CardContent>
+            <Box display="flex" justifyContent="center" m={1} p={1}>
+              <Link
+                to={props.content.link}
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                }}
+              >
+                <Box style={{ marginLeft: 10 }}>{props.content.icon}</Box>
+              </Link>
+            </Box>
+
+            <Typography variant="h5" color="inherit" paragraph>
+              {props.content.title}
             </Typography>
-          </Link>
 
-          <Typography variant="h5" color="inherit" paragraph>
-            {props.content.title}
-          </Typography>
+            <Typography component="p">{props.content.description}</Typography>
+          </CardContent>
+        </Card>
+      ) : (
+        <Card className={classes.card} variant="outline" p={1}>
+          <CardContent>
+            <Box display="flex" justifyContent="center" m={1} p={1}>
+              <Box style={{ marginLeft: 10 }}>{props.content.icon}</Box>
+            </Box>
 
-          <Typography component="p">{props.content.description}</Typography>
-        </CardContent>
-      </Card>
+            <Typography variant="h5" color="inherit" paragraph>
+              {props.content.title}
+            </Typography>
+
+            <Typography component="p">{props.content.description}</Typography>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }

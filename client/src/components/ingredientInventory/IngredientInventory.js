@@ -8,7 +8,7 @@ import {
   deleteIngredient,
   initialData,
   addingIngredient,
-  editingIngredient
+  editingIngredient,
 } from "../../actions/ingredientInventoryActions";
 
 import Container from "@material-ui/core/Container";
@@ -17,8 +17,7 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import IngredientInventoryTable from "./ingredientInventoryTable";
 
-
- let filterOptionsMain = [
+let filterOptionsMain = [
   "Dairy",
   "Fruits",
   "Grains",
@@ -27,13 +26,11 @@ import IngredientInventoryTable from "./ingredientInventoryTable";
   "Vegetables",
 ];
 
-let filterOptions = []
+let filterOptions = [];
 
-
-let amount=0
-let inventory = ""
-let category = ""
-
+let amount = 0;
+let inventory = "";
+let category = "";
 
 const useStyles = (theme) => ({
   root: {
@@ -42,11 +39,14 @@ const useStyles = (theme) => ({
     textAlign: "center",
     justifyContent: "center",
     marginTop: 20,
-    marginBottom: 30,
+    marginBottom: 50,
   },
   buttons: {
     marginTop: 10,
     marginBottom: 25,
+  },
+  inventoryTable: {
+    marginTop: 30,
   },
 });
 
@@ -56,8 +56,6 @@ class IngredientInventory extends React.Component {
   }
 
   addItem() {
-
-
     let key = 0;
     if (this.props.ingredientInventory.length > 0) {
       key =
@@ -66,38 +64,52 @@ class IngredientInventory extends React.Component {
         ].key + 1;
     }
 
-    let allIngredientsArray = this.props.ingredientInventory.map(item=>item.description)
+    let allIngredientsArray = this.props.ingredientInventory.map(
+      (item) => item.description
+    );
 
-    if(!(inventory==="" || allIngredientsArray.includes(inventory)) ){
-    this.props.addingIngredient({
-      email: this.props.userInfo.email,
-      inventory: [
-        {
-          key: key,
-          description: inventory,
-          amount: amount,
-          category: category,
-          targetAmount: 0,
-          selected: false,
-        },
-      ],
-    });
-  }
+    if (!(inventory === "" || allIngredientsArray.includes(inventory))) {
+      this.props.addingIngredient({
+        email: this.props.userInfo.email,
+        inventory: [
+          {
+            key: key,
+            description: inventory,
+            amount: amount,
+            category: category,
+            targetAmount: 0,
+            selected: false,
+          },
+        ],
+      });
+    }
   }
 
   setFilterCategories() {
-    filterOptions = filterOptionsMain.concat(this.props.ingredientInventory.map(item => item.category).filter(item => {
-      if(filterOptionsMain.includes(item)){return false}else{return true}
-    }))
+    filterOptions = filterOptionsMain.concat(
+      this.props.ingredientInventory
+        .map((item) => item.category)
+        .filter((item) => {
+          if (filterOptionsMain.includes(item)) {
+            return false;
+          } else {
+            return true;
+          }
+        })
+    );
 
-    let tempArray=[]
-    filterOptions = filterOptions.filter(item => {if(tempArray.includes(item)){return false}else{tempArray.push(item);return true}})
+    let tempArray = [];
+    filterOptions = filterOptions.filter((item) => {
+      if (tempArray.includes(item)) {
+        return false;
+      } else {
+        tempArray.push(item);
+        return true;
+      }
+    });
   }
 
-
   handleDelete = (rowIndex) => {
-
-
     this.props.deleteIngredient(
       {
         email: this.props.userInfo.email,
@@ -107,9 +119,7 @@ class IngredientInventory extends React.Component {
     );
   };
 
-  handleEdit= (rowDescription,rowAmount) => {
-
-
+  handleEdit = (rowDescription, rowAmount) => {
     this.props.editingIngredient(
       {
         email: this.props.userInfo.email,
@@ -120,20 +130,20 @@ class IngredientInventory extends React.Component {
     );
   };
 
-  handleOnChangeIngredient = event => {
-    inventory = event.target.value
+  handleOnChangeIngredient = (event) => {
+    inventory = event.target.value;
   };
 
-  handleOnChangeAmount = event => {
-    amount= event.target.value
+  handleOnChangeAmount = (event) => {
+    amount = event.target.value;
   };
 
-  handleOnChangeCategory = event => {
-    category= event.target.value
-  }
+  handleOnChangeCategory = (event) => {
+    category = event.target.value;
+  };
 
   updateFilters(newValue) {
-    category= newValue
+    category = newValue;
   }
 
   // TODO: temporary mock filters, replace with redux
@@ -143,12 +153,9 @@ class IngredientInventory extends React.Component {
 
     return (
       <div>
-        
         <Container text-align="center">
           <div className={classes.root}>
-
-          {this.setFilterCategories()}
-
+            {this.setFilterCategories()}
             <TextField
               label="Ingredient"
               type="text"
@@ -172,15 +179,17 @@ class IngredientInventory extends React.Component {
               getOptionLabel={(option) => option}
               debug
               renderInput={(params) => (
-                <TextField {...params} label="Category"   onChange={this.handleOnChangeCategory}
+                <TextField
+                  {...params}
+                  label="Category"
+                  onChange={this.handleOnChangeCategory}
                 />
               )}
               onChange={(event, newValue) => {
                 this.updateFilters(newValue);
-            }}
+              }}
             />
           </div>
-
 
           <div className={classes.buttons}>
             <Button
@@ -204,12 +213,14 @@ class IngredientInventory extends React.Component {
               CLEAR
             </Button>
           </div>
-          <IngredientInventoryTable
-            inventory={this.props.ingredientInventory}
-            onDelete={this.handleDelete}
-            onEdit={this.handleEdit}
-          />
-        
+
+          <div className={classes.inventoryTable}>
+            <IngredientInventoryTable
+              inventory={this.props.ingredientInventory}
+              onDelete={this.handleDelete}
+              onEdit={this.handleEdit}
+            />
+          </div>
         </Container>
       </div>
     );
@@ -220,12 +231,20 @@ const mapDispatchToProps = (dispatch) => {
   return {
     initialData: () => dispatch(initialData()),
     addingIngredient: (emailAndIngredientObject) =>
-    dispatch(addingIngredient(emailAndIngredientObject)),
+      dispatch(addingIngredient(emailAndIngredientObject)),
     clearIngredients: (email) => dispatch(clearIngredients(email)),
     deleteIngredient: (emailAndKeyObject, ingredientInventory) =>
-    dispatch(deleteIngredient(emailAndKeyObject, ingredientInventory)),
-    editingIngredient: (emailAndIngredientAndAmountObject,ingredientInventory)=>
-    dispatch(editingIngredient(emailAndIngredientAndAmountObject,ingredientInventory)),
+      dispatch(deleteIngredient(emailAndKeyObject, ingredientInventory)),
+    editingIngredient: (
+      emailAndIngredientAndAmountObject,
+      ingredientInventory
+    ) =>
+      dispatch(
+        editingIngredient(
+          emailAndIngredientAndAmountObject,
+          ingredientInventory
+        )
+      ),
   };
 };
 
