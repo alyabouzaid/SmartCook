@@ -17,6 +17,7 @@ import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import Tooltip from "@material-ui/core/Tooltip";
 import Box from "@material-ui/core/Box";
+import Footer from "../footer/footer";
 
 const useStyles = (theme) => ({
   post: {
@@ -147,6 +148,7 @@ class FoodPicturesMyPost extends React.Component {
             onSizeChange={this.handleOnSizeChange}
           />
         </div>
+        <Footer/>
       </div>
     );
   }

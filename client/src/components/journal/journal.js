@@ -18,8 +18,9 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { loadUserData } from "../../actions/userActions";
+import Footer from "../footer/footer";
 
-const useStyles = () => ({
+const useStyles = (theme) => ({
   root: {
     flexGrow: 1,
   },
@@ -30,6 +31,9 @@ const useStyles = () => ({
     justifyContent: "left", // aligns button to left of container
     fontSize: "16px",
   },
+    copyright: {
+        paddingTop: theme.spacing(3),
+    }
 });
 
 class Journal extends React.Component {
@@ -100,6 +104,9 @@ class Journal extends React.Component {
               Update Journal
             </Button>
           )}
+        <div className={classes.copyright}>
+          <Footer/>
+        </div>
         </div>
       </div>
     );

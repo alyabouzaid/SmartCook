@@ -16,6 +16,7 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import IngredientInventoryTable from "./ingredientInventoryTable";
+import Footer from "../footer/footer";
 
 let filterOptionsMain = [
   "Dairy",
@@ -222,6 +223,7 @@ class IngredientInventory extends React.Component {
             />
           </div>
         </Container>
+        <Footer/>
       </div>
     );
   }
