@@ -18,6 +18,7 @@ import compose from "recompose/compose";
 import { connect } from "react-redux";
 import { changeColor } from "./actions/colorActions";
 import Header from "./components/login/Header";
+import Footer from "./components/footer/footer";
 import Settings from "./components/login/settings";
 
 toast.configure();
@@ -76,6 +77,7 @@ class App extends React.Component {
             <Route path="/foodPicFeatured" component={FeaturedPostCarousel} />
             <Route path="/settings" component={Settings} />
           </Switch>
+          <Footer />
         </div>
       </ThemeProvider>
     );

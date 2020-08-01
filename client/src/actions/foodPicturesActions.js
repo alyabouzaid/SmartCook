@@ -180,6 +180,7 @@ export const getFeaturedFoodPicPost = () => {
       const res = await axios.get("/foodPictures/featuredPost");
 
       const featuredPosts = await res.data;
+      console.log("check pics within one week ", featuredPosts);
       dispatch(loadFeaturedPicPost(featuredPosts));
     } catch (error) {
       console.log("Error: ", error);
@@ -224,11 +225,6 @@ export const addLike = (idPayload, email, name) => {
           autoClose: 3000,
         });
       }
-      // console.log("error", error);
-      // toast.error("API error", {
-      //   position: toast.POSITION.TOP_RIGHT,
-      //   autoClose: 3000,
-      // });
     }
   };
 };

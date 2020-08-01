@@ -22,11 +22,10 @@ import Toggle from "./Toggle";
 import IconButton from "@material-ui/core/IconButton";
 import SettingsIcon from "@material-ui/icons/Settings";
 import Settings from "./settings";
+import pic from "./smartcookLogo.png";
 
 const useStyles = (theme) => ({
   appbar: {
-    // backgroundColor: "#e0f2f1",
-    // "#e3f2fd",
     color: "secondary",
     position: "sticky",
   },
@@ -62,7 +61,6 @@ const StyledMenu = withStyles({
 const StyledMenuItem = withStyles((theme) => ({
   root: {
     "&:focus": {
-      // backgroundColor: theme.palette.primary.main,
       "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
         color: theme.palette.primary.main,
       },
@@ -73,14 +71,6 @@ const StyledMenuItem = withStyles((theme) => ({
     },
     justifyContent: "center",
   },
-  // root: {
-  //   "&:focus": {
-  //     backgroundColor: theme.palette.primary.main,
-  //     "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
-  //       color: theme.palette.common.white,
-  //     },
-  //   },
-  // },
 }))(MenuItem);
 
 class Header extends React.Component {
@@ -120,9 +110,10 @@ class Header extends React.Component {
     return (
       <AppBar className={classes.appbar} color="secondary">
         <Toolbar className={classes.toolbar}>
+          <img src={pic} style={{ width: 50, height: 50 }}></img>
           <Typography
-            style={{ textAlign: "left" }}
-            variant="h5"
+            style={{ textAlign: "left", fontFamily: "Grand Hotel" }}
+            variant="h4"
             className={classes.websiteTitle}
           >
             <Link

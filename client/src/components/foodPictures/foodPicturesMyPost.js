@@ -70,23 +70,13 @@ class FoodPicturesMyPost extends React.Component {
   };
 
   displayData = () => {
-    // return <div>{JSON.stringify(this.props.allPostLoading)}</div>;
     const data = this.props.myPost;
     const sliceData = data.slice(
       this.state.offset,
       this.state.offset + this.state.perPage
     );
-    // return <div>{JSON.stringify(sliceData[0])}</div>;
     return sliceData.map((post) => {
-      return (
-        <FoodPicturesPost
-          key={post._id}
-          item={post}
-          cardWidth={300}
-          // cardLeftMargin={0}
-          // cardRightMargin={0}
-        />
-      );
+      return <FoodPicturesPost key={post._id} item={post} cardWidth={300} />;
     });
   };
 
@@ -135,7 +125,6 @@ class FoodPicturesMyPost extends React.Component {
                     aria-label="upload picture"
                     component="span"
                     color="black"
-                    // style={{ position: "fixed", right: "42%", top: "76px" }}
                   >
                     <AddIcon size="medium" style={{ width: 60, height: 50 }} />
                   </IconButton>
@@ -144,9 +133,6 @@ class FoodPicturesMyPost extends React.Component {
             </Link>
           </Box>
         </Box>
-
-        {/* </div>
-        </div> */}
 
         <div className={classes.post}>{this.displayData()}</div>
 
