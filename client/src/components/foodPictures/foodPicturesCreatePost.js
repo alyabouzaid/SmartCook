@@ -13,6 +13,7 @@ import {
   getAllFoodPicPost,
 } from "../../actions/foodPicturesActions";
 import compose from "recompose/compose";
+<<<<<<< HEAD
 import Tooltip from "@material-ui/core/Tooltip";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -22,6 +23,9 @@ import Draggable from "react-draggable";
 import Container from "@material-ui/core/Container";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Box from "@material-ui/core/Box";
+=======
+import Footer from "../footer/footer";
+>>>>>>> 0c8b9b678bfbeb378afdda033c07f0c1d95f5568
 
 const useStyles = (theme) => ({
   rootCardTitle: {
@@ -181,8 +185,14 @@ class FoodPicturesCreatePost extends React.Component {
             >
               SUBMIT
             </Button>
+<<<<<<< HEAD
           </DialogActions>
         </Dialog>
+=======
+          </Card>
+        </div>
+        <Footer/>
+>>>>>>> 0c8b9b678bfbeb378afdda033c07f0c1d95f5568
       </div>
     );
   }

@@ -24,6 +24,7 @@ import "simple-react-pagination-js/build/style.css";
 import DisplayTabs from "./DisplayTabs";
 
 import { getRecipeIngredients } from "../../actions/ingredientAmountActions";
+import Footer from "../footer/footer";
 
 const useStyles = (theme) => ({
   root: {
@@ -64,6 +65,9 @@ const useStyles = (theme) => ({
     textAlign: "center",
     marginBottom: 50,
   },
+    copyright: {
+        paddingTop: theme.spacing(3),
+    }
 });
 
 class Recommendation extends React.Component {
@@ -260,6 +264,9 @@ class Recommendation extends React.Component {
                   onPageChange={this.handleOnPageChange}
                   onSizeChange={this.handleOnSizeChange}
                 />
+              <div className={classes.copyright}>
+                  <Footer/>
+              </div>
               </div>
             </Grid>
           </Grid>

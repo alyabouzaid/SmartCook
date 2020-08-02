@@ -14,6 +14,7 @@ import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 import FastfoodOutlinedIcon from "@material-ui/icons/FastfoodOutlined";
 import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
 import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
+import Footer from "../footer/footer";
 
 const useStyles = (theme) => ({
   gridList: {
@@ -120,6 +121,7 @@ class LandingPage extends React.Component {
             })}
           </GridList>
         </div>
+        <Footer/>
       </div>
     );
   }

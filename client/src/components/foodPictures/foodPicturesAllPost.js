@@ -14,6 +14,7 @@ import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import Tooltip from "@material-ui/core/Tooltip";
 import FoodPicturesAnnouncement from "./foodPicturesAnnouncement";
+import Footer from "../footer/footer";
 
 const useStyles = (theme) => ({
   pagination: {
@@ -161,6 +162,7 @@ class FoodPicturesAllPost extends React.Component {
             onSizeChange={this.handleOnSizeChange}
           />
         </div>
+          <Footer/>
       </div>
     );
   }
