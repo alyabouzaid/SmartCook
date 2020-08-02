@@ -156,21 +156,9 @@ class Settings extends React.Component {
           </DialogContent>
 
           <DialogActions>
-            <Button
-              color="primary"
-              onClick={this.handleClick}
-              //   this.props.uploadProfilePicImage(
-              //     this.state.image.raw,
-              //     this.props.userInfo.email
-              //   );
-              //   {this.prop.isClose}
-              // }}
-            >
+            <Button color="primary" onClick={this.handleClick}>
               Save
             </Button>
-            {/* <Button onClick={this.props.isClose} color="primary">
-              Close
-            </Button> */}
           </DialogActions>
         </Dialog>
       </div>

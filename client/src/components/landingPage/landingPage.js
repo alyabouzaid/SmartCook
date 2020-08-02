@@ -12,6 +12,7 @@ import { getFeaturedFoodPicPost } from "../../actions/foodPicturesActions";
 import FeaturedPostCarousel from "../foodPictures/featuredPostCarousel";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 import FastfoodOutlinedIcon from "@material-ui/icons/FastfoodOutlined";
+import MenuBookOutlinedIcon from "@material-ui/icons/MenuBookOutlined";
 import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
 import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
 import Footer from "../footer/footer";
@@ -58,7 +59,7 @@ const gridCardContent = [
     description:
       "Create and customize your favourite recipes into personal recipe journal",
     link: "/journalView",
-    icon: <CreateOutlinedIcon style={{ fontSize: 42, color: "#4db6ac" }} />,
+    icon: <MenuBookOutlinedIcon style={{ fontSize: 42, color: "#4db6ac" }} />,
   },
   {
     header: "Share",
@@ -121,7 +122,7 @@ class LandingPage extends React.Component {
             })}
           </GridList>
         </div>
-        <Footer/>
+        <Footer />
       </div>
     );
   }

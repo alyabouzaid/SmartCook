@@ -122,10 +122,6 @@ class FoodPicturesMyPost extends React.Component {
           </Box>
 
           <Box>
-            {/* <Link
-              to={"/foodPicNewPost"}
-              style={{ textDecoration: "none", color: "inherit" }}
-            > */}
             <label htmlFor="icon-button-file">
               <Tooltip title="Click to create new post" placement="right" arrow>
                 <IconButton
@@ -138,7 +134,6 @@ class FoodPicturesMyPost extends React.Component {
                 </IconButton>
               </Tooltip>
             </label>
-            {/* </Link> */}
           </Box>
         </Box>
 
@@ -162,7 +157,7 @@ class FoodPicturesMyPost extends React.Component {
             onSizeChange={this.handleOnSizeChange}
           />
         </div>
-        <Footer/>
+        <Footer />
       </div>
     );
   }

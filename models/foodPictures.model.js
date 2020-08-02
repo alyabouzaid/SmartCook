@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-//const {ObjectId} = mongoose.Schema.Types
-
 const foodPicPostSchema = new Schema(
   {
     _id: { type: String },
