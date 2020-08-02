@@ -314,8 +314,7 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  //name is by convention
-  return { userInfo: state.userStore }; //now it will appear as props
+  return { userInfo: state.userStore };
 };
 
 export default compose(

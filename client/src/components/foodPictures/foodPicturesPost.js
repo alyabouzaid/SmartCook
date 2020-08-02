@@ -53,7 +53,7 @@ const useStyles = (theme) => ({
   },
   media: {
     height: 0,
-    paddingTop: "56.25%", // 16:9
+    paddingTop: "56.25%",
   },
   expand: {
     transform: "rotate(0deg)",
@@ -225,30 +225,25 @@ class FoodPicturesPost extends React.Component {
     return (
       <ListItem>
         <ListItemAvatar>
-          {
-            // this.props.userInfo.userUploadedPic &&
-            // this.props.userInfo.email === comment.postedByEmail ? (
-            comment.postedByUploadedPic ? (
-              <Avatar
-                className={classes.commentAvatar}
-                style={{
-                  marginRight: 0,
-                }}
-                alt={comment.postedByFullName}
-                // src={this.props.userInfo.userUploadedPic}
-                src={comment.postedByUploadedPic}
-              />
-            ) : (
-              <Avatar
-                className={classes.commentAvatar}
-                style={{
-                  marginRight: 0,
-                }}
-                alt={comment.postedByFullName}
-                src={comment.postedByGoogleDefaultPic}
-              />
-            )
-          }
+          {comment.postedByUploadedPic ? (
+            <Avatar
+              className={classes.commentAvatar}
+              style={{
+                marginRight: 0,
+              }}
+              alt={comment.postedByFullName}
+              src={comment.postedByUploadedPic}
+            />
+          ) : (
+            <Avatar
+              className={classes.commentAvatar}
+              style={{
+                marginRight: 0,
+              }}
+              alt={comment.postedByFullName}
+              src={comment.postedByGoogleDefaultPic}
+            />
+          )}
         </ListItemAvatar>
         <ListItemText
           primary={
@@ -286,30 +281,25 @@ class FoodPicturesPost extends React.Component {
     return (
       <ListItem>
         <ListItemAvatar>
-          {
-            // this.props.userInfo.userUploadedPic &&
-            // this.props.userInfo.email === comment.postedByEmail ? (
-            comment.postedByUploadedPic ? (
-              <Avatar
-                className={classes.commentAvatar}
-                style={{
-                  marginRight: 0,
-                }}
-                alt={comment.postedByFullName}
-                // src={this.props.userInfo.userUploadedPic}
-                src={comment.postedByUploadedPic}
-              />
-            ) : (
-              <Avatar
-                className={classes.commentAvatar}
-                style={{
-                  marginRight: 0,
-                }}
-                alt={comment.postedByFullName}
-                src={comment.postedByGoogleDefaultPic}
-              />
-            )
-          }
+          {comment.postedByUploadedPic ? (
+            <Avatar
+              className={classes.commentAvatar}
+              style={{
+                marginRight: 0,
+              }}
+              alt={comment.postedByFullName}
+              src={comment.postedByUploadedPic}
+            />
+          ) : (
+            <Avatar
+              className={classes.commentAvatar}
+              style={{
+                marginRight: 0,
+              }}
+              alt={comment.postedByFullName}
+              src={comment.postedByGoogleDefaultPic}
+            />
+          )}
         </ListItemAvatar>
         <ListItemText
           primary={
@@ -347,7 +337,7 @@ class FoodPicturesPost extends React.Component {
             width: 500,
             fontSize: 15,
             marginLeft: 0,
-            // marginBottom: 10,
+
             float: "left",
           }}
         />
@@ -376,12 +366,9 @@ class FoodPicturesPost extends React.Component {
           <CardHeader
             className={classes.header}
             avatar={
-              // this.props.userInfo.userUploadedPic &&
-              // this.props.userInfo.email === this.props.item.postedByEmail ? (
               this.props.item.postedByUploadedPic ? (
                 <Avatar
                   alt={this.props.item.postedByFullName}
-                  // src={this.props.userInfo.userUploadedPic}
                   src={this.props.item.postedByUploadedPic}
                 />
               ) : (
@@ -621,8 +608,6 @@ const mapDispatchToProps = (dispatch) => {
     deleteComment: (idPayload, commentId) =>
       dispatch(deleteComment(idPayload, commentId)),
     getProfilePic: () => dispatch(getProfilePic()),
-    // deleteAllFoodPicPosts: (idPayload) =>
-    //   dispatch(deleteAllFoodPicPosts(idPayload)),
   };
 };
 
