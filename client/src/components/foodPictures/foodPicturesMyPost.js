@@ -6,6 +6,7 @@ import { getMyFoodPicPost } from "../../actions/foodPicturesActions";
 import { css } from "@emotion/core";
 import CircleLoader from "react-spinners/CircleLoader";
 import FoodPicturesPost from "./foodPicturesPost";
+import FoodPicturesCreatePost from "./foodPicturesCreatePost";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
@@ -51,6 +52,7 @@ class FoodPicturesMyPost extends React.Component {
       offset: 0,
       currentPage: 1,
       perPage: 8,
+      isOpen: false,
     };
   }
 
@@ -68,6 +70,14 @@ class FoodPicturesMyPost extends React.Component {
 
   handleOnSizeChange = (perPage) => {
     this.setState({ perPage, currentPage: 1 });
+  };
+
+  handleClickOpenCreatePost = () => {
+    this.setState({ isOpen: true });
+  };
+
+  handleClickCloseCreatePost = () => {
+    this.setState({ isOpen: false });
   };
 
   displayData = () => {
@@ -112,28 +122,32 @@ class FoodPicturesMyPost extends React.Component {
           </Box>
 
           <Box>
-            <Link
+            {/* <Link
               to={"/foodPicNewPost"}
               style={{ textDecoration: "none", color: "inherit" }}
-            >
-              <label htmlFor="icon-button-file">
-                <Tooltip
-                  title="Click to create new post"
-                  placement="right"
-                  arrow
+            > */}
+            <label htmlFor="icon-button-file">
+              <Tooltip title="Click to create new post" placement="right" arrow>
+                <IconButton
+                  aria-label="upload picture"
+                  component="span"
+                  color="black"
+                  onClick={this.handleClickOpenCreatePost}
                 >
-                  <IconButton
-                    aria-label="upload picture"
-                    component="span"
-                    color="black"
-                  >
-                    <AddIcon size="medium" style={{ width: 60, height: 50 }} />
-                  </IconButton>
-                </Tooltip>
-              </label>
-            </Link>
+                  <AddIcon size="medium" style={{ width: 60, height: 50 }} />
+                </IconButton>
+              </Tooltip>
+            </label>
+            {/* </Link> */}
           </Box>
         </Box>
+
+        {this.state.isOpen ? (
+          <FoodPicturesCreatePost
+            isOpen={this.state.isOpen}
+            isClose={this.handleClickCloseCreatePost}
+          />
+        ) : null}
 
         <div className={classes.post}>{this.displayData()}</div>
 

@@ -26,14 +26,17 @@ const useStyles = (theme) => ({
   },
   button: {
     textAlign: "left",
-    // width: "100%",
     textTransform: "capitalize",
     justifyContent: "left", // aligns button to left of container
     fontSize: "16px",
+    marginTop: 25,
   },
-    copyright: {
-        paddingTop: theme.spacing(3),
-    }
+  editor: {
+    marginBottom: 30,
+  },
+  copyright: {
+    paddingTop: theme.spacing(3),
+  },
 });
 
 class Journal extends React.Component {
@@ -47,18 +50,23 @@ class Journal extends React.Component {
       <div>
         <div style={{ margin: "5%" }}>
           &nbsp;
-          <form noValidate autoComplete="off" style={{ marginBottom: "5%" }}>
-            <TextField
-              id="standard-basic"
-              label="Title"
-              fullWidth
-              value={this.props.editorData.title}
-              onChange={(e) => this.props.updateTitle(e.target.value)}
-            />
-          </form>
           <Grid container spacing={2} className={classes.root}>
             <Grid item xs={9}>
+              <form
+                noValidate
+                autoComplete="off"
+                style={{ marginBottom: "5%" }}
+              >
+                <TextField
+                  id="standard-basic"
+                  label="Title"
+                  fullWidth
+                  value={this.props.editorData.title}
+                  onChange={(e) => this.props.updateTitle(e.target.value)}
+                />
+              </form>
               <CKEditor
+                className={classes.editor}
                 editor={ClassicEditor}
                 data={this.props.editorData.initialData}
                 // onInit={(editor) => {
@@ -71,42 +79,39 @@ class Journal extends React.Component {
                   console.log({ event, editor, data });
                 }}
               />
+              {this.props.editorData._id.length === 0 ? (
+                <Button
+                  className={classes.button}
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    this.props.addNewJournalData(
+                      this.props.editorData,
+                      this.props.userInfo
+                    );
+                    this.props.history.push("/journalView");
+                  }}
+                >
+                  SUBMIT
+                </Button>
+              ) : (
+                <Button
+                  className={classes.button}
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    this.props.updateJournalData(this.props.editorData);
+                    this.props.history.push("/journalView");
+                  }}
+                >
+                  UPDATE JOURNAL
+                </Button>
+              )}
             </Grid>
             <Grid item xs={3}>
               <JournalImage />
             </Grid>
           </Grid>
-          {this.props.editorData._id.length === 0 ? (
-            <Button
-              className={classes.button}
-              variant="contained"
-              color="primary"
-              onClick={() => {
-                this.props.addNewJournalData(
-                  this.props.editorData,
-                  this.props.userInfo
-                );
-                this.props.history.push("/journalView");
-              }}
-            >
-              Submit Journal
-            </Button>
-          ) : (
-            <Button
-              className={classes.button}
-              variant="contained"
-              color="primary"
-              onClick={() => {
-                this.props.updateJournalData(this.props.editorData);
-                this.props.history.push("/journalView");
-              }}
-            >
-              Update Journal
-            </Button>
-          )}
-        <div className={classes.copyright}>
-          <Footer/>
-        </div>
         </div>
       </div>
     );

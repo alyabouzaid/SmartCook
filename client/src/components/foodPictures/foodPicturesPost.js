@@ -39,6 +39,7 @@ import { deepPurple } from "@material-ui/core/colors";
 import { css } from "@emotion/core";
 import DotLoader from "react-spinners/DotLoader";
 import Popover from "@material-ui/core/Popover";
+import { FaComment } from "react-icons/fa";
 
 const useStyles = (theme) => ({
   root: {
@@ -63,9 +64,6 @@ const useStyles = (theme) => ({
   },
   expandOpen: {
     transform: "rotate(180deg)",
-  },
-  avatar: {
-    backgroundColor: red[500],
   },
   typography: {
     body2: {
@@ -227,26 +225,30 @@ class FoodPicturesPost extends React.Component {
     return (
       <ListItem>
         <ListItemAvatar>
-          {this.props.userInfo.userUploadedPic &&
-          this.props.userInfo.email === comment.postedByEmail ? (
-            <Avatar
-              className={classes.commentAvatar}
-              style={{
-                marginRight: 0,
-              }}
-              alt={this.props.item.postedByFullName}
-              src={this.props.userInfo.userUploadedPic}
-            />
-          ) : (
-            <Avatar
-              className={classes.commentAvatar}
-              style={{
-                marginRight: 0,
-              }}
-              alt={comment.postedByFullName}
-              src={comment.postedByGoogleDefaultPic}
-            />
-          )}
+          {
+            // this.props.userInfo.userUploadedPic &&
+            // this.props.userInfo.email === comment.postedByEmail ? (
+            comment.postedByUploadedPic ? (
+              <Avatar
+                className={classes.commentAvatar}
+                style={{
+                  marginRight: 0,
+                }}
+                alt={comment.postedByFullName}
+                // src={this.props.userInfo.userUploadedPic}
+                src={comment.postedByUploadedPic}
+              />
+            ) : (
+              <Avatar
+                className={classes.commentAvatar}
+                style={{
+                  marginRight: 0,
+                }}
+                alt={comment.postedByFullName}
+                src={comment.postedByGoogleDefaultPic}
+              />
+            )
+          }
         </ListItemAvatar>
         <ListItemText
           primary={
@@ -284,26 +286,30 @@ class FoodPicturesPost extends React.Component {
     return (
       <ListItem>
         <ListItemAvatar>
-          {this.props.userInfo.userUploadedPic &&
-          this.props.userInfo.email === comment.postedByEmail ? (
-            <Avatar
-              className={classes.commentAvatar}
-              style={{
-                marginRight: 0,
-              }}
-              alt={this.props.item.postedByFullName}
-              src={this.props.userInfo.userUploadedPic}
-            />
-          ) : (
-            <Avatar
-              className={classes.commentAvatar}
-              style={{
-                marginRight: 0,
-              }}
-              alt={comment.postedByFullName}
-              src={comment.postedByGoogleDefaultPic}
-            />
-          )}
+          {
+            // this.props.userInfo.userUploadedPic &&
+            // this.props.userInfo.email === comment.postedByEmail ? (
+            comment.postedByUploadedPic ? (
+              <Avatar
+                className={classes.commentAvatar}
+                style={{
+                  marginRight: 0,
+                }}
+                alt={comment.postedByFullName}
+                // src={this.props.userInfo.userUploadedPic}
+                src={comment.postedByUploadedPic}
+              />
+            ) : (
+              <Avatar
+                className={classes.commentAvatar}
+                style={{
+                  marginRight: 0,
+                }}
+                alt={comment.postedByFullName}
+                src={comment.postedByGoogleDefaultPic}
+              />
+            )
+          }
         </ListItemAvatar>
         <ListItemText
           primary={
@@ -370,11 +376,13 @@ class FoodPicturesPost extends React.Component {
           <CardHeader
             className={classes.header}
             avatar={
-              this.props.userInfo.userUploadedPic &&
-              this.props.userInfo.email === this.props.item.postedByEmail ? (
+              // this.props.userInfo.userUploadedPic &&
+              // this.props.userInfo.email === this.props.item.postedByEmail ? (
+              this.props.item.postedByUploadedPic ? (
                 <Avatar
                   alt={this.props.item.postedByFullName}
-                  src={this.props.userInfo.userUploadedPic}
+                  // src={this.props.userInfo.userUploadedPic}
+                  src={this.props.item.postedByUploadedPic}
                 />
               ) : (
                 <Avatar

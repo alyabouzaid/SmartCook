@@ -1,6 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getAllFoodPicPost } from "./foodPicturesActions";
 
 export const uploadProfilePicImage = (image, email) => {
   // console.log("in profile pic ", JSON.stringify(image));
@@ -28,18 +29,22 @@ export const uploadProfilePicImage = (image, email) => {
 };
 
 export const addProfilePic = (uploadedImage, userEmail) => {
-  // console.log("image", uploadedImage.secure_url);
   return async (dispatch) => {
     try {
       const params = {
         image: uploadedImage.secure_url,
       };
       const res = await axios.put(`/userProfilePic/add/${userEmail}`, params);
-      // const res2 = await axios.put(`/userProfilePic/updatePost/${userEmail}`, params);
       const allUserData = await res.data;
       const userProfilePic = allUserData.userUploadedPic;
-      console.log("user pic:", userProfilePic);
       dispatch(updateUserInfo(userProfilePic));
+
+      await axios.put(`/userProfilePic/updatePostAvatar/${userEmail}`, params);
+      await axios.put(
+        `/userProfilePic/updatePostCommentAvatar/${userEmail}`,
+        params
+      );
+      dispatch(getAllFoodPicPost());
     } catch (error) {
       console.log("Error: ", error);
       toast.error("API error", {

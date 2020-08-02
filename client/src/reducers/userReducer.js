@@ -16,6 +16,7 @@ export default function userReducer(state = initialState, action) {
         firstName: action.payload.firstName,
         fullName: action.payload.fullName,
         googleDefaultPic: action.payload.googleDefaultPic,
+        userUploadedPic: action.payload.userUploadedPic,
         isLoggedIn: true,
       };
     case "ADD_PROFILE_PIC":

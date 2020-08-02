@@ -13,40 +13,29 @@ import {
   getAllFoodPicPost,
 } from "../../actions/foodPicturesActions";
 import compose from "recompose/compose";
-<<<<<<< HEAD
-import Tooltip from "@material-ui/core/Tooltip";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import Paper from "@material-ui/core/Paper";
-import Draggable from "react-draggable";
-import Container from "@material-ui/core/Container";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Box from "@material-ui/core/Box";
-=======
-import Footer from "../footer/footer";
->>>>>>> 0c8b9b678bfbeb378afdda033c07f0c1d95f5568
+import Tooltip from "@material-ui/core/Tooltip"; // import css
 
 const useStyles = (theme) => ({
+  rootContainer: {
+    display: "flex",
+    justifyContent: "center",
+    paddingTop: 200,
+    height: "100vh",
+  },
+  rootCard: {
+    width: 500,
+    minheight: 400,
+  },
   rootCardTitle: {
+    marginBottom: 10,
     marginTop: 12,
   },
   description: {
     marginBottom: 20,
-    justifyContent: "center",
-    marginLeft: 90,
   },
   button: {
     marginTop: 20,
     marginBottom: 20,
-  },
-  uploadIcon: {
-    marginLeft: 140,
-  },
-  paper: {
-    width: 400,
-    justifyContent: "center",
-    alignItems: "center",
   },
 });
 
@@ -64,10 +53,11 @@ class FoodPicturesCreatePost extends React.Component {
       },
     };
 
+    this.handleChange = this.handleChange.bind(this);
     this.inputRef = null;
   }
 
-  handleChange = (e) => {
+  handleChange(e) {
     if (e.target.files.length) {
       this.setState({
         image: {
@@ -76,45 +66,15 @@ class FoodPicturesCreatePost extends React.Component {
         },
       });
     }
-  };
-
-  paperComponent = (props) => {
-    return (
-      <Draggable
-        handle="#draggable-dialog-title"
-        cancel={'[class*="MuiDialogContent-root"]'}
-      >
-        <Paper {...props} />
-      </Draggable>
-    );
-  };
-
-  handleClick = () => {
-    this.props.uploadProfilePicImage(
-      this.state.image.raw,
-      this.props.userInfo.email
-    );
-    this.props.isClose();
-  };
+  }
 
   render() {
     const { classes } = this.props;
 
     return (
       <div>
-        <Dialog
-          classes={{ paper: classes.paper }}
-          open={this.props.isOpen}
-          onClose={this.props.isClose}
-          PaperComponent={this.paperComponent}
-          aria-labelledby="draggable-dialog-title"
-        >
-          <DialogTitle
-            style={{
-              cursor: "move",
-            }}
-            id="draggable-dialog-title"
-          >
+        <div className={classes.rootContainer}>
+          <Card className={classes.rootCard}>
             <Typography
               className={classes.rootCardTitle}
               variant="h5"
@@ -123,9 +83,6 @@ class FoodPicturesCreatePost extends React.Component {
             >
               Food Picture Post
             </Typography>
-          </DialogTitle>
-
-          <DialogContent>
             <form className={classes.description}>
               <TextField
                 multiline
@@ -135,7 +92,23 @@ class FoodPicturesCreatePost extends React.Component {
                 onChange={(e) => this.setState({ description: e.target.value })}
               />
             </form>
-
+            {/* <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+              onClick={() => this.inputRef.click()}
+            >
+              Upload Pic
+            </Button>
+            <input
+              type="file"
+              ref={(inputRef) => {
+                this.inputRef = inputRef;
+              }}
+              id="upload-button"
+              style={{ display: "none" }}
+              onChange={(e) => this.handleChange(e)}
+            /> */}
             <div className={classes.image}>
               {this.state.image.preview ? (
                 <img
@@ -152,20 +125,14 @@ class FoodPicturesCreatePost extends React.Component {
                     className="inputfile"
                     onChange={(e) => this.handleChange(e)}
                   />
-                  <Tooltip
-                    title="Click to upload picture"
-                    placement="right-start"
-                  >
+                  <Tooltip title="Click to upload picture" arrow>
                     <label htmlFor="singleUpload" className="label">
-                      <FaImage className={classes.uploadIcon} size="20%" />
+                      <FaImage size="20%" />
                     </label>
                   </Tooltip>
                 </div>
               )}
             </div>
-          </DialogContent>
-
-          <DialogActions>
             <Button
               className={classes.button}
               variant="contained"
@@ -180,19 +147,15 @@ class FoodPicturesCreatePost extends React.Component {
                   this.props.userInfo.googleDefaultPic,
                   this.props.userInfo.userUploadedPic
                 );
-                this.props.isClose();
+                setTimeout(() => {
+                  this.props.history.push("/foodPicAllPost");
+                }, 1300);
               }}
             >
-              SUBMIT
+              SUBMIT POST
             </Button>
-<<<<<<< HEAD
-          </DialogActions>
-        </Dialog>
-=======
           </Card>
         </div>
-        <Footer/>
->>>>>>> 0c8b9b678bfbeb378afdda033c07f0c1d95f5568
       </div>
     );
   }

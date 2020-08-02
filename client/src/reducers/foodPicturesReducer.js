@@ -14,7 +14,7 @@ export default function foodPicturesReducer(
     case "ADD_NEW_FOODPIC_POST":
       return {
         ...state,
-        allPost: [...state.allPost, action.payload],
+        allPost: [action.payload, ...state.allPost],
       };
     case "ALL_FOODPIC_POSTS_LOADING":
       return {
