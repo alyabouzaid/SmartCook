@@ -23,6 +23,8 @@ import IconButton from "@material-ui/core/IconButton";
 import SettingsIcon from "@material-ui/icons/Settings";
 import Settings from "./settings";
 import pic from "./smartcookLogo.png";
+import Avatar from "@material-ui/core/Avatar";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = (theme) => ({
   appbar: {
@@ -35,6 +37,10 @@ const useStyles = (theme) => ({
   websiteTitle: {
     flex: 1,
     marginLeft: 15,
+  },
+  avatar: {
+    width: theme.spacing(3),
+    height: theme.spacing(3),
   },
 });
 
@@ -181,37 +187,6 @@ class Header extends React.Component {
                   </Button>
                 </NavLink>
 
-                {/* <div>
-                  <Button
-                    href=""
-                    color="inherit"
-                    target="_blank"
-                    size="small"
-                    onClick={this.handleClick}
-                  >
-                    Journal
-                  </Button>
-                  <StyledMenu
-                    id="customized-menu"
-                    anchorEl={this.state.anchorEl}
-                    keepMounted
-                    open={Boolean(this.state.anchorEl)}
-                    onClose={this.handleClose}
-                  >
-                    <StyledMenuItem>
-                      <ListItem button component="a" href="/journal">
-                        <ListItemText primary="Journal editor" />
-                      </ListItem>
-                    </StyledMenuItem>
-                    <StyledMenuItem>
-
-                      <ListItem button component="a" href="/journalView">
-                        <ListItemText primary="Collections" />
-                      </ListItem>
-                    </StyledMenuItem>
-                  </StyledMenu>
-                  </div> */}
-
                 <Button
                   href=""
                   color="inherit"
@@ -228,23 +203,6 @@ class Header extends React.Component {
                   open={Boolean(this.state.anchorEl)}
                   onClose={this.handleClickCloseDropDownMenu}
                 >
-                  {/*<StyledMenuItem>*/}
-                  {/* <ListItemIcon>
-                          <SendIcon fontSize="small" />
-                        </ListItemIcon> */}
-                  {/*<Link*/}
-                  {/*    to={"/foodPicNewPost"}*/}
-                  {/*    style={{*/}
-                  {/*      textDecoration: "none",*/}
-                  {/*      color: "inherit",*/}
-                  {/*    }}*/}
-                  {/*>*/}
-                  {/*  New post*/}
-                  {/*</Link>*/}
-                  {/*<ListItem button component="a" href="/foodPicNewPost">*/}
-                  {/*  <ListItemText primary="New post" />*/}
-                  {/*</ListItem>*/}
-                  {/*</StyledMenuItem>*/}
                   <StyledMenuItem>
                     <Link
                       to={"/foodPicAllPost"}
@@ -255,9 +213,6 @@ class Header extends React.Component {
                     >
                       All posts
                     </Link>
-                    {/*<ListItem button component="a" href="/foodPicAllPost">*/}
-                    {/*  <ListItemText primary="All posts" />*/}
-                    {/*</ListItem>*/}
                   </StyledMenuItem>
                   <StyledMenuItem>
                     <Link
@@ -269,9 +224,6 @@ class Header extends React.Component {
                     >
                       My posts
                     </Link>
-                    {/*<ListItem button component="a" href="foodPicMyPost">*/}
-                    {/*  <ListItemText primary="My posts" />*/}
-                    {/*</ListItem>*/}
                   </StyledMenuItem>
                 </StyledMenu>
 
@@ -287,15 +239,7 @@ class Header extends React.Component {
                 >
                   Logout
                 </Button>
-                {/* <Toggle /> */}
 
-                {/* <Link
-                  to={"/settings"}
-                  style={{
-                    textDecoration: "none",
-                    color: "inherit",
-                  }}
-                > */}
                 <IconButton
                   className={classes.settingsIcon}
                   onClick={this.handleClickOpenSettingsIcon}
@@ -306,13 +250,31 @@ class Header extends React.Component {
                     }}
                   />
                 </IconButton>
-                {/* </Link> */}
+
                 {this.state.isOpen ? (
                   <Settings
                     isOpen={this.state.isOpen}
                     isClose={this.handleClickCloseSettingsIcon}
                   />
                 ) : null}
+
+                {this.props.userInfo.userUploadedPic ? (
+                  <Tooltip title={this.props.userInfo.email} placement="bottom">
+                    <Avatar
+                      className={classes.avatar}
+                      alt={this.props.userInfo.fullName}
+                      src={this.props.userInfo.userUploadedPic}
+                    />
+                  </Tooltip>
+                ) : (
+                  <Tooltip title={this.props.userInfo.email} placement="bottom">
+                    <Avatar
+                      className={classes.avatar}
+                      alt={this.props.userInfo.fullName}
+                      src={this.props.userInfo.googleDefaultPic}
+                    />
+                  </Tooltip>
+                )}
               </ListItem>
             ) : (
               <ListItem>
@@ -328,19 +290,6 @@ class Header extends React.Component {
                     Home
                   </Button>
                 </NavLink>
-
-                {/*<NavLink*/}
-                {/*  to={"/about"}*/}
-                {/*  activeClassName="selected"*/}
-                {/*  activeStyle={{*/}
-                {/*    borderBottom: "2px solid #43AA8B",*/}
-                {/*  }}*/}
-                {/*  style={{ textDecoration: "none", color: "inherit" }}*/}
-                {/*>*/}
-                {/*  <Button href="" color="inherit" target="_blank" size="small">*/}
-                {/*    About*/}
-                {/*  </Button>*/}
-                {/*</NavLink>*/}
 
                 <Button
                   href="/auth/google"

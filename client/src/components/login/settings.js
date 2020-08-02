@@ -40,6 +40,9 @@ const useStyles = (theme) => ({
     display: "flex",
     flexDirection: "row",
   },
+  paper: {
+    width: 270,
+  },
 });
 
 class Settings extends React.Component {
@@ -90,6 +93,7 @@ class Settings extends React.Component {
     return (
       <div>
         <Dialog
+          classes={{ paper: classes.paper }}
           open={this.props.isOpen}
           onClose={this.props.isClose}
           PaperComponent={this.paperComponent}
