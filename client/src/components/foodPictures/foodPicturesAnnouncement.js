@@ -21,7 +21,7 @@ class FoodPicturesAnnouncement extends React.Component {
       <Announcement
         title="Share &amp; get your pictures featured!"
         subtitle="Top 3 voted food pictures of the recent 7 days will be featured on the landing page!"
-        // link="http://smart-cook-436.herokuapp.com/"
+        link="http://smart-cook-436.herokuapp.com/"
         imageSource={pic}
         // daysToLive={0}
         secondsBeforeBannerShows={5}
