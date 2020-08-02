@@ -94,6 +94,8 @@ class Settings extends React.Component {
           onClose={this.props.isClose}
           PaperComponent={this.paperComponent}
           aria-labelledby="draggable-dialog-title"
+          maxWidth={"md"}
+          fullWidth={true}
         >
           <DialogTitle
             className={classes.header}

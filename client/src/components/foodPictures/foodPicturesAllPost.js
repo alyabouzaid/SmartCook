@@ -6,6 +6,7 @@ import { getAllFoodPicPost } from "../../actions/foodPicturesActions";
 import { css } from "@emotion/core";
 import CircleLoader from "react-spinners/CircleLoader";
 import FoodPicturesPost from "./foodPicturesPost";
+import FoodPicturesCreatePost from "./foodPicturesCreatePost";
 import SPagination from "simple-react-pagination-js";
 import "simple-react-pagination-js/build/style.css"; // import css
 import { Link } from "react-router-dom";
@@ -40,6 +41,7 @@ class FoodPicturesAllPost extends React.Component {
       offset: 0,
       currentPage: 1,
       perPage: 5,
+      isOpen: false,
     };
   }
 
@@ -57,6 +59,14 @@ class FoodPicturesAllPost extends React.Component {
 
   handleOnSizeChange = (perPage) => {
     this.setState({ perPage, currentPage: 1 });
+  };
+
+  handleClickOpenCreatePost = () => {
+    this.setState({ isOpen: true });
+  };
+
+  handleClickCloseCreatePost = () => {
+    this.setState({ isOpen: false });
   };
 
   displayData = () => {
@@ -102,23 +112,24 @@ class FoodPicturesAllPost extends React.Component {
           }}
         />
 
-        <Link
+        {/* <Link
           to={"/foodPicNewPost"}
           style={{ textDecoration: "none", color: "inherit" }}
-        >
-          <label htmlFor="icon-button-file" style={{ justifyContent: "right" }}>
-            <Tooltip title="Click to create new post" arrow>
-              <IconButton
-                aria-label="upload picture"
-                component="span"
-                color="black"
-                style={{ position: "fixed", right: "5%" }}
-              >
-                <AddIcon size="large" style={{ width: 60, height: 60 }} />
-              </IconButton>
-            </Tooltip>
-          </label>
-        </Link>
+        > */}
+        <label htmlFor="icon-button-file" style={{ justifyContent: "right" }}>
+          <Tooltip title="Click to create new post" arrow>
+            <IconButton
+              aria-label="upload picture"
+              component="span"
+              color="black"
+              onClick={this.handleClickOpenCreatePost}
+              style={{ position: "fixed", right: "5%" }}
+            >
+              <AddIcon size="large" style={{ width: 60, height: 60 }} />
+            </IconButton>
+          </Tooltip>
+        </label>
+        {/* </Link> */}
         <p
           style={{
             textAlign: "left",
@@ -127,6 +138,13 @@ class FoodPicturesAllPost extends React.Component {
             fontSize: "24px",
           }}
         />
+
+        {this.state.isOpen ? (
+          <FoodPicturesCreatePost
+            isOpen={this.state.isOpen}
+            isClose={this.handleClickCloseCreatePost}
+          />
+        ) : null}
 
         {this.displayData()}
 
