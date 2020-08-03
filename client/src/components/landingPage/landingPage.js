@@ -16,6 +16,7 @@ import MenuBookOutlinedIcon from "@material-ui/icons/MenuBookOutlined";
 import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
 import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
 import Footer from "../footer/footer";
+import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
 
 const useStyles = (theme) => ({
   gridList: {
@@ -67,7 +68,7 @@ const gridCardContent = [
     description:
       "Share the joy and vote for food pictures among friends and family members",
     link: "/foodPicAllPost",
-    icon: <ShareOutlinedIcon style={{ fontSize: 42, color: "#4db6ac" }} />,
+    icon: <PhotoCameraOutlinedIcon style={{ fontSize: 42, color: "#4db6ac" }} />,
   },
 ];
 

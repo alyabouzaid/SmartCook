@@ -1,45 +1,40 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
-import Popover from '@material-ui/core/Popover';
-import Typography from '@material-ui/core/Typography';
-import CardContent from "@material-ui/core/CardContent";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import Link from "@material-ui/core/Link";
-import CardMedia from "@material-ui/core/CardMedia";
-import Card from "@material-ui/core/Card";
-import CardActions from '@material-ui/core/CardActions';
-import LinkIcon from '@material-ui/icons/Link';
-import IconButton from "@material-ui/core/IconButton";
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import {useDispatch} from 'react-redux';
 import {useHistory} from 'react-router-dom';
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import DoneIcon from '@material-ui/icons/Done';
+import {makeStyles} from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
+import Popover from '@material-ui/core/Popover';
+import Card from "@material-ui/core/Card";
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardActionArea from "@material-ui/core/CardActionArea";
 import Container from "@material-ui/core/Container";
+import Typography from '@material-ui/core/Typography';
+import Link from "@material-ui/core/Link";
+import LinkIcon from '@material-ui/icons/Link';
+import DoneIcon from '@material-ui/icons/Done';
+import IconButton from "@material-ui/core/IconButton";
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/Delete';
-import Tooltip from '@material-ui/core/Tooltip';
 
-const useStyles = makeStyles((theme) => ({
-    cardGrid: {
-        paddingBottom: theme.spacing(8),
-    },
+const useStyles = makeStyles(() => ({
     card: {
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
     },
     cardMedia: {
-        height: 100, // increases image height
-        paddingTop: '56.25%', // 16:9
+        height: 100,
+        paddingTop: '56.25%',
     },
     cardContent: {
         flexGrow: 1,
         whiteSpace: "wrap",
         overflow: "hidden",
         minWidth: "0",
-        textOverflow: "ellipsis", // doesn't work
-
     },
     title: {
         fontSize: "16px",
@@ -53,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function RecipeInfo({ingredientInventory, getRecipeIngredients, recipe, userInfo, saveRecipe, switchDisplay, deleteRecipe}) {
-
 
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -71,19 +65,13 @@ export default function RecipeInfo({ingredientInventory, getRecipeIngredients, r
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
-
-// -----------------------------
-
-
     const handleClickDone = (event) => {
-        getRecipeIngredients(recipe)
+        getRecipeIngredients(recipe);
     };
 
 
     return (
         <div>
-
-
             <Card className={classes.card} variant="outlined">
                 <CardActionArea disableRipple>
                     <Link href={recipe["recipe"]["shareAs"]} target="_blank">
@@ -179,8 +167,6 @@ export default function RecipeInfo({ingredientInventory, getRecipeIngredients, r
                             </IconButton>
                         </Tooltip>
                     </Container>
-
-
                 </CardActions>
             </Card>
         </div>

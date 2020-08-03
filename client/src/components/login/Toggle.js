@@ -1,8 +1,8 @@
 import React from 'react';
-import Switch from '@material-ui/core/Switch';
 import compose from "recompose/compose";
 import {connect} from "react-redux";
 import {changeColor} from "../../actions/colorActions";
+import Switch from '@material-ui/core/Switch';
 
 class Toggle extends React.Component {
 
@@ -28,8 +28,7 @@ class Toggle extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    //name is by convention
-    return { color: state.colorStore }; //now it will appear as props
+    return { color: state.colorStore };
 };
 
 export default compose(connect(mapStateToProps, { changeColor })

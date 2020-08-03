@@ -1,30 +1,24 @@
 import React from "react";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Button from "@material-ui/core/Button";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Typography from "@material-ui/core/Typography";
-import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import compose from "recompose/compose";
 import { connect } from "react-redux";
 import { loadUserData } from "../../actions/userActions";
-import { useLocation } from "react-router-dom";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import MenuList from "@material-ui/core/MenuList";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import "../../index.css";
-import Toggle from "./Toggle";
-import IconButton from "@material-ui/core/IconButton";
-import SettingsIcon from "@material-ui/icons/Settings";
 import Settings from "./settings";
 import pic from "./smartcookLogo.png";
-import Avatar from "@material-ui/core/Avatar";
+import { withStyles } from "@material-ui/core/styles";
+import Menu from "@material-ui/core/Menu";
+import AppBar from "@material-ui/core/AppBar";
 import Tooltip from "@material-ui/core/Tooltip";
+import Toolbar from "@material-ui/core/Toolbar";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import Avatar from "@material-ui/core/Avatar";
+import MenuItem from "@material-ui/core/MenuItem";
+import IconButton from "@material-ui/core/IconButton";
+import SettingsIcon from "@material-ui/icons/Settings";
 
 const useStyles = (theme) => ({
   appbar: {
@@ -111,7 +105,6 @@ class Header extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { pathname } = window.location.pathname;
 
     return (
       <AppBar className={classes.appbar} color="secondary">

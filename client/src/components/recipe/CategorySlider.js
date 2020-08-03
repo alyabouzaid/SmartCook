@@ -1,14 +1,14 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Slider from '@material-ui/core/Slider';
-import Input from '@material-ui/core/Input';
 import compose from "recompose/compose";
 import {connect} from "react-redux";
 import {updateRange} from "../../actions/recommendationFilterActions";
+import { withStyles } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Slider from '@material-ui/core/Slider';
 
-const useStyles = (theme) => ({
+const useStyles = () => ({
     root: {
         width: 250,
     },
@@ -90,11 +90,7 @@ class CategorySlider extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    //name is by convention
-};
-
 export default compose(
     withStyles(useStyles),
-    connect(mapStateToProps, {updateRange}
-))(CategorySlider);
+    connect(null, {updateRange})
+)(CategorySlider);
