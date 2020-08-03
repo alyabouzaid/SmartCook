@@ -1,19 +1,19 @@
 import React from 'react';
-import {withStyles} from '@material-ui/core/styles';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import Checkbox from '@material-ui/core/Checkbox';
 import compose from "recompose/compose";
 import {connect} from "react-redux";
 import {selectingIngredient} from "../../actions/selectIngredientActions";
+import {withStyles} from '@material-ui/core/styles';
+import ListItemText from '@material-ui/core/ListItemText';
+import Collapse from '@material-ui/core/Collapse';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
-import FormGroup from "@material-ui/core/FormGroup";
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 
 const useStyles = (theme) => ({
     root: {
@@ -37,7 +37,6 @@ class IngredientList extends React.Component {
         }
     };
 
-
     filter(ingredientInventory) {
         if (Array.isArray(ingredientInventory)){
             currentCategoryItems = this.props.filter.length === 0 ? this.props.ingredientInventory :
@@ -50,7 +49,8 @@ class IngredientList extends React.Component {
                         }
                         return false;
                     }
-                    ))
+                    )
+                )
                 }
     } 
 
@@ -83,7 +83,6 @@ class IngredientList extends React.Component {
 
                         <ListItem>
                         <FormControl component="fieldset" >
-                            {/*<FormLabel component="legend">Select Your Ingredients</FormLabel>*/}
                             <FormGroup>
                                 {this.filter(this.props.ingredientInventory)}
                                 {currentCategoryItems.map((ingredient) =>
@@ -106,13 +105,13 @@ class IngredientList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    //name is by convention
     return { 
         ingredientInventory: state.ingredientInventory,
-        filter: state.filterStore }; //now it will appear as props
+        filter: state.filterStore
+    };
 };
 
 export default compose(
     withStyles(useStyles),
-    connect(mapStateToProps, { selectingIngredient })
+    connect(mapStateToProps, {selectingIngredient})
 )(IngredientList);

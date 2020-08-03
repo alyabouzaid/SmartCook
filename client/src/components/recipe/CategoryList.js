@@ -1,15 +1,15 @@
 import React from 'react';
-import {withStyles} from '@material-ui/core/styles';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import compose from "recompose/compose";
 import {connect} from "react-redux";
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import CategorySlider from "./CategorySlider";
 import {updateDietType} from "../../actions/recommendationFilterActions";
 import {updateHealthType} from "../../actions/recommendationFilterActions";
+import {withStyles} from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 
 const useStyles = (theme) => ({
     root: {
