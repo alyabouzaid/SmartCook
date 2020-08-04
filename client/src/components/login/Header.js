@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
-import compose from "recompose/compose";
+import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
+import compose from "recompose/compose";
 import { loadUserData } from "../../actions/userActions";
 import Settings from "./settings";
-import pic from "./smartcookLogo.png";
-import { withStyles } from "@material-ui/core/styles";
+import pic from "../../pictures/smartcookLogo.png";
 import Menu from "@material-ui/core/Menu";
 import AppBar from "@material-ui/core/AppBar";
 import Tooltip from "@material-ui/core/Tooltip";

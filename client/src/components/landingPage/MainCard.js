@@ -1,9 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import pic from "../../pictures/landingPage.jpg";
+import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import pic from "./landingPage.jpg";
 
 const useStyles = makeStyles((theme) => ({
   mainCard: {
@@ -47,6 +47,7 @@ export default function MainCard(props) {
       style={{ backgroundImage: `url(${pic})` }}
     >
       {<img style={{ display: "none" }} src={pic} />}
+
       <div className={classes.overlay} />
       <Grid container>
         <Grid item md={7}>
@@ -61,6 +62,7 @@ export default function MainCard(props) {
                 >
                   {props.card.title_isAuthenticated}
                 </Typography>
+
                 <Typography variant="h6" color="inherit" paragraph>
                   {props.card.description_isAuthenticated}
                 </Typography>
@@ -75,6 +77,7 @@ export default function MainCard(props) {
                 >
                   {props.card.title}
                 </Typography>
+
                 <Typography variant="h6" color="inherit" paragraph>
                   {props.card.description}
                 </Typography>

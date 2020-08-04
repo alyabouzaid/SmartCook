@@ -10,11 +10,8 @@ import IngredientInventory from "./components/ingredientInventory/IngredientInve
 import Journal from "./components/journal/journal";
 import JournalView from "./components/journal/journalView";
 import FoodPicturesAllPost from "./components/foodPictures/foodPicturesAllPost";
-import FoodPicturesCreatePost from "./components/foodPictures/foodPicturesCreatePost";
 import FoodPicturesMyPost from "./components/foodPictures/foodPicturesMyPost";
-import FeaturedPostCarousel from "./components/foodPictures/featuredPostCarousel";
 import Header from "./components/login/Header";
-import Settings from "./components/login/settings";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
@@ -50,15 +47,15 @@ class App extends React.Component {
           <Header />
           <Switch>
             <Route exact path="/" component={LandingPage} />
-            <Route path="/ingredientInventory" component={IngredientInventory} />
+            <Route
+              path="/ingredientInventory"
+              component={IngredientInventory}
+            />
             <Route path="/recommendation" component={Recommendation} />
             <Route path="/journal" component={Journal} />
             <Route path="/journalView" component={JournalView} />
-            <Route path="/foodPicNewPost" component={FoodPicturesCreatePost} />
             <Route path="/foodPicAllPost" component={FoodPicturesAllPost} />
             <Route path="/foodPicMyPost" component={FoodPicturesMyPost} />
-            <Route path="/foodPicFeatured" component={FeaturedPostCarousel} />
-            <Route path="/settings" component={Settings} />
           </Switch>
         </div>
       </ThemeProvider>

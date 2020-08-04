@@ -1,9 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
 import { Link } from "react-router-dom";
+import Typography from "@material-ui/core/Typography";
+import CardContent from "@material-ui/core/CardContent";
+import Card from "@material-ui/core/Card";
 import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles(() => ({
@@ -48,11 +48,9 @@ export default function GridPost(props) {
                 <Box style={{ marginLeft: 10 }}>{props.content.icon}</Box>
               </Link>
             </Box>
-
             <Typography variant="h5" color="inherit" paragraph>
               {props.content.title}
             </Typography>
-
             <Typography component="p">{props.content.description}</Typography>
           </CardContent>
         </Card>
@@ -62,11 +60,9 @@ export default function GridPost(props) {
             <Box display="flex" justifyContent="center" m={1} p={1}>
               <Box style={{ marginLeft: 10 }}>{props.content.icon}</Box>
             </Box>
-
             <Typography variant="h5" color="inherit" paragraph>
               {props.content.title}
             </Typography>
-
             <Typography component="p">{props.content.description}</Typography>
           </CardContent>
         </Card>

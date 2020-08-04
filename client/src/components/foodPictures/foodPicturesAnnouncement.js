@@ -1,5 +1,7 @@
+//source from: https://www.npmjs.com/package/react-announcement,
+// https://github.com/kristofferandreasen/react-announcement/blob/master/example/src/App.js
 import * as React from "react";
-import pic from "./announcementPic.jpg";
+import pic from "../../pictures/announcementPic.jpg";
 import Announcement from "react-announcement";
 import { withCookies, Cookies } from "react-cookie";
 import { instanceOf } from "prop-types";

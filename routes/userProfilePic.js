@@ -2,6 +2,13 @@ const router = require("express").Router();
 const users = require("../models/users.model");
 const foodPicturePost = require("../models/foodPictures.model");
 
+router.get("/", (req, res) => {
+  users
+    .findOne({ email: req.query.email })
+    .then((data) => res.status(200).json(data))
+    .catch((err) => res.status(400).json("Error: ", err));
+});
+
 router.put("/add/:email", (req, res) => {
   users
     .findOneAndUpdate(
@@ -56,13 +63,6 @@ router.put("/updatePostCommentAvatar/:email", (req, res) => {
       }
     )
     .then((posts) => res.status(200).json(posts))
-    .catch((err) => res.status(400).json("Error: ", err));
-});
-
-router.get("/", (req, res) => {
-  users
-    .findOne({ email: req.query.email })
-    .then((data) => res.status(200).json(data))
     .catch((err) => res.status(400).json("Error: ", err));
 });
 

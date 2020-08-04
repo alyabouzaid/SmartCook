@@ -1,25 +1,7 @@
 import React from "react";
-import clsx from "clsx";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
-import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import { red } from "@material-ui/core/colors";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
-import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { connect } from "react-redux";
-import compose from "recompose/compose";
 import { withStyles } from "@material-ui/core/styles";
+import { getProfilePic } from "../../actions/userProfilePicActions";
 import {
   getAllFoodPicPost,
   deleteOneFoodPicPost,
@@ -29,17 +11,30 @@ import {
   editPostComment,
   deleteComment,
 } from "../../actions/foodPicturesActions";
-import { getProfilePic } from "../../actions/userProfilePicActions";
-import TextField from "@material-ui/core/TextField";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import compose from "recompose/compose";
+import clsx from "clsx";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Collapse from "@material-ui/core/Collapse";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import { deepPurple } from "@material-ui/core/colors";
-import { css } from "@emotion/core";
-import DotLoader from "react-spinners/DotLoader";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import Avatar from "@material-ui/core/Avatar";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Popover from "@material-ui/core/Popover";
-import { FaComment } from "react-icons/fa";
+import IconButton from "@material-ui/core/IconButton";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
+import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 
 const useStyles = (theme) => ({
   root: {
@@ -73,12 +68,30 @@ const useStyles = (theme) => ({
   action: {
     marginBottm: 0,
   },
-  commentInput: {
-    justifyContent: "left",
+  commentTextField: {
+    border: "none",
+    width: 500,
+    fontSize: 15,
+    marginLeft: 12,
+    marginBottom: 15,
+    float: "left",
+  },
+  editCommentField: {
+    width: 500,
+    fontSize: 15,
+    marginLeft: 0,
+    float: "left",
   },
   commentAvatar: {
     width: theme.spacing(4),
     height: theme.spacing(4),
+  },
+  editDescriptionField: {
+    width: 500,
+    fontSize: 15,
+    marginLeft: 12,
+    marginBottom: 10,
+    float: "left",
   },
   content: {
     marginTop: 0,
@@ -90,13 +103,6 @@ const useStyles = (theme) => ({
     padding: theme.spacing(1),
   },
 });
-
-const override = css`
-  display: inline-block;
-  margin: 0;
-  justifycontent: center;
-  alignitems: center;
-`;
 
 class FoodPicturesPost extends React.Component {
   constructor(props) {
@@ -331,15 +337,9 @@ class FoodPicturesPost extends React.Component {
         }}
       >
         <input
+          className={classes.editCommentField}
           type="text"
           placeholder="Edit your comment"
-          style={{
-            width: 500,
-            fontSize: 15,
-            marginLeft: 0,
-
-            float: "left",
-          }}
         />
       </form>
     );
@@ -353,7 +353,7 @@ class FoodPicturesPost extends React.Component {
       <div className={classes.root}>
         <Card
           key={this.props.item._id}
-          className={classes.root}
+          className={classes.card}
           style={{
             maxWidth: this.props.cardWidth,
             marginTop: 30,
@@ -465,15 +465,9 @@ class FoodPicturesPost extends React.Component {
               }}
             >
               <input
+                className={classes.editDescriptionField}
                 type="text"
                 placeholder="Edit post description"
-                style={{
-                  width: 500,
-                  fontSize: 15,
-                  marginLeft: 12,
-                  marginBottom: 10,
-                  float: "left",
-                }}
               />
             </form>
           ) : (
@@ -555,16 +549,9 @@ class FoodPicturesPost extends React.Component {
               }}
             >
               <TextField
+                className={classes.commentTextField}
                 id="standard-basic"
                 label="Add a comment"
-                style={{
-                  border: "none",
-                  width: 500,
-                  fontSize: 15,
-                  marginLeft: 12,
-                  marginBottom: 15,
-                  float: "left",
-                }}
               />
             </form>
           </Collapse>

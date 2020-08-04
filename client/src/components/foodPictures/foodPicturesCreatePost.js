@@ -1,27 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
-import { withRouter } from "react-router";
-import "../../index.css";
-import Card from "@material-ui/core/Card";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import { TextField } from "@material-ui/core";
-import { FaImage } from "react-icons/all";
 import {
   uploadImageAndCreatePost,
   getAllFoodPicPost,
 } from "../../actions/foodPicturesActions";
 import compose from "recompose/compose";
+import "../../index.css";
+import { TextField } from "@material-ui/core";
+import { FaImage } from "react-icons/all";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import Paper from "@material-ui/core/Paper";
 import Draggable from "react-draggable";
-import Container from "@material-ui/core/Container";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Box from "@material-ui/core/Box";
 
 const useStyles = (theme) => ({
   rootCardTitle: {
