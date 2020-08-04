@@ -71,7 +71,6 @@ passport.use(
   new GoogleStrategy(
     { clientID, clientSecret, callbackURL },
     (accessToken, refreshToken, profile, done) => {
-      console.log(profile);
       users.findOrCreate(
         { email: profile.emails[0].value },
         {
@@ -109,7 +108,6 @@ app.use("/userProfilePic", userProfilePicRouter);
 
 app.get("/auth/user", isUserAuthenticated, (req, res) => {
   users.findOne({ email: req.user.email }, function (err, result) {
-    console.log(result);
     res.send(result);
   });
 });
