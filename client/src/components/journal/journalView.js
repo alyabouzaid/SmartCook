@@ -81,9 +81,9 @@ const useStyles = (theme) => ({
     textAlign: "center",
     marginBottom: 50,
   },
-    copyright: {
-        paddingTop: theme.spacing(3),
-    },
+  copyright: {
+    paddingTop: theme.spacing(3),
+  },
 });
 
 class JournalView extends Component {
@@ -286,9 +286,9 @@ class JournalView extends Component {
                   onPageChange={this.handleOnPageChange}
                   onSizeChange={this.handleOnSizeChange}
                 />
-              <div className={classes.copyright}>
-                <Footer/>
-              </div>
+                <div className={classes.copyright}>
+                  <Footer />
+                </div>
               </div>
             </Grid>
           </Grid>

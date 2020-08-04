@@ -1,22 +1,17 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
-import AppBar from "@material-ui/core/AppBar";
-import MainCard from "./MainCard";
-import GridPost from "./GridPost";
-import GridList from "@material-ui/core/GridList";
-import Typography from "@material-ui/core/Typography";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
-import compose from "recompose/compose";
 import { connect } from "react-redux";
+import { withStyles } from "@material-ui/core/styles";
 import { getFeaturedFoodPicPost } from "../../actions/foodPicturesActions";
 import FeaturedPostCarousel from "../foodPictures/featuredPostCarousel";
+import compose from "recompose/compose";
+import MainCard from "./MainCard";
+import GridPost from "./GridPost";
+import Footer from "../footer/footer";
+import GridList from "@material-ui/core/GridList";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 import FastfoodOutlinedIcon from "@material-ui/icons/FastfoodOutlined";
 import MenuBookOutlinedIcon from "@material-ui/icons/MenuBookOutlined";
-import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
-import ShareOutlinedIcon from "@material-ui/icons/ShareOutlined";
-import Footer from "../footer/footer";
-import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
+import PhotoCameraOutlinedIcon from "@material-ui/icons/PhotoCameraOutlined";
 
 const useStyles = (theme) => ({
   gridList: {
@@ -68,7 +63,9 @@ const gridCardContent = [
     description:
       "Share the joy and vote for food pictures among friends and family members",
     link: "/foodPicAllPost",
-    icon: <PhotoCameraOutlinedIcon style={{ fontSize: 42, color: "#4db6ac" }} />,
+    icon: (
+      <PhotoCameraOutlinedIcon style={{ fontSize: 42, color: "#4db6ac" }} />
+    ),
   },
 ];
 

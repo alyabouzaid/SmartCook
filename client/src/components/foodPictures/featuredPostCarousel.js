@@ -1,11 +1,11 @@
 import React from "react";
-import Carousel from "react-material-ui-carousel";
+import { withStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 import compose from "recompose/compose";
 import MainCard from "../landingPage/MainCard";
-import { withStyles } from "@material-ui/core/styles";
+import Carousel from "react-material-ui-carousel";
 import Typography from "@material-ui/core/Typography";
 import Popover from "@material-ui/core/Popover";
-import { Link } from "react-router-dom";
 
 const useStyles = (theme) => ({
   featuredPosts: {
@@ -114,8 +114,6 @@ class FeaturedPostCarousel extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
-
     return (
       <Carousel>
         <div>

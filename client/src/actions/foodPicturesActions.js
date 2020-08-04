@@ -11,17 +11,12 @@ export const uploadImageAndCreatePost = (
   googleDefaultPic,
   userUploadedPic
 ) => {
-  console.log("in getImage and createPost ", JSON.stringify(googleDefaultPic));
   return async (dispatch) => {
     try {
       const formData = new FormData();
       formData.append("file", image);
-
       const res = await axios.post("/images/image-upload", formData);
       const imageData = await res.data;
-      console.log("image data: ", JSON.stringify(imageData));
-      console.log("single image data: ", JSON.stringify(imageData[0]));
-
       dispatch(
         createNewFoodPicPost(
           description,
@@ -43,7 +38,6 @@ export const uploadImageAndCreatePost = (
   };
 };
 
-// post request
 export const createNewFoodPicPost = (
   description,
   imageData,
@@ -53,11 +47,6 @@ export const createNewFoodPicPost = (
   googleDefaultPic,
   userUploadedPic
 ) => {
-  // console.log("in createNewFoodPic");
-  // console.log("description: ", JSON.stringify(description));
-  // console.log("image: ", JSON.stringify(imageData));
-  // console.log("username: ", JSON.stringify(username));
-  console.log("in createNewPost ", JSON.stringify(googleDefaultPic));
   return async (dispatch) => {
     try {
       const params = {
@@ -69,20 +58,13 @@ export const createNewFoodPicPost = (
         googleDefaultPic: googleDefaultPic,
         userUploadedPic: userUploadedPic,
       };
-      // console.log("create post waiting before");
-      // dispatch(postMessagePostingsLoading());
       const res = await axios.post("/foodPictures/addPost", params);
-      // console.log("create post waiting");
       const newFoodPicPost = await res.data;
       await dispatch(addNewFoodPicPost(newFoodPicPost));
       toast.success("A new food picture post is added!", {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
       });
-      // setTimeout(() => {
-      //   window.location = "/foodPicAllPost";
-      // }, 2000);
-      // console.log("in all pic view page");
     } catch (error) {
       console.log("Error: ", error);
       toast.error("API error", {
@@ -94,21 +76,17 @@ export const createNewFoodPicPost = (
 };
 
 export const addNewFoodPicPost = (newFoodPicPost) => {
-  // console.log("this is to message list: " + JSON.stringify(newPosting));
-  // console.log("in addNewFoodPic: " + JSON.stringify(newFoodPicPost));
   return {
     type: "ADD_NEW_FOODPIC_POST",
     payload: newFoodPicPost,
   };
 };
 
-// get all food pic post request for food post page
 export const getAllFoodPicPost = () => {
   return async (dispatch) => {
     try {
       dispatch(allFoodPicPostLoading());
       const res = await axios.get("/foodPictures/allPost");
-
       const allPosts = await res.data;
       dispatch(loadAllFoodPicPost(allPosts));
     } catch (error) {
@@ -135,13 +113,10 @@ export const loadAllFoodPicPost = (posts) => {
 };
 
 export const getMyFoodPicPost = () => {
-  // console.log("action email: ", email);
   return async (dispatch) => {
     try {
       dispatch(myFoodPicPostLoading());
       const userData = await axios.get("/auth/user");
-      // console.log("userData: ", JSON.stringify(userData.data.email));
-
       const res = await axios.get(`/foodPictures/myPost`, {
         params: {
           email: userData.data.email,
@@ -172,15 +147,11 @@ export const loadMyFoodPicPost = (myPosts) => {
   };
 };
 
-// get one food pic post with highest like to feature on landing page
 export const getFeaturedFoodPicPost = () => {
   return async (dispatch) => {
     try {
-      // await dispatch(loadingAllFoodPicPost());
       const res = await axios.get("/foodPictures/featuredPost");
-
       const featuredPosts = await res.data;
-      console.log("check pics within one week ", featuredPosts);
       dispatch(loadFeaturedPicPost(featuredPosts));
     } catch (error) {
       console.log("Error: ", error);
@@ -199,9 +170,7 @@ export const loadFeaturedPicPost = (posts) => {
   };
 };
 
-//update like request
 export const addLike = (idPayload, email, name) => {
-  // console.log("like");
   return async (dispatch) => {
     try {
       const params = {
@@ -229,7 +198,6 @@ export const addLike = (idPayload, email, name) => {
   };
 };
 
-//update comment request
 export const addComment = (
   idPayload,
   comment,
@@ -239,7 +207,6 @@ export const addComment = (
   googleDefaultPic,
   userUploadedPic
 ) => {
-  // console.log("comment");
   return async (dispatch) => {
     try {
       const params = {
@@ -267,7 +234,6 @@ export const addComment = (
 };
 
 export const editPostDescription = (idPayload, editedPostDescription) => {
-  // console.log("like");
   return async (dispatch) => {
     try {
       const params = {
@@ -290,7 +256,6 @@ export const editPostDescription = (idPayload, editedPostDescription) => {
 };
 
 export const editPostComment = (idPayload, commentId, editedComment) => {
-  // console.log("editedComment: ", commentId, editedComment);
   return async (dispatch) => {
     try {
       const params = {
@@ -314,7 +279,6 @@ export const editPostComment = (idPayload, commentId, editedComment) => {
 };
 
 export const deleteComment = (idPayload, commentId) => {
-  // console.log("editedComment: ", commentId, editedComment);
   return async (dispatch) => {
     try {
       const params = {
@@ -324,7 +288,6 @@ export const deleteComment = (idPayload, commentId) => {
         `/foodPictures/deleteComment/${idPayload}`,
         params
       );
-
       const updatedFoodPicPost = await res.data;
       dispatch(addUpdatedFoodPicPost(updatedFoodPicPost));
     } catch (error) {
@@ -338,21 +301,15 @@ export const deleteComment = (idPayload, commentId) => {
 };
 
 export const addUpdatedFoodPicPost = (updatedFoodPicPost) => {
-  // console.log("this is to message list: " + JSON.stringify(newPosting));
-  // console.log("in addNewFoodPic: " + JSON.stringify(newFoodPicPost));
   return {
     type: "ADD_UPDATED_FOODPIC_POST",
     payload: updatedFoodPicPost,
   };
 };
 
-//Delete one post request
 export const deleteOneFoodPicPost = (idPayload, email) => {
   return async (dispatch) => {
     try {
-      // console.log("in action1:", idPayload);
-      // console.log("in action2:", email);
-
       const res = await axios.delete(`/foodPictures/deletePost/${idPayload}`, {
         headers: {
           "Content-Type": "application/json",
@@ -379,12 +336,10 @@ export const deleteOne = (idPayload) => {
   };
 };
 
-//Delete all posts request
 export const deleteAllFoodPicPosts = () => {
   return async (dispatch) => {
     try {
       await axios.delete("/foodPictures/deleteAll");
-
       dispatch(deleteAll());
     } catch (error) {
       console.log("Error: ", error);

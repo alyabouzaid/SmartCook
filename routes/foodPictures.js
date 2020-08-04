@@ -1,25 +1,18 @@
 const router = require("express").Router();
 const { uuid } = require("uuidv4");
-var mongoose = require("mongoose");
 const foodPicturePost = require("../models/foodPictures.model");
 var ObjectId = require("mongodb").ObjectID;
 
-// get all posts
 router.get("/allPost", (req, res) => {
-  // setTimeout(() => {
   foodPicturePost
     .find()
-    // .sort("-likesLength")
     .sort("-createdAt")
     .then((posts) => res.status(200).json(posts))
     .catch((err) => res.status(400).json("Error: ", err));
-  // }, 2000);
 });
 
-// get highest like post (feature post)
 router.get("/featuredPost", (req, res) => {
   foodPicturePost
-    // .find()
     .find({
       createdAt: { $gte: new Date(new Date() - 7 * 60 * 60 * 24 * 1000) },
     })
@@ -29,7 +22,6 @@ router.get("/featuredPost", (req, res) => {
     .catch((err) => res.status(400).json("Error: ", err));
 });
 
-// add new post
 router.post("/addPost", (req, res) => {
   const _id = uuid();
   const description = req.body.description;
@@ -55,22 +47,16 @@ router.post("/addPost", (req, res) => {
   post
     .save()
     .then(() => res.status(200).json(post))
-    // .then(() => res.json("Hii"))
     .catch((err) => res.status(400).json("Error: ", err));
 });
 
-// get all individual posts
 router.get("/myPost", (req, res) => {
-  // setTimeout(() => {
   foodPicturePost
-    // .find({ postedBy: req.user })
     .find({ postedByEmail: req.query.email })
     .then((posts) => res.status(200).json(posts))
     .catch((err) => res.status(400).json("Error: ", err));
-  // }, 2000);
 });
 
-// add post like
 router.put("/addLike/:id", (req, res) => {
   foodPicturePost
     .findOneAndUpdate(
@@ -97,7 +83,6 @@ router.put("/addLike/:id", (req, res) => {
     });
 });
 
-// add post comment
 router.put("/addComment/:id", (req, res) => {
   const comment = {
     text: req.body.comment,
@@ -127,7 +112,6 @@ router.put("/addComment/:id", (req, res) => {
     });
 });
 
-// update post description
 router.put("/editDescription/:id", (req, res) => {
   foodPicturePost
     .findByIdAndUpdate(
@@ -149,7 +133,6 @@ router.put("/editDescription/:id", (req, res) => {
     });
 });
 
-// update post comment
 router.put("/editComment/:id", (req, res) => {
   foodPicturePost
     .findOneAndUpdate(
@@ -174,9 +157,7 @@ router.put("/editComment/:id", (req, res) => {
     });
 });
 
-//delete post comment
 router.put("/deleteComment/:id", (req, res) => {
-  // console.log("route:", req.body.username);
   foodPicturePost
     .findOneAndUpdate(
       { _id: req.params.id },
@@ -197,21 +178,16 @@ router.put("/deleteComment/:id", (req, res) => {
     });
 });
 
-// delete food post
 router.delete("/deletePost/:id", (req, res) => {
-  // console.log("route:", req.body.username);
   foodPicturePost
     .remove({
       postedByEmail: req.body.email,
       _id: req.params.id,
-      // postedBy: { $eq: req.body.user },
     })
     .then(() => res.status(200).json("Post is deleted."))
-    // .then(() => res.status(200).json(`${req.body.username}`))
     .catch((err) => res.status(400).json("Error: cannot find user "));
 });
 
-//delete all post (not implemented in frontend)
 router.delete("/deleteAll", (req, res) => {
   foodPicturePost
     .remove({})

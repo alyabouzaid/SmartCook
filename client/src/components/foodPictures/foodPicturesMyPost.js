@@ -1,24 +1,20 @@
 import React from "react";
 import { connect } from "react-redux";
-import compose from "recompose/compose";
 import { withStyles } from "@material-ui/core/styles";
-import { getMyFoodPicPost } from "../../actions/foodPicturesActions";
-import { css } from "@emotion/core";
-import CircleLoader from "react-spinners/CircleLoader";
+import compose from "recompose/compose";
 import FoodPicturesPost from "./foodPicturesPost";
 import FoodPicturesCreatePost from "./foodPicturesCreatePost";
+import Footer from "../footer/footer";
+import { getMyFoodPicPost } from "../../actions/foodPicturesActions";
+import Box from "@material-ui/core/Box";
+import Tooltip from "@material-ui/core/Tooltip";
+import { css } from "@emotion/core";
+import CircleLoader from "react-spinners/CircleLoader";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
 import SPagination from "simple-react-pagination-js";
-import "simple-react-pagination-js/build/style.css"; // import css
-import { Link } from "react-router-dom";
+import "simple-react-pagination-js/build/style.css";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
-import Tooltip from "@material-ui/core/Tooltip";
-import Box from "@material-ui/core/Box";
-import Footer from "../footer/footer";
 
 const useStyles = (theme) => ({
   post: {
@@ -26,6 +22,11 @@ const useStyles = (theme) => ({
     alignItems: "center",
     display: "flex",
     flexWrap: "wrap",
+  },
+  postNum: {
+    fontFamily: "Grand Hotel",
+    marginTop: 25,
+    marginBottom: 20,
   },
   loading: {
     justifyContent: "center",
@@ -107,16 +108,7 @@ class FoodPicturesMyPost extends React.Component {
 
         <Box display="flex" justifyContent="center" m={1} p={1}>
           <Box>
-            <Typography
-              className={classes.postNum}
-              variant="h5"
-              component="p"
-              style={{
-                fontFamily: "Grand Hotel",
-                marginTop: 25,
-                marginBottom: 20,
-              }}
-            >
+            <Typography className={classes.postNum} variant="h5" component="p">
               Total {this.props.myPost.length} posts
             </Typography>
           </Box>

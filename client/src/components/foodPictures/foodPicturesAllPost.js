@@ -1,20 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
-import compose from "recompose/compose";
 import { withStyles } from "@material-ui/core/styles";
+import compose from "recompose/compose";
+import FoodPicturesPost from "./foodPicturesPost";
+import FoodPicturesCreatePost from "./foodPicturesCreatePost";
+import FoodPicturesAnnouncement from "./foodPicturesAnnouncement";
+import Footer from "../footer/footer";
 import { getAllFoodPicPost } from "../../actions/foodPicturesActions";
 import { css } from "@emotion/core";
 import CircleLoader from "react-spinners/CircleLoader";
-import FoodPicturesPost from "./foodPicturesPost";
-import FoodPicturesCreatePost from "./foodPicturesCreatePost";
 import SPagination from "simple-react-pagination-js";
-import "simple-react-pagination-js/build/style.css"; // import css
-import { Link } from "react-router-dom";
+import "simple-react-pagination-js/build/style.css";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import Tooltip from "@material-ui/core/Tooltip";
-import FoodPicturesAnnouncement from "./foodPicturesAnnouncement";
-import Footer from "../footer/footer";
 
 const useStyles = (theme) => ({
   pagination: {
@@ -82,8 +81,6 @@ class FoodPicturesAllPost extends React.Component {
           key={post._id}
           item={post}
           cardWidth={700}
-          // cardLeftMargin={0}
-          // cardRightMargin={0}
           style={{ display: "inline-block", textAlign: "center" }}
         />
       );
@@ -113,10 +110,6 @@ class FoodPicturesAllPost extends React.Component {
           }}
         />
 
-        {/* <Link
-          to={"/foodPicNewPost"}
-          style={{ textDecoration: "none", color: "inherit" }}
-        > */}
         <label htmlFor="icon-button-file" style={{ justifyContent: "right" }}>
           <Tooltip title="Click to create new post" arrow>
             <IconButton
@@ -130,7 +123,7 @@ class FoodPicturesAllPost extends React.Component {
             </IconButton>
           </Tooltip>
         </label>
-        {/* </Link> */}
+
         <p
           style={{
             textAlign: "left",
@@ -162,7 +155,7 @@ class FoodPicturesAllPost extends React.Component {
             onSizeChange={this.handleOnSizeChange}
           />
         </div>
-          <Footer/>
+        <Footer />
       </div>
     );
   }
