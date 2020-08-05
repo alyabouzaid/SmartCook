@@ -19,7 +19,6 @@ export const getRecipeIngredients = (ingredientLinesArray,email,ingredientInvent
         Promise.all(retArray).then(ret => {
             foodAmountArray = ret.map((item) => item.parsed[0].quantity) 
             foodNameArray = ret.map((item) => item.parsed[0].food.label)})
-        // .then(ret => dispatch(getRecipeIngredientsDispatch(foodNameArray)))
         .then(res => 
             
             {
@@ -54,13 +53,16 @@ export const getRecipeIngredients = (ingredientLinesArray,email,ingredientInvent
                     autoClose: false
                 });
 
+                if(foodNameArray.length === foodNamesString.length){
                 arr.map(index =>
                     dispatch(editingIngredient(
                 {"email": email,
                  "description":[foodNameArray[index]],
                  "amount":-foodAmountArray[index]
                     }, ingredientInventory)))
-        })
+                } 
+                })
+                
 
 
 	  } catch (error) {
