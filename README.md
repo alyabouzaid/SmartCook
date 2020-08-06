@@ -63,9 +63,7 @@ Our app also has the following extra functionalities:
 We plan to implement the following features to improve the functionality and usability of our app:
 
 * You will be notified by real time (push) notifications when other users like/comment on your food pic post.
-
 * When you create a food picture post, you will be able to include a link that allows users to access the journal entry, so that users can see both the corresponding food picture and journal entry. This will connect the journal and food picture posts page together.
-
 * For the recipe recommendation page, we will improve the algorithm that parses ingredient names and quantities from the recipe card ingredient list, so that it can detect ingredients with more precision. The current algorithm is unable to detect general ingredients from specific types of that ingredient. For example, it cannot determine that "mushroom" is a general form of "brown mushroom".
 
 ### List of Contributions:
@@ -86,7 +84,7 @@ I designed and implemented the recipe recommendation feature which takes user in
 
 I implemented the ingredient inventory which is where users get to access and store their online kitchen. Ingredients are entered along with their categories to guide users easier access to certain ingredients when looking for recipes and amounts are used to keep track and verify the possibility of making a recipe. I also implemented one of the cool features of our app which ties the recipe recommendation back to the ingredient inventory. The feature checks whether a user will be able to make a recipe based on the ingredients they have in their online kitchen. A natural language processing API was used to break down recipes to their ingredients and amounts.
 
-### Prototype sketches
+### Prototype sketches:
 
 <img src="/client/gallery/logIn.png">
 <img src="/client/gallery/homePage.png">
