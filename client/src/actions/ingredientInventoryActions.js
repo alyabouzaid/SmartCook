@@ -4,22 +4,22 @@ import axios from 'axios'
 
 export const addingIngredient = emailAndIngredientObject => {
 	return async (dispatch) => {
-	  try {
+		try {
 
-		axios({url:'/inventories',method:'POST',data:emailAndIngredientObject})
-		.then(res => console.log(res))
-		.catch(err => console.log(err))
-		
-		dispatch(addingIngredientDispatch(emailAndIngredientObject.inventory[0]));
+			axios({url:'/inventories',method:'POST',data:emailAndIngredientObject})
+				.then(res => console.log(res))
+				.catch(err => console.log(err))
 
-	  } catch (error) {
-		console.log("Error: ", error);
-	  }
+			dispatch(addingIngredientDispatch(emailAndIngredientObject.inventory[0]));
+
+		} catch (error) {
+			console.log("Error: ", error);
+		}
 	};
-  };
+};
 
 
-  
+
 
 export const addingIngredientDispatch= ingredient => {
 	return {
@@ -32,19 +32,19 @@ export const addingIngredientDispatch= ingredient => {
 
 export const clearIngredients = email => {
 	return async (dispatch) => {
-	  try {
+		try {
 
-		axios({url:'/inventories/'+ email, method:'DELETE'})
-		.then(res => console.log(res))
-		.catch(err => console.log(err))
+			axios({url:'/inventories/'+ email, method:'DELETE'})
+				.then(res => console.log(res))
+				.catch(err => console.log(err))
 
-		dispatch(clearIngredientsDispatch());
+			dispatch(clearIngredientsDispatch());
 
-	  } catch (error) {
-		console.log("Error: ", error);
-	  }
+		} catch (error) {
+			console.log("Error: ", error);
+		}
 	};
-  };
+};
 
 
 
@@ -57,97 +57,97 @@ export const clearIngredientsDispatch = () => {
 
 export const deleteIngredient = (emailAndKeyObject,ingredientInventory) => {
 	return async (dispatch) => {
-	  try {
+		try {
 
 
-		let inventoryTemp = ingredientInventory.slice()
+			let inventoryTemp = ingredientInventory.slice()
 
-		inventoryTemp =   inventoryTemp.filter(item =>{
-			
-			if( emailAndKeyObject.key.includes(item.key)){
+			inventoryTemp =   inventoryTemp.filter(item =>{
 
-				axios({url:'/inventories/'+ emailAndKeyObject.email +'/'+ item.key, method:'DELETE'})
-				.then(res => console.log(res))
-				.catch(err => console.log(err))
+				if( emailAndKeyObject.key.includes(item.key)){
 
-				
-				return false
-			}
-			return true})
+					axios({url:'/inventories/'+ emailAndKeyObject.email +'/'+ item.key, method:'DELETE'})
+						.then(res => console.log(res))
+						.catch(err => console.log(err))
 
 
+					return false
+				}
+				return true})
 
 
-		dispatch(loadAllInventory(inventoryTemp));
 
-	  } catch (error) {
-		console.log("Error: ", error);
-	  }
+
+			dispatch(loadAllInventory(inventoryTemp));
+
+		} catch (error) {
+			console.log("Error: ", error);
+		}
 	};
-  };
+};
 
 
-  export const editingIngredient = (emailAndIngredientAndAmountObject,ingredientInventory) => {
+export const editingIngredient = (emailAndIngredientAndAmountObject,ingredientInventory) => {
 
 
 	return async (dispatch) => {
 
-	  try {
+		try {
 
-		let inventoryTemp = ingredientInventory.slice()
-		inventoryTemp =   inventoryTemp.map(item =>{
+			let inventoryTemp = ingredientInventory.slice()
+			inventoryTemp =   inventoryTemp.map(item =>{
 
-			if(emailAndIngredientAndAmountObject.description.includes(item.description)){
-				if(!(item.amount+emailAndIngredientAndAmountObject.amount <0)){
-					
-				item.amount = item.amount + emailAndIngredientAndAmountObject.amount
-				
-				axios({url:'/inventories/edit',method:'POST',data:{
-					email: emailAndIngredientAndAmountObject.email,
-					description: item.description,
-					amount: emailAndIngredientAndAmountObject.amount,
-				  }})
-				.then(res => console.log(res))
-				.catch(err => console.log(err))
-				
+				if(emailAndIngredientAndAmountObject.description.includes(item.description)){
+					if(!(item.amount+emailAndIngredientAndAmountObject.amount <0)){
 
+						item.amount = Number(item.amount) + Number(emailAndIngredientAndAmountObject.amount)
+
+						axios({url:'/inventories/edit',method:'POST',data:{
+								email: emailAndIngredientAndAmountObject.email,
+								description: item.description,
+								amount: emailAndIngredientAndAmountObject.amount,
+							}})
+							.then(res => console.log(res))
+							.catch(err => console.log(err))
+
+
+					}
 				}
-			}
-			return item
-		})
-		
+				return item
+			})
 
-		dispatch(loadAllInventory(inventoryTemp));
 
-	  } catch (error) {
-		console.log("Error: ", error);
-	  }
+			dispatch(loadAllInventory(inventoryTemp));
 
-	
+		} catch (error) {
+			console.log("Error: ", error);
+		}
+
+
 	};
-  };
+};
 
 
 export const initialData = () => {
 	return async (dispatch) => {
-	  try {
-		const userData = await axios.get("/auth/user");
-  
-		const res = await axios.get(`/inventories/${userData.data.email}`);
-  
-		const inventory = await res.data;
+		try {
+			const userData = await axios.get("/auth/user");
 
-		if(!Array.isArray(inventory)){
-			inventory =[]
+			const res = await axios.get(`/inventories/${userData.data.email}`);
+
+			let inventory = await res.data;
+
+			if(!Array.isArray(inventory)){
+				inventory =[]
+			}
+
+			dispatch(loadAllInventory(inventory));
+
+		} catch (error) {
+			console.log("Error: ", error);
 		}
-
-		dispatch(loadAllInventory(inventory));
-
-	  } catch (error) {
-		console.log("Error: ", error);
-	  }
 	};
-  };
+};
 
 export const loadAllInventory = (inventory) => {
 	return {

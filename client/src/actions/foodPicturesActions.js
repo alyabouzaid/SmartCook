@@ -3,13 +3,13 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const uploadImageAndCreatePost = (
-  description,
-  image,
-  email,
-  userFirstName,
-  userFullName,
-  googleDefaultPic,
-  userUploadedPic
+    description,
+    image,
+    email,
+    userFirstName,
+    userFullName,
+    googleDefaultPic,
+    userUploadedPic
 ) => {
   return async (dispatch) => {
     try {
@@ -18,15 +18,15 @@ export const uploadImageAndCreatePost = (
       const res = await axios.post("/images/image-upload", formData);
       const imageData = await res.data;
       dispatch(
-        createNewFoodPicPost(
-          description,
-          imageData,
-          email,
-          userFirstName,
-          userFullName,
-          googleDefaultPic,
-          userUploadedPic
-        )
+          createNewFoodPicPost(
+              description,
+              imageData,
+              email,
+              userFirstName,
+              userFullName,
+              googleDefaultPic,
+              userUploadedPic
+          )
       );
     } catch (error) {
       console.log("Error: ", error);
@@ -39,13 +39,13 @@ export const uploadImageAndCreatePost = (
 };
 
 export const createNewFoodPicPost = (
-  description,
-  imageData,
-  email,
-  userFirstName,
-  userFullName,
-  googleDefaultPic,
-  userUploadedPic
+    description,
+    imageData,
+    email,
+    userFirstName,
+    userFullName,
+    googleDefaultPic,
+    userUploadedPic
 ) => {
   return async (dispatch) => {
     try {
@@ -231,13 +231,13 @@ export const addLike = (idPayload, email, name) => {
 };
 
 export const addComment = (
-  idPayload,
-  comment,
-  userFirstName,
-  userFullName,
-  email,
-  googleDefaultPic,
-  userUploadedPic
+    idPayload,
+    comment,
+    userFirstName,
+    userFullName,
+    email,
+    googleDefaultPic,
+    userUploadedPic
 ) => {
   return async (dispatch) => {
     try {
@@ -250,8 +250,8 @@ export const addComment = (
         userUploadedPic: userUploadedPic,
       };
       const res = await axios.put(
-        `/foodPictures/addComment/${idPayload}`,
-        params
+          `/foodPictures/addComment/${idPayload}`,
+          params
       );
       const updatedFoodPicPost = await res.data;
       dispatch(addUpdatedFoodPicPost(updatedFoodPicPost));
@@ -272,8 +272,8 @@ export const editPostDescription = (idPayload, editedPostDescription) => {
         editedPostDescription: editedPostDescription,
       };
       const res = await axios.put(
-        `/foodPictures/editDescription/${idPayload}`,
-        params
+          `/foodPictures/editDescription/${idPayload}`,
+          params
       );
       const updatedFoodPicPost = await res.data;
       dispatch(addUpdatedFoodPicPost(updatedFoodPicPost));
@@ -295,8 +295,8 @@ export const editPostComment = (idPayload, commentId, editedComment) => {
         editedComment: editedComment,
       };
       const res = await axios.put(
-        `/foodPictures/editComment/${idPayload}`,
-        params
+          `/foodPictures/editComment/${idPayload}`,
+          params
       );
       const updatedFoodPicPost = await res.data;
       dispatch(addUpdatedFoodPicPost(updatedFoodPicPost));
@@ -317,8 +317,8 @@ export const deleteComment = (idPayload, commentId) => {
         commentId: commentId,
       };
       const res = await axios.put(
-        `/foodPictures/deleteComment/${idPayload}`,
-        params
+          `/foodPictures/deleteComment/${idPayload}`,
+          params
       );
       const updatedFoodPicPost = await res.data;
       dispatch(addUpdatedFoodPicPost(updatedFoodPicPost));

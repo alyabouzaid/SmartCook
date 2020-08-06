@@ -33,40 +33,40 @@ export default function GridPost(props) {
   const classes = useStyles();
 
   return (
-    <div>
-      {props.isAuthenticated ? (
-        <Card className={classes.card} variant="outline" p={1}>
-          <CardContent>
-            <Box display="flex" justifyContent="center" m={1} p={1}>
-              <Link
-                to={props.content.link}
-                style={{
-                  textDecoration: "none",
-                  color: "inherit",
-                }}
-              >
-                <Box style={{ marginLeft: 10 }}>{props.content.icon}</Box>
-              </Link>
-            </Box>
-            <Typography variant="h5" color="inherit" paragraph>
-              {props.content.title}
-            </Typography>
-            <Typography component="p">{props.content.description}</Typography>
-          </CardContent>
-        </Card>
-      ) : (
-        <Card className={classes.card} variant="outline" p={1}>
-          <CardContent>
-            <Box display="flex" justifyContent="center" m={1} p={1}>
-              <Box style={{ marginLeft: 10 }}>{props.content.icon}</Box>
-            </Box>
-            <Typography variant="h5" color="inherit" paragraph>
-              {props.content.title}
-            </Typography>
-            <Typography component="p">{props.content.description}</Typography>
-          </CardContent>
-        </Card>
-      )}
-    </div>
+      <div>
+        {props.isAuthenticated ? (
+            <Card className={classes.card} variant="outline" p={1}>
+              <CardContent>
+                <Box display="flex" justifyContent="center" m={1} p={1}>
+                  <Link
+                      to={props.content.link}
+                      style={{
+                        textDecoration: "none",
+                        color: "inherit",
+                      }}
+                  >
+                    <Box style={{ marginLeft: 10 }}>{props.content.icon}</Box>
+                  </Link>
+                </Box>
+                <Typography variant="h5" color="inherit" paragraph>
+                  {props.content.title}
+                </Typography>
+                <Typography component="p">{props.content.description}</Typography>
+              </CardContent>
+            </Card>
+        ) : (
+            <Card className={classes.card} variant="outline" p={1}>
+              <CardContent>
+                <Box display="flex" justifyContent="center" m={1} p={1}>
+                  <Box style={{ marginLeft: 10 }}>{props.content.icon}</Box>
+                </Box>
+                <Typography variant="h5" color="inherit" paragraph>
+                  {props.content.title}
+                </Typography>
+                <Typography component="p">{props.content.description}</Typography>
+              </CardContent>
+            </Card>
+        )}
+      </div>
   );
 }

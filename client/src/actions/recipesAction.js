@@ -1,4 +1,4 @@
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 
 export const loadRecipesData = (email) => {
     return async dispatch => {
@@ -27,9 +27,7 @@ export const loadRecipesPopularData = () => {
 };
 
 export const addNewRecipeData = (recipe, userInfo) => {
-
     let data = {...recipe, email: userInfo.email};
-
     return async dispatch => {
         fetch("/recipes/add", {
             method: 'POST',
@@ -44,15 +42,15 @@ export const addNewRecipeData = (recipe, userInfo) => {
                     autoClose: 3000
                 });
             }).catch((err) => {
-                toast.error(err, {
-                    position: toast.POSITION.TOP_CENTER,
-                    autoClose: 3000})
+            toast.error(err, {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 3000
+            })
         })
     }
 };
 
 export const deleteOneRecipeData = (id) => {
-
     return async dispatch => {
         fetch(`/recipes/delete/${id}`, {
             method: 'DELETE',
@@ -92,8 +90,3 @@ export const deleteOneRecipe = (id) => {
     };
 };
 
-export const deleteAllRecipe = () => {
-    return {
-        type: 'RECIPES_DELETE_ALL',
-    };
-};

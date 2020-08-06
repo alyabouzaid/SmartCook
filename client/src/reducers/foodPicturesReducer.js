@@ -7,8 +7,8 @@ const initialfoodPicPostState = {
 };
 
 export default function foodPicturesReducer(
-  state = initialfoodPicPostState,
-  action
+    state = initialfoodPicPostState,
+    action
 ) {
   switch (action.type) {
     case "ADD_NEW_FOODPIC_POST":

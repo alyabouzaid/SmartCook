@@ -1,4 +1,4 @@
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 
 export const updateTitle = (title) => {
     return {
@@ -16,8 +16,8 @@ export const editJournal = (data) => {
 
 export const addImage = (image) => {
     return {
-       type: 'JOURNAL_EDITOR_ADD_IMAGE',
-       payload: image
+        type: 'JOURNAL_EDITOR_ADD_IMAGE',
+        payload: image
     };
 };
 
@@ -27,20 +27,13 @@ export const clearJournal = () => {
     };
 };
 
-
 export const uploadImage = e => {
-
     return async dispatch => {
-
         const files = Array.from(e.target.files);
-
         const formData = new FormData();
-
         files.forEach((file, i) => {
             formData.append(i, file)
         });
-
-        // formData.append("user", user);
 
         fetch("/images/image-upload", {
             method: 'POST',
@@ -67,9 +60,7 @@ export const loadJournalsData = (email) => {
 };
 
 export const addNewJournalData = (editorData, userInfo) => {
-
     let data = {...editorData, author: userInfo.firstName, email: userInfo.email};
-
     return async dispatch => {
         fetch("/journals/add", {
             method: 'POST',
@@ -78,18 +69,17 @@ export const addNewJournalData = (editorData, userInfo) => {
         })
             .then((res) => res.json())
             .then((res) => {
-               dispatch(clearJournal());
-               dispatch(addJournal(res));
-               toast.success("A new journal has been added", {
-                   position: toast.POSITION.TOP_CENTER,
-                   autoClose: 3000
-               });
+                dispatch(clearJournal());
+                dispatch(addJournal(res));
+                toast.success("A new journal has been added", {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 3000
+                });
             })
     }
 };
 
 export const updateJournalData = (editorData) => {
-
     return async dispatch => {
         fetch(`/journals/update/${editorData._id}`, {
             method: 'PUT',
@@ -109,7 +99,6 @@ export const updateJournalData = (editorData) => {
 };
 
 export const deleteOneJournalData = (id) => {
-
     return async dispatch => {
         fetch(`/journals/delete/${id}`, {
             method: 'DELETE',
@@ -149,22 +138,9 @@ export const deleteOneJournal = (id) => {
     };
 };
 
-export const deleteAllJournal = () => {
-    return {
-        type: 'JOURNALS_DELETE_ALL',
-    };
-};
-
-export const annotateJournal = (recipe) => {
-    return{
-       type: 'RECIPE_ANNOTATION',
-       payload: recipe
-    };
-};
-
 export const importJournal = (journal) => {
-    return{
-      type: 'JOURNAL_IMPORT',
-      payload: journal
+    return {
+        type: 'JOURNAL_IMPORT',
+        payload: journal
     }
 };

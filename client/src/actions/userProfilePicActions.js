@@ -34,19 +34,19 @@ export const addProfilePic = (uploadedImage, userEmail) => {
       dispatch(updateUserInfo(userProfilePic));
       await axios.put(`/userProfilePic/updatePostAvatar/${userEmail}`, params);
       await axios.put(
-        `/userProfilePic/updatePostCommentAvatar/${userEmail}`,
-        params
+          `/userProfilePic/updatePostCommentAvatar/${userEmail}`,
+          params
       );
       dispatch(getAllFoodPicPost());
     } catch (error) {
       console.log("Error: ", error);
       if (error instanceof TypeError) {
         toast.error(
-          "Profile picture not found. Please upload your profile picture and save again.",
-          {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 4000,
-          }
+            "Profile picture not found. Please upload your profile picture and save again.",
+            {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 4000,
+            }
         );
       } else {
         console.log("Error: ", error);

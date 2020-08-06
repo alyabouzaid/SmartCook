@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import compose from "recompose/compose";
 import {
-  loadJournalsData,
   addNewJournalData,
   deleteOneJournalData,
   importJournal,
+  loadJournalsData,
 } from "../../actions/journalActions";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -24,51 +24,36 @@ import Container from "@material-ui/core/Container";
 import SPagination from "simple-react-pagination-js";
 import "simple-react-pagination-js/build/style.css";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
-import CardActions from "@material-ui/core/CardActions";
-import Tooltip from "@material-ui/core/Tooltip"; // import css
+import Tooltip from "@material-ui/core/Tooltip";
 import Footer from "../footer/footer";
 
 const useStyles = (theme) => ({
   root: {
     height: "100vh",
     flexGrow: 1,
-    // marginLeft: "3%",
     justifyContent: "center",
-  },
-  cardGrid: {
-    // paddingTop: theme.spacing(8), // removed this
-    // paddingBottom: theme.spacing(8),
   },
   card: {
     height: "100%",
     display: "flex",
     flexDirection: "column",
   },
-  //   cardMedia: {
-  //     height: 100, // increases image height
-  //     paddingTop: "56.25%", // 16:9
-  //   },
   cardContent: {
     flexGrow: 1,
-    // height: '150px',
     whiteSpace: "wrap",
     overflow: "hidden",
     minWidth: "0",
-    textOverflow: "ellipsis", // doesn't work
+    textOverflow: "ellipsis",
   },
   button: {
     textAlign: "left",
-    // width: "100%",
     textTransform: "capitalize",
-    justifyContent: "left", // aligns button to left of container
+    justifyContent: "left",
     fontSize: "16px",
   },
-  // root: {
-  //     width: '70%',
-  // },
   media: {
     height: 0,
-    paddingTop: "56.25%", // 16:9
+    paddingTop: "56.25%",
   },
   test: {
     "& > *": {
@@ -115,11 +100,10 @@ class JournalView extends Component {
 
   displayData = () => {
     const data = this.props.journals;
-    const sliceData = data.slice(
+    return data.slice(
       this.state.offset,
       this.state.offset + this.state.perPage
     );
-    return sliceData;
   };
 
   render() {
@@ -191,7 +175,6 @@ class JournalView extends Component {
             <Grid item xs={false} sm={4} md={7}>
               <Container>
                 <Grid container spacing={5}>
-                  {/*{this.props.journals.map((journal) => (*/}
                   {this.displayData().map((journal) => (
                     <Grid item xs={false} sm={4} md={12}>
                       <Card
@@ -201,7 +184,6 @@ class JournalView extends Component {
                       >
                         <CardHeader
                           action={
-                            // this.props.userInfo.email === journal.email &&
                             <div>
                               <IconButton aria-label="settings">
                                 <EditOutlinedIcon
@@ -253,15 +235,6 @@ class JournalView extends Component {
                             {parse(journal.body)}
                           </div>
                         </CardContent>
-                        {/*TODO: add functionality to buttons*/}
-                        {/*<CardActions>*/}
-                        {/*    <Button size="small" color="primary">*/}
-                        {/*        Share*/}
-                        {/*    </Button>*/}
-                        {/*    <Button size="small" color="primary">*/}
-                        {/*        Learn More*/}
-                        {/*    </Button>*/}
-                        {/*</CardActions>*/}
                       </Card>
                     </Grid>
                   ))}
@@ -300,8 +273,7 @@ class JournalView extends Component {
 }
 
 const mapStateToProps = (state) => {
-  //name is by convention
-  return { journals: state.journalsStore.journals, userInfo: state.userStore }; //now it will appear as props
+  return { journals: state.journalsStore.journals, userInfo: state.userStore };
 };
 
 export default compose(
