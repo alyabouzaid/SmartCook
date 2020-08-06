@@ -60,11 +60,8 @@ const headCells = [
 function EnhancedTableHead(props) {
   const {
     classes,
-    onSelectAllClick,
     order,
     orderBy,
-    numSelected,
-    rowCount,
     onRequestSort,
   } = props;
   const createSortHandler = (property) => (event) => {
@@ -104,12 +101,9 @@ function EnhancedTableHead(props) {
 
 EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(["asc", "desc"]).isRequired,
   orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -158,7 +152,6 @@ export default function IngredientInventoryTable(props) {
 
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [edit, setEdit] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [isRowSelected, setIsRowSelected] = React.useState(false);
 
@@ -171,14 +164,7 @@ export default function IngredientInventoryTable(props) {
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.description);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
+
 
   const handleClickDescription = (event, name, rowIndex) => {
     const selectedIndex = selected.indexOf(name);
@@ -262,12 +248,9 @@ export default function IngredientInventoryTable(props) {
             >
               <EnhancedTableHead
                   classes={classes}
-                  numSelected={selected.length}
                   order={order}
                   orderBy={orderBy}
-                  onSelectAllClick={handleSelectAllClick}
                   onRequestSort={handleRequestSort}
-                  rowCount={rows.length}
               />
               <TableBody>
                 {stableSort(rows, getComparator(order, orderBy))
@@ -289,7 +272,7 @@ export default function IngredientInventoryTable(props) {
                               key={row.description}
                               selected={isItemSelected}
                           >
-                            <TableCell padding="checkbox" padding="15">
+                            <TableCell padding="15">
                               <Checkbox
                                   checked={isItemSelected}
                                   inputProps={{ "aria-labelledby": labelId }}

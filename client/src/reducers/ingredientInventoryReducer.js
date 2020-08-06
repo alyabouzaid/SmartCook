@@ -1,6 +1,3 @@
-import axios from 'axios'
-
-
 export default function counterMessagesReducer (ingredientInventory = [], action)  {
 	switch (action.type){
 

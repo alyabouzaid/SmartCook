@@ -34,6 +34,7 @@ export const getRecipeIngredients = (ingredientLinesArray,email,ingredientInvent
                                     return true
                                 }
                             }
+                            return false
                         })
 
                         if(tempArray.length ===0){

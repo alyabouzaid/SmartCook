@@ -100,7 +100,7 @@ export const editingIngredient = (emailAndIngredientAndAmountObject,ingredientIn
 				if(emailAndIngredientAndAmountObject.description.includes(item.description)){
 					if(!(item.amount+emailAndIngredientAndAmountObject.amount <0)){
 
-						item.amount = item.amount + emailAndIngredientAndAmountObject.amount
+						item.amount = Number(item.amount) + Number(emailAndIngredientAndAmountObject.amount)
 
 						axios({url:'/inventories/edit',method:'POST',data:{
 								email: emailAndIngredientAndAmountObject.email,
@@ -135,7 +135,7 @@ export const initialData = () => {
 
 			const res = await axios.get(`/inventories/${userData.data.email}`);
 
-			const inventory = await res.data;
+			let inventory = await res.data;
 
 			if(!Array.isArray(inventory)){
 				inventory =[]
