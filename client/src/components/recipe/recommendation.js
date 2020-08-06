@@ -1,28 +1,33 @@
 import React from "react";
-import compose from "recompose/compose";
-import { connect } from "react-redux";
-import { selectingIngredient } from "../../actions/selectIngredientActions";
+import {connect} from "react-redux";
+import Button from "@material-ui/core/Button";
+import {selectingIngredient} from "../../actions/selectIngredientActions";
 import {
     newRecommendation,
     clearRecommendation,
 } from "../../actions/recommendationActions";
-import { getRecommendation } from "../../actions/recommendationActions";
-import { loadUserData } from "../../actions/userActions";
-import { initialData } from "../../actions/ingredientInventoryActions";
-import { loadRecipesData, loadRecipesPopularData, addNewRecipeData, deleteOneRecipeData} from "../../actions/recipesAction";
-import { getRecipeIngredients } from "../../actions/ingredientAmountActions";
+import {getRecommendation} from "../../actions/recommendationActions";
+import {loadUserData} from "../../actions/userActions";
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import {withStyles} from "@material-ui/core/styles";
+import compose from "recompose/compose";
 import IngredientList from "./IngredientList";
+import {initialData} from "../../actions/ingredientInventoryActions";
+import {
+    loadRecipesData,
+    loadRecipesPopularData,
+    addNewRecipeData,
+    deleteOneRecipeData
+} from "../../actions/recipesAction";
 import CategoryList from "./CategoryList";
 import FilterSearchBar from "./FilterSearchBar";
 import RecipeInfo from "./RecipeInfo";
-import DisplayTabs from "./DisplayTabs";
-import Footer from "../footer/footer";
 import SPagination from "simple-react-pagination-js";
 import "simple-react-pagination-js/build/style.css";
-import { withStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
+import DisplayTabs from "./DisplayTabs";
+import {getRecipeIngredients} from "../../actions/ingredientAmountActions";
+import Footer from "../footer/footer";
 
 const useStyles = (theme) => ({
     root: {
@@ -31,6 +36,22 @@ const useStyles = (theme) => ({
     },
     cardGrid: {
         paddingBottom: theme.spacing(8),
+    },
+    card: {
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+    },
+    cardMedia: {
+        height: 100,
+        paddingTop: "56.25%",
+    },
+    cardContent: {
+        flexGrow: 1,
+        whiteSpace: "wrap",
+        overflow: "hidden",
+        minWidth: "0",
+        textOverflow: "ellipsis",
     },
     button: {
         textAlign: "left",
@@ -51,7 +72,6 @@ const useStyles = (theme) => ({
 class Recommendation extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             offset: 0,
             currentPage: 1,
@@ -67,28 +87,24 @@ class Recommendation extends React.Component {
     }
 
     handleSwitchEnum = (s) => {
-        this.setState({ switch: s} );
+        this.setState({switch: s});
     };
 
     handleOnPageChange = (currentPage) => {
         const selectedPage = currentPage;
         const offset = (selectedPage - 1) * this.state.perPage;
-        this.setState({ currentPage: selectedPage });
-        this.setState({ offset: offset });
+        this.setState({currentPage: selectedPage});
+        this.setState({offset: offset});
         this.displayData();
     };
 
     handleOnSizeChange = (perPage) => {
-        this.setState({ perPage, currentPage: 1 });
+        this.setState({perPage, currentPage: 1});
     };
 
-
-    handleGetRecipeIngredients= (recipe) => {
-
-        this.props.getRecipeIngredients(recipe["recipe"]["ingredientLines"],this.props.userInfo.email,this.props.ingredientInventory)
-
+    handleGetRecipeIngredients = (recipe) => {
+        this.props.getRecipeIngredients(recipe["recipe"]["ingredientLines"], this.props.userInfo.email, this.props.ingredientInventory)
     };
-
 
     displayData = () => {
         const data = this.props.recommendation[this.state.switch];
@@ -96,14 +112,13 @@ class Recommendation extends React.Component {
             this.state.offset,
             this.state.offset + this.state.perPage
         );
-
         return sliceData.map((recipe) => {
             return (
                 <Grid item xs={12} sm={6} md={4}>
                     <RecipeInfo
                         recipe={recipe}
-                        ingredientInventory = {this.props.ingredientInventory}
-                        userInfo = {this.props.userInfo}
+                        ingredientInventory={this.props.ingredientInventory}
+                        userInfo={this.props.userInfo}
                         getRecipeIngredients={this.handleGetRecipeIngredients}
                         ingredientAmountStore={this.props.ingredientAmountStore}
                         saveRecipe={this.props.addNewRecipeData}
@@ -145,17 +160,13 @@ class Recommendation extends React.Component {
     };
 
     render() {
-        const { classes } = this.props;
-
+        const {classes} = this.props;
         return (
             <div>
-                <div style={{ margin: "3%" }}>
-
+                <div style={{margin: "3%"}}>
                     <Grid container component="main" className={classes.root} spacing={3}>
-
-                        <Grid item xs={false} sm={4} md={2}>
-                            <FilterSearchBar />
-
+                        <Grid style={{}} item xs={false} sm={4} md={2}>
+                            <FilterSearchBar/>
                             <p
                                 style={{
                                     textAlign: "left",
@@ -164,8 +175,7 @@ class Recommendation extends React.Component {
                                     fontSize: "24px",
                                 }}
                             />
-
-                            <CategoryList />
+                            <CategoryList/>
                             <p
                                 style={{
                                     textAlign: "left",
@@ -174,7 +184,7 @@ class Recommendation extends React.Component {
                                     fontSize: "24px",
                                 }}
                             />
-                            <IngredientList />
+                            <IngredientList/>
                             <p
                                 style={{
                                     textAlign: "left",
@@ -192,10 +202,8 @@ class Recommendation extends React.Component {
                                 RECOMMEND
                             </Button>
                         </Grid>
-
-                        <Grid item xs={false} sm={4} md={1}></Grid>
-
-                        <Grid item xs={12} sm={8} md={8}>
+                        <Grid style={{}} item xs={false} sm={4} md={1}></Grid>
+                        <Grid style={{}} item xs={12} sm={8} md={8}>
                             <Grid container item xs={12} spacing={3} justify="center">
                                 <DisplayTabs switchHandler={this.handleSwitchEnum}/>
                             </Grid>
@@ -257,7 +265,6 @@ const mapStateToProps = (state) => {
         recommendationFilter: state.recommendationFilterStore,
         userInfo: state.userStore,
         ingredientAmountStore: state.ingredientAmountStore,
-
         filter: state.filterStore,
     };
 };

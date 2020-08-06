@@ -4,8 +4,8 @@ const initialState = {
     popular: [],
 };
 
-export default function recommendationReducer(state = initialState, action){
-    switch (action.type){
+export default function recommendationReducer(state = initialState, action) {
+    switch (action.type) {
         case 'NEW_RECOMMENDATION':
             return {...state, hits: action.payload["hits"]};
         case 'RECIPES_ADD':

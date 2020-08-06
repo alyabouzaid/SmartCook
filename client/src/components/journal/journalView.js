@@ -1,31 +1,26 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router";
-import { Link } from "react-router-dom";
+import React, {Component} from "react";
+import {connect} from "react-redux";
+import {withRouter} from "react-router";
 import compose from "recompose/compose";
-import {
-    loadJournalsData,
-    addNewJournalData,
-    deleteOneJournalData,
-    importJournal,
-} from "../../actions/journalActions";
-import Footer from "../footer/footer";
-import parse from "html-react-parser";
-import SPagination from "simple-react-pagination-js";
-import "simple-react-pagination-js/build/style.css";
-import { withStyles } from "@material-ui/core/styles";
+import {addNewJournalData, deleteOneJournalData, importJournal, loadJournalsData,} from "../../actions/journalActions";
+import {withStyles} from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
+import parse from "html-react-parser";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CardHeader from "@material-ui/core/CardHeader";
 import Typography from "@material-ui/core/Typography";
+import {Link} from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import AddIcon from "@material-ui/icons/Add";
 import Container from "@material-ui/core/Container";
+import SPagination from "simple-react-pagination-js";
+import "simple-react-pagination-js/build/style.css";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import Tooltip from "@material-ui/core/Tooltip";
+import Footer from "../footer/footer";
 
 const useStyles = (theme) => ({
     root: {
@@ -38,11 +33,24 @@ const useStyles = (theme) => ({
         display: "flex",
         flexDirection: "column",
     },
+    cardContent: {
+        flexGrow: 1,
+        whiteSpace: "wrap",
+        overflow: "hidden",
+        minWidth: "0",
+        textOverflow: "ellipsis",
+    },
+    button: {
+        textAlign: "left",
+        textTransform: "capitalize",
+        justifyContent: "left",
+        fontSize: "16px",
+    },
     media: {
         height: 0,
         paddingTop: "56.25%",
     },
-    space: {
+    test: {
         "& > *": {
             margin: theme.spacing(1),
         },
@@ -76,26 +84,25 @@ class JournalView extends Component {
     handleOnPageChange = (currentPage) => {
         const selectedPage = currentPage;
         const offset = (selectedPage - 1) * this.state.perPage;
-        this.setState({ currentPage: selectedPage });
-        this.setState({ offset: offset });
+        this.setState({currentPage: selectedPage});
+        this.setState({offset: offset});
         this.displayData();
     };
 
     handleOnSizeChange = (perPage) => {
-        this.setState({ perPage, currentPage: 1 });
+        this.setState({perPage, currentPage: 1});
     };
 
     displayData = () => {
         const data = this.props.journals;
-        const sliceData = data.slice(
+        return data.slice(
             this.state.offset,
             this.state.offset + this.state.perPage
         );
-        return sliceData;
     };
 
     render() {
-        const { classes } = this.props;
+        const {classes} = this.props;
         return (
             <div>
                 <p
@@ -109,17 +116,17 @@ class JournalView extends Component {
 
                 <Link
                     to={"/journal"}
-                    style={{ textDecoration: "none", color: "inherit", padding: "5%" }}
+                    style={{textDecoration: "none", color: "inherit", padding: "5%"}}
                 >
-                    <label htmlFor="icon-button-file" style={{ justifyContent: "right" }}>
+                    <label htmlFor="icon-button-file" style={{justifyContent: "right"}}>
                         <Tooltip title="Click to create new post" arrow>
                             <IconButton
                                 aria-label="upload picture"
                                 component="span"
                                 color="black"
-                                style={{ position: "fixed", right: "5%" }}
+                                style={{position: "fixed", right: "5%"}}
                             >
-                                <AddIcon size="large" style={{ width: 60, height: 60 }} />
+                                <AddIcon size="large" style={{width: 60, height: 60}}/>
                             </IconButton>
                         </Tooltip>
                     </label>
@@ -134,8 +141,8 @@ class JournalView extends Component {
                 />
                 <div>
                     <Grid container component="main" className={classes.root} spacing={5}>
-                        <Grid style={{ textAlign: "right" }} item xs={false} sm={4} md={12}>
-                            <div className={classes.space}>
+                        <Grid style={{textAlign: "right"}} item xs={false} sm={4} md={12}>
+                            <div className={classes.test}>
                                 <p
                                     style={{
                                         textAlign: "left",
@@ -147,8 +154,8 @@ class JournalView extends Component {
                             </div>
                         </Grid>
 
-                        <Grid style={{ textAlign: "right" }} item xs={false} sm={4} md={12}>
-                            <div className={classes.space}>
+                        <Grid style={{textAlign: "right"}} item xs={false} sm={4} md={12}>
+                            <div className={classes.test}>
                                 <p
                                     style={{
                                         textAlign: "left",
@@ -218,7 +225,7 @@ class JournalView extends Component {
                                                     />
                                                 )}
                                                 <CardContent>
-                                                    <div style={{ textAlign: "left" }}>
+                                                    <div style={{textAlign: "left"}}>
                                                         {parse(journal.body)}
                                                     </div>
                                                 </CardContent>
@@ -248,7 +255,7 @@ class JournalView extends Component {
                                     onSizeChange={this.handleOnSizeChange}
                                 />
                                 <div className={classes.copyright}>
-                                    <Footer />
+                                    <Footer/>
                                 </div>
                             </div>
                         </Grid>
@@ -260,7 +267,7 @@ class JournalView extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return { journals: state.journalsStore.journals, userInfo: state.userStore };
+    return {journals: state.journalsStore.journals, userInfo: state.userStore};
 };
 
 export default compose(
