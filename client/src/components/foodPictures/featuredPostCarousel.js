@@ -54,78 +54,78 @@ class FeaturedPostCarousel extends React.Component {
     const open = Boolean(this.state.anchorEl);
 
     return (
-      <div>
-        <Link
-          to={"/foodPicAllPost"}
-          style={{
-            textDecoration: "none",
-            color: "inherit",
-          }}
-        >
-          <img
-            className={classes.featuredPosts}
-            alt={item && item.image[0].asset_id}
-            src={item && item.image[0].secure_url}
-            aria-label="add to favorites"
-            aria-owns={open ? "mouse-over-popover" : undefined}
-            aria-haspopup="true"
-            onMouseEnter={this.handlePopoverOpen}
-            onMouseLeave={this.handlePopoverClose}
-          />
-        </Link>
-        <Popover
-          id="mouse-over-popover"
-          className={classes.popover}
-          classes={{
-            paper: classes.paper,
-          }}
-          elevation="8"
-          open={open}
-          anchorEl={this.state.anchorEl}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right",
-          }}
-          transformOrigin={{
-            vertical: "bottom",
-            horizontal: "right",
-          }}
-          onClose={this.handlePopoverClose}
-          disableRestoreFocus
-        >
-          <Typography style={{ textAlign: "left", fontSize: 12 }}>
-            <li style={{ listStyle: "none" }}>
-              Posted by: {item && item.postedByFullName}
-            </li>
-            <li style={{ listStyle: "none" }}>Date: {item && item.dateTime}</li>
-          </Typography>
-        </Popover>
+        <div>
+          <Link
+              to={"/foodPicAllPost"}
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+              }}
+          >
+            <img
+                className={classes.featuredPosts}
+                alt={item && item.image[0].asset_id}
+                src={item && item.image[0].secure_url}
+                aria-label="add to favorites"
+                aria-owns={open ? "mouse-over-popover" : undefined}
+                aria-haspopup="true"
+                onMouseEnter={this.handlePopoverOpen}
+                onMouseLeave={this.handlePopoverClose}
+            />
+          </Link>
+          <Popover
+              id="mouse-over-popover"
+              className={classes.popover}
+              classes={{
+                paper: classes.paper,
+              }}
+              elevation="8"
+              open={open}
+              anchorEl={this.state.anchorEl}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+              transformOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+              onClose={this.handlePopoverClose}
+              disableRestoreFocus
+          >
+            <Typography style={{ textAlign: "left", fontSize: 12 }}>
+              <li style={{ listStyle: "none" }}>
+                Posted by: {item && item.postedByFullName}
+              </li>
+              <li style={{ listStyle: "none" }}>Date: {item && item.dateTime}</li>
+            </Typography>
+          </Popover>
 
-        <Typography
-          className={classes.featuredPostsCaption}
-          variant="subtitle1"
-        >
-          Recent&nbsp; top 3 voted picture with{" "}
-          <b>{item && item.likesLength}</b> likes
-        </Typography>
-      </div>
+          <Typography
+              className={classes.featuredPostsCaption}
+              variant="subtitle1"
+          >
+            Recent&nbsp; top 3 voted picture with{" "}
+            <b>{item && item.likesLength}</b> likes
+          </Typography>
+        </div>
     );
   };
 
   render() {
     return (
-      <Carousel>
-        <div>
-          <MainCard
-            card={this.props.card}
-            isAuthenticated={this.props.isAuthenticated}
-          />
-        </div>
+        <Carousel>
+          <div>
+            <MainCard
+                card={this.props.card}
+                isAuthenticated={this.props.isAuthenticated}
+            />
+          </div>
 
-        {this.displayData(this.props.featuredPost[0])}
-        {this.displayData(this.props.featuredPost[1])}
-        {this.displayData(this.props.featuredPost[2])}
-      </Carousel>
+          {this.displayData(this.props.featuredPost[0])}
+          {this.displayData(this.props.featuredPost[1])}
+          {this.displayData(this.props.featuredPost[2])}
+        </Carousel>
     );
   }
 }
