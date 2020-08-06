@@ -30,32 +30,32 @@ class JournalImage extends Component {
     const { classes } = this.props;
 
     return (
-      <div>
-        <div className={classes.root}>
-          <GridList cellHeight={180} className={classes.gridList}>
-            {this.props.images.map((image) => (
-              <GridListTile>
-                <img src={image.secure_url} alt="" />
-              </GridListTile>
-            ))}
-          </GridList>
-        </div>
-        {this.props.images.length < 3 && (
-          <div className={classes.journalImage}>
-            <input
-              type="file"
-              id="singleUpload"
-              className="inputfile"
-              onChange={(e) => this.props.uploadImage(e)}
-            />
-            <Tooltip title="Click to upload picture" arrow>
-              <label htmlFor="singleUpload" className="label">
-                <FaImage size="30%" />
-              </label>
-            </Tooltip>
+        <div>
+          <div className={classes.root}>
+            <GridList cellHeight={180} className={classes.gridList}>
+              {this.props.images.map((image) => (
+                  <GridListTile>
+                    <img src={image.secure_url} alt="" />
+                  </GridListTile>
+              ))}
+            </GridList>
           </div>
-        )}
-      </div>
+          {this.props.images.length < 3 && (
+              <div className={classes.journalImage}>
+                <input
+                    type="file"
+                    id="singleUpload"
+                    className="inputfile"
+                    onChange={(e) => this.props.uploadImage(e)}
+                />
+                <Tooltip title="Click to upload picture" arrow>
+                  <label htmlFor="singleUpload" className="label">
+                    <FaImage size="30%" />
+                  </label>
+                </Tooltip>
+              </div>
+          )}
+        </div>
     );
   }
 }
@@ -65,6 +65,6 @@ const mapStateToProps = (state) => {
 };
 
 export default compose(
-  withStyles(useStyles),
-  connect(mapStateToProps, { uploadImage })
+    withStyles(useStyles),
+    connect(mapStateToProps, { uploadImage })
 )(JournalImage);

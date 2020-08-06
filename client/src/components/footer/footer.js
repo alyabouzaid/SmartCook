@@ -15,12 +15,12 @@ export default function Footer(props) {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <div className={classes.container}>
-        <div className={classes.right}>
-          &copy; 2020 - created by SmartCook team
+      <div className={classes.root}>
+        <div className={classes.container}>
+          <div className={classes.right}>
+            &copy; 2020 - created by SmartCook team
+          </div>
         </div>
       </div>
-    </div>
   );
 }
