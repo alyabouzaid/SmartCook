@@ -41,18 +41,18 @@ class IngredientList extends React.Component {
         if (Array.isArray(ingredientInventory)){
             currentCategoryItems = this.props.filter.length === 0 ? this.props.ingredientInventory :
                 (this.props.ingredientInventory.filter((ingredient) =>
-                    {
-                        for (let i = 0; i < this.props.filter.length; i++) {
-                            if (ingredient.category == this.props.filter[i]){
-                                return true;
+                        {
+                            for (let i = 0; i < this.props.filter.length; i++) {
+                                if (ingredient.category == this.props.filter[i]){
+                                    return true;
+                                }
                             }
+                            return false;
                         }
-                        return false;
-                    }
                     )
                 )
-                }
-    } 
+        }
+    }
 
     render() {
         const { classes } = this.props;
@@ -82,20 +82,20 @@ class IngredientList extends React.Component {
                     <List component="div" disablePadding>
 
                         <ListItem>
-                        <FormControl component="fieldset" >
-                            <FormGroup>
-                                {this.filter(this.props.ingredientInventory)}
-                                {currentCategoryItems.map((ingredient) =>
-                                    <FormControlLabel className={classes.nested} key={ingredient.id}
-                                                      control={<Checkbox checked={ingredient.selected}
-                                                                         onChange={() => {this.props.selectingIngredient(ingredient.key);}}
-                                                                         name={ingredient.description}
-                                                                         color="primary"/>}
-                                                      label={ingredient.description}
-                                    />
-                                )}
-                            </FormGroup>
-                        </FormControl>
+                            <FormControl component="fieldset" >
+                                <FormGroup>
+                                    {this.filter(this.props.ingredientInventory)}
+                                    {currentCategoryItems.map((ingredient) =>
+                                        <FormControlLabel className={classes.nested} key={ingredient.id}
+                                                          control={<Checkbox checked={ingredient.selected}
+                                                                             onChange={() => {this.props.selectingIngredient(ingredient.key);}}
+                                                                             name={ingredient.description}
+                                                                             color="primary"/>}
+                                                          label={ingredient.description}
+                                        />
+                                    )}
+                                </FormGroup>
+                            </FormControl>
                         </ListItem>
                     </List>
                 </Collapse>
@@ -105,7 +105,7 @@ class IngredientList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return { 
+    return {
         ingredientInventory: state.ingredientInventory,
         filter: state.filterStore
     };

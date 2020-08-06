@@ -37,7 +37,7 @@ const gridCardContent = [
     header: "Track",
     title: "Ingredient Inventory",
     description:
-      "Track all different category of ingredients in your pantry and fridge with ease",
+        "Track all different category of ingredients in your pantry and fridge with ease",
     link: "/ingredientInventory",
     icon: <PlaylistAddCheckIcon style={{ fontSize: 50, color: "#4db6ac" }} />,
   },
@@ -45,7 +45,7 @@ const gridCardContent = [
     header: "Recommend",
     title: "Recipe Recommender",
     description:
-      "Recommends different recipes based on your preferences and available ingredients",
+        "Recommends different recipes based on your preferences and available ingredients",
     link: "/recommendation",
     icon: <FastfoodOutlinedIcon style={{ fontSize: 42, color: "#4db6ac" }} />,
   },
@@ -53,7 +53,7 @@ const gridCardContent = [
     header: "Create",
     title: "Recipe Journal",
     description:
-      "Create and customize your favourite recipes into personal recipe journal",
+        "Create and customize your favourite recipes into personal recipe journal",
     link: "/journalView",
     icon: <MenuBookOutlinedIcon style={{ fontSize: 42, color: "#4db6ac" }} />,
   },
@@ -61,10 +61,10 @@ const gridCardContent = [
     header: "Share",
     title: "Food Pictures",
     description:
-      "Share the joy and vote for food pictures among friends and family members",
+        "Share the joy and vote for food pictures among friends and family members",
     link: "/foodPicAllPost",
     icon: (
-      <PhotoCameraOutlinedIcon style={{ fontSize: 42, color: "#4db6ac" }} />
+        <PhotoCameraOutlinedIcon style={{ fontSize: 42, color: "#4db6ac" }} />
     ),
   },
 ];
@@ -81,47 +81,47 @@ class LandingPage extends React.Component {
       title: "Simple and fun way to start your cooking journey",
       title_isAuthenticated: "Welcome back " + this.props.userInfo.firstName,
       description:
-        "Love to cook but always struggle to come up with ideas? SmartCook is designed for all food lovers who enjoy cooking, exploring new recipes, creating recipe journals, and socializing about food/cooking",
+          "Love to cook but always struggle to come up with ideas? SmartCook is designed for all food lovers who enjoy cooking, exploring new recipes, creating recipe journals, and socializing about food/cooking",
       description_isAuthenticated:
-        "Enjoy your cooking experience with SmartCook",
+          "Enjoy your cooking experience with SmartCook",
       image: "./gallery/landingPage.jpg",
     };
 
     return (
-      <div>
-        <img
-          style={{ display: "none" }}
-          src="./frontend/gallery/homePage.png"
-        />
-
-        {this.props.userInfo.isLoggedIn ? (
-          <FeaturedPostCarousel
-            card={mainCardContent}
-            isAuthenticated={this.props.userInfo.isLoggedIn}
-            featuredPost={this.props.featuredPost}
+        <div>
+          <img
+              style={{ display: "none" }}
+              src="./frontend/gallery/homePage.png"
           />
-        ) : (
-          <MainCard
-            card={mainCardContent}
-            isAuthenticated={this.props.userInfo.isLoggedIn}
-          />
-        )}
 
-        <div className={classes.gridList}>
-          <GridList cols={4} justify="center">
-            {gridCardContent.map((item) => {
-              return (
-                <GridPost
-                  key={item.header}
-                  content={item}
+          {this.props.userInfo.isLoggedIn ? (
+              <FeaturedPostCarousel
+                  card={mainCardContent}
                   isAuthenticated={this.props.userInfo.isLoggedIn}
-                ></GridPost>
-              );
-            })}
-          </GridList>
+                  featuredPost={this.props.featuredPost}
+              />
+          ) : (
+              <MainCard
+                  card={mainCardContent}
+                  isAuthenticated={this.props.userInfo.isLoggedIn}
+              />
+          )}
+
+          <div className={classes.gridList}>
+            <GridList cols={4} justify="center">
+              {gridCardContent.map((item) => {
+                return (
+                    <GridPost
+                        key={item.header}
+                        content={item}
+                        isAuthenticated={this.props.userInfo.isLoggedIn}
+                    ></GridPost>
+                );
+              })}
+            </GridList>
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
     );
   }
 }
@@ -141,6 +141,6 @@ const mapStateToProps = (state) => {
 };
 
 export default compose(
-  withStyles(useStyles),
-  connect(mapStateToProps, mapDispatchToProps)
+    withStyles(useStyles),
+    connect(mapStateToProps, mapDispatchToProps)
 )(LandingPage);

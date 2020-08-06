@@ -7,7 +7,7 @@ import "./journalImage.css";
 import { withStyles } from "@material-ui/core/styles";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
-import Tooltip from "@material-ui/core/Tooltip"; // import css
+import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = (theme) => ({
   root: {
@@ -15,7 +15,6 @@ const useStyles = (theme) => ({
     flexWrap: "wrap",
     justifyContent: "space-around",
     overflow: "hidden",
-    // backgroundColor: theme.palette.background.paper,
   },
   gridList: {
     width: 300,
@@ -31,42 +30,41 @@ class JournalImage extends Component {
     const { classes } = this.props;
 
     return (
-      <div>
-        <div className={classes.root}>
-          <GridList cellHeight={180} className={classes.gridList}>
-            {this.props.images.map((image) => (
-              <GridListTile>
-                <img src={image.secure_url} alt="" />
-              </GridListTile>
-            ))}
-          </GridList>
-        </div>
-        {this.props.images.length < 3 && (
-          <div className={classes.journalImage}>
-            <input
-              type="file"
-              id="singleUpload"
-              className="inputfile"
-              onChange={(e) => this.props.uploadImage(e)}
-            />
-            <Tooltip title="Click to upload picture" arrow>
-              <label htmlFor="singleUpload" className="label">
-                <FaImage size="30%" />
-              </label>
-            </Tooltip>
+        <div>
+          <div className={classes.root}>
+            <GridList cellHeight={180} className={classes.gridList}>
+              {this.props.images.map((image) => (
+                  <GridListTile>
+                    <img src={image.secure_url} alt="" />
+                  </GridListTile>
+              ))}
+            </GridList>
           </div>
-        )}
-      </div>
+          {this.props.images.length < 3 && (
+              <div className={classes.journalImage}>
+                <input
+                    type="file"
+                    id="singleUpload"
+                    className="inputfile"
+                    onChange={(e) => this.props.uploadImage(e)}
+                />
+                <Tooltip title="Click to upload picture" arrow>
+                  <label htmlFor="singleUpload" className="label">
+                    <FaImage size="30%" />
+                  </label>
+                </Tooltip>
+              </div>
+          )}
+        </div>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  //name is by convention
-  return { images: state.journalEditorStore.images }; //now it will appear as props
+  return { images: state.journalEditorStore.images };
 };
 
 export default compose(
-  withStyles(useStyles),
-  connect(mapStateToProps, { uploadImage })
+    withStyles(useStyles),
+    connect(mapStateToProps, { uploadImage })
 )(JournalImage);

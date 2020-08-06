@@ -16,8 +16,8 @@ export const editJournal = (data) => {
 
 export const addImage = (image) => {
     return {
-       type: 'JOURNAL_EDITOR_ADD_IMAGE',
-       payload: image
+        type: 'JOURNAL_EDITOR_ADD_IMAGE',
+        payload: image
     };
 };
 
@@ -78,12 +78,12 @@ export const addNewJournalData = (editorData, userInfo) => {
         })
             .then((res) => res.json())
             .then((res) => {
-               dispatch(clearJournal());
-               dispatch(addJournal(res));
-               toast.success("A new journal has been added", {
-                   position: toast.POSITION.TOP_CENTER,
-                   autoClose: 3000
-               });
+                dispatch(clearJournal());
+                dispatch(addJournal(res));
+                toast.success("A new journal has been added", {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose: 3000
+                });
             })
     }
 };
@@ -157,14 +157,14 @@ export const deleteAllJournal = () => {
 
 export const annotateJournal = (recipe) => {
     return{
-       type: 'RECIPE_ANNOTATION',
-       payload: recipe
+        type: 'RECIPE_ANNOTATION',
+        payload: recipe
     };
 };
 
 export const importJournal = (journal) => {
     return{
-      type: 'JOURNAL_IMPORT',
-      payload: journal
+        type: 'JOURNAL_IMPORT',
+        payload: journal
     }
 };

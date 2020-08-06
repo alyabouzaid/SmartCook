@@ -72,19 +72,19 @@ class FoodPicturesCreatePost extends React.Component {
 
   paperComponent = (props) => {
     return (
-      <Draggable
-        handle="#draggable-dialog-title"
-        cancel={'[class*="MuiDialogContent-root"]'}
-      >
-        <Paper {...props} />
-      </Draggable>
+        <Draggable
+            handle="#draggable-dialog-title"
+            cancel={'[class*="MuiDialogContent-root"]'}
+        >
+          <Paper {...props} />
+        </Draggable>
     );
   };
 
   handleClick = () => {
     this.props.uploadProfilePicImage(
-      this.state.image.raw,
-      this.props.userInfo.email
+        this.state.image.raw,
+        this.props.userInfo.email
     );
     this.props.isClose();
   };
@@ -93,93 +93,93 @@ class FoodPicturesCreatePost extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div>
-        <Dialog
-          classes={{ paper: classes.paper }}
-          open={this.props.isOpen}
-          onClose={this.props.isClose}
-          PaperComponent={this.paperComponent}
-          aria-labelledby="draggable-dialog-title"
-        >
-          <DialogTitle
-            style={{
-              cursor: "move",
-            }}
-            id="draggable-dialog-title"
+        <div>
+          <Dialog
+              classes={{ paper: classes.paper }}
+              open={this.props.isOpen}
+              onClose={this.props.isClose}
+              PaperComponent={this.paperComponent}
+              aria-labelledby="draggable-dialog-title"
           >
-            <Typography
-              className={classes.rootCardTitle}
-              variant="h5"
-              component="p"
-              style={{ fontFamily: "Grand Hotel" }}
+            <DialogTitle
+                style={{
+                  cursor: "move",
+                }}
+                id="draggable-dialog-title"
             >
-              Food Picture Post
-            </Typography>
-          </DialogTitle>
+              <Typography
+                  className={classes.rootCardTitle}
+                  variant="h5"
+                  component="p"
+                  style={{ fontFamily: "Grand Hotel" }}
+              >
+                Food Picture Post
+              </Typography>
+            </DialogTitle>
 
-          <DialogContent>
-            <form className={classes.description}>
-              <TextField
-                multiline
-                type="text"
-                placeholder="Enter post description"
-                value={this.state.description}
-                onChange={(e) => this.setState({ description: e.target.value })}
-              />
-            </form>
-
-            <div className={classes.image}>
-              {this.state.image.preview ? (
-                <img
-                  src={this.state.image.preview}
-                  alt="dummy"
-                  width="300"
-                  height="300"
+            <DialogContent>
+              <form className={classes.description}>
+                <TextField
+                    multiline
+                    type="text"
+                    placeholder="Enter post description"
+                    value={this.state.description}
+                    onChange={(e) => this.setState({ description: e.target.value })}
                 />
-              ) : (
-                <div>
-                  <input
-                    type="file"
-                    id="singleUpload"
-                    className="inputfile"
-                    onChange={(e) => this.handleChange(e)}
-                  />
-                  <Tooltip
-                    title="Click to upload picture"
-                    placement="right-start"
-                  >
-                    <label htmlFor="singleUpload" className="label">
-                      <FaImage className={classes.uploadIcon} size="20%" />
-                    </label>
-                  </Tooltip>
-                </div>
-              )}
-            </div>
-          </DialogContent>
+              </form>
 
-          <DialogActions>
-            <Button
-              className={classes.button}
-              variant="contained"
-              color="primary"
-              onClick={() => {
-                this.props.uploadImageAndCreatePost(
-                  this.state.description,
-                  this.state.image.raw,
-                  this.props.userInfo.email,
-                  this.props.userInfo.firstName,
-                  this.props.userInfo.fullName,
-                  this.props.userInfo.googleDefaultPic,
-                  this.props.userInfo.userUploadedPic
-                );
-                this.props.isClose();
-              }}
-            >
-              SUBMIT
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+              <div className={classes.image}>
+                {this.state.image.preview ? (
+                    <img
+                        src={this.state.image.preview}
+                        alt="dummy"
+                        width="300"
+                        height="300"
+                    />
+                ) : (
+                    <div>
+                      <input
+                          type="file"
+                          id="singleUpload"
+                          className="inputfile"
+                          onChange={(e) => this.handleChange(e)}
+                      />
+                      <Tooltip
+                          title="Click to upload picture"
+                          placement="right-start"
+                      >
+                        <label htmlFor="singleUpload" className="label">
+                          <FaImage className={classes.uploadIcon} size="20%" />
+                        </label>
+                      </Tooltip>
+                    </div>
+                )}
+              </div>
+            </DialogContent>
+
+            <DialogActions>
+              <Button
+                  className={classes.button}
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    this.props.uploadImageAndCreatePost(
+                        this.state.description,
+                        this.state.image.raw,
+                        this.props.userInfo.email,
+                        this.props.userInfo.firstName,
+                        this.props.userInfo.fullName,
+                        this.props.userInfo.googleDefaultPic,
+                        this.props.userInfo.userUploadedPic
+                    );
+                    this.props.isClose();
+                  }}
+              >
+                SUBMIT
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
     );
   }
 }
@@ -187,25 +187,25 @@ class FoodPicturesCreatePost extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     uploadImageAndCreatePost: (
-      description,
-      image,
-      email,
-      userFirstName,
-      userFullName,
-      googleDefaultPic,
-      userUploadedPic
+        description,
+        image,
+        email,
+        userFirstName,
+        userFullName,
+        googleDefaultPic,
+        userUploadedPic
     ) =>
-      dispatch(
-        uploadImageAndCreatePost(
-          description,
-          image,
-          email,
-          userFirstName,
-          userFullName,
-          googleDefaultPic,
-          userUploadedPic
-        )
-      ),
+        dispatch(
+            uploadImageAndCreatePost(
+                description,
+                image,
+                email,
+                userFirstName,
+                userFullName,
+                googleDefaultPic,
+                userUploadedPic
+            )
+        ),
     getAllFoodPicPost: () => dispatch(getAllFoodPicPost()),
   };
 };
@@ -218,6 +218,6 @@ const mapStateToProps = (state) => {
 };
 
 export default compose(
-  withStyles(useStyles),
-  connect(mapStateToProps, mapDispatchToProps)
+    withStyles(useStyles),
+    connect(mapStateToProps, mapDispatchToProps)
 )(FoodPicturesCreatePost);

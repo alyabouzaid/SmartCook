@@ -1,7 +1,7 @@
 const initialState = {
-        hits: [],
-        recipes: [],
-        popular: [],
+    hits: [],
+    recipes: [],
+    popular: [],
 };
 
 export default function recommendationReducer(state = initialState, action){

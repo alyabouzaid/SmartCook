@@ -4,10 +4,10 @@ export const loadUserData = () => {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
-      .then((res) => res.json())
-      .then((res) => {
-        dispatch(loadUserInfo(res));
-      });
+        .then((res) => res.json())
+        .then((res) => {
+          dispatch(loadUserInfo(res));
+        });
   };
 };
 
