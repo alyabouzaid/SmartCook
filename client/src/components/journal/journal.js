@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router";
 import compose from "recompose/compose";
+import { withRouter } from "react-router";
 import {
   editJournal,
   updateTitle,
@@ -9,6 +9,7 @@ import {
   updateJournalData,
   clearJournal,
 } from "../../actions/journalActions";
+import { loadUserData } from "../../actions/userActions";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import "./journal.css";
@@ -17,8 +18,6 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { loadUserData } from "../../actions/userActions";
-import Footer from "../footer/footer";
 
 const useStyles = (theme) => ({
   root: {
@@ -27,7 +26,7 @@ const useStyles = (theme) => ({
   button: {
     textAlign: "left",
     textTransform: "capitalize",
-    justifyContent: "left", // aligns button to left of container
+    justifyContent: "left",
     fontSize: "16px",
     marginTop: 25,
   },
@@ -69,10 +68,6 @@ class Journal extends React.Component {
                 className={classes.editor}
                 editor={ClassicEditor}
                 data={this.props.editorData.initialData}
-                // onInit={(editor) => {
-                //                 //   // You can store the "editor" and use when it is needed.
-                //                 //   console.log("Editor is ready to use!", editor);
-                //                 // }}
                 onChange={(event, editor) => {
                   const data = editor.getData();
                   this.props.editJournal(data);
@@ -119,12 +114,11 @@ class Journal extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  //name is by convention
   return {
     editorData: state.journalEditorStore,
     userInfo: state.userStore,
     darkMode: state.colorStore,
-  }; //now it will appear as props
+  };
 };
 
 export default compose(

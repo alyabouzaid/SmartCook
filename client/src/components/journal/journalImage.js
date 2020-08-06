@@ -7,7 +7,7 @@ import "./journalImage.css";
 import { withStyles } from "@material-ui/core/styles";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
-import Tooltip from "@material-ui/core/Tooltip"; // import css
+import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = (theme) => ({
   root: {
@@ -15,7 +15,6 @@ const useStyles = (theme) => ({
     flexWrap: "wrap",
     justifyContent: "space-around",
     overflow: "hidden",
-    // backgroundColor: theme.palette.background.paper,
   },
   gridList: {
     width: 300,
@@ -62,8 +61,7 @@ class JournalImage extends Component {
 }
 
 const mapStateToProps = (state) => {
-  //name is by convention
-  return { images: state.journalEditorStore.images }; //now it will appear as props
+  return { images: state.journalEditorStore.images };
 };
 
 export default compose(

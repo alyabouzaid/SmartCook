@@ -33,7 +33,7 @@ let amount = 0;
 let inventory = "";
 let category = "";
 
-const useStyles = (theme) => ({
+const useStyles = () => ({
   root: {
     display: "flex",
     alignItems: "center",
@@ -147,8 +147,6 @@ class IngredientInventory extends React.Component {
     category = newValue;
   }
 
-  // TODO: temporary mock filters, replace with redux
-
   render() {
     const { classes } = this.props;
 
@@ -250,13 +248,11 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-//state has entire state of app!!
 const mapStateToProps = (state) => {
-  //name is by convention
   return {
     ingredientInventory: state.ingredientInventory,
     userInfo: state.userStore,
-  }; //now it will appear as props
+  };
 };
 
 export default compose(

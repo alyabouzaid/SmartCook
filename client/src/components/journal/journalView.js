@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
+import { Link } from "react-router-dom";
 import compose from "recompose/compose";
 import {
   loadJournalsData,
@@ -8,69 +9,40 @@ import {
   deleteOneJournalData,
   importJournal,
 } from "../../actions/journalActions";
+import Footer from "../footer/footer";
+import parse from "html-react-parser";
+import SPagination from "simple-react-pagination-js";
+import "simple-react-pagination-js/build/style.css";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
-import parse from "html-react-parser";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CardHeader from "@material-ui/core/CardHeader";
 import Typography from "@material-ui/core/Typography";
-import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import AddIcon from "@material-ui/icons/Add";
 import Container from "@material-ui/core/Container";
-import SPagination from "simple-react-pagination-js";
-import "simple-react-pagination-js/build/style.css";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
-import CardActions from "@material-ui/core/CardActions";
-import Tooltip from "@material-ui/core/Tooltip"; // import css
-import Footer from "../footer/footer";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = (theme) => ({
   root: {
     height: "100vh",
     flexGrow: 1,
-    // marginLeft: "3%",
     justifyContent: "center",
-  },
-  cardGrid: {
-    // paddingTop: theme.spacing(8), // removed this
-    // paddingBottom: theme.spacing(8),
   },
   card: {
     height: "100%",
     display: "flex",
     flexDirection: "column",
   },
-  //   cardMedia: {
-  //     height: 100, // increases image height
-  //     paddingTop: "56.25%", // 16:9
-  //   },
-  cardContent: {
-    flexGrow: 1,
-    // height: '150px',
-    whiteSpace: "wrap",
-    overflow: "hidden",
-    minWidth: "0",
-    textOverflow: "ellipsis", // doesn't work
-  },
-  button: {
-    textAlign: "left",
-    // width: "100%",
-    textTransform: "capitalize",
-    justifyContent: "left", // aligns button to left of container
-    fontSize: "16px",
-  },
-  // root: {
-  //     width: '70%',
-  // },
   media: {
     height: 0,
-    paddingTop: "56.25%", // 16:9
+    paddingTop: "56.25%",
   },
-  test: {
+  space: {
     "& > *": {
       margin: theme.spacing(1),
     },
@@ -163,7 +135,7 @@ class JournalView extends Component {
         <div>
           <Grid container component="main" className={classes.root} spacing={5}>
             <Grid style={{ textAlign: "right" }} item xs={false} sm={4} md={12}>
-              <div className={classes.test}>
+              <div className={classes.space}>
                 <p
                   style={{
                     textAlign: "left",
@@ -176,7 +148,7 @@ class JournalView extends Component {
             </Grid>
 
             <Grid style={{ textAlign: "right" }} item xs={false} sm={4} md={12}>
-              <div className={classes.test}>
+              <div className={classes.space}>
                 <p
                   style={{
                     textAlign: "left",
@@ -191,7 +163,6 @@ class JournalView extends Component {
             <Grid item xs={false} sm={4} md={7}>
               <Container>
                 <Grid container spacing={5}>
-                  {/*{this.props.journals.map((journal) => (*/}
                   {this.displayData().map((journal) => (
                     <Grid item xs={false} sm={4} md={12}>
                       <Card
@@ -201,7 +172,6 @@ class JournalView extends Component {
                       >
                         <CardHeader
                           action={
-                            // this.props.userInfo.email === journal.email &&
                             <div>
                               <IconButton aria-label="settings">
                                 <EditOutlinedIcon
@@ -252,15 +222,6 @@ class JournalView extends Component {
                             {parse(journal.body)}
                           </div>
                         </CardContent>
-                        {/*TODO: add functionality to buttons*/}
-                        {/*<CardActions>*/}
-                        {/*    <Button size="small" color="primary">*/}
-                        {/*        Share*/}
-                        {/*    </Button>*/}
-                        {/*    <Button size="small" color="primary">*/}
-                        {/*        Learn More*/}
-                        {/*    </Button>*/}
-                        {/*</CardActions>*/}
                       </Card>
                     </Grid>
                   ))}
@@ -299,8 +260,7 @@ class JournalView extends Component {
 }
 
 const mapStateToProps = (state) => {
-  //name is by convention
-  return { journals: state.journalsStore.journals, userInfo: state.userStore }; //now it will appear as props
+  return { journals: state.journalsStore.journals, userInfo: state.userStore };
 };
 
 export default compose(
