@@ -19,8 +19,8 @@ const queryBuilder = (ingredients) => {
 async function getRecommendation(ingredients, filter) {
     let query = queryBuilder(ingredients);
     const url =
-        `https://api.edamam.com/search?${query}&app_id=43011121&app_key` +
-        `=8ded8a6fbd319218357df399687664aa&from=0&to=48&calories=0-${filter.calories}&time=0-${filter.time}&diet=${filter.diet}&health=${filter.healthType}`;
+        `https://api.edamam.com/search?${query}&app_id=${process.env.EdamanID}&app_key` +
+        `=${process.env.EdamanKey}&from=0&to=48&calories=0-${filter.calories}&time=0-${filter.time}&diet=${filter.diet}&health=${filter.healthType}`;
     return fetch(url);
 }
 
@@ -29,7 +29,8 @@ router.post("/recommendation", (req, res) => {
     const filter = req.body.filter;
     getRecommendation(ingredients, filter)
         .then(result => {
-            return result.json()})
+            return result.json()
+        })
         .then((results) => {
             console.log(results);
             res.json(results);
@@ -101,20 +102,20 @@ router.get("/popular", (req, res) => {
     recipes.find({})
         .then((recipes) => {
             let dict = {};
-            for(const recipe of recipes){
-                if(!dict[recipe.name]){
+            for (const recipe of recipes) {
+                if (!dict[recipe.name]) {
                     dict[recipe.name] = recipe;
                     dict[recipe.name]["count"] = 0;
                 }
                 dict[recipe.name]["count"]++;
             }
             let rets = Object.values(dict).sort((a, b) => (a["count"] - b["count"]));
-            if(rets.length > 50){
+            if (rets.length > 50) {
                 rets = rets.slice(0, 50);
             }
             res.json(rets);
         })
-        .catch((err) => {res.status(400).json("Error: " + err); console.log(err);});
+        .catch((err) => res.status(400).json("Error: " + err));
 });
 
 module.exports = router;
