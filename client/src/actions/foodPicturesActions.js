@@ -99,6 +99,38 @@ export const getAllFoodPicPost = () => {
   };
 };
 
+export const getAllFoodPicPost_OldToNew = () => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.get("/foodPictures/allPost/OldToNew");
+      const allPosts = await res.data;
+      dispatch(loadAllFoodPicPost(allPosts));
+    } catch (error) {
+      console.log("Error: ", error);
+      toast.error("API error", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000,
+      });
+    }
+  };
+};
+
+export const getAllFoodPicPost_MostLiked = () => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.get("/foodPictures/allPost/mostLiked");
+      const allPosts = await res.data;
+      dispatch(loadAllFoodPicPost(allPosts));
+    } catch (error) {
+      console.log("Error: ", error);
+      toast.error("API error", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000,
+      });
+    }
+  };
+};
+
 export const allFoodPicPostLoading = () => {
   return {
     type: "ALL_FOODPIC_POSTS_LOADING",

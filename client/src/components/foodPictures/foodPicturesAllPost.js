@@ -112,29 +112,23 @@ class FoodPicturesAllPost extends React.Component {
             fontSize: "24px",
           }}
         />
-        <Box display="flex" justifyContent="center" m={1} p={1}>
-          <Box>
-            <FoodPicturesPostFilters />
-          </Box>
-          <Box>
-            <label
-              htmlFor="icon-button-file"
-              style={{ justifyContent: "right" }}
-            >
-              <Tooltip title="Click to create new post" arrow>
-                <IconButton
-                  aria-label="upload picture"
-                  component="span"
-                  color="black"
-                  onClick={this.handleClickOpenCreatePost}
-                  style={{ position: "fixed", right: "5%" }}
-                >
-                  <AddIcon size="large" style={{ width: 60, height: 60 }} />
-                </IconButton>
-              </Tooltip>
-            </label>
-          </Box>
+
+        <Box m={2} p={1} style={{ position: "absolute", right: 130 }}>
+          <FoodPicturesPostFilters />
         </Box>
+        <label htmlFor="icon-button-file" style={{ justifyContent: "right" }}>
+          <Tooltip title="Click to create new post" arrow>
+            <IconButton
+              aria-label="upload picture"
+              component="span"
+              color="black"
+              onClick={this.handleClickOpenCreatePost}
+              style={{ position: "fixed", right: "5%" }}
+            >
+              <AddIcon size="large" style={{ width: 60, height: 60 }} />
+            </IconButton>
+          </Tooltip>
+        </label>
 
         <p
           style={{

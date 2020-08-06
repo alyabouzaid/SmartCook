@@ -8,7 +8,10 @@ import FoodPicturesPostFilters from "./foodPicturesPostFilters";
 import Footer from "../footer/footer";
 import { getMyFoodPicPost } from "../../actions/foodPicturesActions";
 import Box from "@material-ui/core/Box";
+import Container from "@material-ui/core/Container";
 import Tooltip from "@material-ui/core/Tooltip";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
 import { css } from "@emotion/core";
 import CircleLoader from "react-spinners/CircleLoader";
 import Typography from "@material-ui/core/Typography";
@@ -114,29 +117,40 @@ class FoodPicturesMyPost extends React.Component {
           />
         </div>
 
-        <Box display="flex" justifyContent="center" m={1} p={1}>
-          <Box>
-            <Typography className={classes.postNum} variant="h5" component="p">
-              Total {this.props.myPost.length} posts
-            </Typography>
-          </Box>
-          <Box>
-            <FoodPicturesPostFilters />
-          </Box>
+        <Box>
+          <Box display="flex" justifyContent="center" m={1} p={1}>
+            <Box>
+              <Typography
+                className={classes.postNum}
+                variant="h5"
+                component="p"
+              >
+                Total {this.props.myPost.length} posts
+              </Typography>
+            </Box>
 
-          <Box>
-            <label htmlFor="icon-button-file">
-              <Tooltip title="Click to create new post" placement="right" arrow>
-                <IconButton
-                  aria-label="upload picture"
-                  component="span"
-                  color="black"
-                  onClick={this.handleClickOpenCreatePost}
+            <Box>
+              <label htmlFor="icon-button-file">
+                <Tooltip
+                  title="Click to create new post"
+                  placement="right"
+                  arrow
                 >
-                  <AddIcon size="medium" style={{ width: 60, height: 50 }} />
-                </IconButton>
-              </Tooltip>
-            </label>
+                  <IconButton
+                    aria-label="upload picture"
+                    component="span"
+                    color="black"
+                    onClick={this.handleClickOpenCreatePost}
+                  >
+                    <AddIcon size="medium" style={{ width: 60, height: 50 }} />
+                  </IconButton>
+                </Tooltip>
+              </label>
+            </Box>
+
+            <Box m={1} p={1} style={{ position: "absolute", right: 55 }}>
+              <FoodPicturesPostFilters />
+            </Box>
           </Box>
         </Box>
 
