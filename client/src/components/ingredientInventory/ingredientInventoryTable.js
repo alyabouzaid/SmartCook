@@ -166,20 +166,6 @@ const useStyles = makeStyles((theme) => ({
   // },
 }));
 
-// {
-//     props.inventory &&
-//       props.inventory.map((item) => {
-//         // rows.push(createData(item.description, item.amount, item.category));
-
-//         createData(String(item.description), item.amount, item.category);
-//         console.log(item.description, item.amount, item.category);
-//         //   <div>
-//         //     {item.description}
-//         //     {item.amount}
-//         //     {item.category}
-//         //   </div>
-//       });
-//   }
 
 let amountEdit = 0;
 
@@ -197,9 +183,7 @@ export default function IngredientInventoryTable(props) {
   const [isRowSelected, setIsRowSelected] = React.useState(false);
 
   const rows = props.inventory;
-  // const delFunc = props.onDelete;
-  //   console.log("ori ", JSON.stringify(props.inventory));
-  //   console.log("del func ", JSON.stringify(delFunc));
+
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -361,48 +345,6 @@ export default function IngredientInventoryTable(props) {
           </Table>
         </TableContainer>
 
-        {/* <Container className={classes.editAmountPanel}> */}
-        {/* <Box display="flex" justifyContent="left" m={1} p={1}>
-          <Box className={classes.editAmountPanel}> */}
-        {/* <div className={classes.editAmountPanel}>
-          <Tooltip title="Enter amount" arrow>
-            <TextField
-              type="text"
-              id="amountEdit"
-              style={{ width: 100 }}
-              onChange={handleChangeEdit}
-            />
-          </Tooltip>
-          <Tooltip title="Add amount to selected items">
-            <IconButton aria-label="add">
-              <AddIcon
-                onClick={() => {
-                  props.onEdit(selected, Number(amountEdit));
-                }}
-              />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Subtract amount from selected items">
-            <IconButton aria-label="remove">
-              <RemoveIcon
-                onClick={() => {
-                  props.onEdit(selected, -Number(amountEdit));
-                }}
-              />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Delete selected items">
-            <IconButton aria-label="delete">
-              <DeleteIcon
-                onClick={() => {
-                  props.onDelete(selectedEdit);
-                }}
-              />
-            </IconButton>
-          </Tooltip>
-        </div> */}
-        {/* </Box> */}
-        {/* </Container> */}
 
         <div className={classes.toggleDense}>
           <FormControlLabel
