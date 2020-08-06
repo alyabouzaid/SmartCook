@@ -117,40 +117,26 @@ class FoodPicturesMyPost extends React.Component {
           />
         </div>
 
-        <Box>
-          <Box display="flex" justifyContent="center" m={1} p={1}>
-            <Box>
-              <Typography
-                className={classes.postNum}
-                variant="h5"
-                component="p"
-              >
-                Total {this.props.myPost.length} posts
-              </Typography>
-            </Box>
+        <Box display="flex" justifyContent="center" m={1} p={1}>
+          <Box>
+            <Typography className={classes.postNum} variant="h5" component="p">
+              Total {this.props.myPost.length} posts
+            </Typography>
+          </Box>
 
-            <Box>
-              <label htmlFor="icon-button-file">
-                <Tooltip
-                  title="Click to create new post"
-                  placement="right"
-                  arrow
+          <Box>
+            <label htmlFor="icon-button-file">
+              <Tooltip title="Click to create new post" placement="right" arrow>
+                <IconButton
+                  aria-label="upload picture"
+                  component="span"
+                  color="black"
+                  onClick={this.handleClickOpenCreatePost}
                 >
-                  <IconButton
-                    aria-label="upload picture"
-                    component="span"
-                    color="black"
-                    onClick={this.handleClickOpenCreatePost}
-                  >
-                    <AddIcon size="medium" style={{ width: 60, height: 50 }} />
-                  </IconButton>
-                </Tooltip>
-              </label>
-            </Box>
-
-            <Box m={1} p={1} style={{ position: "absolute", right: 55 }}>
-              <FoodPicturesPostFilters />
-            </Box>
+                  <AddIcon size="medium" style={{ width: 60, height: 50 }} />
+                </IconButton>
+              </Tooltip>
+            </label>
           </Box>
         </Box>
 
