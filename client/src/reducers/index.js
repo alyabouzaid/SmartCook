@@ -1,4 +1,4 @@
-import { combineReducers } from "redux";
+import {combineReducers} from "redux";
 import ingredientInventoryReducer from "./ingredientInventoryReducer";
 import recommendationReducer from "./recommendationReducer";
 import journalEditorReducer from "./journalEditorReducer";
@@ -12,14 +12,14 @@ import ingredientAmountReducer from "./ingredientAmountReducer";
 
 
 export default combineReducers({
-  ingredientInventory: ingredientInventoryReducer,
-  recommendationStore: recommendationReducer,
-  recommendationFilterStore: recommendationFilterReducer,
-  journalEditorStore: journalEditorReducer,
-  journalsStore: journalsReducer,
-  userStore: userReducer,
-  foodPicturesStore: foodPicturesReducer,
-  colorStore: colorReducer,
-  filterStore:filterReducer,
-  ingredientAmountStore:ingredientAmountReducer,
+    ingredientInventory: ingredientInventoryReducer,
+    recommendationStore: recommendationReducer,
+    recommendationFilterStore: recommendationFilterReducer,
+    journalEditorStore: journalEditorReducer,
+    journalsStore: journalsReducer,
+    userStore: userReducer,
+    foodPicturesStore: foodPicturesReducer,
+    colorStore: colorReducer,
+    filterStore: filterReducer,
+    ingredientAmountStore: ingredientAmountReducer,
 });

@@ -8,5 +8,5 @@
 }
 
 .inputfile + label {
-    cursor: pointer; /* "hand" cursor */
+    cursor: pointer;
 }
