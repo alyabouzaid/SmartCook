@@ -5,8 +5,8 @@ const cloudinary = require('cloudinary');
 
 router.post('/image-upload', (req, res) => {
 
-        let values = Object.values(req.files);
-        let promises = values.map(image => cloudinary.v2.uploader.upload(image.path));
+    let values = Object.values(req.files);
+    let promises = values.map(image => cloudinary.v2.uploader.upload(image.path));
 
     Promise.all(promises)
         .then((results) => {

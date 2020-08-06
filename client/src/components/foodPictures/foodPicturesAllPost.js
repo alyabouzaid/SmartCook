@@ -16,16 +16,16 @@ import AddIcon from "@material-ui/icons/Add";
 import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = (theme) => ({
-  pagination: {
-    display: "inline-block",
-    textAlign: "center",
-    marginBottom: 50,
-  },
-  loading: {
-    justifyContent: "center",
-    alignItems: "center",
-    display: "flex",
-  },
+    pagination: {
+        display: "inline-block",
+        textAlign: "center",
+        marginBottom: 50,
+    },
+    loading: {
+        justifyContent: "center",
+        alignItems: "center",
+        display: "flex",
+    },
 });
 
 const override = css`
@@ -34,148 +34,148 @@ const override = css`
 `;
 
 class FoodPicturesAllPost extends React.Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.state = {
-      offset: 0,
-      currentPage: 1,
-      perPage: 5,
-      isOpen: false,
+        this.state = {
+            offset: 0,
+            currentPage: 1,
+            perPage: 5,
+            isOpen: false,
+        };
+    }
+
+    componentDidMount() {
+        this.props.getAllFoodPicPost();
+    }
+
+    handleOnPageChange = (currentPage) => {
+        const selectedPage = currentPage;
+        const offset = (selectedPage - 1) * this.state.perPage;
+        this.setState({ currentPage: selectedPage });
+        this.setState({ offset: offset });
+        this.displayData();
     };
-  }
 
-  componentDidMount() {
-    this.props.getAllFoodPicPost();
-  }
+    handleOnSizeChange = (perPage) => {
+        this.setState({ perPage, currentPage: 1 });
+    };
 
-  handleOnPageChange = (currentPage) => {
-    const selectedPage = currentPage;
-    const offset = (selectedPage - 1) * this.state.perPage;
-    this.setState({ currentPage: selectedPage });
-    this.setState({ offset: offset });
-    this.displayData();
-  };
+    handleClickOpenCreatePost = () => {
+        this.setState({ isOpen: true });
+    };
 
-  handleOnSizeChange = (perPage) => {
-    this.setState({ perPage, currentPage: 1 });
-  };
+    handleClickCloseCreatePost = () => {
+        this.setState({ isOpen: false });
+    };
 
-  handleClickOpenCreatePost = () => {
-    this.setState({ isOpen: true });
-  };
+    displayData = () => {
+        const data = this.props.allPost;
+        const sliceData = data.slice(
+            this.state.offset,
+            this.state.offset + this.state.perPage
+        );
+        return sliceData.map((post) => {
+            return (
+                <FoodPicturesPost
+                    key={post._id}
+                    item={post}
+                    cardWidth={700}
+                    style={{ display: "inline-block", textAlign: "center" }}
+                />
+            );
+        });
+    };
 
-  handleClickCloseCreatePost = () => {
-    this.setState({ isOpen: false });
-  };
+    render() {
+        const { classes } = this.props;
 
-  displayData = () => {
-    const data = this.props.allPost;
-    const sliceData = data.slice(
-      this.state.offset,
-      this.state.offset + this.state.perPage
-    );
-    return sliceData.map((post) => {
-      return (
-        <FoodPicturesPost
-          key={post._id}
-          item={post}
-          cardWidth={700}
-          style={{ display: "inline-block", textAlign: "center" }}
-        />
-      );
-    });
-  };
+        return (
+            <div>
+                <div className={classes.loading}>
+                    <CircleLoader
+                        css={override}
+                        size={80}
+                        color={"green"}
+                        loading={this.props.allPostLoading}
+                    />
+                </div>
 
-  render() {
-    const { classes } = this.props;
+                <p
+                    style={{
+                        textAlign: "left",
+                        backgroundColor: "transparent",
+                        margin: "3",
+                        fontSize: "24px",
+                    }}
+                />
 
-    return (
-      <div>
-        <div className={classes.loading}>
-          <CircleLoader
-            css={override}
-            size={80}
-            color={"green"}
-            loading={this.props.allPostLoading}
-          />
-        </div>
+                <label htmlFor="icon-button-file" style={{ justifyContent: "right" }}>
+                    <Tooltip title="Click to create new post" arrow>
+                        <IconButton
+                            aria-label="upload picture"
+                            component="span"
+                            color="black"
+                            onClick={this.handleClickOpenCreatePost}
+                            style={{ position: "fixed", right: "5%" }}
+                        >
+                            <AddIcon size="large" style={{ width: 60, height: 60 }} />
+                        </IconButton>
+                    </Tooltip>
+                </label>
 
-        <p
-          style={{
-            textAlign: "left",
-            backgroundColor: "transparent",
-            margin: "3",
-            fontSize: "24px",
-          }}
-        />
+                <p
+                    style={{
+                        textAlign: "left",
+                        backgroundColor: "transparent",
+                        margin: "3",
+                        fontSize: "24px",
+                    }}
+                />
 
-        <label htmlFor="icon-button-file" style={{ justifyContent: "right" }}>
-          <Tooltip title="Click to create new post" arrow>
-            <IconButton
-              aria-label="upload picture"
-              component="span"
-              color="black"
-              onClick={this.handleClickOpenCreatePost}
-              style={{ position: "fixed", right: "5%" }}
-            >
-              <AddIcon size="large" style={{ width: 60, height: 60 }} />
-            </IconButton>
-          </Tooltip>
-        </label>
+                {this.state.isOpen ? (
+                    <FoodPicturesCreatePost
+                        isOpen={this.state.isOpen}
+                        isClose={this.handleClickCloseCreatePost}
+                    />
+                ) : null}
 
-        <p
-          style={{
-            textAlign: "left",
-            backgroundColor: "transparent",
-            margin: "3",
-            fontSize: "24px",
-          }}
-        />
+                {this.displayData()}
 
-        {this.state.isOpen ? (
-          <FoodPicturesCreatePost
-            isOpen={this.state.isOpen}
-            isClose={this.handleClickCloseCreatePost}
-          />
-        ) : null}
+                <FoodPicturesAnnouncement />
 
-        {this.displayData()}
-
-        <FoodPicturesAnnouncement />
-
-        <div className={classes.pagination}>
-          <SPagination
-            page={this.state.currentPage}
-            sizePerPage={this.state.perPage}
-            totalSize={this.props.allPost.length}
-            pagesNextToActivePage={5}
-            sizePerPageOptions={[5, 10, 15, 20]}
-            onPageChange={this.handleOnPageChange}
-            onSizeChange={this.handleOnSizeChange}
-          />
-        </div>
-        <Footer />
-      </div>
-    );
-  }
+                <div className={classes.pagination}>
+                    <SPagination
+                        page={this.state.currentPage}
+                        sizePerPage={this.state.perPage}
+                        totalSize={this.props.allPost.length}
+                        pagesNextToActivePage={5}
+                        sizePerPageOptions={[5, 10, 15, 20]}
+                        onPageChange={this.handleOnPageChange}
+                        onSizeChange={this.handleOnSizeChange}
+                    />
+                </div>
+                <Footer />
+            </div>
+        );
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    getAllFoodPicPost: () => dispatch(getAllFoodPicPost()),
-  };
+    return {
+        getAllFoodPicPost: () => dispatch(getAllFoodPicPost()),
+    };
 };
 
 const mapStateToProps = (state) => {
-  return {
-    userInfo: state.userStore,
-    allPost: state.foodPicturesStore.allPost,
-    allPostLoading: state.foodPicturesStore.loadingAllPost,
-  };
+    return {
+        userInfo: state.userStore,
+        allPost: state.foodPicturesStore.allPost,
+        allPostLoading: state.foodPicturesStore.loadingAllPost,
+    };
 };
 
 export default compose(
-  withStyles(useStyles),
-  connect(mapStateToProps, mapDispatchToProps)
+    withStyles(useStyles),
+    connect(mapStateToProps, mapDispatchToProps)
 )(FoodPicturesAllPost);

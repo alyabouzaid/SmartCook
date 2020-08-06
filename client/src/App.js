@@ -41,24 +41,24 @@ class App extends React.Component {
     });
 
     return (
-      <ThemeProvider theme={darkTheme}>
-        <div className={"App"}>
-          <CssBaseline />
-          <Header />
-          <Switch>
-            <Route exact path="/" component={LandingPage} />
-            <Route
-              path="/ingredientInventory"
-              component={IngredientInventory}
-            />
-            <Route path="/recommendation" component={Recommendation} />
-            <Route path="/journal" component={Journal} />
-            <Route path="/journalView" component={JournalView} />
-            <Route path="/foodPicAllPost" component={FoodPicturesAllPost} />
-            <Route path="/foodPicMyPost" component={FoodPicturesMyPost} />
-          </Switch>
-        </div>
-      </ThemeProvider>
+        <ThemeProvider theme={darkTheme}>
+          <div className={"App"}>
+            <CssBaseline />
+            <Header />
+            <Switch>
+              <Route exact path="/" component={LandingPage} />
+              <Route
+                  path="/ingredientInventory"
+                  component={IngredientInventory}
+              />
+              <Route path="/recommendation" component={Recommendation} />
+              <Route path="/journal" component={Journal} />
+              <Route path="/journalView" component={JournalView} />
+              <Route path="/foodPicAllPost" component={FoodPicturesAllPost} />
+              <Route path="/foodPicMyPost" component={FoodPicturesMyPost} />
+            </Switch>
+          </div>
+        </ThemeProvider>
     );
   }
 }

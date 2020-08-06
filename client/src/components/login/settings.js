@@ -59,12 +59,12 @@ class Settings extends React.Component {
 
   paperComponent = (props) => {
     return (
-      <Draggable
-        handle="#draggable-dialog-title"
-        cancel={'[class*="MuiDialogContent-root"]'}
-      >
-        <Paper {...props} />
-      </Draggable>
+        <Draggable
+            handle="#draggable-dialog-title"
+            cancel={'[class*="MuiDialogContent-root"]'}
+        >
+          <Paper {...props} />
+        </Draggable>
     );
   };
 
@@ -81,8 +81,8 @@ class Settings extends React.Component {
 
   handleClick = () => {
     this.props.uploadProfilePicImage(
-      this.state.image.raw,
-      this.props.userInfo.email
+        this.state.image.raw,
+        this.props.userInfo.email
     );
     this.props.isClose();
   };
@@ -91,77 +91,77 @@ class Settings extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div>
-        <Dialog
-          classes={{ paper: classes.paper }}
-          open={this.props.isOpen}
-          onClose={this.props.isClose}
-          PaperComponent={this.paperComponent}
-          aria-labelledby="draggable-dialog-title"
-          maxWidth={"md"}
-          fullWidth={true}
-        >
-          <DialogTitle
-            className={classes.header}
-            style={{ cursor: "move" }}
-            id="draggable-dialog-title"
+        <div>
+          <Dialog
+              classes={{ paper: classes.paper }}
+              open={this.props.isOpen}
+              onClose={this.props.isClose}
+              PaperComponent={this.paperComponent}
+              aria-labelledby="draggable-dialog-title"
+              maxWidth={"md"}
+              fullWidth={true}
           >
-            Settings
-          </DialogTitle>
-          <DialogContent>
-            <Divider />
-          </DialogContent>
+            <DialogTitle
+                className={classes.header}
+                style={{ cursor: "move" }}
+                id="draggable-dialog-title"
+            >
+              Settings
+            </DialogTitle>
+            <DialogContent>
+              <Divider />
+            </DialogContent>
 
-          <DialogContent>
-            <div className={classes.item}>
-              <Typography className={classes.subheader1} variant="h7">
-                Profile Picture
-              </Typography>
-              <div className={classes.image}>
-                {this.state.image.preview ? (
-                  <img
-                    src={this.state.image.preview}
-                    alt="dummy"
-                    width="150"
-                    height="150"
-                  />
-                ) : (
-                  <div>
-                    <input
-                      type="file"
-                      id="singleUpload"
-                      className="inputfile"
-                      onChange={(e) => this.handleChange(e)}
-                    />
-                    <label htmlFor="singleUpload">
-                      <AccountCircleRoundedIcon
-                        style={{
-                          fontSize: 30,
-                        }}
+            <DialogContent>
+              <div className={classes.item}>
+                <Typography className={classes.subheader1} variant="h7">
+                  Profile Picture
+                </Typography>
+                <div className={classes.image}>
+                  {this.state.image.preview ? (
+                      <img
+                          src={this.state.image.preview}
+                          alt="dummy"
+                          width="150"
+                          height="150"
                       />
-                    </label>
-                  </div>
-                )}
+                  ) : (
+                      <div>
+                        <input
+                            type="file"
+                            id="singleUpload"
+                            className="inputfile"
+                            onChange={(e) => this.handleChange(e)}
+                        />
+                        <label htmlFor="singleUpload">
+                          <AccountCircleRoundedIcon
+                              style={{
+                                fontSize: 30,
+                              }}
+                          />
+                        </label>
+                      </div>
+                  )}
+                </div>
               </div>
-            </div>
-          </DialogContent>
+            </DialogContent>
 
-          <DialogContent>
-            <div className={classes.item}>
-              <Typography className={classes.subheader2} variant="h7">
-                Dark/ Light Mode
-              </Typography>
-              <Toggle />
-            </div>
-          </DialogContent>
+            <DialogContent>
+              <div className={classes.item}>
+                <Typography className={classes.subheader2} variant="h7">
+                  Dark/ Light Mode
+                </Typography>
+                <Toggle />
+              </div>
+            </DialogContent>
 
-          <DialogActions>
-            <Button color="primary" onClick={this.handleClick}>
-              Save
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+            <DialogActions>
+              <Button color="primary" onClick={this.handleClick}>
+                Save
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
     );
   }
 }
@@ -169,7 +169,7 @@ class Settings extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     uploadProfilePicImage: (image, email) =>
-      dispatch(uploadProfilePicImage(image, email)),
+        dispatch(uploadProfilePicImage(image, email)),
   };
 };
 
@@ -180,6 +180,6 @@ const mapStateToProps = (state) => {
 };
 
 export default compose(
-  withStyles(useStyles),
-  connect(mapStateToProps, mapDispatchToProps)
+    withStyles(useStyles),
+    connect(mapStateToProps, mapDispatchToProps)
 )(Settings);

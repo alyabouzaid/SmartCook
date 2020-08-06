@@ -10,12 +10,12 @@ import thunk from "redux-thunk";
 import reducers from "./reducers";
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Provider store={createStore(reducers, applyMiddleware(thunk))}>
-      <App />
-    </Provider>
-  </BrowserRouter>,
-  document.getElementById("root")
+    <BrowserRouter>
+        <Provider store={createStore(reducers, applyMiddleware(thunk))}>
+            <App />
+        </Provider>
+    </BrowserRouter>,
+    document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
