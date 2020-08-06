@@ -32,7 +32,7 @@ class JournalImage extends Component {
                 <div className={classes.root}>
                     <div className={classes.images}>
                         {this.props.images.map((image) => (
-                                <img src={image.secure_url} alt="" style={{width: "80%"}}/>
+                            <img src={image.secure_url} alt="" style={{width: "80%"}}/>
                         ))}
                     </div>
                 </div>

@@ -12,19 +12,19 @@ router.get("/allPost", (req, res) => {
 });
 
 router.get("/allPost/OldToNew", (req, res) => {
-  foodPicturePost
-    .find()
-    .sort("createdAt")
-    .then((posts) => res.status(200).json(posts))
-    .catch((err) => res.status(400).json("Error: ", err));
+    foodPicturePost
+        .find()
+        .sort("createdAt")
+        .then((posts) => res.status(200).json(posts))
+        .catch((err) => res.status(400).json("Error: ", err));
 });
 
 router.get("/allPost/mostLiked", (req, res) => {
-  foodPicturePost
-    .find()
-    .sort("-likesLength")
-    .then((posts) => res.status(200).json(posts))
-    .catch((err) => res.status(400).json("Error: ", err));
+    foodPicturePost
+        .find()
+        .sort("-likesLength")
+        .then((posts) => res.status(200).json(posts))
+        .catch((err) => res.status(400).json("Error: ", err));
 });
 
 router.get("/featuredPost", (req, res) => {
