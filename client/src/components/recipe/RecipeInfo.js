@@ -47,7 +47,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-export default function RecipeInfo({ingredientInventory, getRecipeIngredients, recipe, userInfo, saveRecipe, switchDisplay, deleteRecipe}) {
+export default function RecipeInfo({getRecipeIngredients, recipe, userInfo, saveRecipe, switchDisplay, deleteRecipe}) {
 
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -65,7 +65,7 @@ export default function RecipeInfo({ingredientInventory, getRecipeIngredients, r
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
-    const handleClickDone = (event) => {
+    const handleClickDone = () => {
         getRecipeIngredients(recipe);
     };
 

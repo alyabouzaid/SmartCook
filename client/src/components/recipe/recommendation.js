@@ -26,7 +26,6 @@ import RecipeInfo from "./RecipeInfo";
 import SPagination from "simple-react-pagination-js";
 import "simple-react-pagination-js/build/style.css";
 import DisplayTabs from "./DisplayTabs";
-
 import {getRecipeIngredients} from "../../actions/ingredientAmountActions";
 import Footer from "../footer/footer";
 
@@ -103,13 +102,9 @@ class Recommendation extends React.Component {
         this.setState({perPage, currentPage: 1});
     };
 
-
     handleGetRecipeIngredients = (recipe) => {
-
         this.props.getRecipeIngredients(recipe["recipe"]["ingredientLines"], this.props.userInfo.email, this.props.ingredientInventory)
-
     };
-
 
     displayData = () => {
         const data = this.props.recommendation[this.state.switch];
@@ -166,7 +161,6 @@ class Recommendation extends React.Component {
 
     render() {
         const {classes} = this.props;
-
         return (
             <div>
                 <div style={{margin: "3%"}}>
@@ -271,7 +265,6 @@ const mapStateToProps = (state) => {
         recommendationFilter: state.recommendationFilterStore,
         userInfo: state.userStore,
         ingredientAmountStore: state.ingredientAmountStore,
-
         filter: state.filterStore,
     };
 };
