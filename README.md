@@ -2,54 +2,96 @@
 
 Love to cook but always struggle to come up with ideas? SmartCook is a web app designed for all food lovers who enjoy cooking, exploring new recipes, creating recipe journals, and socializing about food/cooking.
 
-### Project Description: 
-It is not just a standard recipe recommendation app. It is an app that keeps track of your ingredient inventory (almost like an online fridge) and recommends different recipes based on the type of food you like and the ingredients you have on hand. Also, SmartCook allows you to save and customize your favourite recipes into your personal recipe journal. You can upload food pictures and create group chats to communicate on meal planning and vote for your favourite food pictures. The data that will be stored in SmartCook includes recipes, user’s ingredient inventory, user's recipe journal, user account information, chat history, and food pictures uploaded by users. If time allows, we would like to add an online grocery shopping feature that allows users to order groceries online (e.g. Instacart). Both the online grocery shopping and the group chat feature may be added/removed based on time constraint. 
-
-### Project task requirements:
-#### 3-5 minimal requirements (will definitely complete)
-* Create user interface design 
-* Set up database to store data 
-* Set up RESTful API to retrieve/store information from different APIs and database
-* Create ingredient inventory tracker 
-* Implement recipe recommendation system
+### Project Goals:
+#### 3-5 minimal requirements
+* Create user interface design (used Material UI) ✔
+* Set up database to store data (set up different collections in MongoDB to store user info, ingredient inventory, recipe data, journal entries, food pictures) ✔
+* Set up RESTful API to retrieve/store information from different APIs and database (used React for frontend, Redux to save state, redux thunk to trigger event actions and make API calls, Express to handle requests) ✔
+* Implement ingredient inventory tracker that tracks users’ ingredients available on hand ✔ 
+* Implement recipe recommendation feature based on users’ ingredients ✔
 
 
-#### 3-7 minimal requirements (will most likely complete)
-* Design recipe journal feature to save user’s favourite recipes/ user’s recipe annotations 
-* Create food picture upload feature 
-* Build food picture voting feature 
+#### 3-7 standard requirements
+* Implement ingredient category filters that allows users to select ingredients of the preferred categories to be displayed on the recipe recommendation page ✔
+* Implement recipe journal feature to save users’ favourite recipes with annotations ✔
+* Implement food picture post feature where users can upload/share their food pictures and like/comment on others’ posts (Instagram clone) ✔
+* Implement user profile picture upload feature where users can change their profile pictures that are displayed on their food picture posts ✔
+* Implement feature to display top liked/voted food pictures posted/shared by users ✔ 
 
  
-#### 2-3 stretch requirements (plan to complete 1!)
-* Create group chat feature 
-* Create online grocery shopping feature
-* Implement a more personalize recommendation system to recommend recipes based on user's most used ingredients/dietary restrictions 
+#### 2-3 stretch requirements
+* Implement a more personalized recommendation system to recommend recipes based on users’ most used ingredients/dietary restrictions (did not implement the most used ingredients feature but we added recipe filters [calories, cooking time, diet type, health labels] to improve the user’s recipe search; implemented popular recipe feature that highlights the recipes most liked by users) ✔
+* Create group chat feature (we decided to allow users to comment under the food pictures instead of creating a group chat feature on top of it) !
+* Create online grocery shopping feature (we researched and found out that there were no online grocery shopping APIs that supported this feature) 𐊴  
 
+### Technologies from Units 1-5:
+#### HTML, CSS, JS
 
-### Task Breakdown
-#### Minimal requirement 1: Design user interface
-* Design login in & landing page 
-* Design different components of the web app: 
-  - Recipe recommendation page 
-  - Ingredient inventory page
-  - Recipe journal page 
-  - Food image upload & contest page
-* Implement and test webpage navigation/ routing logic 
+We use JavaScript XML (JSX), a HTML-like markup syntax for React to give structure to the web content along with JavaScript (JS) which is a programming language used for web-based applications to create dynamic and interactive elements that engage the users. Using JSX with JS makes it easier to create React components and write scalable codes as JSX will be converted to JS objects, allowing us to write concise HTML/XML-like structures in the same files and put HTML into JS instead of a traditional web development where we have to put JS inside an HTML file. In terms of styling, we use Material-UI APIs (useStyles/withStyles) along with inline CSS to allow flexible styling of individual components.
 
-#### Minimal requirement 2: Set up RESTful API to retrieve/store information from different APIs and database
-* Set up Google login authentication 
-* Search and test different recipe APIs to decide which APIs to use
-* Set up backend end-points & link to APIs to get data 
-* Connect frontend and backend
-* Test end-points and connection between frontend and backend
+#### React & Redux
 
+We use React to build our responsive frontend and utilize its advantages of reusable components and real time rendering. We use Redux for global state management since our frontend components need to communicate with each other and are dependent on many global and dynamic properties. Both React and Redux enable us to build highly scalable frontend components.
+
+#### MongoDB
+
+A NoSQL database is used in our project to allow us flexible storage of varied types of information. This flexibility doesn’t come handy with an SQL database which is restricted to only using tables related by foreign keys. MongoDB is used specifically because of its real-time integration and indexing efficiency along with its free cloud base service Atlas. The cloud base service aspect is detrimental when we compare MongoDB with other viable options like CouchDB which has a limited time free trial for its services. We used MongoDB to store user info, recipe journals, food pictures and ingredient inventory data.
+
+#### Node & Express
+
+We used Node.js and Express.js to connect the frontend and backend of our app. Node.js is a server-side runtime environment built on Chrome's V8 JavaScript Engine, which is fast, lightweight, and supports the development of scalable applications. It includes npm (node package manager), which we use to efficiently install and manage app dependencies. Express is a fast, minimalist web framework for Node.js that provides more features than solely using Node.js, using middleware and simple, robust routing to handle HTTP requests. It uses less code to accomplish tasks then Node.js, making it easier to develop a fast, secure web application.
+
+#### Release Engineering
+
+We deploy our web app using Heroku which is a cloud platform that enables developers to build, run, and operate applications. The deployment process and set up on Heroku is relatively easy as compared to other platforms that require more complex configurations and devOps skills (e.g AWS), allowing our team more time to focus on building the web app. Also, Heroku’s integration with GitHub enables our team to build, scale, and deploy the latest version of code over the course of production easily.
+
+### Above and Beyond Functionality:
+
+One of the cool features of our app demonstrates how the recipe recommendation ties back to the ingredient inventory. Where the ingredient inventory keeps track of the ingredients available, the recipe recommendation generates recipes based on selected ingredients and edits those ingredients depending on the quantities needed to create recipes. We used a Natural Language Processing (NLP) API to parse ingredient names and quantities from the recipe ingredient list. Ingredient names and quantities are tied back to the ingredient inventory to check for their availability and existence by getting access to the ingredientInventoryStore. If all the ingredients required for a recipe are found available, the amount required to make the recipe will be deducted from the inventory by calling the ingredient inventory edit action. Users are alerted for missing ingredients or for being low in stock.
+
+Our app also has the following extra functionalities:
+
+- it is fully responsive
+- it uses two external APIs: a recipe API and a Food and Database API (with Natural Language Processing)
+- it uses Cloudinary: an image service that enables direct uploading of images by users
+- it uses CKEditor: a rich text editor for better content creation experience when creating recipe journal entries
+- it uses an algorithm to determine the most popular recipes based on all the recipes saved by different users
+- it has a social aspect, in which users can upload food pictures and vote/comment on food pictures that are shared by other users. The 3 most liked pictures of the week are displayed on the landing page.
+
+### Next Steps:
+
+We plan to implement the following features to improve the functionality and usability of our app:
+
+* You will be notified by real time (push) notifications when other users like/comment on your food pic post.
+
+* When you create a food picture post, you will be able to include a link that allows users to access the journal entry, so that users can see both the corresponding food picture and journal entry. This will connect the journal and food picture posts page together.
+
+* For the recipe recommendation page, we will improve the algorithm that parses ingredient names and quantities from the recipe card ingredient list, so that it can detect ingredients with more precision. The current algorithm is unable to detect general ingredients from specific types of that ingredient. For example, it cannot determine that "mushroom" is a general form of "brown mushroom".
+
+### List of Contributions:
+
+#### Samantha Lee
+
+I implemented the user authentication of the app using Google OAuth, storing permanent user data into MongoDB and impermanent user info into Redux. I developed the dark mode feature, creating a toggle button that allows the user to view the app in either a light or dark theme. I also styled the recipe recommendation page and recipe cards, implemented the functionality of two recipe filters and the detailed view of recipe cards to display additional info, and implemented the functionality of the navigation bar to navigate between pages using react-router-dom elements.
+
+#### Sheena Ng
+
+I implemented the Instagram-clone food picture post features where users can upload food pictures, like/comment on other food pictures with CRUD operations (e.g edit post caption/ comments, delete the post/comments). I also implemented an individual food picture post collection where each user can view and manage all the posts they have uploaded. I designed the logo and landing page of the app, implemented React carousel to showcase the most recent top-liked food pictures, added user profile picture upload functionality as part of the app’s settings, and styled the inventory table that contains sorting functionality and pagination.
+
+#### Xi Huang
+
+I designed and implemented the recipe recommendation feature which takes user input, calls external API and renders the return results to a list of recipe cards, with options of saving the favorite recipes and viewing the most popular recipes. I also implemented the personal journal feature with a rich text editor, enabling users to create and preserve their desired formatting. I integrated the recommendation and the personal journal by adding the feature of importing information from the recommendation to the journal editor. In addition, I set up the image service endpoint which allows users to upload their own pictures.
+
+#### Aly Abouzaid
+
+I implemented the ingredient inventory which is where users get to access and store their online kitchen. Ingredients are entered along with their categories to guide users easier access to certain ingredients when looking for recipes and amounts are used to keep track and verify the possibility of making a recipe. I also implemented one of the cool features of our app which ties the recipe recommendation back to the ingredient inventory. The feature checks whether a user will be able to make a recipe based on the ingredients they have in their online kitchen. A natural language processing API was used to break down recipes to their ingredients and amounts.
 
 ### Prototype sketches
 
-<img src="/frontend/gallery/logIn.png">
-<img src="/frontend/gallery/homePage.png">
-<img src="/frontend/gallery/ingredientInventory.png">
-<img src="/frontend/gallery/g1.png">
-<img src="/frontend/gallery/g2.png">
-<img src="/frontend/gallery/g3.png">
+<img src="/client/gallery/logIn.png">
+<img src="/client/gallery/homePage.png">
+<img src="/client/gallery/ingredientInventory.png">
+<img src="/client/gallery/g1.png">
+<img src="/client/gallery/g2.png">
+<img src="/client/gallery/g3.png">
 
