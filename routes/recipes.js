@@ -109,7 +109,7 @@ router.get("/popular", (req, res) => {
                 }
                 dict[recipe.name]["count"]++;
             }
-            let rets = Object.values(dict).sort((a, b) => (a["count"] - b["count"]));
+            let rets = Object.values(dict).sort((a, b) => (b["count"] - a["count"]));
             if (rets.length > 50) {
                 rets = rets.slice(0, 50);
             }
