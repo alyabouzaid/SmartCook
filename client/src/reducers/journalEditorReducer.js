@@ -11,8 +11,7 @@ const parseRecipe = (recipe) => {
     let link = `<a href=${recipe.url} target="_blank"> ${recipe.url} </a>`;
     let ingredients = '<ul>' + recipe.ingredientLines.map(ingredient => `<li>${ingredient}</li>`).join('') + '<ul>';
     let healthLabels = '<ul>' + recipe.healthLabels.map(label => `<li>${label}</li>`).join('') + '<ul>';
-    let ret = link + ingredients + healthLabels;
-    return ret;
+    return link + ingredients + healthLabels;
 };
 
 export default function formReducer(state = initialState, action) {
@@ -20,7 +19,7 @@ export default function formReducer(state = initialState, action) {
         case 'JOURNAL_EDITOR_BODY':
             return {...state, body: action.payload};
         case 'JOURNAL_EDITOR_ADD_IMAGE':
-            return {...state, images: [...state.images, action.payload]};
+            return {...state, images: [action.payload]};
         case 'JOURNAL_EDITOR_TITLE':
             return {...state, title: action.payload};
         case 'RECIPE_ANNOTATION':

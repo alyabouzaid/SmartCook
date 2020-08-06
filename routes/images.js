@@ -7,7 +7,6 @@ router.post('/image-upload', (req, res) => {
     let promises = values.map(image => cloudinary.v2.uploader.upload(image.path));
     Promise.all(promises)
         .then((results) => {
-            console.log(results);
             res.json(results);
         })
         .catch((err) => {
