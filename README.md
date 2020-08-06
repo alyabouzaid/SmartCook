@@ -4,25 +4,25 @@ Love to cook but always struggle to come up with ideas? SmartCook is a web app d
 
 ### Project Goals:
 #### 3-5 minimal requirements
-* Create user interface design (used Material UI) ✔
-* Set up database to store data (set up different collections in MongoDB to store user info, ingredient inventory, recipe data, journal entries, food pictures) ✔
-* Set up RESTful API to retrieve/store information from different APIs and database (used React for frontend, Redux to save state, redux thunk to trigger event actions and make API calls, Express to handle requests) ✔
-* Implement ingredient inventory tracker that tracks users’ ingredients available on hand ✔ 
-* Implement recipe recommendation feature based on users’ ingredients ✔
+* Create user interface design (used Material UI) ✅
+* Set up database to store data (set up different collections in MongoDB to store user info, ingredient inventory, recipe data, journal entries, food pictures) ✅
+* Set up RESTful API to retrieve/store information from different APIs and database (used React for frontend, Redux to save state, redux thunk to trigger event actions and make API calls, Express to handle requests) ✅
+* Implement ingredient inventory tracker that tracks users’ ingredients available on hand ✅ 
+* Implement recipe recommendation feature based on users’ ingredients ✅
 
 
 #### 3-7 standard requirements
-* Implement ingredient category filters that allows users to select ingredients of the preferred categories to be displayed on the recipe recommendation page ✔
-* Implement recipe journal feature to save users’ favourite recipes with annotations ✔
-* Implement food picture post feature where users can upload/share their food pictures and like/comment on others’ posts (Instagram clone) ✔
-* Implement user profile picture upload feature where users can change their profile pictures that are displayed on their food picture posts ✔
-* Implement feature to display top liked/voted food pictures posted/shared by users ✔ 
+* Implement ingredient category filters that allows users to select ingredients of the preferred categories to be displayed on the recipe recommendation page ✅
+* Implement recipe journal feature to save users’ favourite recipes with annotations ✅
+* Implement food picture post feature where users can upload/share their food pictures and like/comment on others’ posts (Instagram clone) ✅
+* Implement user profile picture upload feature where users can change their profile pictures that are displayed on their food picture posts ✅
+* Implement feature to display top liked/voted food pictures posted/shared by users ✅ 
 
  
 #### 2-3 stretch requirements
-* Implement a more personalized recommendation system to recommend recipes based on users’ most used ingredients/dietary restrictions (did not implement the most used ingredients feature but we added recipe filters [calories, cooking time, diet type, health labels] to improve the user’s recipe search; implemented popular recipe feature that highlights the recipes most liked by users) ✔
-* Create group chat feature (we decided to allow users to comment under the food pictures instead of creating a group chat feature on top of it) !
-* Create online grocery shopping feature (we researched and found out that there were no online grocery shopping APIs that supported this feature) 𐊴  
+* Implement a more personalized recommendation system to recommend recipes based on users’ most used ingredients/dietary restrictions (did not implement the most used ingredients feature but we added recipe filters [calories, cooking time, diet type, health labels] to improve the user’s recipe search; implemented popular recipe feature that highlights the recipes most liked by users) ✅
+* Create group chat feature (we decided to allow users to comment under the food pictures instead of creating a group chat feature on top of it) ⚠️
+* Create online grocery shopping feature (we researched and found out that there were no online grocery shopping APIs that supported this feature) ❌  
 
 ### Technologies from Units 1-5:
 #### HTML, CSS, JS
