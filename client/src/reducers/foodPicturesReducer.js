@@ -47,13 +47,13 @@ export default function foodPicturesReducer(
       return {
         ...state,
         allPost: state.allPost.map((item) => {
-          if (item._id == action.payload._id) {
+          if (item._id === action.payload._id) {
             return action.payload;
           }
           return item;
         }),
         myPost: state.myPost.map((item) => {
-          if (item._id == action.payload._id) {
+          if (item._id === action.payload._id) {
             return action.payload;
           }
           return item;

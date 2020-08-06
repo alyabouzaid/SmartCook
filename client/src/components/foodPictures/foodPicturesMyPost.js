@@ -84,11 +84,18 @@ class FoodPicturesMyPost extends React.Component {
   displayData = () => {
     const data = this.props.myPost;
     const sliceData = data.slice(
-        this.state.offset,
-        this.state.offset + this.state.perPage
+      this.state.offset,
+      this.state.offset + this.state.perPage
     );
     return sliceData.map((post) => {
-      return <FoodPicturesPost key={post._id} item={post} cardWidth={300} />;
+      return (
+        <FoodPicturesPost
+          key={post._id}
+          item={post}
+          cardWidth={400}
+          cardCaptionSize={17}
+        />
+      );
     });
   };
 
@@ -96,61 +103,61 @@ class FoodPicturesMyPost extends React.Component {
     const { classes } = this.props;
 
     return (
-        <div>
-          <div className={classes.loading}>
-            <CircleLoader
-                css={override}
-                size={80}
-                color={"green"}
-                loading={this.props.myPostLoading}
-            />
-          </div>
+      <div>
+        <div className={classes.loading}>
+          <CircleLoader
+            css={override}
+            size={80}
+            color={"green"}
+            loading={this.props.myPostLoading}
+          />
+        </div>
 
-          <Box display="flex" justifyContent="center" m={1} p={1}>
-            <Box>
-              <Typography className={classes.postNum} variant="h5" component="p">
-                Total {this.props.myPost.length} posts
-              </Typography>
-            </Box>
-
-            <Box>
-              <label htmlFor="icon-button-file">
-                <Tooltip title="Click to create new post" placement="right" arrow>
-                  <IconButton
-                      aria-label="upload picture"
-                      component="span"
-                      color="black"
-                      onClick={this.handleClickOpenCreatePost}
-                  >
-                    <AddIcon size="medium" style={{ width: 60, height: 50 }} />
-                  </IconButton>
-                </Tooltip>
-              </label>
-            </Box>
+        <Box display="flex" justifyContent="center" m={1} p={1}>
+          <Box>
+            <Typography className={classes.postNum} variant="h5" component="p">
+              Total {this.props.myPost.length} posts
+            </Typography>
           </Box>
 
-          {this.state.isOpen ? (
-              <FoodPicturesCreatePost
-                  isOpen={this.state.isOpen}
-                  isClose={this.handleClickCloseCreatePost}
-              />
-          ) : null}
+          <Box>
+            <label htmlFor="icon-button-file">
+              <Tooltip title="Click to create new post" placement="right" arrow>
+                <IconButton
+                  aria-label="upload picture"
+                  component="span"
+                  color="black"
+                  onClick={this.handleClickOpenCreatePost}
+                >
+                  <AddIcon size="medium" style={{ width: 60, height: 50 }} />
+                </IconButton>
+              </Tooltip>
+            </label>
+          </Box>
+        </Box>
 
-          <div className={classes.post}>{this.displayData()}</div>
+        {this.state.isOpen ? (
+          <FoodPicturesCreatePost
+            isOpen={this.state.isOpen}
+            isClose={this.handleClickCloseCreatePost}
+          />
+        ) : null}
 
-          <div className={classes.pagination}>
-            <SPagination
-                page={this.state.currentPage}
-                sizePerPage={this.state.perPage}
-                totalSize={this.props.myPost.length}
-                pagesNextToActivePage={5}
-                sizePerPageOptions={[8, 12, 16, 20]}
-                onPageChange={this.handleOnPageChange}
-                onSizeChange={this.handleOnSizeChange}
-            />
-          </div>
-          <Footer />
+        <div className={classes.post}>{this.displayData()}</div>
+
+        <div className={classes.pagination}>
+          <SPagination
+            page={this.state.currentPage}
+            sizePerPage={this.state.perPage}
+            totalSize={this.props.myPost.length}
+            pagesNextToActivePage={5}
+            sizePerPageOptions={[8, 12, 16, 20]}
+            onPageChange={this.handleOnPageChange}
+            onSizeChange={this.handleOnSizeChange}
+          />
         </div>
+        <Footer />
+      </div>
     );
   }
 }
@@ -170,6 +177,6 @@ const mapStateToProps = (state) => {
 };
 
 export default compose(
-    withStyles(useStyles),
-    connect(mapStateToProps, mapDispatchToProps)
+  withStyles(useStyles),
+  connect(mapStateToProps, mapDispatchToProps)
 )(FoodPicturesMyPost);

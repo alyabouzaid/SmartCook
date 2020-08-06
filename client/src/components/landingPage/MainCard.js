@@ -42,50 +42,50 @@ export default function MainCard(props) {
   const classes = useStyles();
 
   return (
-      <Paper
-          className={classes.mainCard}
-          style={{ backgroundImage: `url(${pic})` }}
-      >
-        {<img style={{ display: "none" }} src={pic} />}
+    <Paper
+      className={classes.mainCard}
+      style={{ backgroundImage: `url(${pic})` }}
+    >
+      {<img style={{ display: "none" }} alt="backgroundImage" src={pic} />}
 
-        <div className={classes.overlay} />
-        <Grid container>
-          <Grid item md={7}>
-            <div className={classes.mainCardContent}>
-              {props.isAuthenticated ? (
-                  <div className={classes.mainCardTitleContainer}>
-                    <Typography
-                        className={classes.mainCardTitle}
-                        variant="h4"
-                        color="inherit"
-                        gutterBottom
-                    >
-                      {props.card.title_isAuthenticated}
-                    </Typography>
+      <div className={classes.overlay} />
+      <Grid container>
+        <Grid item md={7}>
+          <div className={classes.mainCardContent}>
+            {props.isAuthenticated ? (
+              <div className={classes.mainCardTitleContainer}>
+                <Typography
+                  className={classes.mainCardTitle}
+                  variant="h4"
+                  color="inherit"
+                  gutterBottom
+                >
+                  {props.card.title_isAuthenticated}
+                </Typography>
 
-                    <Typography variant="h6" color="inherit" paragraph>
-                      {props.card.description_isAuthenticated}
-                    </Typography>
-                  </div>
-              ) : (
-                  <div className={classes.mainCardTitleContainer}>
-                    <Typography
-                        className={classes.mainCardTitle}
-                        variant="h4"
-                        color="inherit"
-                        gutterBottom
-                    >
-                      {props.card.title}
-                    </Typography>
+                <Typography variant="h6" color="inherit" paragraph>
+                  {props.card.description_isAuthenticated}
+                </Typography>
+              </div>
+            ) : (
+              <div className={classes.mainCardTitleContainer}>
+                <Typography
+                  className={classes.mainCardTitle}
+                  variant="h4"
+                  color="inherit"
+                  gutterBottom
+                >
+                  {props.card.title}
+                </Typography>
 
-                    <Typography variant="h6" color="inherit" paragraph>
-                      {props.card.description}
-                    </Typography>
-                  </div>
-              )}
-            </div>
-          </Grid>
+                <Typography variant="h6" color="inherit" paragraph>
+                  {props.card.description}
+                </Typography>
+              </div>
+            )}
+          </div>
         </Grid>
-      </Paper>
+      </Grid>
+    </Paper>
   );
 }
