@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import { getFeaturedFoodPicPost } from "../../actions/foodPicturesActions";
 import FeaturedPostCarousel from "../foodPictures/featuredPostCarousel";
+import pic from "../../pictures/landingPage.jpg";
 import compose from "recompose/compose";
 import MainCard from "./MainCard";
 import GridPost from "./GridPost";
@@ -89,10 +90,7 @@ class LandingPage extends React.Component {
 
     return (
       <div>
-        <img
-          style={{ display: "none" }}
-          src="./frontend/gallery/homePage.png"
-        />
+        <img style={{ display: "none" }} alt="backgroundImage" src={pic} />
 
         {this.props.userInfo.isLoggedIn ? (
           <FeaturedPostCarousel

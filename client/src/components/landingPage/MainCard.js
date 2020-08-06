@@ -46,7 +46,7 @@ export default function MainCard(props) {
       className={classes.mainCard}
       style={{ backgroundImage: `url(${pic})` }}
     >
-      {<img style={{ display: "none" }} src={pic} />}
+      {<img style={{ display: "none" }} alt="backgroundImage" src={pic} />}
 
       <div className={classes.overlay} />
       <Grid container>

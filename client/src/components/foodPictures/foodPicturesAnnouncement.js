@@ -26,7 +26,7 @@ class FoodPicturesAnnouncement extends React.Component {
         link="http://smart-cook-436.herokuapp.com/"
         imageSource={pic}
         // daysToLive={0}
-        secondsBeforeBannerShows={5}
+        secondsBeforeBannerShows={3}
         closeIconSize={25}
       />
     );

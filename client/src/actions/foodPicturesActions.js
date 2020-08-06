@@ -310,7 +310,7 @@ export const addUpdatedFoodPicPost = (updatedFoodPicPost) => {
 export const deleteOneFoodPicPost = (idPayload, email) => {
   return async (dispatch) => {
     try {
-      const res = await axios.delete(`/foodPictures/deletePost/${idPayload}`, {
+      await axios.delete(`/foodPictures/deletePost/${idPayload}`, {
         headers: {
           "Content-Type": "application/json",
         },

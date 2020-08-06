@@ -5,9 +5,11 @@ import compose from "recompose/compose";
 import FoodPicturesPost from "./foodPicturesPost";
 import FoodPicturesCreatePost from "./foodPicturesCreatePost";
 import FoodPicturesAnnouncement from "./foodPicturesAnnouncement";
+import FoodPicturesPostFilters from "./foodPicturesPostFilters";
 import Footer from "../footer/footer";
 import { getAllFoodPicPost } from "../../actions/foodPicturesActions";
 import { css } from "@emotion/core";
+import Box from "@material-ui/core/Box";
 import CircleLoader from "react-spinners/CircleLoader";
 import SPagination from "simple-react-pagination-js";
 import "simple-react-pagination-js/build/style.css";
@@ -81,6 +83,7 @@ class FoodPicturesAllPost extends React.Component {
           key={post._id}
           item={post}
           cardWidth={700}
+          cardCaptionSize={20}
           style={{ display: "inline-block", textAlign: "center" }}
         />
       );
@@ -109,20 +112,29 @@ class FoodPicturesAllPost extends React.Component {
             fontSize: "24px",
           }}
         />
-
-        <label htmlFor="icon-button-file" style={{ justifyContent: "right" }}>
-          <Tooltip title="Click to create new post" arrow>
-            <IconButton
-              aria-label="upload picture"
-              component="span"
-              color="black"
-              onClick={this.handleClickOpenCreatePost}
-              style={{ position: "fixed", right: "5%" }}
+        <Box display="flex" justifyContent="center" m={1} p={1}>
+          <Box>
+            <FoodPicturesPostFilters />
+          </Box>
+          <Box>
+            <label
+              htmlFor="icon-button-file"
+              style={{ justifyContent: "right" }}
             >
-              <AddIcon size="large" style={{ width: 60, height: 60 }} />
-            </IconButton>
-          </Tooltip>
-        </label>
+              <Tooltip title="Click to create new post" arrow>
+                <IconButton
+                  aria-label="upload picture"
+                  component="span"
+                  color="black"
+                  onClick={this.handleClickOpenCreatePost}
+                  style={{ position: "fixed", right: "5%" }}
+                >
+                  <AddIcon size="large" style={{ width: 60, height: 60 }} />
+                </IconButton>
+              </Tooltip>
+            </label>
+          </Box>
+        </Box>
 
         <p
           style={{

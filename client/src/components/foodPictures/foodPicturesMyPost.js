@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import compose from "recompose/compose";
 import FoodPicturesPost from "./foodPicturesPost";
 import FoodPicturesCreatePost from "./foodPicturesCreatePost";
+import FoodPicturesPostFilters from "./foodPicturesPostFilters";
 import Footer from "../footer/footer";
 import { getMyFoodPicPost } from "../../actions/foodPicturesActions";
 import Box from "@material-ui/core/Box";
@@ -88,7 +89,14 @@ class FoodPicturesMyPost extends React.Component {
       this.state.offset + this.state.perPage
     );
     return sliceData.map((post) => {
-      return <FoodPicturesPost key={post._id} item={post} cardWidth={300} />;
+      return (
+        <FoodPicturesPost
+          key={post._id}
+          item={post}
+          cardWidth={400}
+          cardCaptionSize={17}
+        />
+      );
     });
   };
 
@@ -111,6 +119,9 @@ class FoodPicturesMyPost extends React.Component {
             <Typography className={classes.postNum} variant="h5" component="p">
               Total {this.props.myPost.length} posts
             </Typography>
+          </Box>
+          <Box>
+            <FoodPicturesPostFilters />
           </Box>
 
           <Box>

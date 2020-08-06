@@ -109,7 +109,7 @@ class Header extends React.Component {
     return (
       <AppBar className={classes.appbar} color="secondary">
         <Toolbar className={classes.toolbar}>
-          <img src={pic} style={{ width: 50, height: 50 }}></img>
+          <img alt="logo" src={pic} style={{ width: 50, height: 50 }}></img>
           <Typography
             style={{ textAlign: "left", fontFamily: "Grand Hotel" }}
             variant="h4"

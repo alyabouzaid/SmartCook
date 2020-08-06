@@ -28,8 +28,6 @@ const useStyles = (theme) => ({
   },
 });
 
-const posts = [];
-
 class FeaturedPostCarousel extends React.Component {
   constructor(props) {
     super(props);
@@ -66,6 +64,7 @@ class FeaturedPostCarousel extends React.Component {
         >
           <img
             className={classes.featuredPosts}
+            alt={item && item.image[0].asset_id}
             src={item && item.image[0].secure_url}
             aria-label="add to favorites"
             aria-owns={open ? "mouse-over-popover" : undefined}

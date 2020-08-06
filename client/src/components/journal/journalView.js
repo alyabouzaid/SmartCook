@@ -234,6 +234,7 @@ class JournalView extends Component {
                               align="left"
                               variant="subtitle2"
                               component="h2"
+                              style={{ color: "#4db6ac" }}
                             >
                               {journal.author}{" "}
                               {journal.createdAt.slice(0, -5).replace("T", " ")}

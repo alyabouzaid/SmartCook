@@ -13,6 +13,7 @@ import {
 } from "../../actions/foodPicturesActions";
 import compose from "recompose/compose";
 import clsx from "clsx";
+import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -83,8 +84,15 @@ const useStyles = (theme) => ({
     float: "left",
   },
   commentAvatar: {
-    width: theme.spacing(4),
-    height: theme.spacing(4),
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+  },
+  commentUserName: {
+    color: "#4db6ac",
+    fontSize: 14,
+  },
+  commentText: {
+    fontSize: 14,
   },
   editDescriptionField: {
     width: 500,
@@ -227,7 +235,6 @@ class FoodPicturesPost extends React.Component {
 
   renderEditOrDelBtnForComments = (item, comment) => {
     const { classes } = this.props;
-
     return (
       <ListItem>
         <ListItemAvatar>
@@ -253,9 +260,14 @@ class FoodPicturesPost extends React.Component {
         </ListItemAvatar>
         <ListItemText
           primary={
-            <Typography align="left" variant="subtitle1" component="h2">
-              {comment.postedByFullName + ": " + " " + comment.text}
-            </Typography>
+            <div style={{ display: "flex" }}>
+              <Typography className={classes.commentUserName} component="h2">
+                {`${comment.postedByFullName}: \u00A0`}
+              </Typography>
+              <Typography className={classes.commentText} component="h2">
+                {`${comment.text}`}
+              </Typography>
+            </div>
           }
         />
         <IconButton
@@ -285,36 +297,37 @@ class FoodPicturesPost extends React.Component {
     const { classes } = this.props;
 
     return (
-      <ListItem>
-        <ListItemAvatar>
-          {comment.postedByUploadedPic ? (
-            <Avatar
-              className={classes.commentAvatar}
-              style={{
-                marginRight: 0,
-              }}
-              alt={comment.postedByFullName}
-              src={comment.postedByUploadedPic}
-            />
-          ) : (
-            <Avatar
-              className={classes.commentAvatar}
-              style={{
-                marginRight: 0,
-              }}
-              alt={comment.postedByFullName}
-              src={comment.postedByGoogleDefaultPic}
-            />
-          )}
-        </ListItemAvatar>
-        <ListItemText
-          primary={
-            <Typography align="left" variant="subtitle1" component="h2">
-              {comment.postedByFullName + ": " + " " + comment.text}
+      <ul>
+        <li style={{ listStyle: "none" }}>
+          <Box display="flex" justifyContent="left">
+            {comment.postedByUploadedPic ? (
+              <Avatar
+                className={classes.commentAvatar}
+                style={{
+                  marginRight: 5,
+                }}
+                alt={comment.postedByFullName}
+                src={comment.postedByUploadedPic}
+              />
+            ) : (
+              <Avatar
+                className={classes.commentAvatar}
+                style={{
+                  marginRight: 5,
+                }}
+                alt={comment.postedByFullName}
+                src={comment.postedByGoogleDefaultPic}
+              />
+            )}
+            <Typography className={classes.commentUserName} component="h2">
+              {`${comment.postedByFullName}: \u00A0`}
             </Typography>
-          }
-        />
-      </ListItem>
+            <Typography className={classes.commentText} component="h2">
+              {`${comment.text}`}
+            </Typography>
+          </Box>
+        </li>
+      </ul>
     );
   };
 
@@ -389,7 +402,12 @@ class FoodPicturesPost extends React.Component {
               </Typography>
             }
             subheader={
-              <Typography align="left" variant="subtitle2" component="h2">
+              <Typography
+                align="left"
+                variant="subtitle2"
+                component="h2"
+                style={{ color: "#4db6ac" }}
+              >
                 {this.props.item.dateTime}
               </Typography>
             }
@@ -473,10 +491,11 @@ class FoodPicturesPost extends React.Component {
           ) : (
             <CardContent className={classes.content}>
               <Typography
-                variant="h6"
+                // variant="h6"
                 color="textSecondary"
                 component="p"
                 align="left"
+                style={{ fontSize: this.props.cardCaptionSize }}
               >
                 {this.props.item.description}
               </Typography>
@@ -496,16 +515,24 @@ class FoodPicturesPost extends React.Component {
 
           {this.state.expanded ? (
             ""
-          ) : (
+          ) : this.props.item.comments.length ? (
             <div>
               <Typography
                 variant="subtitle2"
                 align="center"
                 style={{ color: "#adb5bd", marginBottom: 5 }}
               >
-                view comments
+                view comments &#40;{this.props.item.comments.length}&#41;
               </Typography>
             </div>
+          ) : (
+            <Typography
+              variant="subtitle2"
+              align="center"
+              style={{ color: "#adb5bd", marginBottom: 5 }}
+            >
+              view comments &#40;0&#41;
+            </Typography>
           )}
           <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
             {this.props.item.comments.map((comment) => (
@@ -546,6 +573,7 @@ class FoodPicturesPost extends React.Component {
                   this.props.userInfo.googleDefaultPic,
                   this.props.userInfo.userUploadedPic
                 );
+                e.target.reset();
               }}
             >
               <TextField
