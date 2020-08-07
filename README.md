@@ -1,14 +1,15 @@
 # SmartCook
 
-Love to cook but always struggle to come up with ideas? SmartCook is a web app designed for all food lovers who enjoy cooking, exploring new recipes, creating recipe journals, and socializing about food/cooking.
+Love to cook but always struggle to come up with ideas? 
+SmartCook is a web app that keeps track of users' ingredient inventories and recommends recipes based on the selected filters and ingredients available on hand. Users can save and customize their favourite recipes into personal journals. To connect food lovers, users can also upload food pictures and vote/comment on pictures shared by others.
 
 ### Project Goals:
 #### 3-5 minimal requirements
 * Create user interface design (used Material UI) ✅
 * Set up database to store data (set up different collections in MongoDB to store user info, ingredient inventory, recipe data, journal entries, food pictures) ✅
-* Set up RESTful API to retrieve/store information from different APIs and database (used React for frontend, Redux to save state, redux thunk to trigger event actions and make API calls, Express to handle requests) ✅
+* Set up user login using Google OAuth ✅
 * Implement ingredient inventory tracker that tracks users’ ingredients available on hand ✅ 
-* Implement recipe recommendation feature based on users’ ingredients ✅
+* Implement recipe recommendation feature that recommends recipes based on users’ ingredients ✅
 
 
 #### 3-7 standard requirements
@@ -16,7 +17,7 @@ Love to cook but always struggle to come up with ideas? SmartCook is a web app d
 * Implement recipe journal feature to save users’ favourite recipes with annotations ✅
 * Implement food picture post feature where users can upload/share their food pictures and like/comment on others’ posts (Instagram clone) ✅
 * Implement user profile picture upload feature where users can change their profile pictures that are displayed on their food picture posts ✅
-* Implement feature to display top liked/voted food pictures posted/shared by users ✅ 
+* Implement feature to display top three liked/voted food pictures posted/shared by users ✅ 
 
  
 #### 2-3 stretch requirements
@@ -31,11 +32,11 @@ We use JavaScript XML (JSX), a HTML-like markup syntax for React to give structu
 
 #### React & Redux
 
-We use React to build our responsive frontend and utilize its advantages of reusable components and real time rendering. We use Redux for global state management since our frontend components need to communicate with each other and are dependent on many global and dynamic properties. Both React and Redux enable us to build highly scalable frontend components.
+We use React to build our responsive frontend and utilize its advantages of reusable components and real time rendering. We use Redux for global state management since our frontend components need to communicate with each other and are dependent on many global and dynamic properties; Redux-thunk middleware to write action creators to deal with asynchronous actions. Both React and Redux enable us to build highly scalable frontend components.
 
 #### MongoDB
 
-A NoSQL database is used in our project to allow us flexible storage of varied types of information. This flexibility doesn’t come handy with an SQL database which is restricted to only using tables related by foreign keys. MongoDB is used specifically because of its real-time integration and indexing efficiency along with its free cloud base service Atlas. The cloud base service aspect is detrimental when we compare MongoDB with other viable options like CouchDB which has a limited time free trial for its services. We used MongoDB to store user info, recipe journals, food pictures and ingredient inventory data.
+A NoSQL database is used in our project to allow flexible storage of varied types of information. This flexibility does not come in handy with a SQL database which is restricted to only using tables related to foreign keys. MongoDB is used specifically because of its real-time integration and indexing efficiency along with its free cloud base service, Mongo Atlas. The cloud base service aspect is detrimental when we compare MongoDB with other viable options like CouchDB which has a limited time free trial for its services. We used MongoDB to store user info, recipe journals, food pictures, ingredient inventory, and journal entries data.
 
 #### Node & Express
 
@@ -62,9 +63,13 @@ Our app also has the following extra functionalities:
 
 We plan to implement the following features to improve the functionality and usability of our app:
 
-* You will be notified by real time (push) notifications when other users like/comment on your food pic post.
-* When you create a food picture post, you will be able to include a link that allows users to access the journal entry, so that users can see both the corresponding food picture and journal entry. This will connect the journal and food picture posts page together.
-* For the recipe recommendation page, we will improve the algorithm that parses ingredient names and quantities from the recipe card ingredient list, so that it can detect ingredients with more precision. The current algorithm is unable to detect general ingredients from specific types of that ingredient. For example, it cannot determine that "mushroom" is a general form of "brown mushroom".
+* Real-time (push) notifications to notify users when other users like/comment on your food pic post.
+
+* Individual hyperlink for both the food picture and journal entry so that users can share journal entries along with the corresponding food picture posts if they desire. This will help to connect the journal and food picture posts features together.
+
+* Social media share button that allows users to share the journal entries/ food picture posts to external social media applications (e.g Facebook).
+
+* For the recipe recommendation page, we will improve the algorithm that parses ingredient names and quantities from the recipe card ingredient list to detect ingredients with more precision. The current algorithm is unable to detect general ingredients from specific types of that ingredient. For example, it cannot determine that "mushroom" is a general form of "brown mushroom".
 
 ### List of Contributions:
 
