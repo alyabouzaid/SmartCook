@@ -1,4 +1,4 @@
-# <img src="client/src/pictures/smartcookLogo.png" alt="logo" width=150 height=150> SmartCook
+# <img src="client/src/pictures/smartcookLogo.png" alt="logo" width=50 height=50> SmartCook
 
 Love to cook but always struggle to come up with ideas? 
 SmartCook is a web app that keeps track of users' ingredient inventories and recommends recipes based on the selected filters and ingredients available on hand. Users can save and customize their favourite recipes into personal journals. To connect food lovers, users can also upload food pictures and vote/comment on pictures shared by others.
