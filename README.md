@@ -1,4 +1,4 @@
-# SmartCook
+# <img src="client/src/pictures/smartcookLogo.png" alt="logo" width=150 height=150> SmartCook
 
 Love to cook but always struggle to come up with ideas? 
 SmartCook is a web app that keeps track of users' ingredient inventories and recommends recipes based on the selected filters and ingredients available on hand. Users can save and customize their favourite recipes into personal journals. To connect food lovers, users can also upload food pictures and vote/comment on pictures shared by others.
@@ -58,7 +58,7 @@ Our app also has the following extra functionalities:
 - it uses two external APIs: a recipe API and a Food and Database API (with Natural Language Processing)
 - it uses Cloudinary: an image service that enables direct uploading of images by users
 - it uses CKEditor: a rich text editor for better content creation experience when creating recipe journal entries
-- it uses algorithms: 1) to determine the most popular recipes based on all the recipes saved by different users, 2) to compare the ingredient names and quantities parsed by the NLP API and the ingredient inventory to check whether or not the ingredients/amount needed are availab/sufficient
+- it uses algorithms: 1) to determine the most popular recipes based on all the recipes saved by different users, 2) to compare the ingredient names and quantities parsed by the NLP API and the ingredient inventory to check whether or not the ingredients/amount needed are available/sufficient
 
 
 ### Next Steps:
