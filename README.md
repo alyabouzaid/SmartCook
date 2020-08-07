@@ -7,7 +7,8 @@ SmartCook is a web app that keeps track of users' ingredient inventories and rec
 #### Additional instructions on how to use the app for better experience: 
 - Before using the recipe recommendation feature, go to the ingredient inventory page and populate your inventory by adding the ingredients with the corresponding amounts (without the unit) and categories. You can edit/delete the ingredient/amount using the editing panel at the bottom of the table.
 - When using the recipe recommendation feature, you can click the checkmark icon under a recipe card to check if you have all the ingredients (and sufficient amount of those ingredients) in your inventory to make that recipe. If you are able to make that recipe, the required amount of ingredients will be deducted from the ingredient inventory. 
-- You can change the app to dark/light mode and upload/change the user profile picture under the settings icon. Both the Settings and the Create New Post dialog pop-up is draggable. 
+- You can change the app to dark/light mode and upload/change the user profile picture under the settings icon. Both the Settings and the Create New Post dialog pop-up are draggable. 
+
 
 ### Project Goals:
 #### 3-5 minimal requirements
