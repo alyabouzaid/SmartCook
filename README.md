@@ -48,7 +48,9 @@ We deploy our web app using Heroku which is a cloud platform that enables develo
 
 ### Above and Beyond Functionality:
 
-One of the cool features of our app demonstrates how the recipe recommendation ties back to the ingredient inventory. Where the ingredient inventory keeps track of the ingredients available, the recipe recommendation generates recipes based on selected ingredients and edits those ingredients depending on the quantities needed to create recipes. We used a Natural Language Processing (NLP) API to parse ingredient names and quantities from the recipe ingredient list. Ingredient names and quantities are tied back to the ingredient inventory to check for their availability and existence by getting access to the ingredientInventoryStore. If all the ingredients required for a recipe are found available, the amount required to make the recipe will be deducted from the inventory by calling the ingredient inventory edit action. Users are alerted for missing ingredients or for being low in stock.
+One of the cool features of our web app demonstrates how the ingredient inventory integrates with the recipe recommendation feature. While the ingredient inventory keeps track of the available ingredients, the recipe recommendation generates recipes based on selected ingredients and the ingredients amount will be deducted from the inventory list. We used a Natural Language Processing (NLP) API to parse ingredient names and quantities from the recipe ingredient list. Ingredient names and quantities parsed by the API are then compared to the ingredient inventory to check whether or not the ingredients/amount needed are availab/sufficient. If all the ingredients required for a recipe are found available, the required amount will be deducted from the inventory by dispatching the ingredient inventory edit action. Users will be alerted for missing ingredients or for being low in stock.
+
+Instead of a regular recipe recommendation app, another cool feature is that we implement the social aspect to our web app by creating food picture posts to connect the users. Users can view, like, comment on all the food picture posts (Instagram clone) and the top 3 voted/liked picture of the recent 7 days are featured on the landing page.
 
 Our app also has the following extra functionalities:
 
@@ -56,8 +58,8 @@ Our app also has the following extra functionalities:
 - it uses two external APIs: a recipe API and a Food and Database API (with Natural Language Processing)
 - it uses Cloudinary: an image service that enables direct uploading of images by users
 - it uses CKEditor: a rich text editor for better content creation experience when creating recipe journal entries
-- it uses an algorithm to determine the most popular recipes based on all the recipes saved by different users
-- it has a social aspect, in which users can upload food pictures and vote/comment on food pictures that are shared by other users. The 3 most liked pictures of the week are displayed on the landing page.
+- it uses algorithms: 1) to determine the most popular recipes based on all the recipes saved by different users, 2) to compare the ingredient names and quantities parsed by the NLP API and the ingredient inventory to check whether or not the ingredients/amount needed are availab/sufficient
+
 
 ### Next Steps:
 
