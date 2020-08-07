@@ -1,14 +1,21 @@
-# SmartCook
+# <img src="client/src/pictures/smartcookLogo.png" alt="logo" width=50 height=50> SmartCook
 
-Love to cook but always struggle to come up with ideas? SmartCook is a web app designed for all food lovers who enjoy cooking, exploring new recipes, creating recipe journals, and socializing about food/cooking.
+### Project Description:
+Love to cook but always struggle to come up with ideas? 
+SmartCook is a web app that keeps track of users' ingredient inventories and recommends recipes based on the selected filters and ingredients available on hand. Users can save and customize their favourite recipes into personal journals. To connect food lovers, users can also upload food pictures and vote/comment on pictures shared by others.
+
+#### Additional instruction on how to use the app to get better experience: 
+- Populate the ingredient inventory by adding the ingredients with the corresponding amount (without the unit) and category before using the recommendation feature. You can edit/ delete the ingredient/amount using the editing panel at the bottom of the table.
+- If you select a recipe of your choice, click the checkmark icon under the recipe card to check if you have all the available ingredients with sufficent amount. If you do, the required amount will be deducted from the ingredient inventory. 
+- You can change the app to dark/light mode and upload/change the user profile picture under the settings icon.
 
 ### Project Goals:
 #### 3-5 minimal requirements
 * Create user interface design (used Material UI) ✅
 * Set up database to store data (set up different collections in MongoDB to store user info, ingredient inventory, recipe data, journal entries, food pictures) ✅
-* Set up RESTful API to retrieve/store information from different APIs and database (used React for frontend, Redux to save state, redux thunk to trigger event actions and make API calls, Express to handle requests) ✅
+* Set up user login using Google OAuth ✅
 * Implement ingredient inventory tracker that tracks users’ ingredients available on hand ✅ 
-* Implement recipe recommendation feature based on users’ ingredients ✅
+* Implement recipe recommendation feature that recommends recipes based on users’ ingredients ✅
 
 
 #### 3-7 standard requirements
@@ -16,7 +23,7 @@ Love to cook but always struggle to come up with ideas? SmartCook is a web app d
 * Implement recipe journal feature to save users’ favourite recipes with annotations ✅
 * Implement food picture post feature where users can upload/share their food pictures and like/comment on others’ posts (Instagram clone) ✅
 * Implement user profile picture upload feature where users can change their profile pictures that are displayed on their food picture posts ✅
-* Implement feature to display top liked/voted food pictures posted/shared by users ✅ 
+* Implement feature to display top three liked/voted food pictures posted/shared by users ✅ 
 
  
 #### 2-3 stretch requirements
@@ -31,11 +38,11 @@ We use JavaScript XML (JSX), a HTML-like markup syntax for React to give structu
 
 #### React & Redux
 
-We use React to build our responsive frontend and utilize its advantages of reusable components and real time rendering. We use Redux for global state management since our frontend components need to communicate with each other and are dependent on many global and dynamic properties. Both React and Redux enable us to build highly scalable frontend components.
+We use React to build our responsive frontend and utilize its advantages of reusable components and real time rendering. We use Redux for global state management since our frontend components need to communicate with each other and are dependent on many global and dynamic properties; Redux-thunk middleware to write action creators to deal with asynchronous actions. Both React and Redux enable us to build highly scalable frontend components.
 
 #### MongoDB
 
-A NoSQL database is used in our project to allow us flexible storage of varied types of information. This flexibility doesn’t come handy with an SQL database which is restricted to only using tables related by foreign keys. MongoDB is used specifically because of its real-time integration and indexing efficiency along with its free cloud base service Atlas. The cloud base service aspect is detrimental when we compare MongoDB with other viable options like CouchDB which has a limited time free trial for its services. We used MongoDB to store user info, recipe journals, food pictures and ingredient inventory data.
+A NoSQL database is used in our project to allow flexible storage of varied types of information. This flexibility does not come in handy with a SQL database which is restricted to only using tables related to foreign keys. MongoDB is used specifically because of its real-time integration and indexing efficiency along with its free cloud base service, Mongo Atlas. The cloud base service aspect is detrimental when we compare MongoDB with other viable options like CouchDB which has a limited time free trial for its services. We used MongoDB to store user info, recipe journals, food pictures, ingredient inventory, and journal entries data.
 
 #### Node & Express
 
@@ -47,7 +54,9 @@ We deploy our web app using Heroku which is a cloud platform that enables develo
 
 ### Above and Beyond Functionality:
 
-One of the cool features of our app demonstrates how the recipe recommendation ties back to the ingredient inventory. Where the ingredient inventory keeps track of the ingredients available, the recipe recommendation generates recipes based on selected ingredients and edits those ingredients depending on the quantities needed to create recipes. We used a Natural Language Processing (NLP) API to parse ingredient names and quantities from the recipe ingredient list. Ingredient names and quantities are tied back to the ingredient inventory to check for their availability and existence by getting access to the ingredientInventoryStore. If all the ingredients required for a recipe are found available, the amount required to make the recipe will be deducted from the inventory by calling the ingredient inventory edit action. Users are alerted for missing ingredients or for being low in stock.
+One of the cool features of our web app demonstrates how the ingredient inventory integrates with the recipe recommendation feature. While the ingredient inventory keeps track of the available ingredients, the recipe recommendation generates recipes based on selected ingredients and the ingredients amount will be deducted from the inventory list. We used a Natural Language Processing (NLP) API to parse ingredient names and quantities from the recipe ingredient list. Ingredient names and quantities parsed by the API are then compared to the ingredient inventory to check whether or not the ingredients/amount needed are availab/sufficient. If all the ingredients required for a recipe are found available, the required amount will be deducted from the inventory by dispatching the ingredient inventory edit action. Users will be alerted for missing ingredients or for being low in stock.
+
+Instead of a regular recipe recommendation app, another cool feature is that we implement the social aspect to our web app by creating food picture posts to connect the users. Users can view, like, comment on all the food picture posts (Instagram clone) and the top 3 voted/liked picture of the recent 7 days are featured on the landing page.
 
 Our app also has the following extra functionalities:
 
@@ -55,16 +64,20 @@ Our app also has the following extra functionalities:
 - it uses two external APIs: a recipe API and a Food and Database API (with Natural Language Processing)
 - it uses Cloudinary: an image service that enables direct uploading of images by users
 - it uses CKEditor: a rich text editor for better content creation experience when creating recipe journal entries
-- it uses an algorithm to determine the most popular recipes based on all the recipes saved by different users
-- it has a social aspect, in which users can upload food pictures and vote/comment on food pictures that are shared by other users. The 3 most liked pictures of the week are displayed on the landing page.
+- it uses algorithms: 1) to determine the most popular recipes based on all the recipes saved by different users, 2) to compare the ingredient names and quantities parsed by the NLP API and the ingredient inventory to check whether or not the ingredients/amount needed are available/sufficient
+
 
 ### Next Steps:
 
 We plan to implement the following features to improve the functionality and usability of our app:
 
-* You will be notified by real time (push) notifications when other users like/comment on your food pic post.
-* When you create a food picture post, you will be able to include a link that allows users to access the journal entry, so that users can see both the corresponding food picture and journal entry. This will connect the journal and food picture posts page together.
-* For the recipe recommendation page, we will improve the algorithm that parses ingredient names and quantities from the recipe card ingredient list, so that it can detect ingredients with more precision. The current algorithm is unable to detect general ingredients from specific types of that ingredient. For example, it cannot determine that "mushroom" is a general form of "brown mushroom".
+* Real-time (push) notifications to notify users when other users like/comment on your food pic post.
+
+* Individual hyperlink for both the food picture and journal entry so that users can share journal entries along with the corresponding food picture posts if they desire. This will help to connect the journal and food picture posts features together.
+
+* Social media share button that allows users to share the journal entries/ food picture posts to external social media applications (e.g Facebook).
+
+* For the recipe recommendation page, we will improve the algorithm that parses ingredient names and quantities from the recipe card ingredient list to detect ingredients with more precision. The current algorithm is unable to detect general ingredients from specific types of that ingredient. For example, it cannot determine that "mushroom" is a general form of "brown mushroom".
 
 ### List of Contributions:
 

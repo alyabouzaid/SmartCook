@@ -38,16 +38,16 @@ class IngredientList extends React.Component {
   filter(ingredientInventory) {
     if (Array.isArray(ingredientInventory)) {
       currentCategoryItems =
-        this.props.filter.length === 0
-          ? this.props.ingredientInventory
-          : this.props.ingredientInventory.filter((ingredient) => {
-              for (let i = 0; i < this.props.filter.length; i++) {
-                if (ingredient.category === this.props.filter[i]) {
-                  return true;
+          this.props.filter.length === 0
+              ? this.props.ingredientInventory
+              : this.props.ingredientInventory.filter((ingredient) => {
+                for (let i = 0; i < this.props.filter.length; i++) {
+                  if (ingredient.category === this.props.filter[i]) {
+                    return true;
+                  }
                 }
-              }
-              return false;
-            });
+                return false;
+              });
     }
   }
 
@@ -60,53 +60,53 @@ class IngredientList extends React.Component {
     };
 
     return (
-      <List
-        component="nav"
-        aria-labelledby="nested-list-subheader"
-        subheader={
-          <ListSubheader
-            style={{ fontSize: "18px", textAlign: "left" }}
-            component="div"
-            id="nested-list-subheader"
-          >
-            Select Ingredients:
-          </ListSubheader>
-        }
-        className={classes.root}
-      >
-        <ListItem button onClick={handleClick}>
-          <ListItemText primary="Ingredient List" />
-          {this.state.open ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={this.state.open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem>
-              <FormControl component="fieldset">
-                <FormGroup>
-                  {this.filter(this.props.ingredientInventory)}
-                  {currentCategoryItems.map((ingredient) => (
-                    <FormControlLabel
-                      className={classes.nested}
-                      key={ingredient.id}
-                      control={
-                        <Checkbox
-                          checked={ingredient.selected}
-                          onChange={() => {
-                            this.props.selectingIngredient(ingredient.key);
-                          }}
-                          name={ingredient.description}
-                          color="primary"
+        <List
+            component="nav"
+            aria-labelledby="nested-list-subheader"
+            subheader={
+              <ListSubheader
+                  style={{ fontSize: "18px", textAlign: "left" }}
+                  component="div"
+                  id="nested-list-subheader"
+              >
+                Select Ingredients:
+              </ListSubheader>
+            }
+            className={classes.root}
+        >
+          <ListItem button onClick={handleClick}>
+            <ListItemText primary="Ingredient List" />
+            {this.state.open ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItem>
+                <FormControl component="fieldset">
+                  <FormGroup>
+                    {this.filter(this.props.ingredientInventory)}
+                    {currentCategoryItems.map((ingredient) => (
+                        <FormControlLabel
+                            className={classes.nested}
+                            key={ingredient.id}
+                            control={
+                              <Checkbox
+                                  checked={ingredient.selected}
+                                  onChange={() => {
+                                    this.props.selectingIngredient(ingredient.key);
+                                  }}
+                                  name={ingredient.description}
+                                  color="primary"
+                              />
+                            }
+                            label={ingredient.description}
                         />
-                      }
-                      label={ingredient.description}
-                    />
-                  ))}
-                </FormGroup>
-              </FormControl>
-            </ListItem>
-          </List>
-        </Collapse>
-      </List>
+                    ))}
+                  </FormGroup>
+                </FormControl>
+              </ListItem>
+            </List>
+          </Collapse>
+        </List>
     );
   }
 }
@@ -119,6 +119,6 @@ const mapStateToProps = (state) => {
 };
 
 export default compose(
-  withStyles(useStyles),
-  connect(mapStateToProps, { selectingIngredient })
+    withStyles(useStyles),
+    connect(mapStateToProps, { selectingIngredient })
 )(IngredientList);
