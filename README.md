@@ -1,9 +1,10 @@
 # <img src="client/src/pictures/smartcookLogo.png" alt="logo" width=50 height=50> SmartCook
 
+### Project Description:
 Love to cook but always struggle to come up with ideas? 
 SmartCook is a web app that keeps track of users' ingredient inventories and recommends recipes based on the selected filters and ingredients available on hand. Users can save and customize their favourite recipes into personal journals. To connect food lovers, users can also upload food pictures and vote/comment on pictures shared by others.
 
-* Additional instruction on how to use the app to get better experience: 
+#### Additional instruction on how to use the app to get better experience: 
 - Populate the ingredient inventory by adding the ingredients with the corresponding amount (without the unit) and category before using the recommendation feature. You can edit/ delete the ingredient/amount using the editing panel at the bottom of the table.
 - If you select a recipe of your choice, click the checkmark icon under the recipe card to check if you have all the available ingredients with sufficent amount. If you do, the required amount will be deducted from the ingredient inventory. 
 - You can change the app to dark/light mode and upload/change the user profile picture under the settings icon.
