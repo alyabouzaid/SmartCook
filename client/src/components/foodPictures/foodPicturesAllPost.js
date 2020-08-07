@@ -113,7 +113,7 @@ class FoodPicturesAllPost extends React.Component {
           }}
         />
 
-        <Box m={2} p={1} style={{ position: "absolute", right: 130 }}>
+        <Box m={2} p={1} style={{ position: "absolute", right: 140 }}>
           <FoodPicturesPostFilters />
         </Box>
         <label htmlFor="icon-button-file" style={{ justifyContent: "right" }}>
