@@ -8,7 +8,7 @@
     "dev": "cd client && npm run build && cd .. && npm start"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "cloudinary": "^1.22.0",
     "cookie-parser": "~1.4.4",
